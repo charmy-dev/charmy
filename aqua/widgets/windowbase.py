@@ -1,5 +1,7 @@
 import sys
+import typing
 
+from ..const import UIFrame
 from ..object import AqObject
 from ..pos import AqPos
 from ..size import AqSize
@@ -7,7 +9,7 @@ from .app import AqApp
 
 
 class AqWindowBase(AqObject):
-    def __init__(self, parent: AqApp = None, *, title: str = "Aquaui", fha: bool = True):
+    def __init__(self, parent: AqApp = None, *, title: str = "Aquaui", size: tuple[int, int] = (100, 100), fha: bool = True):
         super().__init__()
 
         if parent is None:
@@ -35,16 +37,18 @@ class AqWindowBase(AqObject):
         self.new("is_force_hardware_acceleration", fha)
         self.new("pos", AqPos(0, 0))
         self.new("root_pos", AqPos(0, 0))
+        self.new("size", AqSize(size[0], size[1]))
         self.new("title", title)
         self.new("visible", False)
+        self.new("alive", True)
 
-        self.the_window = self.create()
+        self.new("the_window", self.create())
 
     def create(self):
         window = None
 
         match self.get("ui.framework"):
-            case "glfw":
+            case UIFrame.GLFW:
                 import glfw
 
                 glfw.window_hint(
@@ -68,8 +72,9 @@ class AqWindowBase(AqObject):
                         glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
                         glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
 
+                _size = self.get("size")
                 window = glfw.create_window(
-                    self.width, self.height, self.get("title"), None, None
+                    _size["width"], _size["height"], self.get("title"), None, None
                 )
                 if not window:
                     raise RuntimeError("无法创建GLFW窗口")
@@ -78,29 +83,57 @@ class AqWindowBase(AqObject):
 
                 pos = glfw.get_window_pos(window)
 
-                root_point = self.get("root_point")
-                root_point.set("x", pos[0])
-                root_point.set("y", pos[1])
+                _root_point = self.get("root_pos")
+                _root_point.set("x", pos[0])
+                _root_point.set("y", pos[1])
 
         return window
 
     def update(self):
-        from glfw import poll_events, wait_events, get_current_context, swap_interval
+        pass
 
-        input_mode: bool = True
+    def destroy(self) -> None:
+        """Destroy the window.
 
-        # poll_events()
+        :return: None
+        """
+        # self._event_init = False
+        # print(self.id)
+        self["app"].destroy_window(self)
+        match self.get("ui.framework"):
+            case UIFrame.GLFW:
+                import glfw
+                try:
+                    glfw.destroy_window(self["the_window"])
+                except TypeError:
+                    pass
 
-        for window in self.windows:
-            if window.visible and window.alive:
-                window.update()
-                if window.mode == "input":
-                    input_mode = True
-                if get_current_context():
-                    swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
+        self["alive"] = False
+        #self.draw_func = None
+        self["the_window"] = None  # Clear the reference
 
-        if input_mode:
-            poll_events()
-        else:
-            # if self._check_delay_events()
-            wait_events()
+    def can_be_close(self, value: bool | None = None) -> typing.Self | bool:
+        """Set whether the window can be closed.
+
+        Prevent users from closing the window, which can be used in conjunction with prompts like "Save before closing?"
+
+        >>> def delete(_: SkEvent):
+        >>>     window.can_be_close(False)
+        >>> window.bind("delete_window", delete)
+
+
+        :param value: Whether the window can be closed
+        :return: None
+        """
+        match self.get("ui.framework"):
+            case UIFrame.GLFW:
+                import glfw
+                if value is not None:
+                    glfw.set_window_should_close(self["the_window"], value)
+                    return self
+                else:
+                    if self["the_window"]:
+                        return glfw.window_should_close(self["the_window"])
+                    else:
+                        return False
+        return True

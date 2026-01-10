@@ -30,6 +30,7 @@ class AqApp(AqObject):
         self.new("ui.samples", samples)
 
         self.new("windows", [])
+        self.new("alive", False)
 
         self._init_ui_framework()
 
@@ -49,11 +50,65 @@ class AqApp(AqObject):
                 glfw.window_hint(glfw.SAMPLES, self.get("ui.samples"))
                 glfw.set_error_callback(self.error)
 
+    def update(self):
+        from glfw import poll_events, wait_events, get_current_context, swap_interval
+
+        input_mode: bool = True
+
+        # poll_events()
+        windows = self.get("windows")
+
+        for window in windows:
+            if window["visible"] and window["alive"]:
+                window.update()
+                if get_current_context():
+                    swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
+
+        if input_mode:
+            poll_events()
+        else:
+            # if self._check_delay_events()
+            wait_events()
+
+
     def run(self):
         if not self.get("windows"):
             warnings.warn(
                 "At least one window is required to run application!",
             )
+
+        self.set("alive", True)
+
+        while self.get("alive"):
+            windows = self.get("windows")
+            if not windows:
+                self.quit()
+                break
+            for window in windows:
+                if window.can_be_close():
+                    window.destroy()
+            self.update()
+
+        self.cleanup()
+
+    def destroy_window(self, window):
+        windows = self.get("windows")
+        if window in windows:
+            windows.remove(window)
+
+    def cleanup(self) -> None:
+        """Clean up resources."""
+        match self.get("ui.framework"):
+            case UIFrame.GLFW:
+                import glfw
+                for window in self.get("windows"):
+                    glfw.destroy_window(window.the_window)
+                glfw.terminate()
+        self.quit()
+
+    def quit(self) -> None:
+        """Quit application."""
+        self.set("alive", False)
 
     @staticmethod
     def error(error_code: typing.Any, description: bytes):
