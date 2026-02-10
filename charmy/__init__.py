@@ -1,5 +1,5 @@
 from .const import *
-from .event import CEventThread, CEventTask, CEventHandler, CEvent
+from .event import CEvent, CEventHandler, CEventTask, CEventThread
 from .object import CObject
 from .pos import CPos
 from .size import CSize

@@ -63,9 +63,7 @@ class CDelayTask(CBoundTask):
                       executed.
         :param (Other): See `CBoundTask.__init__()`
         """
-        CBoundTask.__init__(
-            self, id_, target, *args, **kwargs
-        )  # For other things,same as
+        CBoundTask.__init__(self, id_, target, *args, **kwargs)  # For other things,same as
         # CBoundTask
         if delay_.endswith("s"):
             if delay_.endswith("ms"):
@@ -74,9 +72,7 @@ class CDelayTask(CBoundTask):
                 delay_ = float(delay_[:-1])
         else:
             delay_ = float(delay_)
-        self.target_time = (
-            float(time.time()) + delay_
-        )  # To store when to execute the Task
+        self.target_time = float(time.time()) + delay_  # To store when to execute the Task
 
 
 class CRepeatTask(CBoundTask):
@@ -88,13 +84,9 @@ class CRepeatTask(CBoundTask):
         :param delay: Time to delay, in seconds, indicating how log to wait before the Task is
                       executed.
         """
-        CBoundTask.__init__(
-            self, id_, target, *args, **kwargs
-        )  # For other things,same as
+        CBoundTask.__init__(self, id_, target, *args, **kwargs)  # For other things,same as
         # CBoundTask
-        self.target_time = (
-            float(time.time()) + interval
-        )  # To store when to execute the Task for
+        self.target_time = float(time.time()) + interval  # To store when to execute the Task for
         # the next time, will be accumulated after
         # execution of the Task
         self.interval = interval  # Interval of the Task
@@ -185,9 +177,7 @@ class CEventHandling:
         ## Accumulate instance count
         self.__class__.instance_count += 1
         # Event binds
-        self.bind(
-            "update", self._check_delay_events, _keep_at_clear=True
-        )  # Delay checking loop
+        self.bind("update", self._check_delay_events, _keep_at_clear=True)  # Delay checking loop
 
     def parse_event_type_str(self, event_type_str) -> dict:
         """This function parses event type string.
@@ -258,9 +248,7 @@ class CEventHandling:
         parsed_event_type = self.parse_event_type_str(event_type)
         # Create a default CEvent object if not specified
         if event_obj is None:
-            event_obj = CEvent(
-                widget=self, event_type=tuple(parsed_event_type.keys())[0]
-            )
+            event_obj = CEvent(widget=self, event_type=tuple(parsed_event_type.keys())[0])
         # Add the event to event lists (the widget itself and the global list)
         self.latest_event = event_obj
         CEvent.latest = event_obj
@@ -372,12 +360,8 @@ class CEventHandling:
         match target_Task:
             case str():  # If given an ID string
                 Task_id_parsed = target_Task.split(".")
-                if (
-                    len(Task_id_parsed) == 2
-                ):  # If is a shortened ID (without widget indicator)
-                    Task_id_parsed.insert(
-                        0, self.id
-                    )  # We assume that this indicates self
+                if len(Task_id_parsed) == 2:  # If is a shortened ID (without widget indicator)
+                    Task_id_parsed.insert(0, self.id)  # We assume that this indicates self
                 if Task_id_parsed != self.id:  # If given ID indicates another widget
                     NotImplemented
                     # Still not inplemented, as we currently cannot get a CWidget object itself
@@ -453,9 +437,7 @@ class CEventHandling:
 
 
 # Initialize working thread
-CEventHandling.WORKING_THREAD = threading.Thread(
-    target=CEventHandling._working_thread_loop
-)
+CEventHandling.WORKING_THREAD = threading.Thread(target=CEventHandling._working_thread_loop)
 
 
 # @daTasklass
@@ -486,9 +468,7 @@ class CEvent:
         """
         self.event_type: str = event_type  # Type of event
         self.widget: typing.Optional[typing.Any] = widget  # Relating widget
-        self.window_base: typing.Optional[typing.Any] = (
-            None  # WindowBase of the current window
-        )
+        self.window_base: typing.Optional[typing.Any] = None  # WindowBase of the current window
         self.window: typing.Optional[typing.Any] = None  # Current window
         self.event_data: dict = {}
         # Not all properties above will be used

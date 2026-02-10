@@ -1,9 +1,9 @@
 import typing
 import warnings
 
-from ..const import UIFrame, DrawingFrame, BackendFrame
-from ..object import CObject
+from ..const import BackendFrame, DrawingFrame, UIFrame
 from ..event import CEventThread
+from ..object import CObject
 
 
 class CApp(CObject):
@@ -36,7 +36,7 @@ class CApp(CObject):
         self.new("ui.samples", samples)
 
         self.new("drawing.framework", drawing)
-        
+
         self.new("backend.framework", backend)
 
         self.new("windows", [])
@@ -72,9 +72,7 @@ class CApp(CObject):
             if window["is_visible"] and window["is_alive"]:
                 window.update()
                 if get_current_context():
-                    swap_interval(
-                        1 if self.get("ui.is_vsync") else 0
-                    )  # 是否启用垂直同步
+                    swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
 
         if input_mode:
             poll_events()

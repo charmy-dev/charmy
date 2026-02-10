@@ -17,3 +17,8 @@ class BackendFrame(Enum):
 
 class DrawingFrame(Enum):
     SKIA = skia = "SKIA"
+
+
+class DrawingMode(Enum):
+    IMMEDIATE = immediate = "IMMEDIATE"
+    Retained = retained = "READIED"

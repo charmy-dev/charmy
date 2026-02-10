@@ -2,8 +2,8 @@ import threading
 import time
 import typing
 
-from .object import CObject
 from .const import ID
+from .object import CObject
 
 
 class CEvent(CObject):
@@ -23,14 +23,17 @@ class CEventTask(CObject):
         target: The function to be called when the event is triggered
     """
 
-    def __init__(self, _id=ID.AUTO, target: typing.Callable[..., None] = None, ):
+    def __init__(
+        self,
+        _id=ID.AUTO,
+        target: typing.Callable[..., None] = None,
+    ):
         super().__init__(_id=_id)
 
         self.new("target", target)
 
 
 class CEventThread(threading.Thread, CObject):
-
     """CEventThread is a class to store event tasks and execute them"""
 
     tasks: list[list[CEventTask | CEvent]] = []
@@ -57,7 +60,11 @@ class CEventThread(threading.Thread, CObject):
 class CEventHandler(CObject):
 
     basic_event_types = [
-        "on_click", "on_dbclick", "on_draw", "on_move", "on_resize",
+        "on_click",
+        "on_dbclick",
+        "on_draw",
+        "on_move",
+        "on_resize",
     ]
 
     def __init__(self, *args, **kwargs):
@@ -78,7 +85,9 @@ class CEventHandler(CObject):
 
     def generate_event_signal(self, event_type: str, **kwargs):
         for target in self["events"][event_type]:
-            self["event.main_thread"].add_task(CEventTask(target=target), CEvent(event_type=event_type, **kwargs))
+            self["event.main_thread"].add_task(
+                CEventTask(target=target), CEvent(event_type=event_type, **kwargs)
+            )
 
     trigger = generate_event_signal
 

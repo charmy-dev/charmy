@@ -13,6 +13,11 @@ dependencies = [
 [tool.poetry]
 packages = [{include = "charmy"}]
 
+[tool.black]
+line-length = 100
+# A programmer who writes codes already formatted never needs a formatting tool
+# (, but someone isn't).
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"

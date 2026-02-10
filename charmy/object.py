@@ -212,3 +212,6 @@ class CObject(metaclass=CInstanceCounterMeta):
     def attributes(self) -> typing.Dict[str, typing.Any]:
         """Return all attributes"""
         return self._attributes
+
+    def __str__(self):
+        return str(self._attributes)

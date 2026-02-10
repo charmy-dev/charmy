@@ -2,13 +2,12 @@ import importlib
 import sys
 import typing
 
-from ..const import UIFrame, DrawingFrame, BackendFrame
+from ..const import BackendFrame, DrawingFrame, UIFrame, DrawingMode
+from ..event import CEventHandler, CEvent
 from ..object import CObject
 from ..pos import CPos
 from ..size import CSize
 from .app import CApp
-
-from ..event import CEventHandler
 
 
 class CWindowBase(CEventHandler):
@@ -28,6 +27,7 @@ class CWindowBase(CEventHandler):
         title: str = "Charmy GUI",
         size: tuple[int, int] = (100, 100),
         fha: bool = True,
+        drawing_mode: DrawingMode = DrawingMode.IMMEDIATE
     ):
         super().__init__()
 
@@ -47,6 +47,8 @@ class CWindowBase(CEventHandler):
         self.get("app").get("windows").append(self)
 
         # Init Attributes
+        self.new("is_dirty", False)
+
         self.new(
             "ui.framework", self._get_ui_framework(), get_func=self._get_ui_framework
         )  # The UI Framework
@@ -62,40 +64,57 @@ class CWindowBase(CEventHandler):
             case _:
                 raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
 
-        self.new("drawing.framework", self._get_drawing_framework(), get_func=self._get_drawing_framework)
+        self.new("ui.draw_func", None)
+
+        self.new(
+            "drawing.framework",
+            self._get_drawing_framework(),
+            get_func=self._get_drawing_framework,
+        )
+        self.new("drawing.mode", drawing_mode)
 
         match self["drawing.framework"]:
             case DrawingFrame.SKIA:
                 self.skia = importlib.import_module("skia")
+                self.new("drawing.surface", None)
             case _:
                 raise ValueError(f"Unknown Drawing Framework: {self['drawing.framework']}")
 
-        self.new("backend.framework", self._get_backend_framework(), get_func=self._get_backend_framework)
+        self.new(
+            "backend.framework",
+            self._get_backend_framework(),
+            get_func=self._get_backend_framework,
+        )
 
         match self["backend.framework"]:
             case BackendFrame.OPENGL:
                 self.opengl = importlib.import_module("OpenGL")
+                self.opengl_GL = importlib.import_module("OpenGL.GL")
+                self.new("backend.context", None)
             case _:
-                raise ValueError(
-                    f"Unknown Backend Framework: {self['backend.framework']}")
+                raise ValueError(f"Unknown Backend Framework: {self['backend.framework']}")
 
         self.new("is_force_hardware_acceleration", fha)
         self.new("pos", CPos(0, 0))  # Always (0, 0)
+        self.new("canvas_pos", CPos(0, 0))  # Always (0, 0)
         self.new(
-            "root_pos", CPos(0, 0), set_func=self._set_pos, get_func=self._get_pos
+            "root_pos", CPos(0, 0), set_func=self._set_pos
         )  # The position of the window
         self.new(
             "size",
             CSize(size[0], size[1]),
-            set_func=self._set_size,
-            get_func=self._get_size,
+            set_func=self._set_size
         )  # The size of the window
         self.new("title", title)  # The title of the window
         self.new("is_visible", False)  # Is the window visible
         self.new("is_alive", True)  # Is the window alive
 
         self.new("the_window", self.create())  # GLFW/SDL Window
+
         self.create_event_bounds()
+
+        self.bind("on_move", self._on_move)
+        self.bind("on_resize", self._on_resize)
 
     def create(self):
         window = None
@@ -132,7 +151,7 @@ class CWindowBase(CEventHandler):
                 if not window:
                     raise RuntimeError("Can't create window")
 
-                self.set("is_visible", True)
+                self["is_visible"] = True
 
                 pos = glfw.get_window_pos(window)
 
@@ -147,15 +166,131 @@ class CWindowBase(CEventHandler):
             case UIFrame.GLFW:
                 self.glfw.set_window_size_callback(
                     self["the_window"],
-                    lambda window, width, height: self.trigger("on_resize", width=width, height=height),
+                    lambda window, width, height: self.trigger(
+                        "on_resize", width=width, height=height
+                    ),
                 )
                 self.glfw.set_window_pos_callback(
                     self["the_window"],
-                    lambda window, root_x, root_y: self.trigger("on_move", x_root=root_x, y_root=root_y),
+                    lambda window, root_x, root_y: self.trigger(
+                        "on_move", x_root=root_x, y_root=root_y
+                    ),
                 )
 
     def update(self):
-        pass
+        match self["drawing.mode"]:
+            case DrawingMode.IMMEDIATE:
+                self.draw()
+            case DrawingMode.Retained:
+                if self["is_dirty"]:
+                    self.draw()
+                    self["is_dirty"] = False
+
+    import contextlib
+
+    @contextlib.contextmanager
+    def skia_surface(self, arg: typing.Any):
+        """Create a Skia surface for the window.
+
+        :param arg: GLFW or SDL2 Window/Surface
+        :return: Skia Surface
+        """
+        match self["ui.framework"]:
+            case UIFrame.GLFW:
+                if not self.glfw.get_current_context() or self.glfw.window_should_close(
+                        arg):
+                    yield None
+                    return
+
+                match self["backend.framework"]:
+                    case BackendFrame.OPENGL:
+                        match self["drawing.framework"]:
+                            case DrawingFrame.SKIA:
+                                self["backend.context"] = self.skia.GrDirectContext.MakeGL()
+                                fb_width, fb_height = self.glfw.get_framebuffer_size(arg)
+                                backend_render_target = self.skia.GrBackendRenderTarget(
+                                    fb_width, fb_height, 0, 0, self.skia.GrGLFramebufferInfo(0, self.opengl_GL.GL_RGBA8)
+                                )
+                                surface = self.skia.Surface.MakeFromBackendRenderTarget(
+                                    self["backend.context"],
+                                    backend_render_target,
+                                    self.skia.kBottomLeft_GrSurfaceOrigin,
+                                    self.skia.kRGBA_8888_ColorType,
+                                    self.skia.ColorSpace.MakeSRGB(),
+                                )
+                                self["backend.context"].setResourceCacheLimit(16 * 1024 * 1024)
+
+                                if surface is None:
+                                    raise RuntimeError("Failed to create Skia surface")
+
+                                yield surface
+
+            case UIFrame.SDL:
+                import ctypes
+
+                width, height = arg.w, arg.h
+                pixels_ptr = arg.pixels
+                pitch = arg.pitch
+
+                # SDL 像素包装成 buffer
+                buf_type = ctypes.c_uint8 * (pitch * height)
+                buf = buf_type.from_address(pixels_ptr)
+
+                imageinfo = self.skia.ImageInfo.MakeN32Premul(width, height)
+                surface = self.skia.Surface.MakeRasterDirect(imageinfo, buf, pitch)
+
+                if surface is None:
+                    raise RuntimeError("Failed to create Skia surface")
+
+                yield surface  # ⚠️ 必须用 yield，不要 return
+
+    def draw(self, event: CEvent = None) -> None:
+        if self["is_visible"]:
+            # Set the current context for each arg
+            # 【为该窗口设置当前上下文】
+            match self["ui.framework"]:
+                case UIFrame.GLFW:
+                    self.glfw.make_context_current(self["the_window"])
+
+                    match self["drawing.framework"]:
+                        case DrawingFrame.SKIA:
+                            # Create a Surface and hand it over to this arg.
+                            # 【创建Surface，交给该窗口】
+                            with self.skia_surface(self["the_window"]) as self["drawing.surface"]:
+                                if self["drawing.surface"]:
+                                    with self["drawing.surface"] as canvas:
+                                        # Determine and call the drawing function of this arg.
+                                        # 【判断并调用该窗口的绘制函数】
+                                        if self["ui.draw_func"]:
+                                            self["ui.draw_func"](canvas)
+
+                                    self["drawing.surface"].flushAndSubmit()
+                    if self["is_alive"]:
+                        self.glfw.swap_buffers(self["the_window"])
+                case "sdl2":
+                    import sdl2
+
+                    surface = sdl2.SDL_GetWindowSurface(self.the_window).contents
+
+                    with self.skia_surface(surface) as sk_surface:
+                        if sk_surface:
+                            with sk_surface as canvas:
+                                if self.draw_func:
+                                    self.draw_func(canvas)
+
+                    sdl2.SDL_UpdateWindowSurface(self.the_window)
+        if self["backend.context"]:
+            self["backend.context"].freeGpuResources()
+            self["backend.context"].releaseResourcesAndAbandonContext()
+        # for child in self.children:
+        #    child.need_redraw = False
+        self.trigger("on_draw")
+
+    def dirty(self):
+        self["is_dirty"] = True
+
+    def cancel_dirty(self):
+        self["is_dirty"] = False
 
     def destroy(self) -> None:
         """Destroy the window.
@@ -222,25 +357,11 @@ class CWindowBase(CEventHandler):
         if isinstance(size, tuple):
             match self["ui.framework"]:
                 case UIFrame.GLFW:
-                    _size = self.get("size", skip=True)
                     self.glfw.set_window_size(self["the_window"], size[0], size[1])
-                    _size.set("width", size[0])
-                    _size.set("height", size[1])
         else:
             match self["ui.framework"]:
                 case UIFrame.GLFW:
-                    self.set("size", size, skip=True)
-                    self.glfw.set_window_size(
-                        self["the_window"], size["width"], size["height"]
-                    )
-        self.trigger("on_resize")
-
-    def _get_size(self) -> None:
-        if self["ui.framework"] == UIFrame.GLFW:
-            _size = self.get("size", skip=True)
-            size = self.glfw.get_window_size(self["the_window"])
-            _size.set("width", size[0])
-            _size.set("height", size[1])
+                    self.glfw.set_window_size(self["the_window"], size["width"], size["height"])
 
     def resize(self, size: CSize | tuple[int, int]) -> None:
         """Resize the window to the given size.
@@ -255,22 +376,10 @@ class CWindowBase(CEventHandler):
     def _set_pos(self, pos: CPos | tuple[int, int]) -> None:
         if isinstance(pos, tuple):
             if self["ui.framework"] == UIFrame.GLFW:
-                _root_point = self.get("root_pos", skip=True)
                 self.glfw.set_window_pos(self["the_window"], pos[0], pos[1])
-                _root_point.set("x", pos[0])
-                _root_point.set("y", pos[1])
         else:
             if self["ui.framework"] == UIFrame.GLFW:
-                self.set("root_pos", pos, skip=True)
                 self.glfw.set_window_pos(self["the_window"], pos["x"], pos["y"])
-        self.trigger("on_move")
-
-    def _get_pos(self) -> None:
-        if self["ui.framework"] == UIFrame.GLFW:
-            _root_point = self.get("root_pos", skip=True)
-            pos = self.glfw.get_window_pos(self["the_window"])
-            _root_point.set("x", pos[0])
-            _root_point.set("y", pos[1])
 
     def move(self, pos: CPos | tuple[int, int]) -> None:
         """Move the window to the given position.
@@ -285,5 +394,16 @@ class CWindowBase(CEventHandler):
     # endregion
 
     # region Events
+
+    def _on_move(self, event: CEvent):
+        _root_point = self.get("root_pos", skip=True)
+        _root_point.set("x", event["x_root"])
+        _root_point.set("y", event["y_root"])
+
+    def _on_resize(self, event: CEvent):
+        _size = self.get("size", skip=True)
+        _size.set("width", event["width"])
+        _size.set("height", event["height"])
+        self.dirty()
 
     # endregion
