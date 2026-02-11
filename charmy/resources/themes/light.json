@@ -1,0 +1,790 @@
+{
+  "name": "default.light",
+  "base": "ROOT",
+  "friendly_name": "Default Light",
+
+  "color_palette": {
+    "bg": [240, 240, 240, 255],
+    "second_bg": [225, 225, 225, 245],
+    "fg": [0, 0, 0, 235],
+    "inverse_fg": [255, 255, 255, 235],
+    "bd": [200, 200, 200, 255],
+    "bd_shadow": [0, 3, 1, 1, [0, 0, 0, 50]],
+    "accent": [25, 125, 225, 235]
+  },
+
+  "styles": {
+
+    "SkEmpty": {
+      "rest": {
+        "size": [0, 0]
+      }
+    },
+
+    "SkBadge": {
+      "rest": {
+        "size": [0, 35],
+        "radius": 99,
+        "bg": [5, 105, 200, 255],
+        "fg": [255, 255, 255, 235],
+        "bd": "transparent",
+        "width": 0
+      }
+    },
+
+    "SkButton": {
+      "rest": {
+        "size": [0, 35],
+        "radius": 5,
+        "bg": [
+          "linear_gradient", {
+            "direction": "n",
+            "colors": {
+              "0%": [235, 235, 235, 255],
+              "100%": [200, 200, 200, 255]
+              }
+          }
+        ],
+        "fg": [0, 0, 0, 235],
+        "bd": [200, 200, 200, 255],
+        "bd_shadow": [0, 3, 1, 1, [0, 0, 0, 50]],
+        "width": 2
+      },
+      "hover": {
+        "bg": [
+          "linear_gradient", {
+            "direction": "n",
+            "colors": {
+              "0%": [245, 245, 245, 255],
+              "100%": [200, 200, 200, 255]
+            }
+          }
+        ],
+        "fg": [0, 0, 0, 235],
+        "bd": [200, 200, 200, 255],
+        "bd_shadow": [0, 0, 4, 4, [40, 130, 255, 255]],
+        "width": 2
+      },
+      "press": {
+        "bg": [
+          "lg", {
+            "direction": "n",
+            "colors": {
+              "0%": [200, 200, 200, 255],
+              "100%": [235, 235, 235, 255]
+            }
+          }
+        ],
+        "fg": [0, 0, 0, 235],
+        "bd": [200, 200, 200, 255],
+        "bd_shadow": [0, 0, 3, 3, [40, 130, 255, 255]],
+        "width": 2
+      },
+      "focus": {
+        "bg": [225, 225, 225, 245],
+        "fg": [0, 0, 0, 235],
+        "bd": [40, 130, 255, 255],
+        "bd_shadow": [0, 1, 3, 3, [25, 125, 225, 100]],
+        "width": 3
+      },
+      "disabled": {
+        "bg": [240, 240, 240, 240],
+        "fg": [150, 150, 150, 235],
+        "bd": [200, 200, 200, 255],
+        "width": 2
+      }
+    },
+
+    "SkCloseButton": {
+      "rest": {
+        "size": [35, 35],
+        "radius": [0, 5, 0, 0],
+        "bg": "transparent",
+        "fg": {"color_palette": "fg"},
+        "width": 0
+      },
+      "hover": {
+        "bg": [196, 43, 28],
+        "fg": "white",
+        "width": 0
+      },
+      "press": {
+        "bg": [145, 31, 20],
+        "fg": "white",
+        "width": 0
+      },
+      "disabled": {
+        "bg": "transparent",
+        "fg": "gray",
+        "width": 0
+      }
+    },
+
+    "SkComboBox": {
+      "rest": {
+        "size": [0, 35],
+        "radius": 5,
+        "bg": [
+          "lg", {
+            "direction": "n",
+            "colors": {
+              "0%": [235, 235, 235, 255],
+              "100%": [200, 200, 200, 255]
+              }
+          }
+        ],
+        "fg": [0, 0, 0, 235],
+        "bd": [200, 200, 200, 255],
+        "bd_shadow": [0, 3, 1, 1, [0, 0, 0, 50]],
+        "width": 2,
+        "arrow": "gray"
+      },
+      "hover": {
+        "bg": [
+          "lg", {
+            "start_anchor": "n",
+            "end_anchor": "s",
+            "colors": {
+              "0%": [245, 245, 245, 255],
+              "100%": [200, 200, 200, 255]
+            }
+          }
+        ],
+        "fg": [0, 0, 0, 235],
+        "bd": [200, 200, 200, 255],
+        "bd_shadow": [0, 0, 4, 4, [40, 130, 255, 255]],
+        "width": 2
+      },
+      "press": {
+        "bg": [
+          "lg", {
+            "start_anchor": "n",
+            "end_anchor": "s",
+            "colors": {
+              "0%": [200, 200, 200, 255],
+              "100%": [235, 235, 235, 255]
+            }
+          }
+        ],
+        "fg": [0, 0, 0, 235],
+        "bd": [200, 200, 200, 255],
+        "bd_shadow": [0, 0, 3, 3, [40, 130, 255, 255]],
+        "width": 2
+      },
+      "focus": {
+        "bg": [225, 225, 225, 245],
+        "fg": [0, 0, 0, 235],
+        "bd": [40, 130, 255, 255],
+        "bd_shadow": [0, 1, 3, 3, [25, 125, 225, 100]],
+        "width": 3
+      },
+      "disabled": {
+        "bg": [240, 240, 240, 240],
+        "fg": [150, 150, 150, 235],
+        "bd": [200, 200, 200, 255],
+        "width": 2
+      }
+    },
+
+    "SkMaximizeButton": {
+      "rest": {
+        "size": [35, 35],
+        "radius": 0,
+        "icon_radius": 1,
+        "bg": "transparent",
+        "fg": {"color_palette": "fg"},
+        "width": 0
+      },
+      "hover": {
+        "bg": [50, 100, 210, 200],
+        "fg": "white",
+        "width": 0
+      },
+      "press": {
+        "bg": [40, 80, 160],
+        "fg": "white",
+        "width": 0
+      },
+      "disabled": {
+        "bg": "transparent",
+        "fg": "gray",
+        "width": 0
+      }
+    },
+
+    "SkMinimizeButton": {
+      "rest": {
+        "size": [35, 35],
+        "radius": 0,
+        "icon_radius": 1,
+        "bg": "transparent",
+        "fg": {"color_palette": "fg"},
+        "width": 0
+      },
+      "hover": {
+        "bg": [0, 0, 0, 20],
+        "fg": "black",
+        "width": 0
+      },
+      "press": {
+        "bg": [0, 0, 0, 40],
+        "fg": "black",
+        "width": 0
+      },
+      "disabled": {
+        "bg": "transparent",
+        "fg": "gray",
+        "width": 0
+      }
+    },
+
+    "SkMenu": {
+      "rest": {
+        "size": [0, 35],
+        "radius": 5,
+        "fg": [0, 0, 0, 235],
+        "width": 2
+      },
+      "hover": {
+        "bg": [0, 0, 0, 20],
+        "fg": [0, 0, 0, 235],
+        "bd": [200, 200, 200, 255],
+        "width": 2
+      },
+      "press": {
+        "bg": [0, 0, 0, 40],
+        "fg": [0, 0, 0, 235],
+        "bd": [200, 200, 200, 255],
+        "width": 2
+      },
+      "focus": {
+        "fg": [0, 0, 0, 235],
+        "bd": [40, 130, 255, 255],
+        "bd_shadow": [0, 1, 3, 3, [25, 125, 225, 100]],
+        "width": 3
+      },
+      "disabled": {
+        "bg": [240, 240, 240, 240],
+        "fg": [150, 150, 150, 235],
+        "bd": [200, 200, 200, 255],
+        "width": 2
+      }
+    },
+
+    "SkMenuBar": {
+      "rest": {
+        "size": [0, 30],
+        "fg": {"color_palette": "bd"},
+        "bg": {"color_palette": "second_bg"},
+        "bd_shadow": [0, 4, 2, 2, [0, 0, 0, 50]],
+        "width": 0
+      }
+    },
+
+    "SkCard": {
+      "rest": {
+        "size": [0, 0],
+        "radius": 8,
+        "bg": {"color_palette": "second_bg"},
+        "bd": {"color_palette": "bd"},
+        "bd_shadow": [0, 3, 3, 3, [0, 0, 0, 50]],
+        "width": 2
+      }
+    },
+
+    "SkTipBar": {
+      "rest": {
+        "size": [0, 0],
+        "radius": 0,
+        "bg": {"color_palette": "second_bg"},
+        "bd": {"color_palette": "bd"},
+        "bd_shadow": [0, 3, 3, 3, [0, 0, 0, 50]],
+        "width": 2
+      }
+    },
+
+    "SkPopup": {
+      "rest": {
+        "size": [0, 0],
+        "radius": 8,
+        "bg": {"color_palette": "second_bg"},
+        "bd": {"color_palette": "bd"},
+        "bd_shadow": [0, 3, 3, 3, [0, 0, 0, 50]],
+        "width": 2
+      }
+    },
+
+    "SkCheckBox": {
+      "rest": {
+        "radius": 3,
+        "size": [22, 22]
+      },
+      "unchecked-rest": {
+        "bg": [
+          "lg", {
+            "direction": "n",
+            "colors": {
+              "0%": [235, 235, 235, 255],
+              "100%": [200, 200, 200, 255]
+            }
+          }
+        ],
+        "bd": [200, 200, 200, 255],
+        "width": 2
+      },
+      "unchecked-hover": {
+        "bg": [200, 200, 200, 245],
+        "bd": [200, 200, 200, 255],
+        "width": 2
+      },
+      "unchecked-press": {
+        "bg": [180, 180, 180, 245],
+        "bd": [200, 200, 200, 255],
+        "width": 2
+      },
+      "checked-rest": {
+        "bg": [
+          "lg", {
+            "direction": "n",
+            "colors": {
+              "0%": [40, 130, 255, 255],
+              "100%": [40, 130, 255, 150]
+            }
+          }
+        ],
+        "fg": [250, 250, 250, 255],
+        "width": 2,
+        "bd_shadow": [0, 1, 4, 4, [25, 125, 225, 50]]
+      },
+      "checked-hover": {
+        "bg": [40, 130, 255, 215],
+        "fg": [250, 250, 250, 255],
+
+        "bd_shadow": [0, 0, 3, 3, [40, 130, 255, 100]],
+        "width": 2
+      },
+      "checked-press": {
+        "bg": [40, 130, 255, 190],
+        "fg": [250, 250, 250, 255],
+
+        "bd_shadow": [0, 0, 3, 3, [40, 130, 255, 100]],
+        "width": 2
+      }
+    },
+
+    "SkCheckItem": {
+      "rest": {
+        "size": [0, 32]
+      }
+    },
+
+    "SkEntry": {
+      "rest": {
+        "size": [120, 35],
+        "radius": 6,
+        "bg": [210, 210, 210, 245],
+        "fg": [0, 0, 0, 235],
+        "bd": [0, 0, 0, 20],
+        "width": 2,
+        "placeholder": [0, 0, 0, 165]
+      },
+      "hover": {
+        "bg": [200, 200, 200, 245],
+        "fg": [0, 0, 0, 235],
+        "bd": {"color_palette": "accent"},
+        "bd_shadow": [0, 1, 4, 4, [25, 125, 225, 50]],
+        "width": 2,
+        "placeholder": [0, 0, 0, 165]
+      },
+      "focus": {
+        "bg": [220, 220, 220, 245],
+        "fg": [0, 0, 0, 235],
+        "bd": {"color_palette": "accent"},
+        "bd_shadow": [0, 1, 3, 3, [25, 125, 225, 100]],
+        "width": 3,
+        "cursor": [0, 0, 0, 100],
+        "selected_bg": [25, 125, 225, 245],
+        "selected_fg": [255, 255, 255, 255],
+        "selected_radius": true
+      }
+    },
+
+    "SkFrame": {
+      "rest": {
+        "size": [0, 0],
+        "radius": 0,
+        "bg": "transparent",
+        "bd": "transparent",
+        "width": 0
+      }
+    },
+
+    "SkLabel": {
+      "rest": {
+        "size": [0, 0],
+        "fg": {"color_palette": "fg"},
+        "bg": [0, 0, 0, 20],
+        "bd": [0, 0, 0, 30],
+        "width": 2,
+        "radius": 4
+      }
+    },
+
+    "SkListBox": {
+      "rest": {
+        "size": [0, 0],
+        "radius": 5,
+        "bg": [225, 225, 225, 245],
+        "bd": [200, 200, 200, 245],
+        "bd_shadow": [0, 3, 2, 2, [0, 0, 0, 20]],
+        "width": 2
+      }
+    },
+
+    "SkListBox.Item": {
+      "rest": {
+        "size": [0, 32],
+        "radius": 3,
+        "bg": "transparent",
+        "fg": {"color_palette": "fg"},
+        "width": 0
+      },
+      "hover": {
+        "bg": [0, 0, 0, 25],
+        "fg": {"color_palette": "fg"},
+        "width": 0
+      },
+      "press": {
+        "bg": [0, 0, 0, 45],
+        "fg": {"color_palette": "fg"},
+        "width": 0
+      },
+      "selected": {
+        "bg": {"color_palette": "accent"},
+        "bd": {"color_palette": "accent"},
+        "fg": {"color_palette": "inverse_fg"},
+        "width": 2
+      }
+    },
+
+    "SkRadioBox": {
+      "rest": {
+        "radius": 99,
+        "size": [22, 22]
+      },
+      "unchecked-rest": {
+        "bg": [240, 240, 240, 240],
+        "bd": [200, 200, 200, 255],
+        "width": 2
+      },
+      "unchecked-hover": {
+        "bg": [200, 200, 200, 245],
+        "bd": [200, 200, 200, 255],
+        "width": 2
+      },
+      "checked-rest": {
+        "bg": [40, 130, 255, 255],
+        "fg": [250, 250, 250, 255],
+        "width": 2,
+        "inner_width": 4
+      },
+      "checked-hover": {
+        "bg": [40, 130, 255, 215],
+        "fg": [250, 250, 250, 255],
+        "width": 2,
+        "inner_width": 5
+      }
+
+    },
+
+    "SkRadioItem": {
+      "rest": {
+        "size": [0, 32]
+      }
+    },
+
+    "SkSeparator": {
+      "rest": {
+        "fg": {"color_palette": "bd"},
+        "width": 2
+      }
+    },
+
+    "SkSizeGrip": {
+      "rest": {
+        "size": [15, 15],
+        "grip_style": "dotted",
+        "dot_size": 2,
+        "dot_spacing": 5,
+        "fg": {"color_palette": "bd"}
+      }
+    },
+
+    "SkProgressBar": {
+      "rest": {
+        "size": [120, 20]
+      }
+    },
+
+    "SkProgressBar.Progress": {
+      "rest": {
+        "size": 8,
+        "bg": [40, 130, 255, 215],
+        "width": 0,
+        "radius": 99
+      }
+    },
+
+    "SkProgressBar.Rail": {
+      "rest": {
+        "size": 10,
+        "bg": [0, 0, 0, 30],
+        "width": 2,
+        "bd": [0, 0, 0, 25],
+        "radius": 99
+      }
+    },
+
+    "SkSlider": {
+      "rest": {
+        "size": [120, 20]
+      }
+    },
+
+    "SkSlider.Progress": {
+      "rest": {
+        "size": 9,
+        "bg": [40, 130, 255, 215],
+        "width": 0,
+        "radius": [4, 0, 0, 4]
+      }
+    },
+
+    "SkSlider.Rail": {
+      "rest": {
+        "size": 8,
+        "bg": [0, 0, 0, 30],
+        "width": 0,
+        "radius": 4
+      }
+    },
+
+    "SkSlider.Thumb": {
+      "rest": {
+        "size": [20, 20],
+        "bg": [245, 245, 245, 255],
+        "bd": [0, 0, 0, 25],
+        "width": 2,
+        "radius": 99,
+        "bd_shadow": [0, 0, 2, 2, [125, 125, 125, 200]],
+
+        "inner": false
+      },
+      "hover": {
+        "bg": [255, 255, 255, 255]
+      },
+      "press": {
+        "bg": [220, 220, 220, 255]
+      },
+      "focus": {}
+    },
+
+    "SkSwitchBox": {
+      "rest": {
+        "size": [48, 20],
+        "radius": 99,
+        "radius2": 99,
+        "shape": "circle"
+      },
+      "unchecked-rest": {
+        "bg": [
+          "lg", {
+            "direction": "n",
+            "colors": {
+              "0%": [235, 235, 235, 255],
+              "100%": [200, 200, 200, 255]
+            }
+          }
+        ],
+        "bd": [200, 200, 200, 245],
+        "width": 2,
+        "button": [25, 25, 25, 180],
+        "button-padding": 4
+      },
+      "unchecked-hover": {
+        "bg": [
+          "lg", {
+            "direction": "n",
+            "colors": {
+              "0%": [235, 235, 235, 235],
+              "100%": [200, 200, 200, 215]
+            }
+          }
+        ],
+        "bd": [200, 200, 200, 245],
+        "width": 2,
+        "button": [25, 25, 25, 190],
+        "button-padding": 3
+      },
+      "unchecked-press": {
+        "bg": [
+          "lg", {
+            "direction": "n",
+            "colors": {
+              "0%": [235, 235, 235, 200],
+              "100%": [200, 200, 200, 180]
+            }
+          }
+        ],
+        "bd": [200, 200, 200, 245],
+        "width": 2,
+        "button": [25, 25, 25, 180],
+        "button-padding": 5
+      },
+      "checked-rest": {
+        "bg": [
+          "lg", {
+            "direction": "n",
+            "colors": {
+              "0%": [40, 130, 255, 150],
+              "100%": [40, 130, 255, 255]
+            }
+          }
+        ],
+        "bd": [40, 130, 255, 235],
+        "width": 2,
+        "button": [255, 255, 255, 235],
+        "button-padding": 4
+      },
+      "checked-hover": {
+        "bg": [
+          "lg", {
+            "direction": "n",
+            "colors": {
+              "0%": [40, 130, 255, 255],
+              "100%": [40, 130, 255, 150]
+            }
+          }
+        ],
+        "bd": [40, 130, 255, 235],
+        "width": 2,
+        "button": [255, 255, 255, 235],
+        "button-padding": 3
+      },
+      "checked-press": {
+        "bg": [
+          "lg", {
+            "direction": "n",
+            "colors": {
+              "0%": [40, 130, 255, 255],
+              "100%": [40, 130, 255, 150]
+            }
+          }
+        ],
+        "bd": [40, 130, 255, 235],
+        "width": 2,
+        "button": [255, 255, 255, 235],
+        "button-padding": 5
+      }
+    },
+
+    "SkTabs": {
+      "rest": {
+        "size": [0, 0],
+        "radius": 8,
+        "bg": {"color_palette": "second_bg"},
+        "bd": {"color_palette": "bd"},
+        "bd_shadow": [0, 3, 3, 3, [0, 0, 0, 50]],
+        "width": 2
+      }
+    },
+
+    "SkTabBar": {
+      "rest": {
+        "size": [0, 0],
+        "radius": 0,
+        "bg": "transparent",
+        "bd": "transparent",
+        "width": 0
+      }
+    },
+
+    "SkTabBar.Button": {
+      "rest": {
+        "size": [0, 32],
+        "radius": [4, 4, 0, 0],
+        "bg": "transparent",
+        "fg": {"color_palette": "fg"},
+        "width": 0
+      },
+      "hover": {
+        "bg": [0, 0, 0, 25],
+        "fg": {"color_palette": "fg"},
+        "width": 0
+      },
+      "press": {
+        "bg": [0, 0, 0, 45],
+        "fg": {"color_palette": "fg"},
+        "width": 0
+      },
+      "selected": {
+        "bd": [40, 130, 255, 10],
+        "bg": [
+          "lg", {
+            "start_anchor": "n",
+            "end_anchor": "s",
+            "colors": {
+              "0%": [0, 0, 0, 0],
+              "45%": [0,0,0,0],
+              "95%": [40, 130, 255, 20],
+              "100%": [40, 130, 255, 40]
+            }
+          }
+        ],
+        "fg": {"color_palette": "fg"},
+        "width": 1,
+        "bd_shadow": [0, 0, 0, 0, [40, 130, 255, 255]],
+        "underline": [40, 130, 255, 255],
+        "underline_width": 2,
+        "underline_ipadx": 1
+      }
+    },
+
+    "SkText": {
+      "rest": {
+        "size": [0, 0],
+        "fg": {"color_palette": "fg"}
+      }
+    },
+
+    "SkTitleBar": {
+      "rest": {
+        "size": [0, 0],
+        "radius": 0,
+        "width": 0,
+        "bg": {"color_palette": "second_bg"},
+        "bd_shadow": [0, 4, 2, 2, [0, 0, 0, 50]]
+      }
+    },
+
+    "SkWindow": {
+      "rest": {
+        "bg": {"color_palette": "bg"},
+        "radius": [8, 8, 0, 0],
+        "width": 3,
+        "bd": {"color_palette": "bd"}
+      }
+    },
+
+    "SkWindowCommand": {
+      "rest": {
+        "size": [0, 0],
+        "radius": 0,
+        "bg": "transparent",
+        "bd": "transparent",
+        "width": 2
+      }
+    }
+
+  }
+}

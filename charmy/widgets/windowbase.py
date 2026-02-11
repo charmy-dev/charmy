@@ -13,7 +13,7 @@ from .app import CApp
 class CWindowBase(CEventHandler):
     """CWindowBase is a base class for window
 
-    Parameters:
+    Args:
         parent: The parent CApp object,
         title: The title of the window,
         size: The size of the window,
@@ -35,7 +35,7 @@ class CWindowBase(CEventHandler):
         if parent is None:
             parent = self.get_obj("capp0")
             if parent is None:
-                raise ValueError("Not found CApp")
+                raise ValueError("Not found main CApp")
 
         # Init parent attribute
         self.new("parent", parent)
@@ -366,7 +366,7 @@ class CWindowBase(CEventHandler):
     def resize(self, size: CSize | tuple[int, int]) -> None:
         """Resize the window to the given size.
 
-        Parameters:
+        Args:
             size: Size to resize
         Returns:
             None
@@ -384,7 +384,7 @@ class CWindowBase(CEventHandler):
     def move(self, pos: CPos | tuple[int, int]) -> None:
         """Move the window to the given position.
 
-        Parameters:
+        Args:
             pos: Position to move
         Returns:
             None

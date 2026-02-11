@@ -101,7 +101,7 @@ class CObject(metaclass=CInstanceCounterMeta):
             print(obj.get("title"))  # User get value: Hello, A
 
 
-        Parameters:
+        Args:
             key (str): attribute name
             default (typing.Any): default value
             set_func (typing.Callable): function to set
@@ -119,7 +119,7 @@ class CObject(metaclass=CInstanceCounterMeta):
     def set(self, key: str, value, *, skip: bool = False) -> typing.Self:
         """Set attribute
 
-        Parameters:
+        Args:
             key (str): attribute name
             value (typing.Any): attribute value
             skip (bool): skip custom set_func function
@@ -149,7 +149,7 @@ class CObject(metaclass=CInstanceCounterMeta):
     def get(self, key: str, *, skip: bool = False) -> typing.Any:
         """Get attribute by key
 
-        Parameters:
+        Args:
             key (str): attribute name
             skip (bool): skip custom get_func function
 
