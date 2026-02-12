@@ -2,8 +2,8 @@ import importlib
 import sys
 import typing
 
-from ..const import BackendFrame, DrawingFrame, UIFrame, DrawingMode
-from ..event import CEventHandler, CEvent
+from ..const import BackendFrame, DrawingFrame, DrawingMode, UIFrame
+from ..event import CEvent, CEventHandler
 from ..object import CObject
 from ..pos import CPos
 from ..size import CSize
@@ -27,7 +27,7 @@ class CWindowBase(CEventHandler):
         title: str = "Charmy GUI",
         size: tuple[int, int] = (100, 100),
         fha: bool = True,
-        drawing_mode: DrawingMode = DrawingMode.IMMEDIATE
+        drawing_mode: DrawingMode = DrawingMode.IMMEDIATE,
     ):
         super().__init__()
 
@@ -97,14 +97,8 @@ class CWindowBase(CEventHandler):
         self.new("is_force_hardware_acceleration", fha)
         self.new("pos", CPos(0, 0))  # Always (0, 0)
         self.new("canvas_pos", CPos(0, 0))  # Always (0, 0)
-        self.new(
-            "root_pos", CPos(0, 0), set_func=self._set_pos
-        )  # The position of the window
-        self.new(
-            "size",
-            CSize(size[0], size[1]),
-            set_func=self._set_size
-        )  # The size of the window
+        self.new("root_pos", CPos(0, 0), set_func=self._set_pos)  # The position of the window
+        self.new("size", CSize(size[0], size[1]), set_func=self._set_size)  # The size of the window
         self.new("title", title)  # The title of the window
         self.new("is_visible", False)  # Is the window visible
         self.new("is_alive", True)  # Is the window alive
@@ -197,8 +191,7 @@ class CWindowBase(CEventHandler):
         """
         match self["ui.framework"]:
             case UIFrame.GLFW:
-                if not self.glfw.get_current_context() or self.glfw.window_should_close(
-                        arg):
+                if not self.glfw.get_current_context() or self.glfw.window_should_close(arg):
                     yield None
                     return
 
@@ -209,7 +202,11 @@ class CWindowBase(CEventHandler):
                                 self["backend.context"] = self.skia.GrDirectContext.MakeGL()
                                 fb_width, fb_height = self.glfw.get_framebuffer_size(arg)
                                 backend_render_target = self.skia.GrBackendRenderTarget(
-                                    fb_width, fb_height, 0, 0, self.skia.GrGLFramebufferInfo(0, self.opengl_GL.GL_RGBA8)
+                                    fb_width,
+                                    fb_height,
+                                    0,
+                                    0,
+                                    self.skia.GrGLFramebufferInfo(0, self.opengl_GL.GL_RGBA8),
                                 )
                                 surface = self.skia.Surface.MakeFromBackendRenderTarget(
                                     self["backend.context"],

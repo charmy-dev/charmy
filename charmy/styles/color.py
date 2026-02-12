@@ -1,12 +1,11 @@
 import importlib
 
-from ..object import CObject
 from ..const import DrawingFrame
+from ..object import CObject
 
 
 class CColor(CObject):
-    """Color manager
-    """
+    """Color manager"""
 
     def __init__(self, *args, draw_framework: DrawingFrame = None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -19,13 +18,12 @@ class CColor(CObject):
                 raise ValueError("Not found main CApp")
             self.new("app", app)
             self.new(
-                "drawing.framework", self._get_drawing_framework(),
-                get_func=self._get_drawing_framework
+                "drawing.framework",
+                self._get_drawing_framework(),
+                get_func=self._get_drawing_framework,
             )
         else:
-            self.new(
-                "drawing.framework", draw_framework
-            )
+            self.new("drawing.framework", draw_framework)
 
         # Import Drawing Framework
         match self["drawing.framework"]:
@@ -34,7 +32,9 @@ class CColor(CObject):
             case _:
                 raise ValueError("Not supported drawing framework")
 
-    def set_rgba(self, r: int | float, g: int | float, b: int | float, a: int | float = 255) -> None:
+    def set_rgba(
+        self, r: int | float, g: int | float, b: int | float, a: int | float = 255
+    ) -> None:
         """set_rgba(r=255, g=255, b=255, a=255) or set_rgba(r=1.0, g=1.0, b=1.0, a=1.0)
 
         Args:
@@ -48,12 +48,14 @@ class CColor(CObject):
         """
         match self["drawing.framework"]:
             case DrawingFrame.SKIA:
-                self["color_object"] = self.skia.Color(self._c(r), self._c(g), self._c(b), self._c(a))
+                self["color_object"] = self.skia.Color(
+                    self._c(r), self._c(g), self._c(b), self._c(a)
+                )
 
     def set_color_hex(self, _hex: str) -> None:
         """
         Convert hex color string to color.
-        
+
         Args:
             _hex (str): Hex color string (support #RRGGBB and #RRGGBBAA format)
 
@@ -98,7 +100,7 @@ class CColor(CObject):
                     self["color_object"] = getattr(self.skia, f"Color{name.upper()}")
                 except:
                     raise ValueError(f"Unknown color name: {name}")
-    
+
     @staticmethod
     def _c(x):
         if isinstance(x, float):

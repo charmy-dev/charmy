@@ -133,7 +133,7 @@ class CTheme:
             self.styles: dict = styles
         self.color_palette = {}
 
-        CTheme.loaded_themes.append(self)  # TODO: figure out.
+        CTheme.loaded_themes.append(self)
         return
 
     def load_from_file(self, file_path: str | pathlib.Path) -> "CTheme":
