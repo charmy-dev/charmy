@@ -31,6 +31,7 @@ class CApp(CObject):
         self.new("event.thread", CEventThread())
 
         self.new("ui.framework", ui)
+        self["ui.framework"]: UIFrame
         self.new("ui.is_vsync", vsync)
         self.new("ui.samples", samples)
 

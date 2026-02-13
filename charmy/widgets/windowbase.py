@@ -159,7 +159,7 @@ class CWindowBase(CEventHandler):
 
     def create_event_bounds(self):
         """Create event bounds."""
-        match self.get("ui.frameork"):
+        match self.get("ui.framework"):
             case UIFrame.GLFW:
                 self.glfw.set_window_size_callback(
                     self.the_window,
