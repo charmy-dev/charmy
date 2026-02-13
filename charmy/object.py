@@ -33,7 +33,7 @@ class CObject(metaclass=CInstanceCounterMeta):
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
 
     def __init__(self, _id: ID | str = ID.AUTO):
-        self._attributes = {}
+        self._attributes = {}  # Expected to be user-modifiable.
 
         if _id == ID.AUTO:
             _prefix = self.class_name
@@ -68,8 +68,9 @@ class CObject(metaclass=CInstanceCounterMeta):
         self,
         key: str,
         default=None,
-        set_func: typing.Callable | None = None,
-        get_func: typing.Callable | None = None,
+        *,
+        set_func: typing.Callable = None,
+        get_func: typing.Callable = None,
     ) -> typing.Self:
         """New attribute
         [Suggested: add `is_`~ as prefix if value is in type bool]
@@ -180,8 +181,8 @@ class CObject(metaclass=CInstanceCounterMeta):
                     return self._attributes[key][1]
         return self._attributes[key]
 
-    def get_obj(self, _id: str) -> object | None:
-        """Get registered object by id"""
+    def get_obj(self, _id: str) -> typing.Any | None:
+        """Get registered object by id. (If not found, return None)"""
         try:
             return self.objects[_id]
         except KeyError:
@@ -190,7 +191,7 @@ class CObject(metaclass=CInstanceCounterMeta):
     find = get_obj
 
     def configure(self, **kwargs):
-        """High level set attributes by keyword arguments"""
+        """High level set attributes by keyword arguments."""
         for key, value in kwargs.items():
             self.set(key, value)
 
