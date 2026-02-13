@@ -16,4 +16,4 @@ class CPos(CObject):
             self.set("y", y)
 
     def __str__(self):
-        return f"{self.get('x')}, {self.get('y')}"
+        return f"CPos({self.get('x')}, {self.get('y')})"

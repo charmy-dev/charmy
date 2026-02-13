@@ -16,4 +16,4 @@ class CSize(CObject):
             self.set("height", height)
 
     def __str__(self):
-        return f"{self.get('width')}, {self.get('height')}"
+        return f"CSize({self.get('width')}, {self.get('height')})"
