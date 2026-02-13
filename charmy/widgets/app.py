@@ -9,7 +9,7 @@ from ..object import CObject
 class CApp(CObject):
     """The base of CApp Class
 
-    Attributes:
+    Args:
         ui.framework: What UI Framework will be used
         ui.is_vsync: Is vsync enabled
         ui.samples: UI Samples
@@ -61,6 +61,7 @@ class CApp(CObject):
                 glfw.set_error_callback(self.error)
 
     def update(self):
+        """Update the CWindows' UI and events"""
         from glfw import get_current_context, poll_events, swap_interval, wait_events
 
         input_mode: bool = True
@@ -81,6 +82,13 @@ class CApp(CObject):
             wait_events()
 
     def run(self):
+        """Run the application.
+
+        This method will start the application event loop. It will continue running
+        as long as the `is_alive` attribute is set to `True`.
+
+        If no windows are added to the application, a warning will be issued.
+        """
         if not self.get("windows"):
             warnings.warn(
                 "At least one window is required to run application!",
@@ -101,6 +109,11 @@ class CApp(CObject):
         self.cleanup()
 
     def destroy_window(self, window):
+        """Destroy a window.
+
+        Args:
+            window (CWindow): The window to be destroyed.
+        """
         windows = self.get("windows")
         if window in windows:
             windows.remove(window)
@@ -126,8 +139,8 @@ class CApp(CObject):
         """
         GLFW Error Callback
 
-        :param error_code: 错误码
-        :param description: 错误信息
+        :param error_code: GLFW error code
+        :param description: Error description
         :return: None
         """
         raise f"GLFW Error {error_code}: {description.decode()}"

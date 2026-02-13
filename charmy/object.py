@@ -159,7 +159,7 @@ class CObject(metaclass=CInstanceCounterMeta):
 
         # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
 
-        # check is a available key
+        # check is an available key
         if key not in self._attributes:
             raise KeyError(key)
 
@@ -213,5 +213,6 @@ class CObject(metaclass=CInstanceCounterMeta):
         """Return all attributes"""
         return self._attributes
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Return all attributes in string"""
         return str(self._attributes)

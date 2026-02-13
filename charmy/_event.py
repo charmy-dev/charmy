@@ -185,10 +185,10 @@ class CEventHandling:
         :param event_type_str: The event type string to be parsed
         :returns: json, parsed event type
         """
-        if not re.match(".*\\[.*\\]", event_type_str):
+        if not re.match(".*\\[.*\\]", event_type_str):  # NOQA
             return {"type": event_type_str, "params": []}
         event_type = re.findall("^(.*?)\\[", event_type_str)[0]
-        params_raw = re.findall("\\[(.*?)\\]$", event_type_str)[0]
+        params_raw = re.findall("\\[(.*?)\\]$", event_type_str)[0]  # NOQA
         params = params_raw.split(",")
         if len(params) == 1:
             if params[0].strip() == "":

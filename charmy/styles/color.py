@@ -103,6 +103,14 @@ class CColor(CObject):
 
     @staticmethod
     def _c(x):
+        """Convert float color component to int.
+
+        Args:
+            x (int | float): Color component value (0.0-1.0 or 0-255)
+
+        Returns:
+            int: Corresponding int value (0-255)
+        """
         if isinstance(x, float):
             if 0 < x <= 1.0:
                 x = x * 255

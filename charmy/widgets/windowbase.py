@@ -4,7 +4,6 @@ import typing
 
 from ..const import BackendFrame, DrawingFrame, DrawingMode, UIFrame
 from ..event import CEvent, CEventHandler
-from ..object import CObject
 from ..pos import CPos
 from ..size import CSize
 from .app import CApp
@@ -18,6 +17,7 @@ class CWindowBase(CEventHandler):
         title: The title of the window,
         size: The size of the window,
         fha: Whether to force hardware acceleration
+        drawing_mode: The drawing mode of the window,
     """
 
     def __init__(
@@ -111,6 +111,7 @@ class CWindowBase(CEventHandler):
         self.bind("on_resize", self._on_resize)
 
     def create(self):
+        """Create the window"""
         window = None
 
         match self.get("ui.framework"):
@@ -156,6 +157,7 @@ class CWindowBase(CEventHandler):
         return window
 
     def create_event_bounds(self):
+        """Create event bounds"""
         match self.get("ui.framework"):
             case UIFrame.GLFW:
                 self.glfw.set_window_size_callback(
@@ -172,13 +174,15 @@ class CWindowBase(CEventHandler):
                 )
 
     def update(self):
-        match self["drawing.mode"]:
-            case DrawingMode.IMMEDIATE:
-                self.draw()
-            case DrawingMode.Retained:
-                if self["is_dirty"]:
+        """Update the window. When is_dirty is True, draw the window."""
+        if self["is_visible"]:
+            match self["drawing.mode"]:
+                case DrawingMode.IMMEDIATE:
                     self.draw()
-                    self["is_dirty"] = False
+                case DrawingMode.Retained:
+                    if self["is_dirty"]:
+                        self.draw()
+                        self["is_dirty"] = False
 
     import contextlib
 
@@ -231,9 +235,9 @@ class CWindowBase(CEventHandler):
 
                 # SDL 像素包装成 buffer
                 buf_type = ctypes.c_uint8 * (pitch * height)
-                buf = buf_type.from_address(pixels_ptr)
+                buf = buf_type.from_address(pixels_ptr)  # NOQA
 
-                imageinfo = self.skia.ImageInfo.MakeN32Premul(width, height)
+                imageinfo = self.skia.ImageInfo.MakeN32Premul(width, height)  # NOQA
                 surface = self.skia.Surface.MakeRasterDirect(imageinfo, buf, pitch)
 
                 if surface is None:
@@ -241,7 +245,12 @@ class CWindowBase(CEventHandler):
 
                 yield surface  # ⚠️ 必须用 yield，不要 return
 
-    def draw(self, event: CEvent = None) -> None:
+    def draw(self, event: CEvent = None) -> None:  # NOQA
+        """Draw the window.
+
+        Args:
+            event (CEvent, optional): The event that triggered the draw. Defaults to None.
+        """
         if self["is_visible"]:
             # Set the current context for each arg
             # 【为该窗口设置当前上下文】
@@ -253,7 +262,7 @@ class CWindowBase(CEventHandler):
                         case DrawingFrame.SKIA:
                             # Create a Surface and hand it over to this arg.
                             # 【创建Surface，交给该窗口】
-                            with self.skia_surface(self["the_window"]) as self["drawing.surface"]:
+                            with self.skia_surface(self["the_window"]) as self["drawing.surface"]:  # NOQA
                                 if self["drawing.surface"]:
                                     with self["drawing.surface"] as canvas:
                                         # Determine and call the drawing function of this arg.
@@ -267,15 +276,15 @@ class CWindowBase(CEventHandler):
                 case "sdl2":
                     import sdl2
 
-                    surface = sdl2.SDL_GetWindowSurface(self.the_window).contents
+                    surface = sdl2.SDL_GetWindowSurface(self["the_window"]).contents
 
-                    with self.skia_surface(surface) as sk_surface:
-                        if sk_surface:
-                            with sk_surface as canvas:
-                                if self.draw_func:
-                                    self.draw_func(canvas)
+                    with self.skia_surface(surface) as self["drawing.surface"]:  # NOQA
+                        if self["drawing.surface"]:
+                            with self["drawing.surface"] as canvas:
+                                if self["ui.draw_func"]:
+                                    self["ui.draw_func"](canvas)
 
-                    sdl2.SDL_UpdateWindowSurface(self.the_window)
+                    sdl2.SDL_UpdateWindowSurface(self["the_window"])  # NOQA
         if self["backend.context"]:
             self["backend.context"].freeGpuResources()
             self["backend.context"].releaseResourcesAndAbandonContext()
@@ -284,9 +293,11 @@ class CWindowBase(CEventHandler):
         self.trigger("on_draw")
 
     def dirty(self):
+        """Set the dirty flag."""
         self["is_dirty"] = True
 
     def cancel_dirty(self):
+        """Cancel the dirty flag."""
         self["is_dirty"] = False
 
     def destroy(self) -> None:
@@ -315,9 +326,9 @@ class CWindowBase(CEventHandler):
 
         Prevent users from closing the window, which can be used in conjunction with prompts like "Save before closing?"
 
-        >>> def delete(_: SkEvent):
-        >>>     window.can_be_close(False)
-        >>> window.bind("delete_window", delete)
+        >>> def delete(_: SkEvent):  # NOQA
+        >>>     window.can_be_close(False)  # NOQA
+        >>> window.bind("delete_window", delete)  # NOQA
 
 
         :param value: Whether the window can be closed
@@ -351,6 +362,13 @@ class CWindowBase(CEventHandler):
         return self["app"].get("ui.is_vsync")
 
     def _set_size(self, size: CSize | tuple[int, int]) -> None:
+        """Set the size of the window.
+
+        Args:
+            size (CSize | tuple[int, int]): Size to set
+        Returns:
+            None
+        """
         if isinstance(size, tuple):
             match self["ui.framework"]:
                 case UIFrame.GLFW:
@@ -371,6 +389,12 @@ class CWindowBase(CEventHandler):
         self.set("size", size)
 
     def _set_pos(self, pos: CPos | tuple[int, int]) -> None:
+        """Set the position of the window.
+        Args:
+            pos (CPOS | tuple[int, int]): Position to set
+        Returns:
+            None
+        """
         if isinstance(pos, tuple):
             if self["ui.framework"] == UIFrame.GLFW:
                 self.glfw.set_window_pos(self["the_window"], pos[0], pos[1])
@@ -393,11 +417,19 @@ class CWindowBase(CEventHandler):
     # region Events
 
     def _on_move(self, event: CEvent):
+        """Handle the move event.
+        Args:
+            event (CEvent): The move event.
+        """
         _root_point = self.get("root_pos", skip=True)
         _root_point.set("x", event["x_root"])
         _root_point.set("y", event["y_root"])
 
     def _on_resize(self, event: CEvent):
+        """Handle the resize event.
+        Args:
+            event (CEvent): The resize event.
+        """
         _size = self.get("size", skip=True)
         _size.set("width", event["width"])
         _size.set("height", event["height"])

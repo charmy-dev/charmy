@@ -7,6 +7,8 @@ from .object import CObject
 
 
 class CEvent(CObject):
+    """Record attributes of an event"""
+
     def __init__(self, event_type: str | None = None, **kwargs):
         super().__init__()
 
@@ -19,7 +21,8 @@ class CEvent(CObject):
 class CEventTask(CObject):
     """CEventTask is a class to store event task
 
-    Attributes:
+    Args:
+        _id (ID): the id of the task
         target: The function to be called when the event is triggered
     """
 
@@ -61,7 +64,7 @@ class CEventHandler(CObject):
 
     basic_event_types = [
         "on_click",
-        "on_dbclick",
+        "on_dbclick",  # NOQA
         "on_draw",
         "on_move",
         "on_resize",

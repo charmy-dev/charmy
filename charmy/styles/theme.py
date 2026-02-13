@@ -19,12 +19,12 @@ class CTheme(CObject):
         my_theme = CTheme({<Some styles>})
         my_sub_theme = CTheme(parent="default.light")
         my_external_theme = CTheme().load_from_file("./path/to/a/theme.json")
-    This shows examples of creating themes, either from a json, a parent theme or a file.
+    This shows examples of creating themes, either from a JSON, a parent theme or a file.
 
     .. code-block:: python
-        all_themes = CTheme.loaded_themes
-        internal_theme = CTheme.internal_theme
-        default_theme = CTheme.default_theme
+        all_themes = CTheme.LOADED_THEMES
+        INTERNAL_THEME = CTheme.INTERNAL_THEME
+        DEFAULT_THEME = CTheme.DEFAULT_THEME
     This shows getting all loaded themes, internal themes, and the default theme.
 
     .. code-block:: python
@@ -36,12 +36,12 @@ class CTheme(CObject):
     重置后我摸改了一些地方，但逻辑、功能应是大差不差的，某些方法名、变量名我改的易读了点
     """
     
-    loaded_themes: list["CTheme"] = []
-    internal_theme_dir = pathlib.Path(__file__).parent.parent / "resources" / "themes"
-    internal_theme: dict[str, "CTheme"] = {}
-    default_theme: "CTheme"
-    default_theme_filename: str = "light"
-    expected_data_type = {
+    LOADED_THEMES: list["CTheme"] = []
+    INTERNAL_THEME_DIR = pathlib.Path(__file__).parent.parent / "resources" / "themes"
+    INTERNAL_THEME: dict[str, "CTheme"] = {}
+    DEFAULT_THEME: "CTheme"
+    DEFAULT_THEME_FILENAME: str = "light"
+    EXPECTED_DATA_TYPE = {
         "styles": dict,
         "color_palette": dict,
         "name": str,
@@ -60,28 +60,28 @@ class CTheme(CObject):
             my_theme = CTheme({<Some styles>})
             my_sub_theme = CTheme(parent="default.light")
             my_external_theme = CTheme().load_from_file("./path/to/a/theme.json")
-        This shows examples of creating themes, either from a json, a parent theme or a file.
+        This shows examples of creating themes, either from a JSON, a parent theme or a file.
 
         :param styles: Styles of the theme
         :param parent: Parent theme
         """
-        super().__init__(**kwargs)
+        super().__init__(**kwargs)  # NOQA
 
-        self["name"]: str = f"untitled.{len(CTheme.loaded_themes) + 1}"
-        self["friendly_name"] = f"Untitled theme {len(CTheme.loaded_themes) + 1}"
-        # friendly_name感觉有点多余? ——Little White Cloud
-        # Keep it 4 now currently. ——rgzz666
+        self["name"]: str = f"untitled.{len(CTheme.LOADED_THEMES) + 1}"
+        self["friendly_name"] = f"Untitled theme {len(CTheme.LOADED_THEMES) + 1}"
+        # NOQA: friendly_name感觉有点多余? ——Little White Cloud
+        # NOQA: Keep it 4 now currently. ——rgzz666
         self.parent: typing.Union["CTheme", None] = parent
         self.children = []
         self["is_special"]: bool = False
 
         if styles is None:
-            self["styles"]: dict = CTheme.default_theme["styles"]
+            self["styles"]: dict = CTheme.DEFAULT_THEME["styles"]
         else:
             self["styles"]: dict = styles
         self["color_palette"] = {}
 
-        CTheme.loaded_themes.append(self)
+        CTheme.LOADED_THEMES.append(self)
         return
     
     @classmethod
@@ -91,13 +91,13 @@ class CTheme(CObject):
         Example
         -------
         .. code-block:: python
-            default_theme = CTheme.find_loaded_theme("default.light")
-        This returns the CTheme object of the default theme to `default_theme`.
+            DEFAULT_THEME = CTheme.find_loaded_theme("default.light")
+        This returns the CTheme object of the default theme to `DEFAULT_THEME`.
 
         :param theme_name: Name of the theme to load
         :return: The CTheme object if found, otherwise False
         """
-        for theme in cls.loaded_themes:
+        for theme in cls.LOADED_THEMES:
             if theme["name"] == theme_name:
                 return theme
         return False
@@ -123,20 +123,23 @@ class CTheme(CObject):
     def _load_internal_theme(cls):
         """Load internal themes. Should be run once at import, see the end of this file."""
         # Load default (ROOT) theme
-        CTheme.default_theme = CTheme({}).load_from_file(
-            CTheme.internal_theme_dir / f"{CTheme.default_theme_filename}.json"
+        CTheme.DEFAULT_THEME = typing.cast(
+            "CTheme",
+            CTheme({}).load_from_file(
+                CTheme.INTERNAL_THEME_DIR / f"{CTheme.DEFAULT_THEME_FILENAME}.json"
+            ),
         )
 
         # Load other internal themes
-        for file in os.listdir(CTheme.internal_theme_dir):
-            if file == f"{CTheme.default_theme_filename}.json":
+        for file in os.listdir(CTheme.INTERNAL_THEME_DIR):
+            if file == f"{CTheme.DEFAULT_THEME_FILENAME}.json":
                 # For default theme, no need to reload it
-                CTheme.internal_theme[CTheme.default_theme.name] = CTheme.default_theme
+                CTheme.INTERNAL_THEME[CTheme.DEFAULT_THEME["name"]] = CTheme.DEFAULT_THEME
                 continue
-            _ = CTheme({}).load_from_file(CTheme.internal_theme_dir / file)
-            CTheme.internal_theme[_.name] = _
+            _ = CTheme({}).load_from_file(CTheme.INTERNAL_THEME_DIR / file)
+            CTheme.INTERNAL_THEME[_["name"]] = _
 
-    def load_from_file(self, file_path: str | pathlib.Path) -> "CTheme":
+    def load_from_file(self, file_path: str | pathlib.Path) -> "CTheme | typing.Literal[False]":
         """Load styles to theme from a file.
 
         Example
@@ -184,21 +187,21 @@ class CTheme(CObject):
         .. code-block:: python
             my_theme = CTheme().load_from_json({<Some JSON theme data>})
             my_theme.load_from_json({<Some JSON theme data>})
-        This shows loading a theme to `my_theme` from json data, and change it to theme from
-        another json later.
+        This shows loading a theme to `my_theme` from JSON data, and change it to theme from
+        another JSON later.
 
         :param theme_data: dict that contains the theme data
         :return self: The CTheme itself
         """
         # Type check
-        for item in self.expected_data_type.keys():
-            if type(theme_data[item]) != self.expected_data_type[item]:
+        for item in self.EXPECTED_DATA_TYPE.keys():
+            if type(theme_data[item]) != self.EXPECTED_DATA_TYPE[item]:
                 theme_name = (
                     theme_data["name"] if type(theme_data["name"]) is str else "(Type error)"
                 )
                 warnings.warn(
                     f"Error data type of <{item}> in theme data that is about to be loaded. "
-                    f"Expected {self.expected_data_type[item]} but got {type(item)}. The json data with "
+                    f"Expected {self.EXPECTED_DATA_TYPE[item]} but got {type(item)}. The json data with "
                     f"theme named <{theme_name}> will not be loaded to the theme <{self['name']}>",
                     ResourceWarning,
                 )

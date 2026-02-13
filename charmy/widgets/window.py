@@ -1,4 +1,3 @@
-from ..event import CEvent
 from .container import CContainer
 from .windowbase import CWindowBase
 
