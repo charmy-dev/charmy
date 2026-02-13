@@ -23,9 +23,7 @@ class CInstanceCounterMeta(type):
 
 
 class CObject(metaclass=CInstanceCounterMeta):
-    """
-    CObject is this project's basic class, can set and get attribute
-    """
+    """CObject is this project's basic class, with features to set and get attribute."""
 
     objects: typing.Dict[str, typing.Any] = {}  # find by ID {1: OBJ1, 2: OBJ2}
     objects_sorted: typing.Dict[str, typing.Any] = (
