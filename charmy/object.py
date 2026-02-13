@@ -68,11 +68,11 @@ class CObject(metaclass=CInstanceCounterMeta):
         self,
         key: str,
         default=None,
-        set_func: typing.Callable = None,
-        get_func: typing.Callable = None,
+        set_func: typing.Callable | None = None,
+        get_func: typing.Callable | None = None,
     ) -> typing.Self:
         """New attribute
-        【推荐如果值为布尔值，则键名前加`is_`】
+        [Suggested: add `is_`~ as prefix if value is in type bool]
 
         Example
         -------
