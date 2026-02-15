@@ -56,10 +56,12 @@ class CEventHandling(CObject):
         -------
         This is mostly for internal use of Charmy.
         .. code-block:: python
+
             class CWidget(CEventHandling, ...):
                 def __init__(self):
                     super().__init__(self)
             ...
+
         This shows subclassing CEventHandling to let CWidget gain the ability of handling events.
         """
         super().__init__()
@@ -91,8 +93,10 @@ class CEventHandling(CObject):
         Example
         -------
         .. code-block:: python
+
             my_task = CWidget.bind("delay[5]", lambda: print("Hello Suzaku"))
             CWidget.execute_task(my_task)
+
         """
         if event_obj is None:
             event_obj = CEvent()
@@ -127,11 +131,13 @@ class CEventHandling(CObject):
         Example
         -------
         .. code-block:: python
+
             class CWidget(CEventHandling, ...):
                 ...
 
             my_widget = CWidget()
             my_widget.trigger("mouse_press")
+
         This shows triggering a `mouse_press` event in a `CWidget`, which inherited 
         `CEventHandling` so has the ability to handle events.
         """

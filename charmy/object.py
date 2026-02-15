@@ -1,3 +1,5 @@
+"""Basic object class."""
+
 import typing
 import weakref
 

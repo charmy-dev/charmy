@@ -5,6 +5,16 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+import sys
+from pathlib import Path
+
+# 添加项目根目录到Python路径
+project_root = Path(__file__).parent.parent.parent.resolve()
+sys.path.insert(0, str(project_root))
+
+# 验证路径是否正确
+print(f"Project root: {project_root}")
+print(f"Charmy package path: {project_root / 'charmy'}")
 
 project = "Charmy GUI"
 copyright = "2026, XiangQinxi, rgzz666, littlewhitecloud"
@@ -14,7 +24,16 @@ release = "0.1.0"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["myst_parser", "sphinx_design"]
+extensions = [
+    "myst_parser", "sphinx_design",
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',  # 支持Google/NumPy风格
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.coverage',
+    'sphinx.ext.mathjax',
+]
 myst_enable_extensions = ["colon_fence"]
 
 templates_path = ["_templates"]
