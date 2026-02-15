@@ -7,7 +7,7 @@ Core Modules
 ------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Core API:
 
    const
@@ -21,7 +21,7 @@ Widgets
 -------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Widgets:
 
    widgets/index
@@ -30,7 +30,7 @@ Drawing
 -------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Drawing:
 
    drawing/index
@@ -39,7 +39,7 @@ Styles
 ------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Styles:
 
    styles/index

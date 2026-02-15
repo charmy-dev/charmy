@@ -9,4 +9,5 @@ Let`s get started with charmy.
 
    install
    first_app
+   window_config
    custom_app_settings
