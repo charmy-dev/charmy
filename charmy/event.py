@@ -54,6 +54,7 @@ class EventHandling(CharmyObject):
         Example
         -------
         This is mostly for internal use of Charmy.
+
         .. code-block:: python
 
             class Widget(EventHandling, ...):
@@ -306,8 +307,6 @@ class Event(CharmyObject):
         Others are stored as items, which can be accessed or manipulated just like dict, e.g.
         `CEvent["x"]` for get and `CEvent["y"] = 16` for set.
 
-        Example
-        -------
         Included in description.
 
         :param widget: The widget of the event, None by default
@@ -353,6 +352,7 @@ class EventTask:
         Example
         -------
         This is mostly for internal use of suzaku.
+
         .. code-block:: python
 
             class EventHandling():

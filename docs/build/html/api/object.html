@@ -195,6 +195,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/index.html">Get Started</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="event.html">charmy.event</a></li>
@@ -207,6 +208,15 @@
 <li class="toctree-l3"><a class="reference internal" href="widgets/widget.html">widget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/window.html">window</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/windowbase.html">windowbase</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="drawing/canvas.html">canvas</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="styles/theme.html">theme</a></li>
 </ul>
 </li>
 </ul>
@@ -253,20 +263,35 @@
 <span id="charmy-object"></span><h1>charmy.object<a class="headerlink" href="#module-charmy.object" title="Link to this heading">¶</a></h1>
 <p>Basic object class.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="charmy.object.CharmyObject">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.object.</span></span><span class="sig-name descname"><span class="pre">CharmyObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.object.CharmyObject" title="Link to this definition">¶</a></dt>
-<dd><p>CObject is this project’s basic class, with features to set and get attribute.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="charmy.object.CharmyObject.attributes">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.attributes" title="Link to this definition">¶</a></dt>
-<dd><p>Return all attributes</p>
+<dt class="sig sig-object py" id="charmy.object.InstanceCounterMeta">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.object.</span></span><span class="sig-name descname"><span class="pre">InstanceCounterMeta</span></span><a class="headerlink" href="#charmy.object.InstanceCounterMeta" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.object.InstanceCounterMeta.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.object.InstanceCounterMeta.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="charmy.object.CharmyObject">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.object.</span></span><span class="sig-name descname"><span class="pre">CharmyObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.object.CharmyObject" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>CharmyObject is this project’s basic class, with features to set and get attribute.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></span><a class="headerlink" href="#charmy.object.CharmyObject.objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.objects_sorted">
+<span class="sig-name descname"><span class="pre">objects_sorted</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></span><a class="headerlink" href="#charmy.object.CharmyObject.objects_sorted" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.object.CharmyObject.cget">
-<span class="sig-name descname"><span class="pre">cget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.cget" title="Link to this definition">¶</a></dt>
-<dd><p>Low level get attribute by key</p>
-</dd></dl>
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="const.html#charmy.const.ID" title="charmy.const.ID"><span class="pre">ID</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ID.AUTO</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.object.CharmyObject.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="charmy.object.CharmyObject.class_name">
@@ -274,37 +299,84 @@
 <dd><p>Return the lowered class name</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="charmy.object.CharmyObject.config">
-<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.object.CharmyObject.config" title="Link to this definition">¶</a></dt>
-<dd><p>High level set attributes by keyword arguments.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.instances">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">instances</span></span><a class="headerlink" href="#charmy.object.CharmyObject.instances" title="Link to this definition">¶</a></dt>
+<dd><p>Return all the class instances</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.instance_count">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">instance_count</span></span><a class="headerlink" href="#charmy.object.CharmyObject.instance_count" title="Link to this definition">¶</a></dt>
+<dd><p>Return the class instance count</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.object.CharmyObject.configure">
-<span class="sig-name descname"><span class="pre">configure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.object.CharmyObject.configure" title="Link to this definition">¶</a></dt>
-<dd><p>High level set attributes by keyword arguments.</p>
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.new">
+<span class="sig-name descname"><span class="pre">new</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.new" title="Link to this definition">¶</a></dt>
+<dd><p>New attribute
+[Suggested: add <a href="#id1"><span class="problematic" id="id2">`</span></a>is_`~ as prefix if value is in type bool]</p>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">CharmyObject</span><span class="p">()</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;obj1&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">))</span>  <span class="c1"># OUTPUT: obj1</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;obj2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">))</span>  <span class="c1"># OUTPUT: obj2</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">set_func</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User set value:&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;Hello, &quot;</span> <span class="o">+</span> <span class="n">value</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_func</span><span class="p">():</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;User get value: </span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">skip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="n">obj</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;default title&quot;</span><span class="p">,</span> <span class="n">set_func</span><span class="o">=</span><span class="n">set_func</span><span class="p">,</span> <span class="n">get_func</span><span class="o">=</span><span class="n">get_func</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">))</span>  <span class="c1"># OUTPUT: default title</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>  <span class="c1"># OUTPUT: User set value: A</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">))</span>  <span class="c1"># User get value: Hello, A</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Args:</dt><dd><p>key (str): attribute name
+default (typing.Any): default value
+set_func (typing.Callable): function to set
+get_func (typing.Callable): function to get</p>
+</dd>
+<dt>Return:</dt><dd><p>Self</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.object.CharmyObject.find">
-<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.find" title="Link to this definition">¶</a></dt>
-<dd><p>Get registered object by id. (If not found, return None)</p>
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.set" title="Link to this definition">¶</a></dt>
+<dd><p>Set attribute</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>key (str): attribute name
+value (typing.Any): attribute value
+skip (bool): skip custom set_func function</p>
+</dd>
+<dt>Return:</dt><dd><p>self</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.object.CharmyObject.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.get" title="Link to this definition">¶</a></dt>
 <dd><p>Get attribute by key</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>str</em>) – attribute name</p></li>
-<li><p><strong>skip</strong> (<em>bool</em>) – skip custom get_func function</p></li>
-</ul>
+<dl class="simple">
+<dt>Args:</dt><dd><p>key (str): attribute name
+skip (bool): skip custom get_func function</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the value corresponding to the key</p>
+<dt>Return:</dt><dd><p>the value corresponding to the key</p>
 </dd>
 </dl>
 </dd></dl>
@@ -315,63 +387,36 @@
 <dd><p>Get registered object by id. (If not found, return None)</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="charmy.object.CharmyObject.instance_count">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">instance_count</span></span><a class="headerlink" href="#charmy.object.CharmyObject.instance_count" title="Link to this definition">¶</a></dt>
-<dd><p>Return the class instance count</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="charmy.object.CharmyObject.instances">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">instances</span></span><a class="headerlink" href="#charmy.object.CharmyObject.instances" title="Link to this definition">¶</a></dt>
-<dd><p>Return all the class instances</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.find">
+<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.find" title="Link to this definition">¶</a></dt>
+<dd><p>Get registered object by id. (If not found, return None)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.object.CharmyObject.new">
-<span class="sig-name descname"><span class="pre">new</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.new" title="Link to this definition">¶</a></dt>
-<dd><p>New attribute
-[Suggested: add <a href="#id1"><span class="problematic" id="id2">`</span></a>is_`~ as prefix if value is in type bool]</p>
-<p class="rubric">Example</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>str</em>) – attribute name</p></li>
-<li><p><strong>default</strong> (<em>Any</em>) – default value</p></li>
-<li><p><strong>set_func</strong> (<em>Callable</em>) – function to set</p></li>
-<li><p><strong>get_func</strong> (<em>Callable</em>) – function to get</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Self</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.configure">
+<span class="sig-name descname"><span class="pre">configure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.object.CharmyObject.configure" title="Link to this definition">¶</a></dt>
+<dd><p>High level set attributes by keyword arguments.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.object.CharmyObject.set">
-<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.set" title="Link to this definition">¶</a></dt>
-<dd><p>Set attribute</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> (<em>str</em>) – attribute name</p></li>
-<li><p><strong>value</strong> (<em>Any</em>) – attribute value</p></li>
-<li><p><strong>skip</strong> (<em>bool</em>) – skip custom set_func function</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>self</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.config">
+<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.object.CharmyObject.config" title="Link to this definition">¶</a></dt>
+<dd><p>High level set attributes by keyword arguments.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.cget">
+<span class="sig-name descname"><span class="pre">cget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.cget" title="Link to this definition">¶</a></dt>
+<dd><p>Low level get attribute by key</p>
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="charmy.object.InstanceCounterMeta">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.object.</span></span><span class="sig-name descname"><span class="pre">InstanceCounterMeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.object.InstanceCounterMeta" title="Link to this definition">¶</a></dt>
-<dd><p>CInstanceCounterMeta</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.object.CharmyObject.attributes">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.object.CharmyObject.attributes" title="Link to this definition">¶</a></dt>
+<dd><p>Return all attributes</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -432,22 +477,28 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">charmy.object</a><ul>
-<li><a class="reference internal" href="#charmy.object.CharmyObject"><code class="docutils literal notranslate"><span class="pre">CharmyObject</span></code></a><ul>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.attributes"><code class="docutils literal notranslate"><span class="pre">CharmyObject.attributes</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.cget"><code class="docutils literal notranslate"><span class="pre">CharmyObject.cget()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.class_name"><code class="docutils literal notranslate"><span class="pre">CharmyObject.class_name</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.config"><code class="docutils literal notranslate"><span class="pre">CharmyObject.config()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.configure"><code class="docutils literal notranslate"><span class="pre">CharmyObject.configure()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.find"><code class="docutils literal notranslate"><span class="pre">CharmyObject.find()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.get"><code class="docutils literal notranslate"><span class="pre">CharmyObject.get()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.get_obj"><code class="docutils literal notranslate"><span class="pre">CharmyObject.get_obj()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.instance_count"><code class="docutils literal notranslate"><span class="pre">CharmyObject.instance_count</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.instances"><code class="docutils literal notranslate"><span class="pre">CharmyObject.instances</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.new"><code class="docutils literal notranslate"><span class="pre">CharmyObject.new()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.object.CharmyObject.set"><code class="docutils literal notranslate"><span class="pre">CharmyObject.set()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.InstanceCounterMeta"><code class="docutils literal notranslate"><span class="pre">InstanceCounterMeta</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.object.InstanceCounterMeta.__init__"><code class="docutils literal notranslate"><span class="pre">InstanceCounterMeta.__init__()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#charmy.object.InstanceCounterMeta"><code class="docutils literal notranslate"><span class="pre">InstanceCounterMeta</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject"><code class="docutils literal notranslate"><span class="pre">CharmyObject</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.objects"><code class="docutils literal notranslate"><span class="pre">CharmyObject.objects</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.objects_sorted"><code class="docutils literal notranslate"><span class="pre">CharmyObject.objects_sorted</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.__init__"><code class="docutils literal notranslate"><span class="pre">CharmyObject.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.class_name"><code class="docutils literal notranslate"><span class="pre">CharmyObject.class_name</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.instances"><code class="docutils literal notranslate"><span class="pre">CharmyObject.instances</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.instance_count"><code class="docutils literal notranslate"><span class="pre">CharmyObject.instance_count</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.new"><code class="docutils literal notranslate"><span class="pre">CharmyObject.new()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.set"><code class="docutils literal notranslate"><span class="pre">CharmyObject.set()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.get"><code class="docutils literal notranslate"><span class="pre">CharmyObject.get()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.get_obj"><code class="docutils literal notranslate"><span class="pre">CharmyObject.get_obj()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.find"><code class="docutils literal notranslate"><span class="pre">CharmyObject.find()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.configure"><code class="docutils literal notranslate"><span class="pre">CharmyObject.configure()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.config"><code class="docutils literal notranslate"><span class="pre">CharmyObject.config()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.cget"><code class="docutils literal notranslate"><span class="pre">CharmyObject.cget()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.object.CharmyObject.attributes"><code class="docutils literal notranslate"><span class="pre">CharmyObject.attributes</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

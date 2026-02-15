@@ -27,7 +27,7 @@ release = "0.1.0"
 extensions = [
     "myst_parser", "sphinx_design",
     'sphinx.ext.autodoc',
-    'sphinx.ext.napoleon',  # 支持Google/NumPy风格
+    # 'sphinx.ext.napoleon',  # 暂时禁用，避免递归深度错误
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
@@ -39,6 +39,35 @@ myst_enable_extensions = ["colon_fence"]
 templates_path = ["_templates"]
 exclude_patterns = []
 
+
+# -- Options for autodoc extension ------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html
+
+# 防止递归深度错误的关键配置
+autodoc_default_options = {
+    'members': True,
+    'member-order': 'bysource',
+    'special-members': '__init__',
+    'undoc-members': True,
+    'exclude-members': '__weakref__',
+    'show-inheritance': True,
+}
+
+# 禁用继承的文档字符串处理
+autodoc_inherit_docstrings = False
+
+# 设置Python路径
+sys.path.insert(0, str(project_root))
+
+# 跳过某些可能导致递归的模块
+def skip_recursive_members(app, what, name, obj, skip, options):
+    # 跳过可能导致递归的模块
+    if name in ['charmy', 'charmy.widgets', 'charmy.styles', 'charmy.drawing']:
+        return True
+    return skip
+
+def setup(app):
+    app.connect('autodoc-skip-member', skip_recursive_members)
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

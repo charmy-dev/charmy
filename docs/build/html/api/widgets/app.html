@@ -195,6 +195,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/index.html">Get Started</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../event.html">charmy.event</a></li>
@@ -207,6 +208,15 @@
 <li class="toctree-l3"><a class="reference internal" href="widget.html">widget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="window.html">window</a></li>
 <li class="toctree-l3"><a class="reference internal" href="windowbase.html">windowbase</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../drawing/canvas.html">canvas</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../styles/theme.html">theme</a></li>
 </ul>
 </li>
 </ul>
@@ -254,23 +264,50 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="charmy.widgets.app.App">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.widgets.app.</span></span><span class="sig-name descname"><span class="pre">App</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App" title="Link to this definition">¶</a></dt>
-<dd><p>The base of CApp Class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ui.framework</strong> – What UI Framework will be used.</p></li>
-<li><p><strong>ui.is_vsync</strong> – Is vsync enabled.</p></li>
-<li><p><strong>ui.samples</strong> – UI Samples.</p></li>
-</ul>
+<dd><p>Bases: <a class="reference internal" href="../object.html#charmy.object.CharmyObject" title="charmy.object.CharmyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharmyObject</span></code></a></p>
+<p>The base of CApp Class.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>ui.framework: What UI Framework will be used.
+ui.is_vsync: Is vsync enabled.
+ui.samples: UI Samples.</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.widgets.app.App.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ui</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.UIFrame" title="charmy.const.UIFrame"><span class="pre">UIFrame</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">UIFrame.GLFW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drawing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.DrawingFrame" title="charmy.const.DrawingFrame"><span class="pre">DrawingFrame</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DrawingFrame.SKIA</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.BackendFrame" title="charmy.const.BackendFrame"><span class="pre">BackendFrame</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">BackendFrame.OPENGL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vsync</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.widgets.app.App.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.update" title="Link to this definition">¶</a></dt>
+<dd><p>Update the CWindows’ UI and events</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.widgets.app.App.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.run" title="Link to this definition">¶</a></dt>
+<dd><p>Run the application.</p>
+<p>This method will start the application event loop. It will continue running
+as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
+<p>If no windows are added to the application, a warning will be issued.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.widgets.app.App.add_window">
 <span class="sig-name descname"><span class="pre">add_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.add_window" title="Link to this definition">¶</a></dt>
 <dd><p>Add a window to the application.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>window</strong> (<em>CWindow</em>) – The window to be added.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>window (CWindow): The window to be added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.widgets.app.App.destroy_window">
+<span class="sig-name descname"><span class="pre">destroy_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.destroy_window" title="Link to this definition">¶</a></dt>
+<dd><p>Destroy a window.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>window (CWindow): The window to be destroyed.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -282,14 +319,9 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.App.destroy_window">
-<span class="sig-name descname"><span class="pre">destroy_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.destroy_window" title="Link to this definition">¶</a></dt>
-<dd><p>Destroy a window.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>window</strong> (<em>CWindow</em>) – The window to be destroyed.</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="charmy.widgets.app.App.quit">
+<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.app.App.quit" title="Link to this definition">¶</a></dt>
+<dd><p>Quit application.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -307,27 +339,6 @@
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.App.quit">
-<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.app.App.quit" title="Link to this definition">¶</a></dt>
-<dd><p>Quit application.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.App.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.run" title="Link to this definition">¶</a></dt>
-<dd><p>Run the application.</p>
-<p>This method will start the application event loop. It will continue running
-as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
-<p>If no windows are added to the application, a warning will be issued.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.App.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.update" title="Link to this definition">¶</a></dt>
-<dd><p>Update the CWindows’ UI and events</p>
 </dd></dl>
 
 </dd></dl>
@@ -391,13 +402,14 @@ as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
             <ul>
 <li><a class="reference internal" href="#">app</a><ul>
 <li><a class="reference internal" href="#charmy.widgets.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
-<li><a class="reference internal" href="#charmy.widgets.app.App.add_window"><code class="docutils literal notranslate"><span class="pre">App.add_window()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.App.cleanup"><code class="docutils literal notranslate"><span class="pre">App.cleanup()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.App.destroy_window"><code class="docutils literal notranslate"><span class="pre">App.destroy_window()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.App.error"><code class="docutils literal notranslate"><span class="pre">App.error()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.App.quit"><code class="docutils literal notranslate"><span class="pre">App.quit()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.App.run"><code class="docutils literal notranslate"><span class="pre">App.run()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.__init__"><code class="docutils literal notranslate"><span class="pre">App.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.app.App.update"><code class="docutils literal notranslate"><span class="pre">App.update()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.run"><code class="docutils literal notranslate"><span class="pre">App.run()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.add_window"><code class="docutils literal notranslate"><span class="pre">App.add_window()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.destroy_window"><code class="docutils literal notranslate"><span class="pre">App.destroy_window()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.cleanup"><code class="docutils literal notranslate"><span class="pre">App.cleanup()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.quit"><code class="docutils literal notranslate"><span class="pre">App.quit()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.error"><code class="docutils literal notranslate"><span class="pre">App.error()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -195,6 +195,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getstarted/index.html">Get Started</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../event.html">charmy.event</a></li>
@@ -207,6 +208,15 @@
 <li class="toctree-l3"><a class="reference internal" href="widget.html">widget</a></li>
 <li class="toctree-l3 current current-page"><a class="current reference internal" href="#">window</a></li>
 <li class="toctree-l3"><a class="reference internal" href="windowbase.html">windowbase</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../drawing/canvas.html">canvas</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../styles/theme.html">theme</a></li>
 </ul>
 </li>
 </ul>
@@ -254,7 +264,35 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="charmy.widgets.window.Window">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.widgets.window.</span></span><span class="sig-name descname"><span class="pre">Window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.window.Window" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="windowbase.html#charmy.widgets.windowbase.WindowBase" title="charmy.widgets.windowbase.WindowBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">WindowBase</span></code></a>, <a class="reference internal" href="container.html#charmy.widgets.container.Container" title="charmy.widgets.container.Container"><code class="xref py py-class docutils literal notranslate"><span class="pre">Container</span></code></a></p>
+<p>Window class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.widgets.window.Window.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.window.Window.__init__" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.widgets.window.Window.skia_draw_func">
+<span class="sig-name descname"><span class="pre">skia_draw_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.window.Window.skia_draw_func" title="Link to this definition">¶</a></dt>
+<dd><p>Draw function for Skia.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.window.Window.WORKING_THREAD">
+<span class="sig-name descname"><span class="pre">WORKING_THREAD</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">threading.Thread</span></span><a class="headerlink" href="#charmy.widgets.window.Window.WORKING_THREAD" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.window.Window.latest_event">
+<span class="sig-name descname"><span class="pre">latest_event</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../event.html#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span><a class="headerlink" href="#charmy.widgets.window.Window.latest_event" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.window.Window.tasks">
+<span class="sig-name descname"><span class="pre">tasks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../event.html#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.widgets.window.Window.tasks" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </section>
 
@@ -314,7 +352,14 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">window</a><ul>
-<li><a class="reference internal" href="#charmy.widgets.window.Window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.window.Window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.widgets.window.Window.__init__"><code class="docutils literal notranslate"><span class="pre">Window.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.window.Window.skia_draw_func"><code class="docutils literal notranslate"><span class="pre">Window.skia_draw_func()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.window.Window.WORKING_THREAD"><code class="docutils literal notranslate"><span class="pre">Window.WORKING_THREAD</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.window.Window.latest_event"><code class="docutils literal notranslate"><span class="pre">Window.latest_event</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.window.Window.tasks"><code class="docutils literal notranslate"><span class="pre">Window.tasks</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

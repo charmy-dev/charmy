@@ -49,7 +49,6 @@ class App(CharmyObject):
         match self["drawing.framework"]:
             case DrawingFrame.SKIA:
                 self.skia = importlib.import_module("skia")
-                self.new("drawing.surface", None)
             case _:
                 raise ValueError(f"Unknown Drawing Framework: {self['drawing.framework']}")
 
@@ -59,7 +58,6 @@ class App(CharmyObject):
             case BackendFrame.OPENGL:
                 self.opengl = importlib.import_module("OpenGL")
                 self.opengl_GL = importlib.import_module("OpenGL.GL")
-                self.new("backend.context", None)
             case _:
                 raise ValueError(f"Unknown Backend Framework: {self['backend.framework']}")
 

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="charmy.const" href="const.html"><link rel="prev" title="Charmy GUI documentation" href="../index.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="charmy.const" href="const.html"><link rel="prev" title="Get Started" href="../getstarted/index.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>API Reference - Charmy GUI 0.1.0 documentation</title>
@@ -176,7 +176,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -195,6 +195,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/index.html">Get Started</a></li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="event.html">charmy.event</a></li>
@@ -207,6 +208,15 @@
 <li class="toctree-l3"><a class="reference internal" href="widgets/widget.html">widget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/window.html">window</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/windowbase.html">windowbase</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="drawing/canvas.html">canvas</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="styles/theme.html">theme</a></li>
 </ul>
 </li>
 </ul>
@@ -244,36 +254,38 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-charmy">
-<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-charmy" title="Link to this heading">¶</a></h1>
-<p>A modern GUI library.</p>
+          <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">¶</a></h1>
+<p>Welcome to the Charmy GUI API reference.</p>
+<section id="core-modules">
+<h2>Core Modules<a class="headerlink" href="#core-modules" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Core API:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="const.html">charmy.const</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.ID"><code class="docutils literal notranslate"><span class="pre">ID</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.UIFrame"><code class="docutils literal notranslate"><span class="pre">UIFrame</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.BackendFrame"><code class="docutils literal notranslate"><span class="pre">BackendFrame</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.DrawingFrame"><code class="docutils literal notranslate"><span class="pre">DrawingFrame</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.DrawingMode"><code class="docutils literal notranslate"><span class="pre">DrawingMode</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.ID"><code class="docutils literal notranslate"><span class="pre">ID</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="const.html#charmy.const.UIFrame"><code class="docutils literal notranslate"><span class="pre">UIFrame</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="event.html">charmy.event</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="event.html#charmy.event.DelayTask"><code class="docutils literal notranslate"><span class="pre">DelayTask</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="event.html#charmy.event.Event"><code class="docutils literal notranslate"><span class="pre">Event</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="event.html#charmy.event.EventHandling"><code class="docutils literal notranslate"><span class="pre">EventHandling</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="event.html#charmy.event.Event"><code class="docutils literal notranslate"><span class="pre">Event</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="event.html#charmy.event.EventTask"><code class="docutils literal notranslate"><span class="pre">EventTask</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="event.html#charmy.event.DelayTask"><code class="docutils literal notranslate"><span class="pre">DelayTask</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="event.html#charmy.event.WorkingThread"><code class="docutils literal notranslate"><span class="pre">WorkingThread</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="object.html">charmy.object</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="object.html#charmy.object.CharmyObject"><code class="docutils literal notranslate"><span class="pre">CharmyObject</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="object.html#charmy.object.InstanceCounterMeta"><code class="docutils literal notranslate"><span class="pre">InstanceCounterMeta</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="object.html#charmy.object.CharmyObject"><code class="docutils literal notranslate"><span class="pre">CharmyObject</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pos.html">charmy.pos</a><ul>
@@ -284,6 +296,14 @@
 <li class="toctree-l2"><a class="reference internal" href="size.html#charmy.size.Size"><code class="docutils literal notranslate"><span class="pre">Size</span></code></a></li>
 </ul>
 </li>
+</ul>
+</div>
+</section>
+<section id="widgets">
+<h2>Widgets<a class="headerlink" href="#widgets" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Widgets:</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="widgets/app.html">app</a></li>
 <li class="toctree-l2"><a class="reference internal" href="widgets/container.html">container</a></li>
@@ -294,6 +314,32 @@
 </li>
 </ul>
 </div>
+</section>
+<section id="drawing">
+<h2>Drawing<a class="headerlink" href="#drawing" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Drawing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="drawing/index.html">charmy.drawing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drawing/canvas.html">canvas</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="styles">
+<h2>Styles<a class="headerlink" href="#styles" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Styles:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="styles/index.html">charmy.styles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="styles/color.html">color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="styles/theme.html">theme</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
 </section>
 
         </article>
@@ -310,14 +356,14 @@
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../index.html">
+          <a class="prev-page" href="../getstarted/index.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Home</div>
+                <div class="title">Get Started</div>
                 
               </div>
             </a>
@@ -339,8 +385,30 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">API Reference</a><ul>
+<li><a class="reference internal" href="#core-modules">Core Modules</a></li>
+<li><a class="reference internal" href="#widgets">Widgets</a></li>
+<li><a class="reference internal" href="#drawing">Drawing</a></li>
+<li><a class="reference internal" href="#styles">Styles</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

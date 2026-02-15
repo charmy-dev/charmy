@@ -195,6 +195,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/index.html">Get Started</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="const.html">charmy.const</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">charmy.event</a></li>
@@ -207,6 +208,15 @@
 <li class="toctree-l3"><a class="reference internal" href="widgets/widget.html">widget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/window.html">window</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/windowbase.html">windowbase</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="drawing/canvas.html">canvas</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="styles/theme.html">theme</a></li>
 </ul>
 </li>
 </ul>
@@ -252,67 +262,39 @@
           <section id="module-charmy.event">
 <span id="charmy-event"></span><h1>charmy.event<a class="headerlink" href="#module-charmy.event" title="Link to this heading">¶</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="charmy.event.DelayTask">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.event.</span></span><span class="sig-name descname"><span class="pre">DelayTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multithread</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_keep_at_clear</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">ID.AUTO</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ID.AUTO</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.DelayTask" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="charmy.event.Event">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.event.</span></span><span class="sig-name descname"><span class="pre">Event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.Event" title="Link to this definition">¶</a></dt>
-<dd><p>Used to represent an event.</p>
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="charmy.event.EventHandling">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.event.</span></span><span class="sig-name descname"><span class="pre">EventHandling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.EventHandling" title="Link to this definition">¶</a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="charmy.event.EventHandling.bind">
-<span class="sig-name descname"><span class="pre">bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multithread</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_keep_at_clear</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></span><a class="headerlink" href="#charmy.event.EventHandling.bind" title="Link to this definition">¶</a></dt>
-<dd><p>To bind a task to the object when a specific type of event is triggered.</p>
-<p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_button</span> <span class="o">=</span> <span class="n">CButton</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-<span class="n">press_down_event</span> <span class="o">=</span> <span class="n">my_button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;mouse_press&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello world!&quot;</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>This shows binding a hello world to the button when it’s press.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>event_type</strong> – The type of event to be bound to</p></li>
-<li><p><strong>target</strong> – A (list of) callable thing, what to do when this task is executed</p></li>
-<li><p><strong>multithread</strong> – If this task should be executed in another thread (False by default)</p></li>
-<li><p><strong>_keep_at_clear</strong> – If the task should be kept when cleaning the event’s binding</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>CEventTask that is bound to the task if success, otherwise False</p>
-</dd>
-</dl>
-</dd></dl>
+<dd><p>Bases: <a class="reference internal" href="object.html#charmy.object.CharmyObject" title="charmy.object.CharmyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharmyObject</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.EventHandling.EVENT_TYPES">
+<span class="sig-name descname"><span class="pre">EVENT_TYPES</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['resize',</span> <span class="pre">'move',</span> <span class="pre">'configure',</span> <span class="pre">'update',</span> <span class="pre">'draw',</span> <span class="pre">'mouse_move',</span> <span class="pre">'mouse_enter',</span> <span class="pre">'mouse_leave',</span> <span class="pre">'mouse_press',</span> <span class="pre">'mouse_release',</span> <span class="pre">'click',</span> <span class="pre">'double_click',</span> <span class="pre">'focus_gain',</span> <span class="pre">'focus_loss',</span> <span class="pre">'key_press',</span> <span class="pre">'key_release',</span> <span class="pre">'key_repeat',</span> <span class="pre">'char',</span> <span class="pre">'delay',</span> <span class="pre">'repeat']</span></span><a class="headerlink" href="#charmy.event.EventHandling.EVENT_TYPES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.EventHandling.multithread_tasks">
+<span class="sig-name descname"><span class="pre">multithread_tasks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></span><a class="headerlink" href="#charmy.event.EventHandling.multithread_tasks" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.EventHandling.WORKING_THREAD">
+<span class="sig-name descname"><span class="pre">WORKING_THREAD</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Thread</span></span><a class="headerlink" href="#charmy.event.EventHandling.WORKING_THREAD" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.event.EventHandling.execute_task">
-<span class="sig-name descname"><span class="pre">execute_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.EventHandling.execute_task" title="Link to this definition">¶</a></dt>
-<dd><p>To execute a task</p>
-<p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_task</span> <span class="o">=</span> <span class="n">CWidget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;delay[5]&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello Suzaku&quot;</span><span class="p">))</span>
-<span class="n">CWidget</span><span class="o">.</span><span class="n">execute_task</span><span class="p">(</span><span class="n">my_task</span><span class="p">)</span>
+<dt class="sig sig-object py" id="charmy.event.EventHandling.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.EventHandling.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>A class containing event handling abilities.</p>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
+<p>This is mostly for internal use of Charmy.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Widget</span><span class="p">(</span><span class="n">EventHandling</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="o">...</span>
 </pre></div>
 </div>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="charmy.event.EventHandling.find_task">
-<span class="sig-name descname"><span class="pre">find_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></span><a class="headerlink" href="#charmy.event.EventHandling.find_task" title="Link to this definition">¶</a></dt>
-<dd><p>To find a event task using task ID.</p>
-<p class="rubric">Example</p>
-<p>This shows getting the <cite>CEventtask</cite> object of task with ID <cite>CButton114.mouse_press.514</cite>
-from bound tasks of <cite>my_button</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The CEventTask object of the task, or False if not found</p>
-</dd>
-</dl>
+<p>This shows subclassing EventHandling to let Widget gain the ability of handling events.</p>
+</section>
 </dd></dl>
 
 <dl class="py method">
@@ -324,92 +306,306 @@ from bound tasks of <cite>my_button</cite>.</p>
 <dd class="field-odd"><p><strong>event_type_str</strong> – The event type string to be parsed</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>json, parsed event type</p>
+<dd class="field-even"><p>JSON, parsed event type</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.event.EventHandling.trigger">
-<span class="sig-name descname"><span class="pre">trigger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.event.EventHandling.trigger" title="Link to this definition">¶</a></dt>
-<dd><p>To trigger a type of event</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>event_type</strong> – The type of event to trigger</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CWidget</span><span class="p">(</span><span class="n">CEventHandling</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
-    <span class="o">...</span>
-
-<span class="n">my_widget</span> <span class="o">=</span> <span class="n">CWidget</span><span class="p">()</span>
-<span class="n">my_widget</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="s2">&quot;mouse_press&quot;</span><span class="p">)</span>
+<dt class="sig sig-object py" id="charmy.event.EventHandling.execute_task">
+<span class="sig-name descname"><span class="pre">execute_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.EventHandling.execute_task" title="Link to this definition">¶</a></dt>
+<dd><p>To execute a task</p>
+<section id="id1">
+<h2>Example<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_task</span> <span class="o">=</span> <span class="n">Widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;delay[5]&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello Suzaku&quot;</span><span class="p">))</span>
+<span class="n">Widget</span><span class="o">.</span><span class="n">execute_task</span><span class="p">(</span><span class="n">my_task</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This shows triggering a <cite>mouse_press</cite> event in a <cite>CWidget</cite>, which inherited
-<cite>CEventHandling</cite> so has the ability to handle events.</p>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.event.EventHandling.trigger_event">
 <span class="sig-name descname"><span class="pre">trigger_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.event.EventHandling.trigger_event" title="Link to this definition">¶</a></dt>
 <dd><p>To trigger a type of event</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>event_type</strong> – The type of event to trigger</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>event_type: The type of event to trigger</p>
 </dd>
 </dl>
-<p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CWidget</span><span class="p">(</span><span class="n">CEventHandling</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+<section id="id2">
+<h2>Example<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Widget</span><span class="p">(</span><span class="n">EventHandling</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
     <span class="o">...</span>
 
-<span class="n">my_widget</span> <span class="o">=</span> <span class="n">CWidget</span><span class="p">()</span>
+<span class="n">my_widget</span> <span class="o">=</span> <span class="n">Widget</span><span class="p">()</span>
 <span class="n">my_widget</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="s2">&quot;mouse_press&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This shows triggering a <cite>mouse_press</cite> event in a <cite>CWidget</cite>, which inherited
-<cite>CEventHandling</cite> so has the ability to handle events.</p>
+<p>This shows triggering a <cite>mouse_press</cite> event in a <cite>Widget</cite>, which inherited
+<cite>EventHandling</cite> so has the ability to handle events.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.event.EventHandling.trigger">
+<span class="sig-name descname"><span class="pre">trigger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.event.EventHandling.trigger" title="Link to this definition">¶</a></dt>
+<dd><p>To trigger a type of event</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>event_type: The type of event to trigger</p>
+</dd>
+</dl>
+<section id="id3">
+<h2>Example<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Widget</span><span class="p">(</span><span class="n">EventHandling</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="n">my_widget</span> <span class="o">=</span> <span class="n">Widget</span><span class="p">()</span>
+<span class="n">my_widget</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="s2">&quot;mouse_press&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This shows triggering a <cite>mouse_press</cite> event in a <cite>Widget</cite>, which inherited
+<cite>EventHandling</cite> so has the ability to handle events.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.event.EventHandling.bind">
+<span class="sig-name descname"><span class="pre">bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multithread</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_keep_at_clear</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></span><a class="headerlink" href="#charmy.event.EventHandling.bind" title="Link to this definition">¶</a></dt>
+<dd><p>To bind a task to the object when a specific type of event is triggered.</p>
+<section id="id4">
+<h2>Example<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="n">press_down_event</span> <span class="o">=</span> <span class="n">my_button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;mouse_press&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello world!&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This shows binding a hello world to the button when it’s press.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param event_type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The type of event to be bound to</p>
+</dd>
+<dt class="field-even">param target<span class="colon">:</span></dt>
+<dd class="field-even"><p>A (list of) callable thing, what to do when this task is executed</p>
+</dd>
+<dt class="field-odd">param multithread<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If this task should be executed in another thread (False by default)</p>
+</dd>
+<dt class="field-even">param _keep_at_clear<span class="colon">:</span></dt>
+<dd class="field-even"><p>If the task should be kept when cleaning the event’s binding</p>
+</dd>
+<dt class="field-odd">return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>EventTask that is bound to the task if success, otherwise False</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.event.EventHandling.find_task">
+<span class="sig-name descname"><span class="pre">find_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></span><a class="headerlink" href="#charmy.event.EventHandling.find_task" title="Link to this definition">¶</a></dt>
+<dd><p>To find an event task using task ID.</p>
+<section id="id5">
+<h2>Example<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">press_task</span> <span class="o">=</span> <span class="n">my_button</span><span class="o">.</span><span class="n">find_task</span><span class="p">(</span><span class="s2">&quot;Button114.mouse_press.514&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This shows getting the <cite>EventTask</cite> object of task with ID <cite>Button114.mouse_press.514</cite>
+from bound tasks of <cite>my_button</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The EventTask object of the task, or False if not found</p>
+</dd>
+</dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.event.EventHandling.unbind">
 <span class="sig-name descname"><span class="pre">unbind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#charmy.event.DelayTask" title="charmy.event.DelayTask"><span class="pre">DelayTask</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#charmy.event.EventHandling.unbind" title="Link to this definition">¶</a></dt>
 <dd><p>To unbind the task with specified task ID.</p>
-<p class="rubric">Example</p>
-<p>This show unbinding the task with ID <cite>CButton114.mouse_press.514</cite> from <cite>my_button</cite>.</p>
+<section id="id6">
+<h2>Example<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">my_button</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="s2">&quot;Button114.mouse_press.514&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This show unbinding the task with ID <cite>Button114.mouse_press.514</cite> from <cite>my_button</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">my_button</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="s2">&quot;Button114.mouse_press.*&quot;</span><span class="p">)</span>
+<span class="n">my_button</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="s2">&quot;mouse_release.*&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>This show unbinding all tasks under <cite>mouse_press</cite> and <cite>mouse_release</cite> event from
 <cite>my_button</cite>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>target_task</strong> – The task ID or <cite>CEventTask</cite> to unbind.</p>
+<dt class="field-odd">param target_task<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The task ID or <cite>EventTask</cite> to unbind.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">return<span class="colon">:</span></dt>
 <dd class="field-even"><p>If success</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="charmy.event.Event">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.event.</span></span><span class="sig-name descname"><span class="pre">Event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.Event" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="object.html#charmy.object.CharmyObject" title="charmy.object.CharmyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharmyObject</span></code></a></p>
+<p>Used to represent an event.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.Event.latest">
+<span class="sig-name descname"><span class="pre">latest</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;charmy.event.Event</span> <span class="pre">object&gt;</span></span><a class="headerlink" href="#charmy.event.Event.latest" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.event.Event.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#charmy.event.EventHandling" title="charmy.event.EventHandling"><span class="pre">EventHandling</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'[Unspecified]'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.Event.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>This class is used to represent events.</p>
+<p>Some properties owned by all types of events are stored as attributes, such as widget and type.
+Others are stored as items, which can be accessed or manipulated just like dict, e.g.
+<cite>CEvent[“x”]</cite> for get and <cite>CEvent[“y”] = 16</cite> for set.</p>
+<p>Included in description.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>widget</strong> – The widget of the event, None by default</p></li>
+<li><p><strong>event_type</strong> – Type of the event, in string, <cite>“[Unspecified]”</cite> by default</p></li>
+<li><p><strong>**kwargs</strong> – <p>Other properties of the event, will be added as items</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.Event.event_type">
+<span class="sig-name descname"><span class="pre">event_type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#charmy.event.Event.event_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.Event.widget">
+<span class="sig-name descname"><span class="pre">widget</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#charmy.event.Event.widget" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.Event.window_base">
+<span class="sig-name descname"><span class="pre">window_base</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#charmy.event.Event.window_base" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.Event.window">
+<span class="sig-name descname"><span class="pre">window</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#charmy.event.Event.window" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.Event.event_data">
+<span class="sig-name descname"><span class="pre">event_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></span><a class="headerlink" href="#charmy.event.Event.event_data" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="charmy.event.EventTask">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.event.</span></span><span class="sig-name descname"><span class="pre">EventTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multithread</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_keep_at_clear</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">ID.AUTO</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ID.AUTO</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.EventTask" title="Link to this definition">¶</a></dt>
-<dd><p>A class to represent event task when a event is triggered.</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to represent event task when an event is triggered.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.event.EventTask.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multithread</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_keep_at_clear</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">ID.AUTO</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ID.AUTO</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.EventTask.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Each object is to represent a task bound to the event.</p>
+<section id="id9">
+<h2>Example<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<p>This is mostly for internal use of suzaku.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">EventHandling</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+        <span class="o">...</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">EventTask</span><span class="p">(</span><span class="n">event_id</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">multithread</span><span class="p">,</span> <span class="n">_keep_at_clear</span><span class="p">)</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>This shows where this class is used for storing task properties in most cases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param target<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A callable thing, what to do when this task is executed</p>
+</dd>
+<dt class="field-even">param multithread<span class="colon">:</span></dt>
+<dd class="field-even"><p>If this task should be executed in another thread (False by default)</p>
+</dd>
+<dt class="field-odd">param _keep_at_clear<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If the task should be kept when cleaning the event’s binding</p>
+</dd>
+<dt class="field-even">param <a href="#id10"><span class="problematic" id="id11">id_</span></a><span class="colon">:</span></dt>
+<dd class="field-even"><p>The task id of this task</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.EventTask.id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">ID.AUTO</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.event.EventTask.id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.EventTask.target">
+<span class="sig-name descname"><span class="pre">target</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span></span><a class="headerlink" href="#charmy.event.EventTask.target" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.EventTask.multithread">
+<span class="sig-name descname"><span class="pre">multithread</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#charmy.event.EventTask.multithread" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.EventTask.keep_at_clear">
+<span class="sig-name descname"><span class="pre">keep_at_clear</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#charmy.event.EventTask.keep_at_clear" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="charmy.event.DelayTask">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.event.</span></span><span class="sig-name descname"><span class="pre">DelayTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multithread</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_keep_at_clear</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">ID.AUTO</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ID.AUTO</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.DelayTask" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventTask</span></code></a></p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="charmy.event.WorkingThread">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.event.</span></span><span class="sig-name descname"><span class="pre">WorkingThread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.WorkingThread" title="Link to this definition">¶</a></dt>
-<dd><p>CWorkingThread is a class represent the event working thread.</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Thread</span></code>, <a class="reference internal" href="object.html#charmy.object.CharmyObject" title="charmy.object.CharmyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharmyObject</span></code></a></p>
+<p>CWorkingThread is a class represent the event working thread.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.event.WorkingThread.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.WorkingThread.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.WorkingThread.tasks">
+<span class="sig-name descname"><span class="pre">tasks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#charmy.event.DelayTask" title="charmy.event.DelayTask"><span class="pre">DelayTask</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.event.WorkingThread.tasks" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.event.WorkingThread.lock">
+<span class="sig-name descname"><span class="pre">lock</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">lock</span></span><a class="headerlink" href="#charmy.event.WorkingThread.lock" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.event.WorkingThread.execute_tasks">
+<span class="sig-name descname"><span class="pre">execute_tasks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.WorkingThread.execute_tasks" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.event.WorkingThread.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.WorkingThread.run" title="Link to this definition">¶</a></dt>
-<dd><p>Method representing the thread’s activity.</p>
-<p>You may override this method in a subclass. The standard run() method
-invokes the callable object passed to the object’s constructor as the
-target argument, if any, with sequential and keyword arguments taken
-from the args and kwargs arguments, respectively.</p>
-</dd></dl>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.event.WorkingThread.add_task">
+<span class="sig-name descname"><span class="pre">add_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#charmy.event.DelayTask" title="charmy.event.DelayTask"><span class="pre">DelayTask</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.event.WorkingThread.add_task" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -471,21 +667,46 @@ from the args and kwargs arguments, respectively.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">charmy.event</a><ul>
-<li><a class="reference internal" href="#charmy.event.DelayTask"><code class="docutils literal notranslate"><span class="pre">DelayTask</span></code></a></li>
-<li><a class="reference internal" href="#charmy.event.Event"><code class="docutils literal notranslate"><span class="pre">Event</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.EventHandling"><code class="docutils literal notranslate"><span class="pre">EventHandling</span></code></a><ul>
-<li><a class="reference internal" href="#charmy.event.EventHandling.bind"><code class="docutils literal notranslate"><span class="pre">EventHandling.bind()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.event.EventHandling.execute_task"><code class="docutils literal notranslate"><span class="pre">EventHandling.execute_task()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.event.EventHandling.find_task"><code class="docutils literal notranslate"><span class="pre">EventHandling.find_task()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventHandling.EVENT_TYPES"><code class="docutils literal notranslate"><span class="pre">EventHandling.EVENT_TYPES</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventHandling.multithread_tasks"><code class="docutils literal notranslate"><span class="pre">EventHandling.multithread_tasks</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventHandling.WORKING_THREAD"><code class="docutils literal notranslate"><span class="pre">EventHandling.WORKING_THREAD</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventHandling.__init__"><code class="docutils literal notranslate"><span class="pre">EventHandling.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.EventHandling.parse_event_type_str"><code class="docutils literal notranslate"><span class="pre">EventHandling.parse_event_type_str()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.event.EventHandling.trigger"><code class="docutils literal notranslate"><span class="pre">EventHandling.trigger()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventHandling.execute_task"><code class="docutils literal notranslate"><span class="pre">EventHandling.execute_task()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.EventHandling.trigger_event"><code class="docutils literal notranslate"><span class="pre">EventHandling.trigger_event()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventHandling.trigger"><code class="docutils literal notranslate"><span class="pre">EventHandling.trigger()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventHandling.bind"><code class="docutils literal notranslate"><span class="pre">EventHandling.bind()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventHandling.find_task"><code class="docutils literal notranslate"><span class="pre">EventHandling.find_task()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.EventHandling.unbind"><code class="docutils literal notranslate"><span class="pre">EventHandling.unbind()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#charmy.event.EventTask"><code class="docutils literal notranslate"><span class="pre">EventTask</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.Event"><code class="docutils literal notranslate"><span class="pre">Event</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.event.Event.latest"><code class="docutils literal notranslate"><span class="pre">Event.latest</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.Event.__init__"><code class="docutils literal notranslate"><span class="pre">Event.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.Event.event_type"><code class="docutils literal notranslate"><span class="pre">Event.event_type</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.Event.widget"><code class="docutils literal notranslate"><span class="pre">Event.widget</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.Event.window_base"><code class="docutils literal notranslate"><span class="pre">Event.window_base</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.Event.window"><code class="docutils literal notranslate"><span class="pre">Event.window</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.Event.event_data"><code class="docutils literal notranslate"><span class="pre">Event.event_data</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#charmy.event.EventTask"><code class="docutils literal notranslate"><span class="pre">EventTask</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.event.EventTask.__init__"><code class="docutils literal notranslate"><span class="pre">EventTask.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventTask.id"><code class="docutils literal notranslate"><span class="pre">EventTask.id</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventTask.target"><code class="docutils literal notranslate"><span class="pre">EventTask.target</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventTask.multithread"><code class="docutils literal notranslate"><span class="pre">EventTask.multithread</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.EventTask.keep_at_clear"><code class="docutils literal notranslate"><span class="pre">EventTask.keep_at_clear</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#charmy.event.DelayTask"><code class="docutils literal notranslate"><span class="pre">DelayTask</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.WorkingThread"><code class="docutils literal notranslate"><span class="pre">WorkingThread</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.event.WorkingThread.__init__"><code class="docutils literal notranslate"><span class="pre">WorkingThread.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.WorkingThread.tasks"><code class="docutils literal notranslate"><span class="pre">WorkingThread.tasks</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.WorkingThread.lock"><code class="docutils literal notranslate"><span class="pre">WorkingThread.lock</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.WorkingThread.execute_tasks"><code class="docutils literal notranslate"><span class="pre">WorkingThread.execute_tasks()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.WorkingThread.run"><code class="docutils literal notranslate"><span class="pre">WorkingThread.run()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.event.WorkingThread.add_task"><code class="docutils literal notranslate"><span class="pre">WorkingThread.add_task()</span></code></a></li>
 </ul>
 </li>
 </ul>

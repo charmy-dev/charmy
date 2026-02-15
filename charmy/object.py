@@ -82,6 +82,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         Example
         -------
         .. code-block:: python
+
             from charmy import *
 
             obj = CharmyObject()

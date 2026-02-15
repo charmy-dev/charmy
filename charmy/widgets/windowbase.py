@@ -75,6 +75,7 @@ class WindowBase(EventHandling, CharmyObject):
         match self["drawing.framework"]:
             case DrawingFrame.SKIA:
                 self.skia = self.app.skia
+                self.new("drawing.surface", None)
             case _:
                 raise ValueError(f"Unknown Drawing Framework: {self['drawing.framework']}")
 
@@ -88,6 +89,7 @@ class WindowBase(EventHandling, CharmyObject):
             case BackendFrame.OPENGL:
                 self.opengl = self.app.opengl
                 self.opengl_GL = self.app.opengl_GL
+                self.new("backend.context", None)
             case _:
                 raise ValueError(f"Unknown Backend Framework: {self['backend.framework']}")
 
