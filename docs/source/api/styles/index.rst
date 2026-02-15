@@ -6,7 +6,6 @@ charmy.styles
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    color
    theme

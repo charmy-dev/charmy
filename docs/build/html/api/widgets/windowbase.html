@@ -194,15 +194,20 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../getstarted/index.html">Get Started</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../getstarted/index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/install.html">Install Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/first_app.html">First application</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../event.html">charmy.event</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../object.html">charmy.object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pos.html">charmy.pos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../size.html">charmy.size</a></li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="app.html">app</a></li>
 <li class="toctree-l3"><a class="reference internal" href="container.html">container</a></li>
 <li class="toctree-l3"><a class="reference internal" href="widget.html">widget</a></li>
@@ -210,11 +215,11 @@
 <li class="toctree-l3 current current-page"><a class="current reference internal" href="#">windowbase</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../drawing/canvas.html">canvas</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../styles/color.html">color</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../styles/theme.html">theme</a></li>
 </ul>
@@ -277,6 +282,26 @@ drawing_mode: The drawing mode of the window,</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="app.html#charmy.widgets.app.App" title="charmy.widgets.app.App"><span class="pre">App</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Charmy</span> <span class="pre">GUI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(100,</span> <span class="pre">100)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drawing_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.DrawingMode" title="charmy.const.DrawingMode"><span class="pre">DrawingMode</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DrawingMode.IMMEDIATE</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.is_dirty">
+<span class="sig-name descname"><span class="pre">is_dirty</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.is_dirty" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.is_force_hardware_acceleration">
+<span class="sig-name descname"><span class="pre">is_force_hardware_acceleration</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.is_force_hardware_acceleration" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.is_visible">
+<span class="sig-name descname"><span class="pre">is_visible</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.is_visible" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.is_alive">
+<span class="sig-name descname"><span class="pre">is_alive</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.is_alive" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -393,6 +418,21 @@ drawing_mode: The drawing mode of the window,</p>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.WORKING_THREAD">
+<span class="sig-name descname"><span class="pre">WORKING_THREAD</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">threading.Thread</span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.WORKING_THREAD" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.latest_event">
+<span class="sig-name descname"><span class="pre">latest_event</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../event.html#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.latest_event" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.tasks">
+<span class="sig-name descname"><span class="pre">tasks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../event.html#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.tasks" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -455,6 +495,10 @@ drawing_mode: The drawing mode of the window,</p>
 <li><a class="reference internal" href="#">windowbase</a><ul>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase"><code class="docutils literal notranslate"><span class="pre">WindowBase</span></code></a><ul>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.__init__"><code class="docutils literal notranslate"><span class="pre">WindowBase.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.is_dirty"><code class="docutils literal notranslate"><span class="pre">WindowBase.is_dirty</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.is_force_hardware_acceleration"><code class="docutils literal notranslate"><span class="pre">WindowBase.is_force_hardware_acceleration</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.is_visible"><code class="docutils literal notranslate"><span class="pre">WindowBase.is_visible</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.is_alive"><code class="docutils literal notranslate"><span class="pre">WindowBase.is_alive</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.create"><code class="docutils literal notranslate"><span class="pre">WindowBase.create()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.create_event_bounds"><code class="docutils literal notranslate"><span class="pre">WindowBase.create_event_bounds()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.update"><code class="docutils literal notranslate"><span class="pre">WindowBase.update()</span></code></a></li>
@@ -467,6 +511,9 @@ drawing_mode: The drawing mode of the window,</p>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.can_be_close"><code class="docutils literal notranslate"><span class="pre">WindowBase.can_be_close()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.resize"><code class="docutils literal notranslate"><span class="pre">WindowBase.resize()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.move"><code class="docutils literal notranslate"><span class="pre">WindowBase.move()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.WORKING_THREAD"><code class="docutils literal notranslate"><span class="pre">WindowBase.WORKING_THREAD</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.latest_event"><code class="docutils literal notranslate"><span class="pre">WindowBase.latest_event</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.tasks"><code class="docutils literal notranslate"><span class="pre">WindowBase.tasks</span></code></a></li>
 </ul>
 </li>
 </ul>

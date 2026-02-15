@@ -10,6 +10,7 @@ Welcome to Charmy GUI documentation! ``Charmy GUI`` is modern, simple GUI librar
 
 .. toctree::
    :maxdepth: 2
+   :caption: Contents:
 
    getstarted/index
    api/index
