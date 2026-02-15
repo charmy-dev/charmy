@@ -33,9 +33,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
 
     def __init__(self, id_: ID | str = ID.AUTO):
-        self._attributes: dict[
-            str, typing.Any | list[str, typing.Any, typing.Callable | None, typing.Callable | None]
-        ] = {}  # NOQA: Expected to be user-modifiable.
+        self._attributes: dict[str, typing.Any | list] = {}  # NOQA: Expected to be user-modifiable.
         # self._attributes -> {key: value, key2: ["@custom", value, set_func, get_func]}
         # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
 
@@ -123,7 +121,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         return self
 
     def set(self, key: str, value, *, skip: bool = False) -> typing.Self:
-        """Set attribute
+        """Set attribute.
 
         Args:
             key (str): attribute name
@@ -153,7 +151,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         return self
 
     def get(self, key: str, *, skip: bool = False) -> typing.Any:
-        """Get attribute by key
+        """Get attribute by key.
 
         Args:
             key (str): attribute name
