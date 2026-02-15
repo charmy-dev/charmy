@@ -221,12 +221,6 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     def __contains__(self, item: str) -> bool:
         return item in self._attributes
 
-    def __getattr__(self, item: str) -> typing.Any:
-        """Get attribute by key: obj.key"""
-        if item in self._attributes:
-            return self.get(item)
-        return None
-
     # endregion
 
     @property

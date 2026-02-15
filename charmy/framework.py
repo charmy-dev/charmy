@@ -97,6 +97,17 @@ class WindowFramework:
         """
         ...
 
+    def get_mouse_pos(self, the_window) -> tuple[int, int]:
+        """Get the mouse position of the window
+
+        Args:
+            the_window: The window to get mouse position for
+
+        Returns:
+            tuple[int, int]: The mouse position of the window
+        """
+        ...
+
     def make_context_current(self, the_window, **kwargs) -> dict[str, typing.Any]:
         """Make the context current for the window
 
@@ -182,6 +193,57 @@ class GLFW(WindowFramework):
             ),
         )
 
+        from glfw import MOD_SHIFT, MOD_CONTROL, MOD_ALT, MOD_SUPER, MOD_NUM_LOCK, MOD_CAPS_LOCK
+
+        def _enter(w, entered: int):
+            if entered:
+                event_type = "mouse_enter"
+            else:
+                event_type = "mouse_leave"
+            window_class.trigger(Event(window_class, event_type, the_window=w))
+
+        self.glfw.set_cursor_enter_callback(
+            the_window,
+            _enter,
+        )
+        self.glfw.set_cursor_pos_callback(
+            the_window,
+            lambda w, x, y: window_class.trigger(
+                Event(window_class, "mouse_move", x=x, canvas_x=x, y=y, canvas_y=y)
+            ),
+        )
+
+        def _mouse(w, button, action, mods):
+            if action == self.glfw.PRESS:
+                event_type = "mouse_press"
+            elif action == self.glfw.RELEASE:
+                event_type = "mouse_release"
+            else:
+                return
+            button_map = {
+                self.glfw.MOUSE_BUTTON_LEFT: "left",
+                self.glfw.MOUSE_BUTTON_RIGHT: "right",
+                self.glfw.MOUSE_BUTTON_MIDDLE: "middle",
+            }
+            mods_map = {
+                self.glfw.MOD_SHIFT: "shift",
+                self.glfw.MOD_CONTROL: "control",
+                self.glfw.MOD_ALT: "alt",
+                self.glfw.MOD_SUPER: "super",
+                self.glfw.MOD_NUM_LOCK: "num_lock",
+                self.glfw.MOD_CAPS_LOCK: "caps_lock",
+            }
+            window_class.trigger(
+                Event(
+                    window_class,
+                    event_type,
+                    button=button_map.get(button, None),
+                    mods=mods_map.get(mods, None),
+                )
+            )
+
+        self.glfw.set_mouse_button_callback(the_window, _mouse)
+
     def destroy(self, the_window) -> None:
         self.glfw.destroy_window(the_window)
 
@@ -199,6 +261,9 @@ class GLFW(WindowFramework):
 
     def set_title(self, the_window, title: str) -> None:
         self.glfw.set_title(the_window, title)
+
+    def get_mouse_pos(self, the_window) -> tuple[int, int]:
+        return self.glfw.get_cursor_pos(the_window)
 
     def make_context_current(self, the_window, **kwargs) -> None:
         self.glfw.make_context_current(the_window)
