@@ -19,7 +19,7 @@ class CEventHandling(CObject):
         # Window size & pos
         "resize", "move", 
         # Widget internal changes
-        "configure", "update", "redraw", 
+        "configure", "update", "draw",
         # Mouse events
         "mouse_move", "mouse_enter", "mouse_leave", "mouse_press", "mouse_release", "click", 
         "double_click",
@@ -121,6 +121,9 @@ class CEventHandling(CObject):
     def trigger_event(self, event_obj: CEvent) -> None:
         """To trigger a type of event
 
+        Args:
+            event_type: The type of event to trigger
+
         Example
         -------
         .. code-block:: python
@@ -131,8 +134,6 @@ class CEventHandling(CObject):
             my_widget.trigger("mouse_press")
         This shows triggering a `mouse_press` event in a `CWidget`, which inherited 
         `CEventHandling` so has the ability to handle events.
-
-        :param event_type: The type of event to trigger
         """
         # Parse event type string
         parsed_event_type = self.parse_event_type_str(event_obj.event_type)
@@ -380,15 +381,16 @@ class CWorkingThread(threading.Thread, CObject):
                     func(task[0])
             self.tasks.remove(task)
         else:
-            warnings.warn("")
+            #warnings.warn("")
+            pass
         self.lock.release()
 
     def run(self):
         while self.is_alive:
             self.execute_tasks()
             if len(self.tasks) == 0:
-                # If idle, then rest for 0.01s to save CPU time
-                time.sleep(0.01)
+                # If idle, then rest for 0.02s to save CPU time
+                time.sleep(0.02)
 
     def add_task(self, task: CEventTask | CDelayTask, event: CEvent):
         self.tasks.append((event, task))

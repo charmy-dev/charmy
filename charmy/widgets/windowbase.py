@@ -167,13 +167,13 @@ class CWindowBase(CEventHandling, CObject):
                 self.glfw.set_window_size_callback(
                     self.the_window,
                     lambda window, width, height: self.trigger(
-                        "on_resize", width=width, height=height
+                        CEvent(self, "resize", width=width, height=height)
                     ),
                 )
                 self.glfw.set_window_pos_callback(
                     self.the_window,
                     lambda window, root_x, root_y: self.trigger(
-                        "on_move", x_root=root_x, y_root=root_y
+                        CEvent(self, "move", x_root=root_x, y_root=root_y)
                     ),
                 )
 
@@ -294,7 +294,7 @@ class CWindowBase(CEventHandling, CObject):
             self["backend.context"].releaseResourcesAndAbandonContext()
         # for child in self.children:
         #    child.need_redraw = False
-        self.trigger("on_draw")
+        self.trigger(CEvent(self,"draw"))
 
     def dirty(self):
         """Set the dirty flag."""
