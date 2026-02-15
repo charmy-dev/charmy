@@ -252,8 +252,8 @@
           <section id="module-charmy.widgets.windowbase">
 <span id="windowbase"></span><h1>windowbase<a class="headerlink" href="#module-charmy.widgets.windowbase" title="Link to this heading">¶</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.widgets.windowbase.</span></span><span class="sig-name descname"><span class="pre">CWindowBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.widgets.windowbase.</span></span><span class="sig-name descname"><span class="pre">WindowBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase" title="Link to this definition">¶</a></dt>
 <dd><p>CWindowBase is a base class for window.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -267,8 +267,8 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.can_be_close">
-<span class="sig-name descname"><span class="pre">can_be_close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.can_be_close" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.can_be_close">
+<span class="sig-name descname"><span class="pre">can_be_close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.can_be_close" title="Link to this definition">¶</a></dt>
 <dd><p>Set whether the window can be closed.</p>
 <p>Prevent users from closing the window, which can be used in conjunction with prompts like “Save before closing?”</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="n">SkEvent</span><span class="p">):</span>  <span class="c1"># NOQA</span>
@@ -287,31 +287,31 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.cancel_dirty">
-<span class="sig-name descname"><span class="pre">cancel_dirty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.cancel_dirty" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.cancel_dirty">
+<span class="sig-name descname"><span class="pre">cancel_dirty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.cancel_dirty" title="Link to this definition">¶</a></dt>
 <dd><p>Cancel the dirty flag.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.contextlib">
-<span class="sig-name descname"><span class="pre">contextlib</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'contextlib'</span> <span class="pre">from</span> <span class="pre">'D:\\Python\\313\\Lib\\contextlib.py'&gt;</span></span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.contextlib" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.contextlib">
+<span class="sig-name descname"><span class="pre">contextlib</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'contextlib'</span> <span class="pre">from</span> <span class="pre">'D:\\Python\\313\\Lib\\contextlib.py'&gt;</span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.contextlib" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.create">
-<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.create" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.create" title="Link to this definition">¶</a></dt>
 <dd><p>Create the window.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.create_event_bounds">
-<span class="sig-name descname"><span class="pre">create_event_bounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.create_event_bounds" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.create_event_bounds">
+<span class="sig-name descname"><span class="pre">create_event_bounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.create_event_bounds" title="Link to this definition">¶</a></dt>
 <dd><p>Create event bounds.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.destroy">
-<span class="sig-name descname"><span class="pre">destroy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.destroy" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.destroy">
+<span class="sig-name descname"><span class="pre">destroy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.destroy" title="Link to this definition">¶</a></dt>
 <dd><p>Destroy the window.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -321,25 +321,25 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.dirty">
-<span class="sig-name descname"><span class="pre">dirty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.dirty" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.dirty">
+<span class="sig-name descname"><span class="pre">dirty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.dirty" title="Link to this definition">¶</a></dt>
 <dd><p>Set the dirty flag.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.draw">
-<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../event.html#charmy.event.CEvent" title="charmy.event.CEvent"><span class="pre">CEvent</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.draw" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../event.html#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.draw" title="Link to this definition">¶</a></dt>
 <dd><p>Draw the window.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>event</strong> (<a class="reference internal" href="../event.html#charmy.event.CEvent" title="charmy.event.CEvent"><em>CEvent</em></a><em>, </em><em>optional</em>) – The event that triggered the draw. Defaults to None.</p>
+<dd class="field-odd"><p><strong>event</strong> (<em>CEvent</em><em>, </em><em>optional</em>) – The event that triggered the draw. Defaults to None.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.move">
-<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pos.html#charmy.pos.CPos" title="charmy.pos.CPos"><span class="pre">CPos</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.move" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pos.html#charmy.pos.Pos" title="charmy.pos.Pos"><span class="pre">Pos</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.move" title="Link to this definition">¶</a></dt>
 <dd><p>Move the window to the given position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -352,8 +352,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.resize">
-<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../size.html#charmy.size.CSize" title="charmy.size.CSize"><span class="pre">CSize</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.resize" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../size.html#charmy.size.Size" title="charmy.size.Size"><span class="pre">Size</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.resize" title="Link to this definition">¶</a></dt>
 <dd><p>Resize the window to the given size.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -366,8 +366,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.skia_surface">
-<span class="sig-name descname"><span class="pre">skia_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.skia_surface" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.skia_surface">
+<span class="sig-name descname"><span class="pre">skia_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.skia_surface" title="Link to this definition">¶</a></dt>
 <dd><p>Create a Skia surface for the window.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -380,8 +380,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.windowbase.CWindowBase.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.CWindowBase.update" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.windowbase.WindowBase.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.windowbase.WindowBase.update" title="Link to this definition">¶</a></dt>
 <dd><p>Update the window. When is_dirty is True, draw the window.</p>
 </dd></dl>
 
@@ -437,19 +437,19 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">windowbase</a><ul>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase"><code class="docutils literal notranslate"><span class="pre">CWindowBase</span></code></a><ul>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.can_be_close"><code class="docutils literal notranslate"><span class="pre">CWindowBase.can_be_close()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.cancel_dirty"><code class="docutils literal notranslate"><span class="pre">CWindowBase.cancel_dirty()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.contextlib"><code class="docutils literal notranslate"><span class="pre">CWindowBase.contextlib</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.create"><code class="docutils literal notranslate"><span class="pre">CWindowBase.create()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.create_event_bounds"><code class="docutils literal notranslate"><span class="pre">CWindowBase.create_event_bounds()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.destroy"><code class="docutils literal notranslate"><span class="pre">CWindowBase.destroy()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.dirty"><code class="docutils literal notranslate"><span class="pre">CWindowBase.dirty()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.draw"><code class="docutils literal notranslate"><span class="pre">CWindowBase.draw()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.move"><code class="docutils literal notranslate"><span class="pre">CWindowBase.move()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.resize"><code class="docutils literal notranslate"><span class="pre">CWindowBase.resize()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.skia_surface"><code class="docutils literal notranslate"><span class="pre">CWindowBase.skia_surface()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.windowbase.CWindowBase.update"><code class="docutils literal notranslate"><span class="pre">CWindowBase.update()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase"><code class="docutils literal notranslate"><span class="pre">WindowBase</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.can_be_close"><code class="docutils literal notranslate"><span class="pre">WindowBase.can_be_close()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.cancel_dirty"><code class="docutils literal notranslate"><span class="pre">WindowBase.cancel_dirty()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.contextlib"><code class="docutils literal notranslate"><span class="pre">WindowBase.contextlib</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.create"><code class="docutils literal notranslate"><span class="pre">WindowBase.create()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.create_event_bounds"><code class="docutils literal notranslate"><span class="pre">WindowBase.create_event_bounds()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.destroy"><code class="docutils literal notranslate"><span class="pre">WindowBase.destroy()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.dirty"><code class="docutils literal notranslate"><span class="pre">WindowBase.dirty()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.draw"><code class="docutils literal notranslate"><span class="pre">WindowBase.draw()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.move"><code class="docutils literal notranslate"><span class="pre">WindowBase.move()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.resize"><code class="docutils literal notranslate"><span class="pre">WindowBase.resize()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.skia_surface"><code class="docutils literal notranslate"><span class="pre">WindowBase.skia_surface()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.windowbase.WindowBase.update"><code class="docutils literal notranslate"><span class="pre">WindowBase.update()</span></code></a></li>
 </ul>
 </li>
 </ul>

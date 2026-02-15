@@ -1,7 +1,7 @@
 from charmy import *
 
-app = CApp()
-window = CWindow(size=(300, 160))
+app = App()
+window = Window(size=(300, 160))
 window["title"] = "Charmy"
 
 window.bind("resize", lambda event: print(f"<{event.event_type}>"))

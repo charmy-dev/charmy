@@ -1,1 +1,1 @@
-from .color import CColor
+from .color import Color

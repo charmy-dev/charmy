@@ -6,9 +6,9 @@ import io
 
 from .const import *
 from .drawing import *
-from .event import CEvent, CEventHandling, CEventTask, CWorkingThread
-from .object import CObject
-from .pos import CPos
-from .size import CSize
+from .event import Event, EventHandling, EventTask, WorkingThread
+from .object import CharmyObject
+from .pos import Pos
+from .size import Size
 from .styles import *
 from .widgets import *

@@ -2,11 +2,11 @@ import typing
 import warnings
 
 from ..const import BackendFrame, DrawingFrame, UIFrame
-from ..event import CWorkingThread
-from ..object import CObject
+from ..event import WorkingThread
+from ..object import CharmyObject
 
 
-class CApp(CObject):
+class App(CharmyObject):
     """The base of CApp Class.
 
     Args:
@@ -28,7 +28,7 @@ class CApp(CObject):
         if self.instance_count >= 1:
             warnings.warn("There should be only one instance of CApp.")
 
-        self.new("event.thread", CWorkingThread())
+        self.new("event.thread", WorkingThread())
 
         self.new("ui.framework", ui)
         self["ui.framework"]: UIFrame

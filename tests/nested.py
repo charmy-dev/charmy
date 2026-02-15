@@ -1,6 +1,6 @@
 from charmy import *
 
 
-with CContainer() as container:
-    with CWidget(container) as widget:
+with Container() as container:
+    with Widget(container) as widget:
         pass

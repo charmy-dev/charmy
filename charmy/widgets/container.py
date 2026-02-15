@@ -2,10 +2,10 @@ import typing
 import threading
 import functools
 
-from ..object import CObject
+from ..object import CharmyObject
 
 
-class CContainer(CObject):
+class Container(CharmyObject):
     """CContainer is a class to store child objects"""
 
     _local = threading.local()
@@ -18,19 +18,19 @@ class CContainer(CObject):
     # region Context
 
     @classmethod
-    def _get_context_stack(cls) -> typing.List['CContainer']:
+    def _get_context_stack(cls) -> typing.List['Container']:
         """Get the context stack of the current thread"""
         if not hasattr(cls._local, 'context_stack'):
             cls._local.context_stack = []
         return cls._local.context_stack
     
     @classmethod
-    def get_context(cls) -> typing.Optional['CContainer']:
+    def get_context(cls) -> typing.Optional['Container']:
         """Get the current context container"""
         stack = cls._get_context_stack()
         return stack[-1] if stack else None
 
-    def __enter__(self) -> 'CContainer':
+    def __enter__(self) -> 'Container':
         """Enter the context"""
         stack = self._get_context_stack()
         stack.append(self)
@@ -43,7 +43,7 @@ class CContainer(CObject):
             stack.pop()
         return False  # 不抑制异常
 
-    def add_child(self, child: 'CObject'):
+    def add_child(self, child: 'CharmyObject'):
         """Add a child object"""
         if child not in self["children"]:
             self["children"].append(child)
@@ -71,7 +71,7 @@ def auto_find_parent(widget_class: typing.Callable) -> typing.Callable:
 
         # If parent is not specified, try to get it from context
         if not parent_specified:
-            parent = CContainer.get_context()
+            parent = Container.get_context()
             if parent is not None:
                 kwargs['parent'] = parent
 

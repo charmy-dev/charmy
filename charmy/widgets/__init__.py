@@ -1,7 +1,7 @@
 """Widgets for Charmy"""
 
-from .app import CApp
-from .container import CContainer, auto_find_parent
-from .widget import CWidget
-from .window import CWindow
-from .windowbase import CWindowBase
+from .app import App
+from .container import Container, auto_find_parent
+from .widget import Widget
+from .window import Window
+from .windowbase import WindowBase

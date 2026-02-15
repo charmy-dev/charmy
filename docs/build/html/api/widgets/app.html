@@ -252,8 +252,8 @@
           <section id="module-charmy.widgets.app">
 <span id="app"></span><h1>app<a class="headerlink" href="#module-charmy.widgets.app" title="Link to this heading">¶</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="charmy.widgets.app.CApp">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.widgets.app.</span></span><span class="sig-name descname"><span class="pre">CApp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.CApp" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.app.App">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.widgets.app.</span></span><span class="sig-name descname"><span class="pre">App</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App" title="Link to this definition">¶</a></dt>
 <dd><p>The base of CApp Class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -265,36 +265,36 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.CApp.add_window">
-<span class="sig-name descname"><span class="pre">add_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.CApp.add_window" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.app.App.add_window">
+<span class="sig-name descname"><span class="pre">add_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.add_window" title="Link to this definition">¶</a></dt>
 <dd><p>Add a window to the application.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>window</strong> (<a class="reference internal" href="window.html#charmy.widgets.window.CWindow" title="charmy.widgets.window.CWindow"><em>CWindow</em></a>) – The window to be added.</p>
+<dd class="field-odd"><p><strong>window</strong> (<em>CWindow</em>) – The window to be added.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.CApp.cleanup">
-<span class="sig-name descname"><span class="pre">cleanup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.app.CApp.cleanup" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.app.App.cleanup">
+<span class="sig-name descname"><span class="pre">cleanup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.app.App.cleanup" title="Link to this definition">¶</a></dt>
 <dd><p>Clean up resources.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.CApp.destroy_window">
-<span class="sig-name descname"><span class="pre">destroy_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.CApp.destroy_window" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.app.App.destroy_window">
+<span class="sig-name descname"><span class="pre">destroy_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.destroy_window" title="Link to this definition">¶</a></dt>
 <dd><p>Destroy a window.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>window</strong> (<a class="reference internal" href="window.html#charmy.widgets.window.CWindow" title="charmy.widgets.window.CWindow"><em>CWindow</em></a>) – The window to be destroyed.</p>
+<dd class="field-odd"><p><strong>window</strong> (<em>CWindow</em>) – The window to be destroyed.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.CApp.error">
-<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.CApp.error" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.app.App.error">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.error" title="Link to this definition">¶</a></dt>
 <dd><p>GLFW Error Callback</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -310,14 +310,14 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.CApp.quit">
-<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.app.CApp.quit" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.app.App.quit">
+<span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.app.App.quit" title="Link to this definition">¶</a></dt>
 <dd><p>Quit application.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.CApp.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.CApp.run" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.app.App.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.run" title="Link to this definition">¶</a></dt>
 <dd><p>Run the application.</p>
 <p>This method will start the application event loop. It will continue running
 as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
@@ -325,8 +325,8 @@ as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.app.CApp.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.CApp.update" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.widgets.app.App.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.update" title="Link to this definition">¶</a></dt>
 <dd><p>Update the CWindows’ UI and events</p>
 </dd></dl>
 
@@ -390,14 +390,14 @@ as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">app</a><ul>
-<li><a class="reference internal" href="#charmy.widgets.app.CApp"><code class="docutils literal notranslate"><span class="pre">CApp</span></code></a><ul>
-<li><a class="reference internal" href="#charmy.widgets.app.CApp.add_window"><code class="docutils literal notranslate"><span class="pre">CApp.add_window()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.CApp.cleanup"><code class="docutils literal notranslate"><span class="pre">CApp.cleanup()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.CApp.destroy_window"><code class="docutils literal notranslate"><span class="pre">CApp.destroy_window()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.CApp.error"><code class="docutils literal notranslate"><span class="pre">CApp.error()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.CApp.quit"><code class="docutils literal notranslate"><span class="pre">CApp.quit()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.CApp.run"><code class="docutils literal notranslate"><span class="pre">CApp.run()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.app.CApp.update"><code class="docutils literal notranslate"><span class="pre">CApp.update()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.widgets.app.App.add_window"><code class="docutils literal notranslate"><span class="pre">App.add_window()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.cleanup"><code class="docutils literal notranslate"><span class="pre">App.cleanup()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.destroy_window"><code class="docutils literal notranslate"><span class="pre">App.destroy_window()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.error"><code class="docutils literal notranslate"><span class="pre">App.error()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.quit"><code class="docutils literal notranslate"><span class="pre">App.quit()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.run"><code class="docutils literal notranslate"><span class="pre">App.run()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.App.update"><code class="docutils literal notranslate"><span class="pre">App.update()</span></code></a></li>
 </ul>
 </li>
 </ul>

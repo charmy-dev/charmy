@@ -1,6 +1,6 @@
 from charmy import *
 
-obj = CObject()
+obj = CharmyObject()
 obj.new("name", "obj1")
 print(obj.get("name"))  # OUTPUT: obj1
 obj.set("name", "obj2")

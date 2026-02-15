@@ -3,14 +3,14 @@ import sys
 import typing
 
 from ..const import BackendFrame, DrawingFrame, DrawingMode, UIFrame
-from ..event import CEvent, CEventHandling
-from ..object import CObject
-from ..pos import CPos
-from ..size import CSize
-from .app import CApp
+from ..event import Event, EventHandling
+from ..object import CharmyObject
+from ..pos import Pos
+from ..size import Size
+from .app import App
 
 
-class CWindowBase(CEventHandling, CObject):
+class WindowBase(EventHandling, CharmyObject):
     """CWindowBase is a base class for window.
 
     Args:
@@ -23,7 +23,7 @@ class CWindowBase(CEventHandling, CObject):
 
     def __init__(
         self,
-        parent: CApp = None,
+        parent: App = None,
         *,
         title: str = "Charmy GUI",
         size: tuple[int, int] = (100, 100),
@@ -34,16 +34,16 @@ class CWindowBase(CEventHandling, CObject):
 
         # Auto find CApp Object
         if parent is None:
-            parent = self.get_obj("capp0")
+            parent = self.get_obj("app0")
             if parent is None:
-                raise ValueError("Not found main CApp")
+                raise ValueError("Not found main App")
 
         # Init parent attribute
         self.parent = parent
 
-        if isinstance(parent, CApp):
+        if isinstance(parent, App):
             self.app = parent
-        elif isinstance(parent, CWindowBase):
+        elif isinstance(parent, WindowBase):
             self.app = parent.app
         self.app.add_window(self)
 
@@ -93,10 +93,10 @@ class CWindowBase(CEventHandling, CObject):
             case _:
                 raise ValueError(f"Unknown Backend Framework: {self['backend.framework']}")
 
-        self.new("pos", CPos(0, 0))  # Always (0, 0)
-        self.new("canvas_pos", CPos(0, 0))  # Always (0, 0)
-        self.new("root_pos", CPos(0, 0), set_func=self._set_pos)  # The position of the window
-        self.new("size", CSize(size[0], size[1]), set_func=self._set_size)  # The size of the window
+        self.new("pos", Pos(0, 0))  # Always (0, 0)
+        self.new("canvas_pos", Pos(0, 0))  # Always (0, 0)
+        self.new("root_pos", Pos(0, 0), set_func=self._set_pos)  # The position of the window
+        self.new("size", Size(size[0], size[1]), set_func=self._set_size)  # The size of the window
         self.new("title", title, set_func=self._set_title)  # The title of the window
 
         self.is_dirty: bool = False
@@ -167,13 +167,13 @@ class CWindowBase(CEventHandling, CObject):
                 self.glfw.set_window_size_callback(
                     self.the_window,
                     lambda window, width, height: self.trigger(
-                        CEvent(self, "resize", width=width, height=height)
+                        Event(self, "resize", width=width, height=height)
                     ),
                 )
                 self.glfw.set_window_pos_callback(
                     self.the_window,
                     lambda window, root_x, root_y: self.trigger(
-                        CEvent(self, "move", x_root=root_x, y_root=root_y)
+                        Event(self, "move", x_root=root_x, y_root=root_y)
                     ),
                 )
 
@@ -249,7 +249,7 @@ class CWindowBase(CEventHandling, CObject):
 
                 yield surface  # ⚠️ 必须用 yield，不要 return
 
-    def draw(self, event: CEvent = None) -> None:  # NOQA
+    def draw(self, event: Event = None) -> None:  # NOQA
         """Draw the window.
 
         Args:
@@ -294,7 +294,7 @@ class CWindowBase(CEventHandling, CObject):
             self["backend.context"].releaseResourcesAndAbandonContext()
         # for child in self.children:
         #    child.need_redraw = False
-        self.trigger(CEvent(self,"draw"))
+        self.trigger(Event(self, "draw"))
 
     def dirty(self):
         """Set the dirty flag."""
@@ -365,11 +365,11 @@ class CWindowBase(CEventHandling, CObject):
     def _get_ui_is_vsync(self):
         return self.app.get("ui.is_vsync")
 
-    def _set_size(self, size: CSize | tuple[int, int]) -> None:
+    def _set_size(self, size: Size | tuple[int, int]) -> None:
         """Set the size of the window.
 
         Args:
-            size (CSize | tuple[int, int]): Size to set.
+            size (Size | tuple[int, int]): Size to set.
         Returns:
             None
         """
@@ -382,7 +382,7 @@ class CWindowBase(CEventHandling, CObject):
                 case UIFrame.GLFW:
                     self.glfw.set_window_size(self.the_window, size["width"], size["height"])
 
-    def resize(self, size: CSize | tuple[int, int]) -> None:
+    def resize(self, size: Size | tuple[int, int]) -> None:
         """Resize the window to the given size.
 
         Args:
@@ -392,7 +392,7 @@ class CWindowBase(CEventHandling, CObject):
         """
         self.set("size", size)
 
-    def _set_pos(self, pos: CPos | tuple[int, int]) -> None:
+    def _set_pos(self, pos: Pos | tuple[int, int]) -> None:
         """Set the position of the window.
 
         Args:
@@ -407,7 +407,7 @@ class CWindowBase(CEventHandling, CObject):
             if self["ui.framework"] == UIFrame.GLFW:
                 self.glfw.set_window_pos(self.the_window, pos["x"], pos["y"])
 
-    def move(self, pos: CPos | tuple[int, int]) -> None:
+    def move(self, pos: Pos | tuple[int, int]) -> None:
         """Move the window to the given position.
 
         Args:
@@ -432,21 +432,21 @@ class CWindowBase(CEventHandling, CObject):
 
     # region Events
 
-    def _on_move(self, event: CEvent):
+    def _on_move(self, event: Event):
         """Handle the move event.
 
         Args:
-            event (CEvent): The move event.
+            event (Event): The move event.
         """
         _root_point = self.get("root_pos", skip=True)
         _root_point.set("x", event["x_root"])
         _root_point.set("y", event["y_root"])
 
-    def _on_resize(self, event: CEvent):
+    def _on_resize(self, event: Event):
         """Handle the resize event.
 
         Args:
-            event (CEvent): The resize event.
+            event (Event): The resize event.
         """
         _size = self.get("size", skip=True)
         _size(event["width"], event["height"])

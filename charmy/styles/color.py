@@ -1,10 +1,10 @@
 import importlib
 
 from ..const import DrawingFrame
-from ..object import CObject
-from ..widgets.app import CApp
+from ..object import CharmyObject
+from ..widgets.app import App
 
-class CColor(CObject):
+class Color(CharmyObject):
     """Color manager"""
 
     def __init__(self, *args, draw_framework: DrawingFrame = None, **kwargs):
@@ -13,10 +13,10 @@ class CColor(CObject):
         # The Drawing Framework
         if draw_framework is None:
             # Auto find CApp Object
-            app = self.get_obj("capp0")
+            app = self.get_obj("app0")
             if app is None:
-                raise ValueError("Not found main CApp")
-            self.app: CApp = app
+                raise ValueError("Not found main App")
+            self.app: App = app
             self.new(
                 "drawing.framework",
                 self._get_drawing_framework(),

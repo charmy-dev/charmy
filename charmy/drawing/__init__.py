@@ -1,1 +1,1 @@
-from .canvas import CCanvasBase
+from .canvas import CanvasBase

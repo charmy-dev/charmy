@@ -1,7 +1,7 @@
-from .object import CObject
+from .object import CharmyObject
 
 
-class CPos(CObject):
+class Pos(CharmyObject):
     """CPos is a class to store position."""
 
     def __init__(self, x=0, y=0):

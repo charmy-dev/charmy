@@ -1,10 +1,10 @@
-from .container import CContainer
-from .windowbase import CWindowBase
+from .container import Container
+from .windowbase import WindowBase
 
 
-class CWindow(CWindowBase, CContainer):
+class Window(WindowBase, Container):
     def __init__(self, *args, **kwargs):
-        CWindowBase.__init__(self, *args, **kwargs)
+        WindowBase.__init__(self, *args, **kwargs)
         self.new("children", [])
         self.set("ui.draw_func", self.skia_draw_func)
 

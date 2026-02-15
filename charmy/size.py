@@ -1,13 +1,13 @@
-from .object import CObject
+from .object import CharmyObject
 
 
-class CSize(CObject):
+class Size(CharmyObject):
     """CSize is a class to store size.
 
     To reset the size, use the __call__ method.
 
     Example:
-        >>> size = CSize(100, 200)
+        >>> size = Size(100, 200)
         >>> print(size)  # CSize(100, 200)
         >>> size(300, 400)  # or size.__call__(300, 400)
         >>> print(size)  # CSize(300, 400)

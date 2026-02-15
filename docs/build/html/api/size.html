@@ -252,12 +252,12 @@
           <section id="module-charmy.size">
 <span id="charmy-size"></span><h1>charmy.size<a class="headerlink" href="#module-charmy.size" title="Link to this heading">¶</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="charmy.size.CSize">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.size.</span></span><span class="sig-name descname"><span class="pre">CSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.size.CSize" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.size.Size">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.size.</span></span><span class="sig-name descname"><span class="pre">Size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.size.Size" title="Link to this definition">¶</a></dt>
 <dd><p>CSize is a class to store size.</p>
 <p>To reset the size, use the __call__ method.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="n">CSize</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># CSize(100, 200)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">size</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>  <span class="c1"># or size.__call__(300, 400)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># CSize(300, 400)</span>
@@ -324,7 +324,7 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">charmy.size</a><ul>
-<li><a class="reference internal" href="#charmy.size.CSize"><code class="docutils literal notranslate"><span class="pre">CSize</span></code></a></li>
+<li><a class="reference internal" href="#charmy.size.Size"><code class="docutils literal notranslate"><span class="pre">Size</span></code></a></li>
 </ul>
 </li>
 </ul>

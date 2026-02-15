@@ -6,7 +6,7 @@ import weakref
 from .const import ID
 
 
-class CInstanceCounterMeta(type):
+class InstanceCounterMeta(type):
     """
     CInstanceCounterMeta
     """
@@ -24,7 +24,7 @@ class CInstanceCounterMeta(type):
         return instance
 
 
-class CObject(metaclass=CInstanceCounterMeta):
+class CharmyObject(metaclass=InstanceCounterMeta):
     """CObject is this project's basic class, with features to set and get attribute."""
 
     objects: typing.Dict[str, typing.Any] = {}  # find by ID {1: OBJ1, 2: OBJ2}
@@ -33,7 +33,8 @@ class CObject(metaclass=CInstanceCounterMeta):
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
 
     def __init__(self, _id: ID | str = ID.AUTO):
-        self._attributes = {}  # Expected to be user-modifiable.
+        self._attributes: dict[str, typing.Any | list[str, typing.Any, typing.Callable | None, typing.Callable | None]] = {}  # NOQA: Expected to be user-modifiable.
+        # {key: value, key2: ["@custom", value, set_func, get_func]}
 
         if _id == ID.AUTO:
             _prefix = self.class_name
@@ -201,6 +202,8 @@ class CObject(metaclass=CInstanceCounterMeta):
         """Low level get attribute by key"""
         return self.get(key)
 
+    # region Item configuration
+
     def __setitem__(self, key: str, value: typing.Any):
         """You can set attribute by key: obj["key"] = value"""
         self.set(key, value)
@@ -208,6 +211,12 @@ class CObject(metaclass=CInstanceCounterMeta):
     def __getitem__(self, key: str) -> typing.Any:
         """You can get attribute by key: obj["key"]"""
         return self.get(key)
+
+    def __delitem__(self, key):
+        """You can delete attribute by key: obj["key"]"""
+        del self._attributes[key]
+
+    # endregion
 
     @property
     def attributes(self) -> typing.Dict[str, typing.Any]:

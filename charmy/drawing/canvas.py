@@ -1,5 +1,5 @@
-from ..object import CObject
+from ..object import CharmyObject
 
 
-class CCanvasBase(CObject):
+class CanvasBase(CharmyObject):
     pass

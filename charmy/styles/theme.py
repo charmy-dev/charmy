@@ -6,10 +6,10 @@ import inspect
 import json
 import warnings
 
-from ..object import CObject
+from ..object import CharmyObject
 
 
-class CTheme(CObject):
+class Theme(CharmyObject):
     
     """Theme class for CWindow and CWidgets.
 
@@ -36,10 +36,10 @@ class CTheme(CObject):
     重置后我摸改了一些地方，但逻辑、功能应是大差不差的，某些方法名、变量名我改的易读了点
     """
     
-    LOADED_THEMES: list["CTheme"] = []
+    LOADED_THEMES: list["Theme"] = []
     INTERNAL_THEME_DIR = pathlib.Path(__file__).parent.parent / "resources" / "themes"
-    INTERNAL_THEME: dict[str, "CTheme"] = {}
-    DEFAULT_THEME: "CTheme"
+    INTERNAL_THEME: dict[str, "Theme"] = {}
+    DEFAULT_THEME: "Theme"
     DEFAULT_THEME_FILENAME: str = "light"
     EXPECTED_DATA_TYPE = {
         "styles": dict,
@@ -50,7 +50,7 @@ class CTheme(CObject):
     }
 
     def __init__(
-        self, styles: dict | None = None, parent: typing.Union["CTheme", None] = None, *kwargs
+        self, styles: dict | None = None, parent: typing.Union["Theme", None] = None, *kwargs
     ) -> None:
         """Theme for CWindow and CWidgets.
 
@@ -67,25 +67,25 @@ class CTheme(CObject):
         """
         super().__init__(**kwargs)  # NOQA
 
-        self["name"]: str = f"untitled.{len(CTheme.LOADED_THEMES) + 1}"
-        self["friendly_name"] = f"Untitled theme {len(CTheme.LOADED_THEMES) + 1}"
+        self["name"]: str = f"untitled.{len(Theme.LOADED_THEMES) + 1}"
+        self["friendly_name"] = f"Untitled theme {len(Theme.LOADED_THEMES) + 1}"
         # NOQA: friendly_name感觉有点多余? ——Little White Cloud
         # NOQA: Keep it 4 now currently. ——rgzz666
-        self.parent: typing.Union["CTheme", None] = parent
+        self.parent: typing.Union["Theme", None] = parent
         self.children = []
         self["is_special"]: bool = False
 
         if styles is None:
-            self["styles"]: dict = CTheme.DEFAULT_THEME["styles"]
+            self["styles"]: dict = Theme.DEFAULT_THEME["styles"]
         else:
             self["styles"]: dict = styles
         self["color_palette"] = {}
 
-        CTheme.LOADED_THEMES.append(self)
+        Theme.LOADED_THEMES.append(self)
         return
     
     @classmethod
-    def find_loaded_theme(cls, theme_name: str) -> "CTheme | typing.Literal[False]":
+    def find_loaded_theme(cls, theme_name: str) -> "Theme | typing.Literal[False]":
         """Search for a loaded theme by name, returns the CTheme object if found, or False if not.
 
         Example
@@ -115,7 +115,7 @@ class CTheme(CObject):
         :param theme_name: Name of the theme to validate
         :return: If the theme loaded
         """
-        return CTheme.find_loaded_theme(theme_name) != False  # ☝🤓
+        return Theme.find_loaded_theme(theme_name) != False  # ☝🤓
 
     # region Load theme
 
@@ -123,23 +123,23 @@ class CTheme(CObject):
     def _load_internal_theme(cls):
         """Load internal themes. Should be run once at import, see the end of this file."""
         # Load default (ROOT) theme
-        CTheme.DEFAULT_THEME = typing.cast(
-            "CTheme",
-            CTheme({}).load_from_file(
-                CTheme.INTERNAL_THEME_DIR / f"{CTheme.DEFAULT_THEME_FILENAME}.json"
+        Theme.DEFAULT_THEME = typing.cast(
+            "Theme",
+            Theme({}).load_from_file(
+                Theme.INTERNAL_THEME_DIR / f"{Theme.DEFAULT_THEME_FILENAME}.json"
             ),
         )
 
         # Load other internal themes
-        for file in os.listdir(CTheme.INTERNAL_THEME_DIR):
-            if file == f"{CTheme.DEFAULT_THEME_FILENAME}.json":
+        for file in os.listdir(Theme.INTERNAL_THEME_DIR):
+            if file == f"{Theme.DEFAULT_THEME_FILENAME}.json":
                 # For default theme, no need to reload it
-                CTheme.INTERNAL_THEME[CTheme.DEFAULT_THEME["name"]] = CTheme.DEFAULT_THEME
+                Theme.INTERNAL_THEME[Theme.DEFAULT_THEME["name"]] = Theme.DEFAULT_THEME
                 continue
-            _ = CTheme({}).load_from_file(CTheme.INTERNAL_THEME_DIR / file)
-            CTheme.INTERNAL_THEME[_["name"]] = _
+            _ = Theme({}).load_from_file(Theme.INTERNAL_THEME_DIR / file)
+            Theme.INTERNAL_THEME[_["name"]] = _
 
-    def load_from_file(self, file_path: str | pathlib.Path) -> "CTheme | typing.Literal[False]":
+    def load_from_file(self, file_path: str | pathlib.Path) -> "Theme | typing.Literal[False]":
         """Load styles to theme from a file.
 
         Example
@@ -168,7 +168,7 @@ class CTheme(CObject):
             style_raw = f.read()
 
             theme_data = json.loads(style_raw)
-            if (search_result := CTheme.find_loaded_theme(theme_data["name"])) != False:
+            if (search_result := Theme.find_loaded_theme(theme_data["name"])) != False:
                 # If name already occupied, meaning the theme might already be loaded
                 # (or just simply has an occupied name)
                 warnings.warn(
@@ -179,7 +179,7 @@ class CTheme(CObject):
 
         return self.load_from_json(theme_data)
 
-    def load_from_json(self, theme_data: dict) -> "CTheme":
+    def load_from_json(self, theme_data: dict) -> "Theme":
         """Load all data (including metadata) to the theme.
 
         Example

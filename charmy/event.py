@@ -9,10 +9,10 @@ import re
 import warnings
 
 from .const import ID
-from .object import CObject
+from .object import CharmyObject
 
 
-class CEventHandling(CObject):
+class EventHandling(CharmyObject):
 
     # fmt: off
     EVENT_TYPES: list[str] = [
@@ -31,11 +31,11 @@ class CEventHandling(CObject):
         "delay", "repeat", 
     ]
     # fmt: on
-    multithread_tasks: list[tuple[CEventTask, CEvent]] = []
+    multithread_tasks: list[tuple[EventTask, Event]] = []
     WORKING_THREAD: threading.Thread
 
     @staticmethod
-    def _execute_task(task: CEventTask | CDelayTask, event_obj: CEvent) -> None:
+    def _execute_task(task: EventTask | DelayTask, event_obj: Event) -> None:
         """To execute the binded task directly, regardless its props, mainly for internal use."""
         match task.target:
             case _ if callable(task.target):
@@ -65,8 +65,8 @@ class CEventHandling(CObject):
         This shows subclassing CEventHandling to let CWidget gain the ability of handling events.
         """
         super().__init__()
-        self.latest_event: CEvent = CEvent(widget=None, event_type="NO_EVENT")
-        self.tasks: dict[str, list[CEventTask]] = {}
+        self.latest_event: Event = Event(widget=None, event_type="NO_EVENT")
+        self.tasks: dict[str, list[EventTask]] = {}
         ## Initialize tasks list
         for event_type in self.__class__.EVENT_TYPES:
             self.tasks[event_type] = []
@@ -87,7 +87,7 @@ class CEventHandling(CObject):
                 params = []
         return {"type": event_type, "params": params}
 
-    def execute_task(self, task: CEventTask, event_obj: CEvent | None = None):
+    def execute_task(self, task: EventTask, event_obj: Event | None = None):
         """To execute a task
 
         Example
@@ -99,15 +99,15 @@ class CEventHandling(CObject):
 
         """
         if event_obj is None:
-            event_obj = CEvent()
+            event_obj = Event()
         assert event_obj is not None
         if event_obj.widget is None:
             event_obj.widget = self
         if not task.multithread:
             # If not multitask, execute directly
-            CEventHandling._execute_task(task, event_obj)
+            EventHandling._execute_task(task, event_obj)
             # If is a delay event, it should be removed right after execution
-            if isinstance(task, CDelayTask):
+            if isinstance(task, DelayTask):
                 self.unbind(task)
         else:
             # Otherwise add to multithread tasks list and let the working thread to deal with it
@@ -115,14 +115,14 @@ class CEventHandling(CObject):
             # which is absolutely not perfect, though works, to implement this mechanism, by
             # overriding its target with a modified version
             def self_destruct_template(task, event_obj):
-                CEventHandling._execute_task(task, event_obj)
+                EventHandling._execute_task(task, event_obj)
                 self.unbind(task)
 
-            if isinstance(task, CDelayTask):
+            if isinstance(task, DelayTask):
                 task.target = lambda event_obj: self_destruct_template(task, event_obj)
-            CEventHandling.multithread_tasks.append((task, event_obj))
+            EventHandling.multithread_tasks.append((task, event_obj))
 
-    def trigger_event(self, event_obj: CEvent) -> None:
+    def trigger_event(self, event_obj: Event) -> None:
         """To trigger a type of event
 
         Args:
@@ -145,10 +145,10 @@ class CEventHandling(CObject):
         parsed_event_type = self.parse_event_type_str(event_obj.event_type)
         # Create a default CEvent object if not specified
         if event_obj is None:
-            event_obj = CEvent(widget=self, event_type=tuple(parsed_event_type.keys())[0])
+            event_obj = Event(widget=self, event_type=tuple(parsed_event_type.keys())[0])
         # Add the event to event lists (the widget itself and the global list)
         self.latest_event = event_obj
-        CEvent.latest = event_obj
+        Event.latest = event_obj
         # Find targets
         targets = [parsed_event_type["type"]]
         if not parsed_event_type["params"]:
@@ -172,7 +172,7 @@ class CEventHandling(CObject):
         target: typing.Callable | typing.Iterable,
         multithread: bool = False,
         _keep_at_clear: bool = False,
-    ) -> CEventTask | bool:
+    ) -> EventTask | bool:
         """To bind a task to the object when a specific type of event is triggered.
 
         Example
@@ -203,7 +203,7 @@ class CEventHandling(CObject):
         match parsed_event_type["type"]:
             case "delay":
                 raise NotImplementedError("Delay tasks are not implemented yet!")
-                task = CDelayTask(
+                task = DelayTask(
                     target,  # I will fix this type error later (ignore is ur type check is off)
                     parsed_event_type["params"][0],
                     multithread,
@@ -213,11 +213,11 @@ class CEventHandling(CObject):
             case "repeat":
                 raise NotImplementedError("Repeat tasks is not implemented yet!")
             case _:  # All normal event types
-                task = CEventTask(target, multithread, _keep_at_clear, task_id)
+                task = EventTask(target, multithread, _keep_at_clear, task_id)
         self.tasks[event_type].append(task)
         return task
 
-    def find_task(self, task_id: str) -> CEventTask | bool:
+    def find_task(self, task_id: str) -> EventTask | bool:
         """To find a event task using task ID.
 
         Example
@@ -239,7 +239,7 @@ class CEventHandling(CObject):
         else:
             return False
 
-    def unbind(self, target_task: str | CEventTask | CDelayTask) -> bool:
+    def unbind(self, target_task: str | EventTask | DelayTask) -> bool:
         """To unbind the task with specified task ID.
 
         Example
@@ -267,7 +267,7 @@ class CEventHandling(CObject):
                         return True
                 else:
                     return False
-            case CEventTask():
+            case EventTask():
                 for event_type in self.tasks:
                     if target_task in self.tasks[event_type]:
                         self.tasks[event_type].remove(target_task)
@@ -282,14 +282,14 @@ class CEventHandling(CObject):
                 return False
 
 
-class CEvent(CObject):
+class Event(CharmyObject):
     """Used to represent an event."""
 
-    latest: "CEvent"
+    latest: "Event"
 
     def __init__(
         self,
-        widget: CEventHandling | None = None,
+        widget: EventHandling | None = None,
         event_type: str = "[Unspecified]",
         **kwargs,
     ):
@@ -327,10 +327,10 @@ class CEvent(CObject):
         else:
             return None  # If no such item avail, returns None
 
-CEvent.latest = CEvent(widget=None, event_type="NO_EVENT")
+Event.latest = Event(widget=None, event_type="NO_EVENT")
 
 
-class CEventTask:
+class EventTask:
     """A class to represent event task when a event is triggered."""
 
     def __init__(
@@ -364,17 +364,17 @@ class CEventTask:
         self.keep_at_clear: bool = _keep_at_clear
 
 
-class CDelayTask(CEventTask):
+class DelayTask(EventTask):
     NotImplemented
 
 
-class CWorkingThread(threading.Thread, CObject):
+class WorkingThread(threading.Thread, CharmyObject):
     """CWorkingThread is a class represent the event working thread."""
 
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self, *args, **kwargs)
-        CObject.__init__(self, _id="event.main_thread")
-        self.tasks: list[tuple[CEvent, CEventTask | CDelayTask]] = []
+        CharmyObject.__init__(self, _id="event.main_thread")
+        self.tasks: list[tuple[Event, EventTask | DelayTask]] = []
         self.is_alive: bool = True
         self.lock: threading.Lock = threading.Lock()
 
@@ -400,5 +400,5 @@ class CWorkingThread(threading.Thread, CObject):
                 # If idle, then rest for 0.02s to save CPU time
                 time.sleep(0.02)
 
-    def add_task(self, task: CEventTask | CDelayTask, event: CEvent):
+    def add_task(self, task: EventTask | DelayTask, event: Event):
         self.tasks.append((event, task))
