@@ -5,19 +5,19 @@ First application
 
 .. code-block:: python
 
-   import charmy as cy
+   import charmy as cm
 
 2. Create a ``App``
 
 .. code-block:: python
 
-   app = cy.App()
+   app = cm.App()
 
 3. Create a ``Window``
 
 .. code-block:: python
 
-   window = cy.Window()  # If you want to use other App, pass it as argument
+   window = cm.Window()  # If you want to use other App, pass it as argument
 
 4. Run the application
 
@@ -29,10 +29,10 @@ In all, your first application should look like this:
 
 .. code-block:: python
 
-   import charmy as cy
+   import charmy as cm
 
-   app = cy.App()
-   window = cy.Window()
+   app = cm.App()
+   window = cm.Window()
    app.run()
 
 Then, you can get a window.

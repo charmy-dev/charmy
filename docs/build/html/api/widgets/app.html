@@ -279,7 +279,7 @@ ui.samples: UI Samples.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.widgets.app.App.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ui</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.UIFrame" title="charmy.const.UIFrame"><span class="pre">UIFrame</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">UIFrame.GLFW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drawing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.DrawingFrame" title="charmy.const.DrawingFrame"><span class="pre">DrawingFrame</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DrawingFrame.SKIA</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.BackendFrame" title="charmy.const.BackendFrame"><span class="pre">BackendFrame</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">BackendFrame.OPENGL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vsync</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ui</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.UIFrame" title="charmy.const.UIFrame"><span class="pre">UIFrame</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">UIFrame.GLFW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drawing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.DrawingFrame" title="charmy.const.DrawingFrame"><span class="pre">DrawingFrame</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DrawingFrame.SKIA</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../const.html#charmy.const.BackendFrame" title="charmy.const.BackendFrame"><span class="pre">BackendFrame</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">BackendFrame.OPENGL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vsync</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.App.__init__" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -346,6 +346,18 @@ as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="charmy.widgets.app.mainloop">
+<span class="sig-prename descclassname"><span class="pre">charmy.widgets.app.</span></span><span class="sig-name descname"><span class="pre">mainloop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.widgets.app.mainloop" title="Link to this definition">¶</a></dt>
+<dd><p>Run the main application</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="charmy.widgets.app.cquit">
+<span class="sig-prename descclassname"><span class="pre">charmy.widgets.app.</span></span><span class="sig-name descname"><span class="pre">cquit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.app.cquit" title="Link to this definition">¶</a></dt>
+<dd><p>Quit the main application</p>
 </dd></dl>
 
 </section>
@@ -417,6 +429,8 @@ as long as the <cite>is_alive</cite> attribute is set to <cite>True</cite>.</p>
 <li><a class="reference internal" href="#charmy.widgets.app.App.error"><code class="docutils literal notranslate"><span class="pre">App.error()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#charmy.widgets.app.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.app.cquit"><code class="docutils literal notranslate"><span class="pre">cquit()</span></code></a></li>
 </ul>
 </li>
 </ul>
