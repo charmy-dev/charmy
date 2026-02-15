@@ -7,23 +7,18 @@ First application
 
    import charmy as cm
 
-2. Create a ``App``
+2. Create a ``Window``
 
 .. code-block:: python
 
-   app = cm.App()
+   window = cm.Window()
 
-3. Create a ``Window``
-
-.. code-block:: python
-
-   window = cm.Window()  # If you want to use other App, pass it as argument
-
-4. Run the application
+3. Run the application
+There is auto created ``App`` object. You can run it by ``cm.mainloop()``.
 
 .. code-block:: python
 
-   app.run()
+   cm.mainloop()
 
 In all, your first application should look like this:
 
@@ -31,9 +26,8 @@ In all, your first application should look like this:
 
    import charmy as cm
 
-   app = cm.App()
    window = cm.Window()
-   app.run()
+   cm.mainloop()
 
 Then, you can get a window.
 

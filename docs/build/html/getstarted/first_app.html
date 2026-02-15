@@ -273,29 +273,21 @@
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
-<li><p>Create a <code class="docutils literal notranslate"><span class="pre">App</span></code></p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">App</span><span class="p">()</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
 <li><p>Create a <code class="docutils literal notranslate"><span class="pre">Window</span></code></p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">()</span>  <span class="c1"># If you want to use other App, pass it as argument</span>
 </pre></div>
 </div>
-<ol class="arabic simple" start="4">
-<li><p>Run the application</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<p>3. Run the application
+There is auto created <code class="docutils literal notranslate"><span class="pre">App</span></code> object. You can run it by <code class="docutils literal notranslate"><span class="pre">cm.mainloop()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>In all, your first application should look like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">App</span><span class="p">()</span>
 <span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Then, you can get a window.</p>
