@@ -2,13 +2,12 @@ import importlib
 import sys
 import typing
 
-from ..const import (MAINAPP_ID, BackendFrame, DrawingFrame, DrawingMode,
-                     UIFrame)
+from ..const import MAIN_MANAGER_ID, BackendFrame, DrawingFrame, DrawingMode, UIFrame
 from ..event import Event, EventHandling
 from ..object import CharmyObject
 from ..pos import Pos
 from ..size import Size
-from .app import App
+from .cmm import CharmyManager
 
 
 class WindowBase(EventHandling, CharmyObject):
@@ -24,7 +23,7 @@ class WindowBase(EventHandling, CharmyObject):
 
     def __init__(
         self,
-        parent: App = None,
+        parent: CharmyManager = None,
         *,
         title: str = "Charmy GUI",
         size: tuple[int, int] = (100, 100),
@@ -35,14 +34,14 @@ class WindowBase(EventHandling, CharmyObject):
 
         # Auto find CApp Object
         if parent is None:
-            parent = self.get_obj(MAINAPP_ID)
+            parent = self.get_obj(MAIN_MANAGER_ID)
             if parent is None:
                 raise ValueError("Not found main App")
 
         # Init parent attribute
         self.parent = parent
 
-        if isinstance(parent, App):
+        if isinstance(parent, CharmyManager):
             self.app = parent
         elif isinstance(parent, WindowBase):
             self.app = parent.app

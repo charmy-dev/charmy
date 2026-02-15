@@ -53,4 +53,4 @@ class DrawingMode(Enum):
     RETAINED = retained = "READIED"
 
 
-MAINAPP_ID = "mainapp"
+MAIN_MANAGER_ID = "main_manager"

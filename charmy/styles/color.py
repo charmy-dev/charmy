@@ -1,8 +1,8 @@
 import importlib
 
-from ..const import MAINAPP_ID, DrawingFrame
+from ..const import MAIN_MANAGER_ID, DrawingFrame
 from ..object import CharmyObject
-from ..widgets.app import App
+from ..widgets.cmm import CharmyManager
 
 
 class Color(CharmyObject):
@@ -17,7 +17,7 @@ class Color(CharmyObject):
             app = self.get_obj(MAINAPP_ID)
             if app is None:
                 raise ValueError("Not found main App")
-            self.app: App = app
+            self.app: CharmyManager = app
             self.new(
                 "drawing.framework",
                 self._get_drawing_framework(),

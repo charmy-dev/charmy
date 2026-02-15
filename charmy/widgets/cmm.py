@@ -3,14 +3,14 @@ import typing
 import warnings
 from os import environ
 
-from ..const import MAINAPP_ID, BackendFrame, DrawingFrame, UIFrame
+from ..const import MAIN_MANAGER_ID, BackendFrame, DrawingFrame, UIFrame
 from ..event import WorkingThread
 from ..framework import window_framework_map
 from ..object import CharmyObject
 
 
-class App(CharmyObject):
-    """The base of CApp Class.
+class CharmyManager(CharmyObject):
+    """The manager of the charmy windows.
 
     Args:
         ui.framework: What UI Framework will be used.
@@ -78,7 +78,7 @@ class App(CharmyObject):
                 )
 
     def update(self):
-        """Update the CWindows' UI and events"""
+        """Update the Windows' UI and events"""
 
         input_mode: bool = True
 
@@ -98,12 +98,12 @@ class App(CharmyObject):
             self.glfw.wait_events()
 
     def mainloop(self):
-        """Run the application.
+        """Start mainloop.
 
-        This method will start the application event loop. It will continue running
+        This method will start the manager event loop. It will continue running
         as long as the `is_alive` attribute is set to `True`.
 
-        If no windows are added to the application, a warning will be issued.
+        If no windows are added to the manager, a warning will be issued.
         """
         if not self.windows:
             warnings.warn(
@@ -132,18 +132,18 @@ class App(CharmyObject):
     launch = run = mainloop
 
     def add_window(self, window):
-        """Add a window to the application.
+        """Add a window to the manager.
 
         Args:
-            window (CWindow): The window to be added.
+            window (charmy.widgets.Window): The window to be added.
         """
         self.windows.append(window)
 
     def destroy_window(self, window):
-        """Destroy a window.
+        """Destroy a window from the manager.
 
         Args:
-            window (CWindow): The window to be destroyed.
+            window (charmy.widgets.Window): The window to be destroyed.
         """
         windows = self.windows
         if window in windows:
@@ -159,7 +159,7 @@ class App(CharmyObject):
         self.quit()
 
     def quit(self) -> None:
-        """Quit application."""
+        """Quit the mainloop."""
         self.is_alive = False
         self["event.thread"].is_alive = False
 
@@ -175,24 +175,23 @@ class App(CharmyObject):
         raise f"GLFW Error {error_code}: {description.decode()}"
 
 
-# Auto create App Object
-if environ.get("AUTO_CREATE_MAIN_APP", "True") == "True":
-    uimap = {
-        "GLFW": UIFrame.GLFW,
-    }
-    mainapp: App = App(id_=MAINAPP_ID, ui=uimap[environ.get("UI_FRAMEWORK", "GLFW")])
-else:
-    mainapp: App | None = None
+# Auto create Manager Object
+uimap = {
+    "GLFW": UIFrame.GLFW,
+}
+main_manager: CharmyManager = CharmyManager(
+    id_=MAIN_MANAGER_ID, ui=uimap[environ.get("UI_FRAMEWORK", "GLFW")]
+)
 
 
 def mainloop() -> None:
-    """Run the main application"""
+    """Start main loop."""
     try:
-        mainapp.run()
+        main_manager.run()
     except Exception as e:
         raise e
 
 
 def cquit():  # NOQA
-    """Quit the main application"""
-    mainapp.quit()
+    """Quit the main loop"""
+    main_manager.quit()
