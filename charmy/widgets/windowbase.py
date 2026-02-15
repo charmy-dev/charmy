@@ -1,8 +1,7 @@
-import importlib
-import sys
 import typing
 
-from ..const import MAIN_MANAGER_ID, BackendFrame, DrawingFrame, DrawingMode, UIFrame
+from ..const import (MAIN_MANAGER_ID, BackendFrame, DrawingFrame, DrawingMode,
+                     UIFrame)
 from ..event import Event, EventHandling
 from ..object import CharmyObject
 from ..pos import Pos
@@ -228,7 +227,7 @@ class WindowBase(EventHandling, CharmyObject):
                         case DrawingFrame.SKIA:
                             # Create a Surface and hand it over to this arg.
                             # 【创建Surface，交给该窗口】
-                            with self.skia_surface(self.the_window) as self[
+                            with self.skia_surface(self.the_window) as self[  # NOQA
                                 "drawing.surface"
                             ]:  # NOQA
                                 if self["drawing.surface"]:
@@ -240,7 +239,7 @@ class WindowBase(EventHandling, CharmyObject):
 
                                     self["drawing.surface"].flushAndSubmit()
                 case "sdl2":
-                    import sdl2
+                    import sdl2  # NOQA
 
                     surface = sdl2.SDL_GetWindowSurface(self.the_window).contents
 

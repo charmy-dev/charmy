@@ -1,5 +1,3 @@
-import importlib
-
 from ..const import MAIN_MANAGER_ID, DrawingFrame
 from ..object import CharmyObject
 from ..widgets.cmm import CharmyManager
