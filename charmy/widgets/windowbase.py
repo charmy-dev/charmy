@@ -2,7 +2,8 @@ import importlib
 import sys
 import typing
 
-from ..const import BackendFrame, DrawingFrame, DrawingMode, UIFrame, MAINAPP_ID
+from ..const import (MAINAPP_ID, BackendFrame, DrawingFrame, DrawingMode,
+                     UIFrame)
 from ..event import Event, EventHandling
 from ..object import CharmyObject
 from ..pos import Pos
@@ -52,9 +53,15 @@ class WindowBase(EventHandling, CharmyObject):
             "ui.framework", self._get_ui_framework(), get_func=self._get_ui_framework
         )  # The UI Framework
         self.new(
+            "ui.framework.class",
+            self._get_ui_framework_class(),
+            get_func=self._get_ui_framework_class,
+        )
+        self.new(
             "ui.is_vsync", self._get_ui_is_vsync(), get_func=self._get_ui_is_vsync
         )  # Whether to enable VSync
 
+        # """
         match self["ui.framework"]:
             case UIFrame.GLFW:
                 self.glfw = self.app.glfw
@@ -62,6 +69,7 @@ class WindowBase(EventHandling, CharmyObject):
                 self.sdl3 = self.app.sdl3
             case _:
                 raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
+        # """
 
         self.new("ui.draw_func", None)
 
@@ -113,67 +121,24 @@ class WindowBase(EventHandling, CharmyObject):
 
     def create(self):
         """Create the window."""
-        window = None
+        arg = self["ui.framework.class"].create(
+            size=self.get("size", skip=True),
+            title=self.get("title"),
+            fha=self.is_force_hardware_acceleration,
+        )
 
-        match self.get("ui.framework"):
-            case UIFrame.GLFW:
-                import glfw
+        _root_point = self.get("root_pos", skip=True)(arg["pos"][0], arg["pos"][1])
 
-                glfw.window_hint(
-                    glfw.CONTEXT_RELEASE_BEHAVIOR, glfw.RELEASE_BEHAVIOR_NONE
-                )  # mystery optimize
-                glfw.window_hint(glfw.STENCIL_BITS, 8)
-                glfw.window_hint(glfw.COCOA_RETINA_FRAMEBUFFER, glfw.TRUE)  # macOS
-                glfw.window_hint(glfw.SCALE_TO_MONITOR, glfw.TRUE)  # Windows/Linux
+        self.is_visible = True
+        self.is_alive = True
 
-                # see https://www.glfw.org/faq#macos
-                if sys.platform.startswith("darwin"):
-                    glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
-                    glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 2)
-                    glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
-                    glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
-                else:
-                    if self.is_force_hardware_acceleration:
-                        glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
-                        glfw.window_hint(glfw.CLIENT_API, glfw.OPENGL_API)
-                        glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
-                        glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
-                        glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
-
-                _size = self.get("size", skip=True)
-                window = glfw.create_window(
-                    _size["width"], _size["height"], self.get("title"), None, None
-                )
-                if not window:
-                    raise RuntimeError("Can't create window")
-
-                self.is_visible = True
-                self.is_alive = True
-
-                pos = glfw.get_window_pos(window)
-
-                _root_point = self.get("root_pos", skip=True)
-                _root_point.set("x", pos[0])
-                _root_point.set("y", pos[1])
-
-        return window
+        return arg["window"]
 
     def create_event_bounds(self):
         """Create event bounds."""
-        match self.get("ui.framework"):
-            case UIFrame.GLFW:
-                self.glfw.set_window_size_callback(
-                    self.the_window,
-                    lambda window, width, height: self.trigger(
-                        Event(self, "resize", width=width, height=height)
-                    ),
-                )
-                self.glfw.set_window_pos_callback(
-                    self.the_window,
-                    lambda window, root_x, root_y: self.trigger(
-                        Event(self, "move", x_root=root_x, y_root=root_y)
-                    ),
-                )
+        self["ui.framework.class"].create_event_bounds(
+            the_window=self.the_window, window_class=self
+        )
 
     def update(self):
         """Update the window. When is_dirty is True, draw the window."""
@@ -258,7 +223,7 @@ class WindowBase(EventHandling, CharmyObject):
             # 【为该窗口设置当前上下文】
             match self["ui.framework"]:
                 case UIFrame.GLFW:
-                    self.glfw.make_context_current(self.the_window)
+                    self["ui.framework.class"].make_context_current(self.the_window)
 
                     match self["drawing.framework"]:
                         case DrawingFrame.SKIA:
@@ -275,8 +240,6 @@ class WindowBase(EventHandling, CharmyObject):
                                             self["ui.draw_func"](canvas)
 
                                     self["drawing.surface"].flushAndSubmit()
-                    if self.is_alive:
-                        self.glfw.swap_buffers(self.the_window)
                 case "sdl2":
                     import sdl2
 
@@ -289,6 +252,10 @@ class WindowBase(EventHandling, CharmyObject):
                                     self["ui.draw_func"](canvas)
 
                     sdl2.SDL_UpdateWindowSurface(self.the_window)  # NOQA
+
+            if self.is_alive:
+                self["ui.framework.class"].swap_buffers(self.the_window)
+
         if self["backend.context"]:
             self["backend.context"].freeGpuResources()
             self["backend.context"].releaseResourcesAndAbandonContext()
@@ -312,18 +279,14 @@ class WindowBase(EventHandling, CharmyObject):
         # self._event_init = False
         # print(self.id)
         self.app.destroy_window(self)
-        match self.get("ui.framework"):
-            case UIFrame.GLFW:
-                import glfw
-
-                try:
-                    glfw.destroy_window(self.the_window)
-                except TypeError:
-                    pass
-
-        self.is_alive = False
-        # self.draw_func = None
-        self.the_window = None  # Clear the reference
+        try:
+            self["ui.framework.class"].destroy(the_window=self.the_window)
+        except TypeError:
+            pass
+        finally:
+            self.is_alive = False
+            # self.draw_func = None
+            self.the_window = None  # Clear the reference
 
     def can_be_close(self, value: bool | None = None) -> typing.Self | bool:
         """Set whether the window can be closed.
@@ -356,6 +319,9 @@ class WindowBase(EventHandling, CharmyObject):
     def _get_ui_framework(self):
         return self.app.get("ui.framework")
 
+    def _get_ui_framework_class(self):
+        return self.app.get("ui.framework.class")
+
     def _get_drawing_framework(self):
         return self.app.get("drawing.framework")
 
@@ -373,14 +339,7 @@ class WindowBase(EventHandling, CharmyObject):
         Returns:
             None
         """
-        if isinstance(size, tuple):
-            match self["ui.framework"]:
-                case UIFrame.GLFW:
-                    self.glfw.set_window_size(self.the_window, size[0], size[1])
-        else:
-            match self["ui.framework"]:
-                case UIFrame.GLFW:
-                    self.glfw.set_window_size(self.the_window, size["width"], size["height"])
+        self["ui.framework.class"].set_size(the_window=self.the_window, size=size)
 
     def resize(self, size: Size | tuple[int, int]) -> None:
         """Resize the window to the given size.
@@ -400,12 +359,7 @@ class WindowBase(EventHandling, CharmyObject):
         Returns:
             None
         """
-        if isinstance(pos, tuple):
-            if self["ui.framework"] == UIFrame.GLFW:
-                self.glfw.set_window_pos(self.the_window, pos[0], pos[1])
-        else:
-            if self["ui.framework"] == UIFrame.GLFW:
-                self.glfw.set_window_pos(self.the_window, pos["x"], pos["y"])
+        self["ui.framework.class"].set_pos(the_window=self.the_window, pos=pos)
 
     def move(self, pos: Pos | tuple[int, int]) -> None:
         """Move the window to the given position.
@@ -425,8 +379,7 @@ class WindowBase(EventHandling, CharmyObject):
         Returns:
             None
         """
-        if self["ui.framework"] == UIFrame.GLFW:
-            self.glfw.set_window_title(self.the_window, title)
+        self["ui.framework.class"].set_title(the_window=self.the_window, title=title)
 
     # endregion
 

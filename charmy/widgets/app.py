@@ -1,9 +1,11 @@
-import typing
 import importlib
+import typing
 import warnings
+from os import environ
 
-from ..const import BackendFrame, DrawingFrame, UIFrame, MAINAPP_ID
+from ..const import MAINAPP_ID, BackendFrame, DrawingFrame, UIFrame
 from ..event import WorkingThread
+from ..framework import window_framework_map
 from ..object import CharmyObject
 
 
@@ -23,7 +25,7 @@ class App(CharmyObject):
         backend: BackendFrame = BackendFrame.OPENGL,
         vsync: bool = True,
         samples: int = 4,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(**kwargs)
 
@@ -33,15 +35,15 @@ class App(CharmyObject):
         self.new("event.thread", WorkingThread())
 
         self.new("ui.framework", ui)
-        self["ui.framework"]: UIFrame
+        self.new("ui.framework.class", window_framework_map[ui]())
         self.new("ui.is_vsync", vsync)
         self.new("ui.samples", samples)
 
         match self["ui.framework"]:
             case UIFrame.GLFW:
-                self.glfw = importlib.import_module("glfw")
+                self.glfw = self["ui.framework.class"].glfw
             case UIFrame.SDL:
-                self.sdl3 = importlib.import_module("sdl3")
+                self.sdl3 = self["ui.framework.class"].sdl3
             case _:
                 raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
 
@@ -71,15 +73,9 @@ class App(CharmyObject):
         """According to attribute `ui.framework` to init ui framework"""
         match self.get("ui.framework"):
             case UIFrame.GLFW:
-                if not self.glfw.init():
-                    raise self.glfw.GLFWError("Init failed")
-
-                self.glfw.window_hint(self.glfw.STENCIL_BITS, 8)
-                self.glfw.window_hint(self.glfw.TRANSPARENT_FRAMEBUFFER, True)
-                self.glfw.window_hint(self.glfw.WIN32_KEYBOARD_MENU, True)
-                self.glfw.window_hint(self.glfw.COCOA_RETINA_FRAMEBUFFER, True)
-                self.glfw.window_hint(self.glfw.SAMPLES, self.get("ui.samples"))
-                self.glfw.set_error_callback(self.error)
+                self["ui.framework.class"].init(
+                    error_callback=self.error, samples=self.get("ui.samples")
+                )
 
     def update(self):
         """Update the CWindows' UI and events"""
@@ -101,7 +97,7 @@ class App(CharmyObject):
             # if self._check_delay_events()
             self.glfw.wait_events()
 
-    def run(self):
+    def mainloop(self):
         """Run the application.
 
         This method will start the application event loop. It will continue running
@@ -132,6 +128,8 @@ class App(CharmyObject):
                 raise e
 
         self.cleanup()
+
+    launch = run = mainloop
 
     def add_window(self, window):
         """Add a window to the application.
@@ -178,15 +176,23 @@ class App(CharmyObject):
 
 
 # Auto create App Object
-mainapp: App = App(id_=MAINAPP_ID)
+if environ.get("AUTO_CREATE_MAIN_APP", "True") == "True":
+    uimap = {
+        "GLFW": UIFrame.GLFW,
+    }
+    mainapp: App = App(id_=MAINAPP_ID, ui=uimap[environ.get("UI_FRAMEWORK", "GLFW")])
+else:
+    mainapp: App | None = None
 
 
 def mainloop() -> None:
     """Run the main application"""
-    return mainapp.run()
+    try:
+        mainapp.run()
+    except Exception as e:
+        raise e
 
 
 def cquit():  # NOQA
     """Quit the main application"""
     mainapp.quit()
-

@@ -1,6 +1,6 @@
 import importlib
 
-from ..const import DrawingFrame, MAINAPP_ID
+from ..const import MAINAPP_ID, DrawingFrame
 from ..object import CharmyObject
 from ..widgets.app import App
 
