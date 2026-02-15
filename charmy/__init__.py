@@ -2,7 +2,6 @@
 # Author: XiangQinxi
 
 """A modern GUI library."""
-import io
 
 from .const import *
 from .drawing import *
