@@ -1,13 +1,13 @@
 THE_POEM = """
 There are two extremes in Python, 
 one is art while the other is fart. 
-Those who create art look down to those who fart, 
+Those who create art look down on those who fart, 
 while they are not actually far apart. 
 
 Art is filled with beauty making it murky. 
 Art is just fart with comments and space bars. 
 Fart is whatever piled up from nothing, 
-hairy but runs fast, 
+messy but runs fast, 
 except it is the programmer who runs fast, 
 while anyway (s)he types fast. 
 
