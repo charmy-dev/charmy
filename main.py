@@ -1,9 +1,15 @@
 from charmy import mainloop, Window, Button
 
-window = Window(size=(300, 400))
+window1 = Window(size=(300, 400))
 
-window.config(title = "Button test")
+window1.config(title = "Button test")
 
 button = Button()
+
+window2 = Window(size=(500, 600))
+
+window2.config(title="muti-window test")
+import threading
+print(threading._count())
 
 mainloop()

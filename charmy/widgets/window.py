@@ -16,6 +16,7 @@ class Window(WindowBase, Container):
                     "ui.draw_func", self.skia_draw_func
                 )  # When `draw` is called, trigger `ui.draw_func`
 
+    # TODO: why specific drawing frame?
     def skia_draw_func(self, canvas):
         """Draw function for Skia."""
         canvas.clear(self.skia.ColorGRAY)

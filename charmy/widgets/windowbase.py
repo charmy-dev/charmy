@@ -246,7 +246,6 @@ class WindowBase(EventHandling, CharmyObject):
         """
         # self._event_init = False
         # print(self.id)
-        self.manager.destroy_window(self)
         try:
             self["framework"].ui.destroy(the_window=self.the_window)
         except TypeError:

@@ -1,5 +1,3 @@
-from __future__ import annotations as _
-
 import collections.abc
 import re
 import threading
@@ -38,10 +36,11 @@ class CBoundTask:
         :param id_: The Task id of this Task
         :param target: A callable thing, what to do when this Task is executed
         :param multithread: If this Task should be executed in another thread (False by default)
-        :param _keep_at_clear: If the Task should be kept when cleaning the event's binding
+        :param _keep_at_clear: Whether the Task should be kept when cleaning the event's binding
         """
         self.id: str = id_
         self.target: typing.Callable | typing.Iterable = target
+        # TODO: ???
         self.multithread: bool = multithread
         self.keep_at_clear: bool = _keep_at_clear
 
@@ -63,8 +62,8 @@ class CDelayTask(CBoundTask):
                       executed.
         :param (Other): See `CBoundTask.__init__()`
         """
-        CBoundTask.__init__(self, id_, target, *args, **kwargs)  # For other things,same as
-        # CBoundTask
+        CBoundTask.__init__(self, id_, target, *args, **kwargs)
+        # For other things,same as CBoundTask
         if delay_.endswith("s"):
             if delay_.endswith("ms"):
                 delay_ = float(delay_[:-2]) / 1000
@@ -84,8 +83,8 @@ class CRepeatTask(CBoundTask):
         :param delay: Time to delay, in seconds, indicating how log to wait before the Task is
                       executed.
         """
-        CBoundTask.__init__(self, id_, target, *args, **kwargs)  # For other things,same as
-        # CBoundTask
+        CBoundTask.__init__(self, id_, target, *args, **kwargs)
+        # For other things,same as CBoundTask
         self.target_time = float(time.time()) + interval  # To store when to execute the Task for
         # the next time, will be accumulated after
         # execution of the Task
@@ -170,6 +169,7 @@ class CEventHandling:
         self.latest_event: CEvent = CEvent(widget=None, event_type="NO_EVENT")
         self.Tasks: dict[str, list[CBoundTask]] = {}
         # Make a initial ID here as it will be needed anyway even if the object does not have an ID.
+        # TODO: example !!!!
         self.id = f"{self.__class__.__name__}{self.__class__.instance_count}"
         ## Initialize Tasks list
         for event_type in self.__class__.EVENT_TYPES:

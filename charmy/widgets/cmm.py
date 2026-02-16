@@ -1,7 +1,6 @@
 import importlib
 import typing
 import warnings
-from os import environ
 
 from ..const import MANAGER_ID, Backends
 from ..event import WorkingThread
@@ -52,23 +51,27 @@ class CharmyManager(CharmyObject):
     def update(self):
         """Update the Windows' UI and events"""
 
-        input_mode: bool = True
-
         self.glfw = self["framework"].ui.glfw
         self.glfw.wait_events()
-        windows = self.windows
 
-        for window in windows:
+        for window in self.windows:
             if window.is_visible and window.is_alive:
                 window.update()
-                if self.glfw.get_current_context():
-                    self.glfw.swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
 
-        if input_mode:
-            self.glfw.poll_events()
-        else:
-            # if self._check_delay_events()
-            self.glfw.wait_events()
+        # TODO: 能不能换个地方？比如说framework.py?
+        # TODO: CharmyManager过度耦合glfw, 没有考虑其他框架
+        # self.glfw.swap_interval(1 if self.get("ui.is_vsync") else 0)  # 是否启用垂直同步
+
+        # not implemented yet
+        # input_mode: bool = True
+
+        #if input_mode:
+        #    self.glfw.poll_events()
+        #else:
+        #    # if self._check_delay_events()
+        #    self.glfw.wait_events()
+
+        self.glfw.wait_events()
 
     def mainloop(self):
         """Start mainloop.
@@ -80,29 +83,31 @@ class CharmyManager(CharmyObject):
         """
         if not self.windows:
             warnings.warn(
-                "At least one window is required to run application!",
+                "At least one window is required to run manager!",
             )
 
         self.is_alive: bool = True
         self["event.thread"].start()
 
+        # Main loop
         while self.is_alive:
             try:
-                windows = self.windows
-                if not windows:
+                # quit when no window in list now
+                if not self.windows:
                     self.quit()
                     break
-                for window in windows:
+
+                for window in self.windows:
                     if window.can_be_close():
+                        self.destroy_window(window) # remove window if closed
                         window.destroy()
+                        
                 self.update()
             except Exception as e:
                 self.is_alive = False
                 raise e
 
         self.cleanup()
-
-    launch = run = mainloop
 
     def add_window(self, window):
         """Add a window to the manager.
@@ -118,9 +123,8 @@ class CharmyManager(CharmyObject):
         Args:
             window (charmy.widgets.WindowBase): The window to be destroyed.
         """
-        windows = self.windows
-        if window in windows:
-            windows.remove(window)
+        if window in self.windows:
+            self.windows.remove(window)
 
     def cleanup(self) -> None:
         """Clean up resources."""
@@ -129,6 +133,7 @@ class CharmyManager(CharmyObject):
                 for window in self.windows:
                     self.glfw.destroy_window(window.the_window)
                 self.glfw.terminate()
+
         self.quit()
 
     def quit(self) -> None:
@@ -156,7 +161,7 @@ manager: CharmyManager = CharmyManager(id_=MANAGER_ID)
 def mainloop() -> None:
     """Start main loop."""
     try:
-        manager.run()
+        manager.mainloop()
     except Exception as e:
         raise e
 
