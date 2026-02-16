@@ -322,6 +322,8 @@
 </li>
           <li><a href="api/widgets/button.html#charmy.widgets.button.Button.__init__">(charmy.widgets.button.Button method)</a>
 </li>
+          <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.__init__">(charmy.widgets.canvas.CanvasBase method)</a>
+</li>
           <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.__init__">(charmy.widgets.cmm.CharmyManager method)</a>
 </li>
           <li><a href="api/widgets/container.html#charmy.widgets.container.Container.__init__">(charmy.widgets.container.Container method)</a>
@@ -343,12 +345,14 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container.add_child">add_child() (charmy.widgets.container.Container method)</a>
 </li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.add_task">add_task() (charmy.event.WorkingThread method)</a>
+        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.add_element">add_element() (charmy.widgets.canvas.CanvasBase method)</a>
 </li>
-        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.add_window">add_window() (charmy.widgets.cmm.CharmyManager method)</a>
+        <li><a href="api/event.html#charmy.event.WorkingThread.add_task">add_task() (charmy.event.WorkingThread method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.add_window">add_window() (charmy.widgets.cmm.CharmyManager method)</a>
+</li>
         <li><a href="api/object.html#charmy.object.CharmyObject.attributes">attributes (charmy.object.CharmyObject property)</a>
 </li>
         <li><a href="api/const.html#charmy.const.ID.AUTO">AUTO (charmy.const.ID attribute)</a>
@@ -390,6 +394,8 @@
         <li><a href="api/framework.html#charmy.framework.GLFW.can_be_closed">can_be_closed() (charmy.framework.GLFW method)</a>
 </li>
         <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.cancel_dirty">cancel_dirty() (charmy.widgets.windowbase.WindowBase method)</a>
+</li>
+        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase">CanvasBase (class in charmy.widgets.canvas)</a>
 </li>
         <li><a href="api/object.html#charmy.object.CharmyObject.cget">cget() (charmy.object.CharmyObject method)</a>
 </li>
@@ -477,13 +483,20 @@
           <li><a href="api/widgets/index.html#module-charmy.widgets">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     charmy.widgets.button
 
         <ul>
           <li><a href="api/widgets/button.html#module-charmy.widgets.button">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    charmy.widgets.canvas
+
+        <ul>
+          <li><a href="api/widgets/canvas.html#module-charmy.widgets.canvas">module</a>
 </li>
         </ul></li>
         <li>
@@ -532,6 +545,8 @@
         <li><a href="api/styles/color.html#charmy.styles.color.Color">Color (class in charmy.styles.color)</a>
 </li>
         <li><a href="api/object.html#charmy.object.CharmyObject.config">config() (charmy.object.CharmyObject method)</a>
+</li>
+        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.config_element">config_element() (charmy.widgets.canvas.CanvasBase method)</a>
 </li>
         <li><a href="api/object.html#charmy.object.CharmyObject.configure">configure() (charmy.object.CharmyObject method)</a>
 </li>
@@ -583,18 +598,28 @@
 </li>
         <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.dirty">dirty() (charmy.widgets.windowbase.WindowBase method)</a>
 </li>
+        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw">draw() (charmy.widgets.canvas.CanvasBase method)</a>
+
+        <ul>
+          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.draw">(charmy.widgets.windowbase.WindowBase method)</a>
+</li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.draw">draw() (charmy.widgets.windowbase.WindowBase method)</a>
-</li>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container.draw_children">draw_children() (charmy.widgets.container.Container method)</a>
 </li>
         <li><a href="api/widgets/button.html#charmy.widgets.button.Button.draw_config">draw_config() (charmy.widgets.button.Button method)</a>
+
+        <ul>
+          <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw_config">(charmy.widgets.canvas.CanvasBase method)</a>
 </li>
+        </ul></li>
         <li><a href="api/framework.html#charmy.framework.DrawingFramework.draw_rect">draw_rect() (charmy.framework.DrawingFramework method)</a>
 
         <ul>
           <li><a href="api/framework.html#charmy.framework.SKIA.draw_rect">(charmy.framework.SKIA method)</a>
+</li>
+          <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw_rect">(charmy.widgets.canvas.CanvasBase method)</a>
 </li>
         </ul></li>
         <li><a href="api/framework.html#charmy.framework.Framework.drawing">drawing (charmy.framework.Framework attribute)</a>
@@ -645,10 +670,12 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/object.html#charmy.object.CharmyObject.find">find() (charmy.object.CharmyObject method)</a>
 </li>
-        <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.find_loaded_theme">find_loaded_theme() (charmy.styles.theme.Theme class method)</a>
+        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.find_element">find_element() (charmy.widgets.canvas.CanvasBase method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.find_loaded_theme">find_loaded_theme() (charmy.styles.theme.Theme class method)</a>
+</li>
         <li><a href="api/event.html#charmy.event.EventHandling.find_task">find_task() (charmy.event.EventHandling method)</a>
 </li>
         <li><a href="api/framework.html#charmy.framework.Framework">Framework (class in charmy.framework)</a>
@@ -664,6 +691,8 @@
         <li><a href="api/object.html#charmy.object.CharmyObject.get">get() (charmy.object.CharmyObject method)</a>
 </li>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container.get_context">get_context() (charmy.widgets.container.Container class method)</a>
+</li>
+        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.get_element">get_element() (charmy.widgets.canvas.CanvasBase method)</a>
 </li>
         <li><a href="api/framework.html#charmy.framework.GLFW.get_mouse_pos">get_mouse_pos() (charmy.framework.GLFW method)</a>
 
@@ -713,6 +742,8 @@
           <li><a href="api/framework.html#charmy.framework.UIFramework.init">(charmy.framework.UIFramework method)</a>
 </li>
         </ul></li>
+        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.insert_element">insert_element() (charmy.widgets.canvas.CanvasBase method)</a>
+</li>
         <li><a href="api/object.html#charmy.object.CharmyObject.instance_count">instance_count (charmy.object.CharmyObject property)</a>
 </li>
     </ul></td>
@@ -821,6 +852,8 @@
 </li>
           <li><a href="api/widgets/button.html#module-charmy.widgets.button">charmy.widgets.button</a>
 </li>
+          <li><a href="api/widgets/canvas.html#module-charmy.widgets.canvas">charmy.widgets.canvas</a>
+</li>
           <li><a href="api/widgets/cmm.html#module-charmy.widgets.cmm">charmy.widgets.cmm</a>
 </li>
           <li><a href="api/widgets/container.html#module-charmy.widgets.container">charmy.widgets.container</a>
@@ -914,10 +947,12 @@
         </ul></li>
         <li><a href="api/rect.html#charmy.rect.Rect">Rect (class in charmy.rect)</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.resize">resize() (charmy.widgets.windowbase.WindowBase method)</a>
+        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.remove_element">remove_element() (charmy.widgets.canvas.CanvasBase method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.resize">resize() (charmy.widgets.windowbase.WindowBase method)</a>
+</li>
         <li><a href="api/const.html#charmy.const.DrawingMode.RETAINED">RETAINED (charmy.const.DrawingMode attribute)</a>
 </li>
         <li><a href="api/const.html#charmy.const.DrawingMode.retained">retained (charmy.const.DrawingMode attribute)</a>
