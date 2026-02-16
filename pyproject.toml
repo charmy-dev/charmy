@@ -10,7 +10,7 @@ requires-python = ">=3.11"
 dependencies = [
     "json5"
 ]
-license = "AGPL-3.0"
+license = "Apache 2.0"
 
 [tool.poetry.optional]
 docs = ["myst-parser", "sphinx-design", "furo", "sphinx-copybutton", "sphinx"]
