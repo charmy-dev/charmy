@@ -25,14 +25,15 @@ release = "0.1.0"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "myst_parser", "sphinx_design",
-    'sphinx.ext.autodoc',
+    "myst_parser",
+    "sphinx_design",
+    "sphinx.ext.autodoc",
     # 'sphinx.ext.napoleon',  # 暂时禁用，避免递归深度错误
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.todo",
+    "sphinx.ext.coverage",
+    "sphinx.ext.mathjax",
 ]
 myst_enable_extensions = ["colon_fence"]
 
@@ -45,12 +46,12 @@ exclude_patterns = []
 
 # 防止递归深度错误的关键配置
 autodoc_default_options = {
-    'members': True,
-    'member-order': 'bysource',
-    'special-members': '__init__',
-    'undoc-members': True,
-    'exclude-members': '__weakref__',
-    'show-inheritance': True,
+    "members": True,
+    "member-order": "bysource",
+    "special-members": "__init__",
+    "undoc-members": True,
+    "exclude-members": "__weakref__",
+    "show-inheritance": True,
 }
 
 # 禁用继承的文档字符串处理
@@ -59,15 +60,18 @@ autodoc_inherit_docstrings = False
 # 设置Python路径
 sys.path.insert(0, str(project_root))
 
+
 # 跳过某些可能导致递归的模块
 def skip_recursive_members(app, what, name, obj, skip, options):
     # 跳过可能导致递归的模块
-    if name in ['charmy', 'charmy.widgets', 'charmy.styles', 'charmy.drawing']:
+    if name in ["charmy", "charmy.widgets", "charmy.styles", "charmy.drawing"]:
         return True
     return skip
 
+
 def setup(app):
-    app.connect('autodoc-skip-member', skip_recursive_members)
+    app.connect("autodoc-skip-member", skip_recursive_members)
+
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -75,9 +79,20 @@ def setup(app):
 html_theme = "furo"
 html_static_path = ["_static"]
 html_theme_options = {
+    "source_repository": "https://github.com/XiangQinxi/charmy",
+    "source_branch": "master",
+    "source_directory": "docs/source",
+    "announcement": "It's <em>Developing</em> !",
     "light_css_variables": {
         "color-brand-primary": "red",
         "color-brand-content": "#CC3333",
+        "color-brand-visited": "#CC8033",
+        "color-admonition-background": "orange",
+    },
+    "dark_css_variables": {
+        "color-brand-primary": "#CC8033",
+        "color-brand-content": "#CC8033",
+        "color-brand-visited": "#CC3333",
         "color-admonition-background": "orange",
     },
 }

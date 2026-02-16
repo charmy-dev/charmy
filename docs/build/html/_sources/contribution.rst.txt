@@ -1,0 +1,20 @@
+Contribution
+============
+
+https://github.com/XiangQinxi/charmy
+
+Build documentation
+-------------------
+
+The documentation is built with Sphinx.
+
+Run it to install the required packages:
+
+.. code-block:: bash
+
+   pip install charmy[docs]
+
+.. code-block:: bash
+
+   cd docs
+   .\make html

@@ -21,6 +21,7 @@
   --color-code-foreground: #1e1e1e;
   --color-brand-primary: red;
   --color-brand-content: #CC3333;
+  --color-brand-visited: #CC8033;
   --color-admonition-background: orange;
   
   }
@@ -28,12 +29,20 @@
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #CC8033;
+  --color-brand-content: #CC8033;
+  --color-brand-visited: #CC3333;
+  --color-admonition-background: orange;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #CC8033;
+  --color-brand-content: #CC8033;
+  --color-brand-visited: #CC3333;
+  --color-admonition-background: orange;
   
       }
     }
@@ -155,7 +164,11 @@
 
 <a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
-
+<div class="announcement">
+  <aside class="announcement-content">
+     It's <em>Developing</em> ! 
+  </aside>
+</div>
 
 <div class="page">
   <header class="mobile-header">
@@ -203,6 +216,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../getstarted/custom_app_settings.html">Custom main manager settings</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">Contribution</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="event.html">charmy.event</a></li>
@@ -249,12 +263,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/api/object.rst.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/XiangQinxi/charmy/blob/master/docs/source/api/object.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/XiangQinxi/charmy/edit/master/docs/source/api/object.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
