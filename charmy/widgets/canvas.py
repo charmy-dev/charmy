@@ -2,7 +2,6 @@ import typing
 import warnings
 
 from ..const import ID, MANAGER_ID
-from ..framework import drawing_framework_map
 from ..object import CharmyObject
 from ..rect import Rect
 from .cmm import CharmyManager

@@ -1,12 +1,23 @@
-import typing
-
 from .object import CharmyObject
 
 
 class Rect(CharmyObject):
-    """Rect is a class to store the position and size of a rectangle."""
+    """Rect is a class to store the position and size of a rectangle.
 
-    def __init__(self, *args, **kwargs):
+    Args:
+        **kwargs: The keyword arguments to initialize the rectangle.
+            The keyword arguments are:
+                x (int): The x coordinate of the top-left corner of the rectangle.
+                y (int): The y coordinate of the top-left corner of the rectangle.
+                width (int): The width of the rectangle.
+                height (int): The height of the rectangle.
+                left (int): The left coordinate of the top-left corner of the rectangle.
+                top (int): The top coordinate of the top-left corner of the rectangle.
+                right (int): The right coordinate of the top-left corner of the rectangle.
+                bottom (int): The bottom coordinate of the top-left corner of the rectangle.
+    """
+
+    def __init__(self, **kwargs):
         super().__init__()
         # 基础四要素
         self.new("base_x", 0)

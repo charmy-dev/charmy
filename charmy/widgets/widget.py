@@ -1,6 +1,3 @@
-import typing
-
-from ..object import CharmyObject
 from .canvas import CanvasBase
 from .container import Container, auto_find_parent
 

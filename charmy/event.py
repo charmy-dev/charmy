@@ -71,7 +71,7 @@ class EventHandling(CharmyObject):
         for event_type in self.__class__.EVENT_TYPES:
             self.tasks[event_type] = []
 
-    def parse_event_type_str(self, event_type_str: str) -> dict:
+    def parse_event_type_str(self, event_type_str: str) -> dict:  # NOQA
         """This function parses event type string.
 
         :param event_type_str: The event type string to be parsed

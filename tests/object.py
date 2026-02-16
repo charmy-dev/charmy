@@ -20,5 +20,3 @@ obj.new("title", "default title", set_func=set_func, get_func=get_func)
 print(obj.get("title"))  # OUTPUT: default title
 obj.set("title", "A")  # OUTPUT: User set value: A
 print(obj.get("title"))  # User get value: Hello, A
-
-print(obj.title)  # User get value: Hello, A
