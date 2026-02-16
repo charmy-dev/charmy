@@ -15,7 +15,9 @@ Core Modules
    framework
    object
    pos
+   rect
    size
+   this
 
 Widgets
 -------
@@ -25,15 +27,6 @@ Widgets
    :caption: Widgets:
 
    widgets/index
-
-Drawing
--------
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Drawing:
-
-   drawing/index
 
 Styles
 ------

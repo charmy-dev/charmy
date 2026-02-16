@@ -209,7 +209,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../framework.html">charmy.framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../object.html">charmy.object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pos.html">charmy.pos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../size.html">charmy.size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../this.html">charmy.this</a></li>
 <li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
@@ -220,11 +222,7 @@
 <li class="toctree-l3"><a class="reference internal" href="windowbase.html">windowbase</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../drawing/canvas.html">canvas</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../styles/color.html">color</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../styles/theme.html">theme</a></li>
 </ul>
@@ -291,6 +289,12 @@
 <dt class="sig sig-object py" id="charmy.widgets.container.Container.add_child">
 <span class="sig-name descname"><span class="pre">add_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../object.html#charmy.object.CharmyObject" title="charmy.object.CharmyObject"><span class="pre">CharmyObject</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.container.Container.add_child" title="Link to this definition">¶</a></dt>
 <dd><p>Add a child object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.widgets.container.Container.draw_children">
+<span class="sig-name descname"><span class="pre">draw_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.container.Container.draw_children" title="Link to this definition">¶</a></dt>
+<dd><p>Draw the container and its children</p>
 </dd></dl>
 
 </dd></dl>
@@ -363,6 +367,7 @@
 <li><a class="reference internal" href="#charmy.widgets.container.Container.__init__"><code class="docutils literal notranslate"><span class="pre">Container.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.container.Container.get_context"><code class="docutils literal notranslate"><span class="pre">Container.get_context()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.widgets.container.Container.add_child"><code class="docutils literal notranslate"><span class="pre">Container.add_child()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.container.Container.draw_children"><code class="docutils literal notranslate"><span class="pre">Container.draw_children()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#charmy.widgets.container.auto_find_parent"><code class="docutils literal notranslate"><span class="pre">auto_find_parent()</span></code></a></li>

@@ -209,7 +209,9 @@
 <li class="toctree-l2"><a class="reference internal" href="framework.html">charmy.framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="object.html">charmy.object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pos.html">charmy.pos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="size.html">charmy.size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="this.html">charmy.this</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
@@ -220,11 +222,7 @@
 <li class="toctree-l3"><a class="reference internal" href="widgets/windowbase.html">windowbase</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="drawing/canvas.html">canvas</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="styles/color.html">color</a></li>
 <li class="toctree-l3"><a class="reference internal" href="styles/theme.html">theme</a></li>
 </ul>
@@ -292,66 +290,49 @@ NONE: No ID.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="charmy.const.UIFrame">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.const.</span></span><span class="sig-name descname"><span class="pre">UIFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.const.UIFrame" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.const.Backends">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.const.</span></span><span class="sig-name descname"><span class="pre">Backends</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.const.Backends" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
 <p>UIFrame is an enum to store UI frame.</p>
-<p>GLFW: GLFW is an enum to store UI frame.
-SDL: SDL is an enum to store UI frame.</p>
+<p>GLFW, SDL, OPENGL, SKIA are consts representing those backends</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.UIFrame.GLFW">
-<span class="sig-name descname"><span class="pre">GLFW</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GLFW'</span></span><a class="headerlink" href="#charmy.const.UIFrame.GLFW" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.const.Backends.GLFW">
+<span class="sig-name descname"><span class="pre">GLFW</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GLFW'</span></span><a class="headerlink" href="#charmy.const.Backends.GLFW" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.UIFrame.glfw">
-<span class="sig-name descname"><span class="pre">glfw</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GLFW'</span></span><a class="headerlink" href="#charmy.const.UIFrame.glfw" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.const.Backends.glfw">
+<span class="sig-name descname"><span class="pre">glfw</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GLFW'</span></span><a class="headerlink" href="#charmy.const.Backends.glfw" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.UIFrame.SDL">
-<span class="sig-name descname"><span class="pre">SDL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SDL'</span></span><a class="headerlink" href="#charmy.const.UIFrame.SDL" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.const.Backends.SDL">
+<span class="sig-name descname"><span class="pre">SDL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SDL'</span></span><a class="headerlink" href="#charmy.const.Backends.SDL" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.UIFrame.sdl">
-<span class="sig-name descname"><span class="pre">sdl</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SDL'</span></span><a class="headerlink" href="#charmy.const.UIFrame.sdl" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="charmy.const.BackendFrame">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.const.</span></span><span class="sig-name descname"><span class="pre">BackendFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.const.BackendFrame" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<p>BackendFrame is an enum to store backend frame.</p>
-<p>OPENGL: OPENGL is an enum to store backend frame.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.BackendFrame.OPENGL">
-<span class="sig-name descname"><span class="pre">OPENGL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENGL'</span></span><a class="headerlink" href="#charmy.const.BackendFrame.OPENGL" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.const.Backends.sdl">
+<span class="sig-name descname"><span class="pre">sdl</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SDL'</span></span><a class="headerlink" href="#charmy.const.Backends.sdl" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.BackendFrame.opengl">
-<span class="sig-name descname"><span class="pre">opengl</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENGL'</span></span><a class="headerlink" href="#charmy.const.BackendFrame.opengl" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="charmy.const.DrawingFrame">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.const.</span></span><span class="sig-name descname"><span class="pre">DrawingFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.const.DrawingFrame" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<p>DrawingFrame is an enum to store drawing frame.</p>
-<p>SKIA: SKIA is an enum to store drawing frame.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.DrawingFrame.SKIA">
-<span class="sig-name descname"><span class="pre">SKIA</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SKIA'</span></span><a class="headerlink" href="#charmy.const.DrawingFrame.SKIA" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.const.Backends.OPENGL">
+<span class="sig-name descname"><span class="pre">OPENGL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENGL'</span></span><a class="headerlink" href="#charmy.const.Backends.OPENGL" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.DrawingFrame.skia">
-<span class="sig-name descname"><span class="pre">skia</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SKIA'</span></span><a class="headerlink" href="#charmy.const.DrawingFrame.skia" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="charmy.const.Backends.opengl">
+<span class="sig-name descname"><span class="pre">opengl</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENGL'</span></span><a class="headerlink" href="#charmy.const.Backends.opengl" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.Backends.SKIA">
+<span class="sig-name descname"><span class="pre">SKIA</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SKIA'</span></span><a class="headerlink" href="#charmy.const.Backends.SKIA" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.Backends.skia">
+<span class="sig-name descname"><span class="pre">skia</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SKIA'</span></span><a class="headerlink" href="#charmy.const.Backends.skia" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -448,21 +429,15 @@ RETAINED(retained): RETAINED is an enum to store drawing mode.</p>
 <li><a class="reference internal" href="#charmy.const.ID.NONE"><code class="docutils literal notranslate"><span class="pre">ID.NONE</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#charmy.const.UIFrame"><code class="docutils literal notranslate"><span class="pre">UIFrame</span></code></a><ul>
-<li><a class="reference internal" href="#charmy.const.UIFrame.GLFW"><code class="docutils literal notranslate"><span class="pre">UIFrame.GLFW</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.UIFrame.glfw"><code class="docutils literal notranslate"><span class="pre">UIFrame.glfw</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.UIFrame.SDL"><code class="docutils literal notranslate"><span class="pre">UIFrame.SDL</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.UIFrame.sdl"><code class="docutils literal notranslate"><span class="pre">UIFrame.sdl</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#charmy.const.BackendFrame"><code class="docutils literal notranslate"><span class="pre">BackendFrame</span></code></a><ul>
-<li><a class="reference internal" href="#charmy.const.BackendFrame.OPENGL"><code class="docutils literal notranslate"><span class="pre">BackendFrame.OPENGL</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.BackendFrame.opengl"><code class="docutils literal notranslate"><span class="pre">BackendFrame.opengl</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#charmy.const.DrawingFrame"><code class="docutils literal notranslate"><span class="pre">DrawingFrame</span></code></a><ul>
-<li><a class="reference internal" href="#charmy.const.DrawingFrame.SKIA"><code class="docutils literal notranslate"><span class="pre">DrawingFrame.SKIA</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.DrawingFrame.skia"><code class="docutils literal notranslate"><span class="pre">DrawingFrame.skia</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Backends"><code class="docutils literal notranslate"><span class="pre">Backends</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.const.Backends.GLFW"><code class="docutils literal notranslate"><span class="pre">Backends.GLFW</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Backends.glfw"><code class="docutils literal notranslate"><span class="pre">Backends.glfw</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Backends.SDL"><code class="docutils literal notranslate"><span class="pre">Backends.SDL</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Backends.sdl"><code class="docutils literal notranslate"><span class="pre">Backends.sdl</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Backends.OPENGL"><code class="docutils literal notranslate"><span class="pre">Backends.OPENGL</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Backends.opengl"><code class="docutils literal notranslate"><span class="pre">Backends.opengl</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Backends.SKIA"><code class="docutils literal notranslate"><span class="pre">Backends.SKIA</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Backends.skia"><code class="docutils literal notranslate"><span class="pre">Backends.skia</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#charmy.const.DrawingMode"><code class="docutils literal notranslate"><span class="pre">DrawingMode</span></code></a><ul>

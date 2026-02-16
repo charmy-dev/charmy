@@ -207,7 +207,9 @@
 <li class="toctree-l2"><a class="reference internal" href="api/framework.html">charmy.framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/object.html">charmy.object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/pos.html">charmy.pos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/size.html">charmy.size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/this.html">charmy.this</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
@@ -218,11 +220,7 @@
 <li class="toctree-l3"><a class="reference internal" href="api/widgets/windowbase.html">windowbase</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/drawing/canvas.html">canvas</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/styles/color.html">color</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/styles/theme.html">theme</a></li>
 </ul>
@@ -270,11 +268,9 @@
   <h2>_</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/drawing/canvas.html#charmy.drawing.canvas.CanvasBase.__init__">__init__() (charmy.drawing.canvas.CanvasBase method)</a>
+        <li><a href="api/event.html#charmy.event.Event.__init__">__init__() (charmy.event.Event method)</a>
 
         <ul>
-          <li><a href="api/event.html#charmy.event.Event.__init__">(charmy.event.Event method)</a>
-</li>
           <li><a href="api/event.html#charmy.event.EventHandling.__init__">(charmy.event.EventHandling method)</a>
 </li>
           <li><a href="api/event.html#charmy.event.EventTask.__init__">(charmy.event.EventTask method)</a>
@@ -283,11 +279,15 @@
 </li>
           <li><a href="api/framework.html#charmy.framework.GLFW.__init__">(charmy.framework.GLFW method)</a>
 </li>
+          <li><a href="api/framework.html#charmy.framework.SKIA.__init__">(charmy.framework.SKIA method)</a>
+</li>
           <li><a href="api/object.html#charmy.object.CharmyObject.__init__">(charmy.object.CharmyObject method)</a>
 </li>
           <li><a href="api/object.html#charmy.object.InstanceCounterMeta.__init__">(charmy.object.InstanceCounterMeta method)</a>
 </li>
           <li><a href="api/pos.html#charmy.pos.Pos.__init__">(charmy.pos.Pos method)</a>
+</li>
+          <li><a href="api/rect.html#charmy.rect.Rect.__init__">(charmy.rect.Rect method)</a>
 </li>
           <li><a href="api/size.html#charmy.size.Size.__init__">(charmy.size.Size method)</a>
 </li>
@@ -316,14 +316,12 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container.add_child">add_child() (charmy.widgets.container.Container method)</a>
 </li>
-        <li><a href="api/drawing/canvas.html#charmy.drawing.canvas.CanvasBase.add_element">add_element() (charmy.drawing.canvas.CanvasBase method)</a>
-</li>
         <li><a href="api/event.html#charmy.event.WorkingThread.add_task">add_task() (charmy.event.WorkingThread method)</a>
+</li>
+        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.add_window">add_window() (charmy.widgets.cmm.CharmyManager method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/cmm.html#charmy.widgets.cmm.CharmyManager.add_window">add_window() (charmy.widgets.cmm.CharmyManager method)</a>
-</li>
         <li><a href="api/object.html#charmy.object.CharmyObject.attributes">attributes (charmy.object.CharmyObject property)</a>
 </li>
         <li><a href="api/const.html#charmy.const.ID.AUTO">AUTO (charmy.const.ID attribute)</a>
@@ -338,7 +336,7 @@
   <h2>B</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/const.html#charmy.const.BackendFrame">BackendFrame (class in charmy.const)</a>
+        <li><a href="api/const.html#charmy.const.Backends">Backends (class in charmy.const)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
@@ -358,8 +356,6 @@
 </li>
         <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.cancel_dirty">cancel_dirty() (charmy.widgets.windowbase.WindowBase method)</a>
 </li>
-        <li><a href="api/drawing/canvas.html#charmy.drawing.canvas.CanvasBase">CanvasBase (class in charmy.drawing.canvas)</a>
-</li>
         <li><a href="api/object.html#charmy.object.CharmyObject.cget">cget() (charmy.object.CharmyObject method)</a>
 </li>
         <li>
@@ -367,20 +363,6 @@
 
         <ul>
           <li><a href="api/const.html#module-charmy.const">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.drawing
-
-        <ul>
-          <li><a href="api/drawing/index.html#module-charmy.drawing">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.drawing.canvas
-
-        <ul>
-          <li><a href="api/drawing/canvas.html#module-charmy.drawing.canvas">module</a>
 </li>
         </ul></li>
         <li>
@@ -412,6 +394,13 @@
 </li>
         </ul></li>
         <li>
+    charmy.rect
+
+        <ul>
+          <li><a href="api/rect.html#module-charmy.rect">module</a>
+</li>
+        </ul></li>
+        <li>
     charmy.size
 
         <ul>
@@ -439,8 +428,13 @@
           <li><a href="api/styles/theme.html#module-charmy.styles.theme">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    charmy.this
+
+        <ul>
+          <li><a href="api/this.html#module-charmy.this">module</a>
+</li>
+        </ul></li>
         <li>
     charmy.widgets
 
@@ -448,6 +442,8 @@
           <li><a href="api/widgets/index.html#module-charmy.widgets">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     charmy.widgets.cmm
 
@@ -547,16 +543,16 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.dirty">dirty() (charmy.widgets.windowbase.WindowBase method)</a>
 </li>
-        <li><a href="api/drawing/canvas.html#charmy.drawing.canvas.CanvasBase.draw">draw() (charmy.drawing.canvas.CanvasBase method)</a>
+        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.draw">draw() (charmy.widgets.windowbase.WindowBase method)</a>
+</li>
+        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.draw_children">draw_children() (charmy.widgets.container.Container method)</a>
+</li>
+        <li><a href="api/framework.html#charmy.framework.DrawingFramework.draw_rect">draw_rect() (charmy.framework.DrawingFramework method)</a>
 
         <ul>
-          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.draw">(charmy.widgets.windowbase.WindowBase method)</a>
+          <li><a href="api/framework.html#charmy.framework.SKIA.draw_rect">(charmy.framework.SKIA method)</a>
 </li>
         </ul></li>
-        <li><a href="api/drawing/canvas.html#charmy.drawing.canvas.CanvasBase.draw_rect">draw_rect() (charmy.drawing.canvas.CanvasBase method)</a>
-</li>
-        <li><a href="api/const.html#charmy.const.DrawingFrame">DrawingFrame (class in charmy.const)</a>
-</li>
         <li><a href="api/framework.html#charmy.framework.DrawingFramework">DrawingFramework (class in charmy.framework)</a>
 </li>
         <li><a href="api/const.html#charmy.const.DrawingMode">DrawingMode (class in charmy.const)</a>
@@ -601,8 +597,6 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/object.html#charmy.object.CharmyObject.find">find() (charmy.object.CharmyObject method)</a>
 </li>
-        <li><a href="api/drawing/canvas.html#charmy.drawing.canvas.CanvasBase.find_element">find_element() (charmy.drawing.canvas.CanvasBase method)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.find_loaded_theme">find_loaded_theme() (charmy.styles.theme.Theme class method)</a>
@@ -621,13 +615,19 @@
 </li>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container.get_context">get_context() (charmy.widgets.container.Container class method)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.get_obj">get_obj() (charmy.object.CharmyObject method)</a>
+        <li><a href="api/framework.html#charmy.framework.GLFW.get_mouse_pos">get_mouse_pos() (charmy.framework.GLFW method)</a>
+
+        <ul>
+          <li><a href="api/framework.html#charmy.framework.WindowFramework.get_mouse_pos">(charmy.framework.WindowFramework method)</a>
 </li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/const.html#charmy.const.UIFrame.GLFW">GLFW (charmy.const.UIFrame attribute)</a>
+        <li><a href="api/object.html#charmy.object.CharmyObject.get_obj">get_obj() (charmy.object.CharmyObject method)</a>
 </li>
-        <li><a href="api/const.html#charmy.const.UIFrame.glfw">glfw (charmy.const.UIFrame attribute)</a>
+        <li><a href="api/const.html#charmy.const.Backends.GLFW">GLFW (charmy.const.Backends attribute)</a>
+</li>
+        <li><a href="api/const.html#charmy.const.Backends.glfw">glfw (charmy.const.Backends attribute)</a>
 </li>
         <li><a href="api/framework.html#charmy.framework.GLFW">GLFW (class in charmy.framework)</a>
 </li>
@@ -653,8 +653,6 @@
           <li><a href="api/framework.html#charmy.framework.WindowFramework.init">(charmy.framework.WindowFramework method)</a>
 </li>
         </ul></li>
-        <li><a href="api/drawing/canvas.html#charmy.drawing.canvas.CanvasBase.insert_element">insert_element() (charmy.drawing.canvas.CanvasBase method)</a>
-</li>
         <li><a href="api/object.html#charmy.object.CharmyObject.instance_count">instance_count (charmy.object.CharmyObject property)</a>
 </li>
     </ul></td>
@@ -739,10 +737,6 @@
         <ul>
           <li><a href="api/const.html#module-charmy.const">charmy.const</a>
 </li>
-          <li><a href="api/drawing/index.html#module-charmy.drawing">charmy.drawing</a>
-</li>
-          <li><a href="api/drawing/canvas.html#module-charmy.drawing.canvas">charmy.drawing.canvas</a>
-</li>
           <li><a href="api/event.html#module-charmy.event">charmy.event</a>
 </li>
           <li><a href="api/framework.html#module-charmy.framework">charmy.framework</a>
@@ -751,6 +745,8 @@
 </li>
           <li><a href="api/pos.html#module-charmy.pos">charmy.pos</a>
 </li>
+          <li><a href="api/rect.html#module-charmy.rect">charmy.rect</a>
+</li>
           <li><a href="api/size.html#module-charmy.size">charmy.size</a>
 </li>
           <li><a href="api/styles/index.html#module-charmy.styles">charmy.styles</a>
@@ -758,6 +754,8 @@
           <li><a href="api/styles/color.html#module-charmy.styles.color">charmy.styles.color</a>
 </li>
           <li><a href="api/styles/theme.html#module-charmy.styles.theme">charmy.styles.theme</a>
+</li>
+          <li><a href="api/this.html#module-charmy.this">charmy.this</a>
 </li>
           <li><a href="api/widgets/index.html#module-charmy.widgets">charmy.widgets</a>
 </li>
@@ -808,9 +806,9 @@
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/const.html#charmy.const.BackendFrame.OPENGL">OPENGL (charmy.const.BackendFrame attribute)</a>
+        <li><a href="api/const.html#charmy.const.Backends.OPENGL">OPENGL (charmy.const.Backends attribute)</a>
 </li>
-        <li><a href="api/const.html#charmy.const.BackendFrame.opengl">opengl (charmy.const.BackendFrame attribute)</a>
+        <li><a href="api/const.html#charmy.const.Backends.opengl">opengl (charmy.const.Backends attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -844,7 +842,7 @@
   <h2>R</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/drawing/canvas.html#charmy.drawing.canvas.CanvasBase.remove_element">remove_element() (charmy.drawing.canvas.CanvasBase method)</a>
+        <li><a href="api/rect.html#charmy.rect.Rect">Rect (class in charmy.rect)</a>
 </li>
         <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.resize">resize() (charmy.widgets.windowbase.WindowBase method)</a>
 </li>
@@ -868,9 +866,9 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/const.html#charmy.const.UIFrame.SDL">SDL (charmy.const.UIFrame attribute)</a>
+        <li><a href="api/const.html#charmy.const.Backends.SDL">SDL (charmy.const.Backends attribute)</a>
 </li>
-        <li><a href="api/const.html#charmy.const.UIFrame.sdl">sdl (charmy.const.UIFrame attribute)</a>
+        <li><a href="api/const.html#charmy.const.Backends.sdl">sdl (charmy.const.Backends attribute)</a>
 </li>
         <li><a href="api/object.html#charmy.object.CharmyObject.set">set() (charmy.object.CharmyObject method)</a>
 </li>
@@ -902,9 +900,11 @@
         </ul></li>
         <li><a href="api/size.html#charmy.size.Size">Size (class in charmy.size)</a>
 </li>
-        <li><a href="api/const.html#charmy.const.DrawingFrame.SKIA">SKIA (charmy.const.DrawingFrame attribute)</a>
+        <li><a href="api/const.html#charmy.const.Backends.SKIA">SKIA (charmy.const.Backends attribute)</a>
 </li>
-        <li><a href="api/const.html#charmy.const.DrawingFrame.skia">skia (charmy.const.DrawingFrame attribute)</a>
+        <li><a href="api/const.html#charmy.const.Backends.skia">skia (charmy.const.Backends attribute)</a>
+</li>
+        <li><a href="api/framework.html#charmy.framework.SKIA">SKIA (class in charmy.framework)</a>
 </li>
         <li><a href="api/widgets/window.html#charmy.widgets.window.Window.skia_draw_func">skia_draw_func() (charmy.widgets.window.Window method)</a>
 </li>
@@ -950,8 +950,6 @@
   <h2>U</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/const.html#charmy.const.UIFrame">UIFrame (class in charmy.const)</a>
-</li>
         <li><a href="api/event.html#charmy.event.EventHandling.unbind">unbind() (charmy.event.EventHandling method)</a>
 </li>
     </ul></td>

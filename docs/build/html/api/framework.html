@@ -209,7 +209,9 @@
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">charmy.framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="object.html">charmy.object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pos.html">charmy.pos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rect.html">charmy.rect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="size.html">charmy.size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="this.html">charmy.this</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html"><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="widgets/cmm.html#charmy.widgets.cmm.mainloop"><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code></a></li>
@@ -220,11 +222,7 @@
 <li class="toctree-l3"><a class="reference internal" href="widgets/windowbase.html">windowbase</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="drawing/index.html">charmy.drawing</a><input aria-label="Toggle navigation of charmy.drawing" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="drawing/canvas.html">canvas</a></li>
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="styles/color.html">color</a></li>
 <li class="toctree-l3"><a class="reference internal" href="styles/theme.html">theme</a></li>
 </ul>
@@ -274,11 +272,11 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="charmy.framework.WindowFramework">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.framework.</span></span><span class="sig-name descname"><span class="pre">WindowFramework</span></span><a class="headerlink" href="#charmy.framework.WindowFramework" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>The base class of WindowFramework.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.framework.WindowFramework.init">
-<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.init" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.init" title="Link to this definition">¶</a></dt>
 <dd><p>Init the window framework</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Keyword arguments.</p>
@@ -290,7 +288,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.framework.WindowFramework.create">
-<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.create" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.create" title="Link to this definition">¶</a></dt>
 <dd><p>Create a window</p>
 <dl>
 <dt>Args:</dt><dd><p>size: Size of the window
@@ -308,7 +306,7 @@ error_callback: Error callback function. Default is None.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.framework.WindowFramework.create_event_bounds">
-<span class="sig-name descname"><span class="pre">create_event_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_class</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.framework.WindowFramework.create_event_bounds" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">create_event_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_class</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.framework.WindowFramework.create_event_bounds" title="Link to this definition">¶</a></dt>
 <dd><p>Create event bounds for the window</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>the_window: The window to create event bounds for
@@ -322,7 +320,7 @@ window_class: The window class to create event bounds for
 
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.framework.WindowFramework.destroy">
-<span class="sig-name descname"><span class="pre">destroy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.destroy" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">destroy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.destroy" title="Link to this definition">¶</a></dt>
 <dd><p>Destroy the window</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>the_window: The window to destroy with</p>
@@ -334,7 +332,7 @@ window_class: The window class to create event bounds for
 
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.framework.WindowFramework.set_size">
-<span class="sig-name descname"><span class="pre">set_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="size.html#charmy.size.Size" title="charmy.size.Size"><span class="pre">Size</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.set_size" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="size.html#charmy.size.Size" title="charmy.size.Size"><span class="pre">Size</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.set_size" title="Link to this definition">¶</a></dt>
 <dd><p>Set the size of the window</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>the_window: The window to set size for
@@ -347,7 +345,7 @@ size: Size to set</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.framework.WindowFramework.set_pos">
-<span class="sig-name descname"><span class="pre">set_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pos.html#charmy.pos.Pos" title="charmy.pos.Pos"><span class="pre">Pos</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.set_pos" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pos.html#charmy.pos.Pos" title="charmy.pos.Pos"><span class="pre">Pos</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.set_pos" title="Link to this definition">¶</a></dt>
 <dd><p>Set the position of the window</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>the_window: The window to set position for
@@ -360,13 +358,25 @@ pos: Position to set</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.framework.WindowFramework.set_title">
-<span class="sig-name descname"><span class="pre">set_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.set_title" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.set_title" title="Link to this definition">¶</a></dt>
 <dd><p>Set the title of the window</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>the_window: The window to set title for
 title: Title to set (Default value = ‘Charmy GUI’)</p>
 </dd>
 <dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.framework.WindowFramework.get_mouse_pos">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_mouse_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.get_mouse_pos" title="Link to this definition">¶</a></dt>
+<dd><p>Get the mouse position of the window</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>the_window: The window to get mouse position for</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple[int, int]: The mouse position of the window</p>
 </dd>
 </dl>
 </dd></dl>
@@ -385,7 +395,7 @@ title: Title to set (Default value = ‘Charmy GUI’)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.framework.WindowFramework.swap_buffers">
-<span class="sig-name descname"><span class="pre">swap_buffers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.swap_buffers" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">swap_buffers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.WindowFramework.swap_buffers" title="Link to this definition">¶</a></dt>
 <dd><p>Swap the buffers of the window</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>the_window: The window to swap buffers for</p>
@@ -442,6 +452,11 @@ title: Title to set (Default value = ‘Charmy GUI’)</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="charmy.framework.GLFW.get_mouse_pos">
+<span class="sig-name descname"><span class="pre">get_mouse_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#charmy.framework.GLFW.get_mouse_pos" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="charmy.framework.GLFW.make_context_current">
 <span class="sig-name descname"><span class="pre">make_context_current</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_window</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.framework.GLFW.make_context_current" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -463,6 +478,36 @@ title: Title to set (Default value = ‘Charmy GUI’)</p>
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.framework.</span></span><span class="sig-name descname"><span class="pre">DrawingFramework</span></span><a class="headerlink" href="#charmy.framework.DrawingFramework" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The base class of DrawingFramework.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.framework.DrawingFramework.draw_rect">
+<span class="sig-name descname"><span class="pre">draw_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="rect.html#charmy.rect.Rect" title="charmy.rect.Rect"><span class="pre">Rect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.framework.DrawingFramework.draw_rect" title="Link to this definition">¶</a></dt>
+<dd><p>Draw a rectangle</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>canvas (Canvas): The canvas to draw
+rect (Rect): The rect area to draw
+radius (int, optional): The radius of the rectangle. Defaults to 0.
+bg (charmy.styles.color.Color, optional): The background color of the rectangle. Defaults to None.
+bd (charmy.styles.color.Color, optional): The border color of the rectangle. Defaults to None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="charmy.framework.SKIA">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.framework.</span></span><span class="sig-name descname"><span class="pre">SKIA</span></span><a class="headerlink" href="#charmy.framework.SKIA" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.framework.SKIA.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#charmy.framework.SKIA.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.framework.SKIA.draw_rect">
+<span class="sig-name descname"><span class="pre">draw_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="rect.html#charmy.rect.Rect" title="charmy.rect.Rect"><span class="pre">Rect</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.framework.SKIA.draw_rect" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -531,6 +576,7 @@ title: Title to set (Default value = ‘Charmy GUI’)</p>
 <li><a class="reference internal" href="#charmy.framework.WindowFramework.set_size"><code class="docutils literal notranslate"><span class="pre">WindowFramework.set_size()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.framework.WindowFramework.set_pos"><code class="docutils literal notranslate"><span class="pre">WindowFramework.set_pos()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.framework.WindowFramework.set_title"><code class="docutils literal notranslate"><span class="pre">WindowFramework.set_title()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.framework.WindowFramework.get_mouse_pos"><code class="docutils literal notranslate"><span class="pre">WindowFramework.get_mouse_pos()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.framework.WindowFramework.make_context_current"><code class="docutils literal notranslate"><span class="pre">WindowFramework.make_context_current()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.framework.WindowFramework.swap_buffers"><code class="docutils literal notranslate"><span class="pre">WindowFramework.swap_buffers()</span></code></a></li>
 </ul>
@@ -544,12 +590,21 @@ title: Title to set (Default value = ‘Charmy GUI’)</p>
 <li><a class="reference internal" href="#charmy.framework.GLFW.set_size"><code class="docutils literal notranslate"><span class="pre">GLFW.set_size()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.framework.GLFW.set_pos"><code class="docutils literal notranslate"><span class="pre">GLFW.set_pos()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.framework.GLFW.set_title"><code class="docutils literal notranslate"><span class="pre">GLFW.set_title()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.framework.GLFW.get_mouse_pos"><code class="docutils literal notranslate"><span class="pre">GLFW.get_mouse_pos()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.framework.GLFW.make_context_current"><code class="docutils literal notranslate"><span class="pre">GLFW.make_context_current()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.framework.GLFW.swap_buffers"><code class="docutils literal notranslate"><span class="pre">GLFW.swap_buffers()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.framework.GLFW.can_be_closed"><code class="docutils literal notranslate"><span class="pre">GLFW.can_be_closed()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#charmy.framework.DrawingFramework"><code class="docutils literal notranslate"><span class="pre">DrawingFramework</span></code></a></li>
+<li><a class="reference internal" href="#charmy.framework.DrawingFramework"><code class="docutils literal notranslate"><span class="pre">DrawingFramework</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.framework.DrawingFramework.draw_rect"><code class="docutils literal notranslate"><span class="pre">DrawingFramework.draw_rect()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#charmy.framework.SKIA"><code class="docutils literal notranslate"><span class="pre">SKIA</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.framework.SKIA.__init__"><code class="docutils literal notranslate"><span class="pre">SKIA.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#charmy.framework.SKIA.draw_rect"><code class="docutils literal notranslate"><span class="pre">SKIA.draw_rect()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
