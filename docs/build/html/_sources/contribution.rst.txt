@@ -1,6 +1,27 @@
 Contribution
 ============
 
+.. sidebar:: Contributor / Xiao Baiyun (Little White Cloud)
+
+    A Senior high school student from ``China``.
+
+    Compiled Chinese content for 'charmy.this'
+
+    .. image:: xby_logo.jpg
+        :alt: xby_logo
+
+    .. image:: xby_content.png
+        :alt: xby_content
+
+.. sidebar:: Contributor / Rgzz666 (Human)
+
+    A Senior high school student from ``China``.
+
+    Compiled English content for 'charmy.this'
+
+    .. image:: rgzz666_logo.jpg
+        :alt: rgzz666_logo
+
 .. note::
 
    Github Repository: https://github.com/XiangQinxi/charmy
