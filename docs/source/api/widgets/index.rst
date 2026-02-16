@@ -12,6 +12,7 @@ charmy.widgets
    :maxdepth: 2
    :caption: Contents:
 
+   button
    cmm
    container
    widget
