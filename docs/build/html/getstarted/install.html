@@ -23,7 +23,6 @@
   --color-brand-primary: red;
   --color-brand-content: #CC3333;
   --color-brand-visited: #CC8033;
-  --color-admonition-background: orange;
   
   }
   @media not print {
@@ -33,7 +32,6 @@
   --color-brand-primary: #CC8033;
   --color-brand-content: #CC8033;
   --color-brand-visited: #CC3333;
-  --color-admonition-background: orange;
   
     }
     @media (prefers-color-scheme: dark) {
@@ -43,7 +41,6 @@
   --color-brand-primary: #CC8033;
   --color-brand-content: #CC8033;
   --color-brand-visited: #CC3333;
-  --color-admonition-background: orange;
   
       }
     }
@@ -190,7 +187,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -281,13 +278,17 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section id="install-charmy">
 <h1>Install Charmy<a class="headerlink" href="#install-charmy" title="Link to this heading">¶</a></h1>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Python version should &gt;= 3.11 !</p>
+</div>
 <p>It`s easy to install <code class="docutils literal notranslate"><span class="pre">Charmy</span> <span class="pre">GUI</span></code>. You can install it using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>charmy
 </pre></div>
@@ -298,6 +299,21 @@
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
+<section id="dependency-library-matching">
+<h2>Dependency library matching<a class="headerlink" href="#dependency-library-matching" title="Link to this heading">¶</a></h2>
+<p>Charmy is supported on Windows, macOS, and Linux. Support multiple backend libraries.</p>
+<p>You can choose different backend libraries to get different features.</p>
+<div class="important admonition">
+<p class="admonition-title">1. <code class="docutils literal notranslate"><span class="pre">skia-python</span></code> + <code class="docutils literal notranslate"><span class="pre">pyopengl</span></code> + <code class="docutils literal notranslate"><span class="pre">glfw</span></code> (Basic)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>skia-python<span class="w"> </span>pyopengl<span class="w"> </span>glfw
+</pre></div>
+</div>
+</div>
+<div class="caution admonition">
+<p class="admonition-title">Waiting for further development</p>
+<p>…</p>
+</div>
+</section>
 </section>
 
         </article>
@@ -343,8 +359,27 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Install Charmy</a><ul>
+<li><a class="reference internal" href="#dependency-library-matching">Dependency library matching</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

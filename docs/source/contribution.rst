@@ -1,7 +1,9 @@
 Contribution
 ============
 
-Github Repository: https://github.com/XiangQinxi/charmy
+.. note::
+
+   Github Repository: https://github.com/XiangQinxi/charmy
 
 How to *Contribute*
 -------------------

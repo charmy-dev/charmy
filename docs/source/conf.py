@@ -88,12 +88,10 @@ html_theme_options = {
         "color-brand-primary": "red",
         "color-brand-content": "#CC3333",
         "color-brand-visited": "#CC8033",
-        "color-admonition-background": "orange",
     },
     "dark_css_variables": {
         "color-brand-primary": "#CC8033",
         "color-brand-content": "#CC8033",
         "color-brand-visited": "#CC3333",
-        "color-admonition-background": "orange",
     },
 }
