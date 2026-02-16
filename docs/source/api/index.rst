@@ -6,6 +6,10 @@ Welcome to the Charmy GUI API reference.
 Core Modules
 ------------
 
+.. autoclasstree:: charmy
+   :full:
+   :strict:
+
 .. toctree::
    :maxdepth: 2
    :caption: Core API:

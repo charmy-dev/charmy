@@ -1,6 +1,10 @@
 charmy.styles
 ==============
 
+.. autoclasstree:: charmy.styles
+   :full:
+   :strict:
+
 .. automodule:: charmy.styles
    :members:
 

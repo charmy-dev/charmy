@@ -1,6 +1,9 @@
 charmy.widgets
 ==============
 
+.. autoclasstree:: charmy.widgets
+   :full:
+   :strict:
 
 .. automodule:: charmy.widgets
    :members:

@@ -40,6 +40,7 @@ extensions = [
     "sphinxcontrib.mermaid",  # 流程图
 ]
 myst_enable_extensions = ["colon_fence"]
+myst_fence_as_directive = ["mermaid"]
 
 templates_path = ["_templates"]
 exclude_patterns = []
