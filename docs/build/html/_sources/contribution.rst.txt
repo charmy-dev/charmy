@@ -9,6 +9,7 @@ How to contribute the project ?
 1. Fork the project on GitHub.
 
 .. code-block:: shell
+
     git clone https://github.com/XiangQinxi/charmy.git
 
 2. Create a new branch for your feature or bug fix.
