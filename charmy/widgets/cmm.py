@@ -5,7 +5,7 @@ from os import environ
 
 from ..const import MANAGER_ID, Backends
 from ..event import WorkingThread
-from ..framework import drawing_framework_map, window_framework_map
+from ..framework import Framework
 from ..object import CharmyObject
 
 
@@ -13,16 +13,12 @@ class CharmyManager(CharmyObject):
     """The manager of the charmy windows.
 
     Args:
-        ui.framework: What UI Framework will be used.
-        ui.is_vsync: Is vsync enabled.
-        ui.samples: UI Samples.
+        is_vsync: Is vsync enabled.
+        samples: UI Samples.
     """
 
     def __init__(
         self,
-        ui: Backends = Backends.GLFW,
-        drawing: Backends = Backends.SKIA,
-        backend: Backends = Backends.OPENGL,
         vsync: bool = True,
         samples: int = 4,
         **kwargs,
@@ -34,55 +30,29 @@ class CharmyManager(CharmyObject):
 
         self.new("event.thread", WorkingThread())
 
-        self.new("ui.framework", ui)
-        self.new("ui.framework.class", window_framework_map[ui]())  # NOQA
+        self.new("framework", Framework)
+        self.new("ui.framework", self["framework"].ui)
+        self.new("drawing.framework", self["framework"].drawing)
+        self.new("backend.framework", self["framework"].backend)
+
         self.new("ui.is_vsync", vsync)
         self.new("ui.samples", samples)
 
-        match self["ui.framework"]:
-            case Backends.GLFW:
-                self.glfw = self["ui.framework.class"].glfw
-            case Backends.SDL:
-                self.sdl3 = self["ui.framework.class"].sdl3
-            case _:
-                raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
-
-        self.new("drawing.framework", drawing)
-        self.new("drawing.framework.class", drawing_framework_map[drawing]())  # NOQA
-
-        match self["drawing.framework"]:
-            case Backends.SKIA:
-                self.skia = importlib.import_module("skia")
-            case _:
-                raise ValueError(f"Unknown Drawing Framework: {self['drawing.framework']}")
-
-        self.new("backend.framework", backend)
-
-        match self["backend.framework"]:
-            case Backends.OPENGL:
-                self.opengl = importlib.import_module("OpenGL")
-                self.opengl_GL = importlib.import_module("OpenGL.GL")
-            case _:
-                raise ValueError(f"Unknown Backend Framework: {self['backend.framework']}")
-
         self.windows = []
-        self.is_alive: bool = False
+        self.is_alive: bool = False  # Is the manager running
 
         self._init_ui_framework()
 
     def _init_ui_framework(self):
         """According to attribute `ui.framework` to init ui framework"""
-        match self.get("ui.framework"):
-            case Backends.GLFW:
-                self["ui.framework.class"].init(
-                    error_callback=self.error, samples=self.get("ui.samples")
-                )
+        self["framework"].ui.init(error_callback=self.error, samples=self.get("ui.samples"))
 
     def update(self):
         """Update the Windows' UI and events"""
 
         input_mode: bool = True
 
+        self.glfw = self["framework"].ui.glfw
         self.glfw.wait_events()
         windows = self.windows
 
@@ -152,8 +122,8 @@ class CharmyManager(CharmyObject):
 
     def cleanup(self) -> None:
         """Clean up resources."""
-        match self.get("ui.framework"):
-            case Backends.GLFW:
+        match self["framework"].ui_name:
+            case "GLFW":
                 for window in self.windows:
                     self.glfw.destroy_window(window.the_window)
                 self.glfw.terminate()
@@ -177,12 +147,8 @@ class CharmyManager(CharmyObject):
 
 
 # Auto create Manager Object
-uimap = {
-    "GLFW": Backends.GLFW,
-}
-manager: CharmyManager = CharmyManager(
-    id_=MANAGER_ID, ui=uimap[environ.get("UI_FRAMEWORK", "GLFW")]
-)
+
+manager: CharmyManager = CharmyManager(id_=MANAGER_ID)
 
 
 def mainloop() -> None:

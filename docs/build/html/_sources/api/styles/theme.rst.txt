@@ -6,4 +6,4 @@ theme
    :strict:
 
 .. automodule:: charmy.styles.theme
-   :members:
+    :members:

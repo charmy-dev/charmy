@@ -6,4 +6,4 @@ color
    :strict:
 
 .. automodule:: charmy.styles.color
-   :members:
+    :members:

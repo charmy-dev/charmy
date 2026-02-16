@@ -41,57 +41,35 @@ class WindowBase(EventHandling, CharmyObject):
         self.manager.add_window(self)
 
         # Init Attributes
-        self.new(
-            "ui.framework", self._get_ui_framework(), get_func=self._get_ui_framework
-        )  # The UI Framework
-        self.new(
-            "ui.framework.class",
-            self._get_ui_framework_class(),
-            get_func=self._get_ui_framework_class,
-        )
+        self.new("framework", self._get_framework(), get_func=self._get_framework)  # The Framework
         self.new(
             "ui.is_vsync", self._get_ui_is_vsync(), get_func=self._get_ui_is_vsync
         )  # Whether to enable VSync
 
-        # """
-        match self["ui.framework"]:
-            case Backends.GLFW:
-                self.glfw = self.manager.glfw
-            case Backends.SDL:
-                self.sdl3 = self.manager.sdl3
-            case _:
-                raise ValueError(f"Unknown UI Framework: {self['ui.framework']}")
-        # """
-
         self.new("ui.draw_func", None)
 
-        self.new(
-            "drawing.framework",
-            self._get_drawing_framework(),
-            get_func=self._get_drawing_framework,
-        )
         self.new("drawing.mode", drawing_mode)
 
-        match self["drawing.framework"]:
-            case Backends.SKIA:
-                self.skia = self.manager.skia
+        match self["framework"].ui_name:
+            case "GLFW":
+                self.glfw = self["framework"].ui.glfw
+            case _:
+                raise ValueError(f"Unknown UI Framework: {self['framework'].ui_name}")
+
+        match self["framework"].drawing_name:
+            case "SKIA":
+                self.skia = self["framework"].drawing.skia
                 self.new("drawing.surface", None)
             case _:
-                raise ValueError(f"Unknown Drawing Framework: {self['drawing.framework']}")
+                raise ValueError(f"Unknown Drawing Framework: {self['framework'].drawing_name}")
 
-        self.new(
-            "backend.framework",
-            self._get_backend_framework(),
-            get_func=self._get_backend_framework,
-        )
-
-        match self["backend.framework"]:
-            case Backends.OPENGL:
-                self.opengl = self.manager.opengl
-                self.opengl_GL = self.manager.opengl_GL
+        match self["framework"].backend_name:
+            case "OPENGL":
+                self.opengl = self["framework"].backend.opengl
+                self.opengl_GL = self["framework"].backend.opengl_GL
                 self.new("backend.context", None)
             case _:
-                raise ValueError(f"Unknown Backend Framework: {self['backend.framework']}")
+                raise ValueError(f"Unknown Backend Framework: {self['framework'].backend_name}")
 
         self.new("pos", Pos(0, 0))  # Always (0, 0)
         self.new("canvas_pos", Pos(0, 0))  # Always (0, 0)
@@ -113,7 +91,7 @@ class WindowBase(EventHandling, CharmyObject):
 
     def create(self):
         """Create the window."""
-        arg = self["ui.framework.class"].create(
+        arg = self["framework"].ui.create(
             size=self.get("size", skip=True),
             title=self.get("title"),
             fha=self.is_force_hardware_acceleration,
@@ -128,9 +106,7 @@ class WindowBase(EventHandling, CharmyObject):
 
     def create_event_bounds(self):
         """Create event bounds."""
-        self["ui.framework.class"].create_event_bounds(
-            the_window=self.the_window, window_class=self
-        )
+        self["framework"].ui.create_event_bounds(the_window=self.the_window, window_class=self)
 
     def update(self):
         """Update the window. When is_dirty is True, draw the window."""
@@ -152,16 +128,16 @@ class WindowBase(EventHandling, CharmyObject):
         :param arg: GLFW or SDL2 Window/Surface
         :return: Skia Surface
         """
-        match self["ui.framework"]:
-            case Backends.GLFW:
+        match self["framework"].ui_name:
+            case "GLFW":
                 if not self.glfw.get_current_context() or self.glfw.window_should_close(arg):
                     yield None
                     return
 
-                match self["backend.framework"]:
-                    case Backends.OPENGL:
-                        match self["drawing.framework"]:
-                            case Backends.SKIA:
+                match self["framework"].backend_name:
+                    case "OPENGL":
+                        match self["framework"].drawing_name:
+                            case "SKIA":
                                 self["backend.context"] = self.skia.GrDirectContext.MakeGL()
                                 fb_width, fb_height = self.glfw.get_framebuffer_size(arg)
                                 backend_render_target = self.skia.GrBackendRenderTarget(
@@ -185,7 +161,7 @@ class WindowBase(EventHandling, CharmyObject):
 
                                 yield surface
 
-            case Backends.SDL:
+            case "SDL":
                 import ctypes
 
                 width, height = arg.w, arg.h
@@ -213,12 +189,12 @@ class WindowBase(EventHandling, CharmyObject):
         if self.is_visible:
             # Set the current context for each arg
             # 【为该窗口设置当前上下文】
-            match self["ui.framework"]:
-                case Backends.GLFW:
-                    self["ui.framework.class"].make_context_current(self.the_window)
+            match self["framework"].ui_name:
+                case "GLFW":
+                    self["framework"].ui.make_context_current(self.the_window)
 
-                    match self["drawing.framework"]:
-                        case Backends.SKIA:
+                    match self["framework"].drawing_name:
+                        case "SKIA":
                             # Create a Surface and hand it over to this arg.
                             # 【创建Surface，交给该窗口】
                             with self.skia_surface(self.the_window) as self[  # NOQA
@@ -232,7 +208,7 @@ class WindowBase(EventHandling, CharmyObject):
                                             self["ui.draw_func"](canvas)
 
                                     self["drawing.surface"].flushAndSubmit()
-                case "sdl2":
+                case "SDL":
                     import sdl2  # NOQA
 
                     surface = sdl2.SDL_GetWindowSurface(self.the_window).contents
@@ -246,7 +222,7 @@ class WindowBase(EventHandling, CharmyObject):
                     sdl2.SDL_UpdateWindowSurface(self.the_window)  # NOQA
 
             if self.is_alive:
-                self["ui.framework.class"].swap_buffers(self.the_window)
+                self["framework"].ui.swap_buffers(self.the_window)
 
         if self["backend.context"]:
             self["backend.context"].freeGpuResources()
@@ -272,7 +248,7 @@ class WindowBase(EventHandling, CharmyObject):
         # print(self.id)
         self.manager.destroy_window(self)
         try:
-            self["ui.framework.class"].destroy(the_window=self.the_window)
+            self["framework"].ui.destroy(the_window=self.the_window)
         except TypeError:
             pass
         finally:
@@ -293,8 +269,8 @@ class WindowBase(EventHandling, CharmyObject):
         :param value: Whether the window can be closed
         :return: None
         """
-        match self.get("ui.framework"):
-            case Backends.GLFW:
+        match self["framework"].ui_name:
+            case "GLFW":
                 import glfw
 
                 if value is not None:
@@ -308,17 +284,8 @@ class WindowBase(EventHandling, CharmyObject):
         return True
 
     # region Getters and Setters
-    def _get_ui_framework(self):
-        return self.manager.get("ui.framework")
-
-    def _get_ui_framework_class(self):
-        return self.manager.get("ui.framework.class")
-
-    def _get_drawing_framework(self):
-        return self.manager.get("drawing.framework")
-
-    def _get_backend_framework(self):
-        return self.manager.get("backend.framework")
+    def _get_framework(self):
+        return self.manager.get("framework")
 
     def _get_ui_is_vsync(self):
         return self.manager.get("ui.is_vsync")
@@ -331,7 +298,7 @@ class WindowBase(EventHandling, CharmyObject):
         Returns:
             None
         """
-        self["ui.framework.class"].set_size(the_window=self.the_window, size=size)
+        self["framework"].ui.set_size(the_window=self.the_window, size=size)
 
     def resize(self, size: Size | tuple[int, int]) -> None:
         """Resize the window to the given size.
@@ -351,7 +318,7 @@ class WindowBase(EventHandling, CharmyObject):
         Returns:
             None
         """
-        self["ui.framework.class"].set_pos(the_window=self.the_window, pos=pos)
+        self["framework"].ui.set_pos(the_window=self.the_window, pos=pos)
 
     def move(self, pos: Pos | tuple[int, int]) -> None:
         """Move the window to the given position.
@@ -371,7 +338,7 @@ class WindowBase(EventHandling, CharmyObject):
         Returns:
             None
         """
-        self["ui.framework.class"].set_title(the_window=self.the_window, title=title)
+        self["framework"].ui.set_title(the_window=self.the_window, title=title)
 
     # endregion
 

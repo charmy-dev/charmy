@@ -2,6 +2,7 @@ import importlib.util
 import sys
 import typing
 
+from os import environ
 from .const import Backends
 from .event import Event
 from .pos import Pos
@@ -11,7 +12,7 @@ from abc import ABC, abstractmethod
 
 
 # region Window
-class WindowFramework(ABC):
+class UIFramework(ABC):
     """The base class of WindowFramework."""
 
     @abstractmethod
@@ -143,10 +144,10 @@ class WindowFramework(ABC):
         ...
 
 
-window_framework_map: dict[Backends, WindowFramework] = {}
+window_framework_map = {}
 
 
-class GLFW(WindowFramework):
+class GLFW(UIFramework):
     def __init__(self):
         self.glfw = importlib.import_module("glfw")
 
@@ -286,7 +287,7 @@ class GLFW(WindowFramework):
 
 
 if importlib.util.find_spec("glfw") is not None:
-    window_framework_map[Backends.GLFW] = GLFW  # NOQA
+    window_framework_map["GLFW"] = GLFW  # NOQA
 # endregion
 
 from .rect import Rect
@@ -310,7 +311,7 @@ class DrawingFramework(ABC):
         ...
 
 
-drawing_framework_map: dict[Backends, DrawingFramework] = {}
+drawing_framework_map = {}
 
 
 class SKIA(DrawingFramework):
@@ -336,6 +337,35 @@ class SKIA(DrawingFramework):
 
 
 if importlib.util.find_spec("skia") is not None:
-    drawing_framework_map[Backends.SKIA] = SKIA  # NOQA
+    drawing_framework_map["SKIA"] = SKIA  # NOQA
 
 # endregion
+
+
+# region Backend
+class BackendFramework(ABC):
+    pass
+
+
+backend_framework_map = {}
+
+
+class OPENGL(BackendFramework):
+    def __init__(self):
+        self.opengl = importlib.import_module("OpenGL")
+        self.opengl_GL = importlib.import_module("OpenGL.GL")
+
+
+if importlib.util.find_spec("OpenGL") is not None:
+    backend_framework_map["OPENGL"] = OPENGL  # NOQA
+
+# endregion
+
+
+class Framework:
+    drawing_name = environ.get("CHARMY_DRAWING_BACKEND", "SKIA")
+    drawing = drawing_framework_map[drawing_name]()
+    ui_name = environ.get("CHARMY_UI_BACKEND", "GLFW")
+    ui = window_framework_map[ui_name]()
+    backend_name = environ.get("CHARMY_BACKEND", "OPENGL")
+    backend = backend_framework_map[backend_name]()

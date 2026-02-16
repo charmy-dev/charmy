@@ -17,14 +17,9 @@ class CanvasBase(CharmyObject):
             raise ValueError("Not found main CharmyManager")
         self.manager: CharmyManager = manager
         self.new(
-            "drawing.framework",
-            self._get_drawing_framework(),
-            get_func=self._get_drawing_framework,
-        )
-        self.new(
-            "drawing.framework.class",
-            self._get_drawing_framework_class(),
-            get_func=self._get_drawing_framework_class,
+            "framework",
+            self._get_framework(),
+            get_func=self._get_framework,
         )
         # element config
         self.elements = []  # e.g. [{"type": "rect", "id": "element0", "radius": 12}]
@@ -43,7 +38,7 @@ class CanvasBase(CharmyObject):
                 warnings.warn(f"Warning: Unknown element type {element['type']}")
 
     def draw_rect(self, canvas, element: dict):
-        self["drawing.framework.class"].draw_rect(
+        self["framework"].drawing.draw_rect(
             canvas,
             rect=element.get("rect"),
             radius=element.get("radius", 0),
@@ -87,8 +82,5 @@ class CanvasBase(CharmyObject):
 
     get_element = find_element
 
-    def _get_drawing_framework(self):
-        return self.manager["drawing.framework"]
-
-    def _get_drawing_framework_class(self):
-        return self.manager.get("drawing.framework.class")
+    def _get_framework(self):
+        return self.manager["framework"]

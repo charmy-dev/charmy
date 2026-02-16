@@ -6,27 +6,24 @@ from ..widgets.cmm import CharmyManager
 class Color(CharmyObject):
     """Color manager"""
 
-    def __init__(self, *args, draw_framework: Backends = None, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        # The Drawing Framework
-        if draw_framework is None:
-            # Auto find CharmyManager Object
-            self.manager: CharmyManager = self.get_obj(MANAGER_ID)
-            self.new(
-                "drawing.framework",
-                self._get_drawing_framework(),
-                get_func=self._get_drawing_framework,
-            )
-        else:
-            self.new("drawing.framework", draw_framework)
+        # Auto find CharmyManager Object
+        self.manager: CharmyManager = self.get_obj(MANAGER_ID)
+        self.new(
+            "framework",
+            self._get_framework(),
+            get_func=self._get_framework,
+        )
 
         # Import Drawing Framework
-        match self["drawing.framework"]:
-            case Backends.SKIA:
-                self.skia = self.manager.skia
+        match self["framework"].drawing_name:
+            case "SKIA":
+                self.skia = self["framework"].drawing.skia
             case _:
-                raise ValueError("Not supported drawing framework")
+                raise ValueError(
+                    f"Not supported drawing framework: {self['framework'].drawing_name}"
+                )
         self.new("color_object", None)
 
     def set_color_rgba(
@@ -43,8 +40,8 @@ class Color(CharmyObject):
         Returns:
             None
         """
-        match self["drawing.framework"]:
-            case Backends.SKIA:
+        match self["framework"].drawing_name:
+            case "SKIA":
                 self["color_object"] = self.skia.Color(
                     self._c(r), self._c(g), self._c(b), self._c(a)
                 )
@@ -75,8 +72,8 @@ class Color(CharmyObject):
             g = int(hex_color[2:4], 16)
             b = int(hex_color[4:6], 16)
             a = int(hex_color[6:8], 16)
-            match self["drawing.framework"]:
-                case Backends.SKIA:
+            match self["framework"].drawing_name:
+                case "SKIA":
                     self["color_object"] = self.skia.ColorSetARGB(a, r, g, b)  # 返回含透明度的颜色
         else:
             raise ValueError("HEX Should be #RRGGBB or #RRGGBBAA format")
@@ -91,8 +88,8 @@ class Color(CharmyObject):
         Raises:
             ValueError: When color not exists
         """
-        match self["drawing.framework"]:
-            case Backends.SKIA:
+        match self["framework"].drawing_name:
+            case "SKIA":
                 try:
                     self["color_object"] = getattr(self.skia, f"Color{name.upper()}")
                 except:
@@ -113,5 +110,5 @@ class Color(CharmyObject):
                 x = x * 255
         return x
 
-    def _get_drawing_framework(self):
-        return self.manager["drawing.framework"]
+    def _get_framework(self):
+        return self.manager["framework"]

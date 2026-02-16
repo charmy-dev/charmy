@@ -9,8 +9,8 @@ class Window(WindowBase, Container):
     def __init__(self, *args, **kwargs):
         WindowBase.__init__(self, *args, **kwargs)
         self.new("children", [])
-        match self["drawing.framework"]:
-            case Backends.SKIA:
+        match self["framework"].drawing_name:
+            case "SKIA":
                 self.set(
                     "ui.draw_func", self.skia_draw_func
                 )  # When `draw` is called, trigger `ui.draw_func`

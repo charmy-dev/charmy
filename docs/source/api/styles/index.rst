@@ -6,7 +6,7 @@ charmy.styles
    :strict:
 
 .. automodule:: charmy.styles
-   :members:
+    :members:
 
 .. toctree::
    :maxdepth: 2
