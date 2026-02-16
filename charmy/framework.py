@@ -323,14 +323,13 @@ class SKIA:
 
         if bg is None:
             bg = {}
-        print(bg)
         canvas.drawRoundRect(
             rect=self.skia.Rect.MakeXYWH(rect["x"], rect["y"], rect["width"], rect["height"]),
             rx=radius,
             ry=radius,
             paint=self.skia.Paint(
                 Color=bg.get("color_object", self.skia.ColorBLUE),
-                Style=self.skia.Paint.kStroke_Style,
+                Style=self.skia.Paint.kFill_Style,
             ),
         )
 

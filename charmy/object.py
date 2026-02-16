@@ -150,7 +150,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         self._attributes[key] = value
         return self
 
-    def get(self, key: str, *, skip: bool = False) -> typing.Any:
+    def get(self, key: str, default=None, *, skip: bool = False) -> typing.Any:
         """Get attribute by key.
 
         Args:
@@ -163,7 +163,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
         # check is an available key
         if key not in self._attributes:
-            raise KeyError(key)
+            return default
 
         # check is a custom attribute
         if isinstance(self._attributes[key], list) and len(self._attributes[key]) > 0:

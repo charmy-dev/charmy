@@ -32,6 +32,6 @@ print(window.id)
 widget = cm.Widget(window)
 color = cm.Color()
 color.set_color_rgba(0, 0, 0)
-widget.add_element("rect", rect=cm.Rect(x=0, y=0, width=100, height=100), color=color)
+widget.add_element("rect", rect=cm.Rect(x=0, y=0, width=100, height=100), bg=color)
 
 cm.mainloop()

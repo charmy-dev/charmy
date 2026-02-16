@@ -47,6 +47,7 @@ class CanvasBase(CharmyObject):
             canvas,
             rect=element.get("rect"),
             radius=element.get("radius", 0),
+            bg=element.get("bg", None),
         )
 
     def _template(self, type_: str, rect: Rect, id_: ID = ID.AUTO, **kwargs):
