@@ -25,3 +25,5 @@ Welcome to Charmy GUI documentation! ``Charmy GUI`` is modern, simple GUI librar
    getstarted/index
    contribution
    api/index
+
+   license
