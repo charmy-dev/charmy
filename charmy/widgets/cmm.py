@@ -23,10 +23,10 @@ class CharmyManager(CharmyObject):
         **kwargs,
     ):
         super().__init__(**kwargs)
- 
+
         # TODO: there should be only one manager
         # TODO: maybe user will use it in later version?
-        #if self.instance_count >= 1:
+        # if self.instance_count >= 1:
         #    warnings.warn("There should be only one instance of CApp.")
 
         self.new("event.thread", WorkingThread())
@@ -65,9 +65,9 @@ class CharmyManager(CharmyObject):
         # not implemented yet
         # input_mode: bool = True
 
-        #if input_mode:
+        # if input_mode:
         #    self.glfw.poll_events()
-        #else:
+        # else:
         #    # if self._check_delay_events()
         #    self.glfw.wait_events()
 
@@ -99,9 +99,9 @@ class CharmyManager(CharmyObject):
 
                 for window in self.windows:
                     if window.can_be_close():
-                        self.destroy_window(window) # remove window if closed
+                        self.destroy_window(window)  # remove window if closed
                         window.destroy()
-                        
+
                 self.update()
             except Exception as e:
                 self.is_alive = False

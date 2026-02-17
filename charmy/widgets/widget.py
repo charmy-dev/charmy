@@ -1,9 +1,9 @@
+from ..event import EventHandling
 from ..pos import Pos
 from ..rect import Rect
 from ..size import Size
 from .canvas import CanvasBase
 from .container import Container, auto_find_parent
-from ..event import EventHandling
 
 
 @auto_find_parent

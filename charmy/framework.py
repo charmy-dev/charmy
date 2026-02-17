@@ -2,7 +2,8 @@ import importlib.util
 import typing
 from abc import ABC, abstractmethod
 from os import environ
-from .const import Backends, PLATFORM
+
+from .const import PLATFORM, Backends
 from .event import Event
 from .pos import Pos
 from .size import Size
@@ -156,7 +157,7 @@ class GLFW(UIFramework):
         self.glfw.window_hint(self.glfw.TRANSPARENT_FRAMEBUFFER, True)
         self.glfw.window_hint(self.glfw.COCOA_RETINA_FRAMEBUFFER, True)
         # TODO: cmm also has samples, I have to figure out whether objects' attributes are shared or not
-        # TODO: combine them? 
+        # TODO: combine them?
         self.glfw.window_hint(self.glfw.SAMPLES, kwargs.get("samples", 4))
 
         if PLATFORM == "windows":
@@ -168,9 +169,7 @@ class GLFW(UIFramework):
 
     def create(self, size, title, **kwargs) -> dict[str, typing.Any]:
         # mystery optimize
-        self.glfw.window_hint(
-            self.glfw.CONTEXT_RELEASE_BEHAVIOR, self.glfw.RELEASE_BEHAVIOR_NONE
-        )
+        self.glfw.window_hint(self.glfw.CONTEXT_RELEASE_BEHAVIOR, self.glfw.RELEASE_BEHAVIOR_NONE)
 
         self.glfw.window_hint(self.glfw.STENCIL_BITS, 8)
         if PLATFORM == "macos":

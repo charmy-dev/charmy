@@ -51,6 +51,7 @@ class Rect(CharmyObject):
         """Return position in string."""
         return f"Rect({self.get('left')}, {self.get('top')}, {self.get('width')}, {self.get('height')})"
 
+    # region Attributes set/get
     def _set_left(self, x):
         self.set("base_x", x)
 
@@ -86,3 +87,5 @@ class Rect(CharmyObject):
 
     def _get_height(self):
         return self.get("base_height")
+
+    # endregion
