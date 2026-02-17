@@ -37,3 +37,8 @@ class DrawingMode(Enum):
 
 
 MANAGER_ID = "main_manager"
+
+
+class Orient(Enum):
+    HORIZONTAL = H = "h"
+    VERTICAL = V = "v"

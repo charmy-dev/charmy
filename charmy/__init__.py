@@ -23,5 +23,6 @@ from .object import CharmyObject
 from .pos import Pos
 from .rect import Rect
 from .size import Size
+from .var import Var, IntVar, FloatVar, StringVar, BooleanVar
 from .styles import *
 from .widgets import *

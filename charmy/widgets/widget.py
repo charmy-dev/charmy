@@ -3,10 +3,11 @@ from ..rect import Rect
 from ..size import Size
 from .canvas import CanvasBase
 from .container import Container, auto_find_parent
+from ..event import EventHandling
 
 
 @auto_find_parent
-class Widget(CanvasBase):
+class Widget(CanvasBase, EventHandling):
     """Basic widget class."""
 
     def __init__(self, parent: Container | None = None):

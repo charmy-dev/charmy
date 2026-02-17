@@ -235,24 +235,39 @@ class GLFW(UIFramework):
                 self.glfw.MOUSE_BUTTON_RIGHT: "right",
                 self.glfw.MOUSE_BUTTON_MIDDLE: "middle",
             }
-            mods_map = {
-                self.glfw.MOD_SHIFT: "shift",
-                self.glfw.MOD_CONTROL: "control",
-                self.glfw.MOD_ALT: "alt",
-                self.glfw.MOD_SUPER: "super",
-                self.glfw.MOD_NUM_LOCK: "num_lock",
-                self.glfw.MOD_CAPS_LOCK: "caps_lock",
-            }
             window_class.trigger(
                 Event(
                     window_class,
                     event_type,
                     button=button_map.get(button, None),
-                    mods=mods_map.get(mods, None),
+                    mods=self._mods_name(mods),
                 )
             )
 
         self.glfw.set_mouse_button_callback(the_window, _mouse)
+
+    def _mods_name(self, _mods, join: str = "+") -> str:
+        """Get the name of the modifier keys.
+
+        :param _mods: The modifier keys.
+        :param join: The separator to join the names. Defaults to "+".
+        :return: str: The name of the modifier keys.
+        """
+        keys = []
+        flags = {
+            "control": self.glfw.MOD_CONTROL,
+            "shift": self.glfw.MOD_SHIFT,
+            "alt": self.glfw.MOD_ALT,
+            "super": self.glfw.MOD_SUPER,
+            "caps_lock": self.glfw.MOD_CAPS_LOCK,
+            "num_lock": self.glfw.MOD_NUM_LOCK,
+        }
+
+        for name, value in flags.items():
+            if _mods & value == value:
+                keys.append(name)
+
+        return join.join(keys)
 
     def destroy(self, the_window) -> None:
         self.glfw.destroy_window(the_window)
