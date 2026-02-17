@@ -202,19 +202,12 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         """Low level get attribute by key"""
         return self.get(key)
 
-    # region Item configuration
+    # region Attr configuration
 
-    def __setitem__(self, key: str, value: typing.Any):
-        """Set attribute by key: obj["key"] = value"""
-        self.set(key, value)
-
-    def __getitem__(self, key: str) -> typing.Any:
-        """Get attribute by key: obj["key"]"""
-        return self.get(key)
-
-    def __delitem__(self, key: str):
-        """Delete attribute by key: obj["key"]"""
-        del self._attributes[key]
+    def __getattr__(self, item):
+        if item in self._attributes:
+            return self.get(item)
+        raise AttributeError(item)
 
     def __contains__(self, item: str) -> bool:
         return item in self._attributes

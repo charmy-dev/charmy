@@ -32,9 +32,9 @@ class CharmyManager(CharmyObject):
         self.new("event.thread", WorkingThread())
 
         self.new("framework", Framework)
-        self.new("ui.framework", self["framework"].ui)
-        self.new("drawing.framework", self["framework"].drawing)
-        self.new("backend.framework", self["framework"].backend)
+        self.new("ui.framework", self.framework.ui)
+        self.new("drawing.framework", self.framework.drawing)
+        self.new("backend.framework", self.framework.backend)
 
         self.new("ui.is_vsync", vsync)
         self.new("ui.samples", samples)
@@ -46,12 +46,12 @@ class CharmyManager(CharmyObject):
 
     def _init_ui_framework(self):
         """According to attribute `ui.framework` to init ui framework"""
-        self["framework"].ui.init(error_callback=self.error, samples=self.get("ui.samples"))
+        self.framework.init(error_callback=self.error, samples=self.get("ui.samples"))
 
     def update(self):
         """Update the Windows' UI and events"""
 
-        self.glfw = self["framework"].ui.glfw
+        self.glfw = self.framework.ui.glfw
         self.glfw.wait_events()
 
         for window in self.windows:
