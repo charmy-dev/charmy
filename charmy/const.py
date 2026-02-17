@@ -1,5 +1,6 @@
 """Charmy constants."""
 
+import sys
 from enum import Enum
 
 
@@ -36,9 +37,10 @@ class DrawingMode(Enum):
     RETAINED = retained = "READIED"
 
 
-MANAGER_ID = "main_manager"
+MANAGER_ID = "manager"
 
 
-class Orient(Enum):
-    HORIZONTAL = H = "h"
-    VERTICAL = V = "v"
+if sys.platform.startswith("darwin"):
+    PLATFORM = "macos"
+elif sys.platform == "win32":
+    PLATFORM = "windows"

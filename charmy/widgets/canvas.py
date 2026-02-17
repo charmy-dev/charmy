@@ -12,22 +12,25 @@ class CanvasBase(CharmyObject):
         super().__init__(*args, **kwargs)
 
         # Auto find CharmyManager Object
-        manager = self.get_obj(MANAGER_ID)
-        if manager is None:
-            raise ValueError("Not found main CharmyManager")
-        self.manager: CharmyManager = manager
+        self.manager: CharmyManager = self.get_obj(MANAGER_ID)
+        self._last_count = 0
+
+        # element config
+        # e.g. [{"type": "rect", "id": "element0", "radius": 12}]
+        self.elements: list[dict] = []
+
         self.new(
             "framework",
             self._get_framework(),
             get_func=self._get_framework,
         )
-        # element config
-        self.elements = []  # e.g. [{"type": "rect", "id": "element0", "radius": 12}]
+        self.new("color_object", None)
+
+        # 元素绘制映射表
+        # TODO: 名字？难以理解感觉
         self.draw_type_map: dict[str, typing.Callable[[dict, dict], None]] = {
             "rect": self.draw_rect,
-        }  # 元素绘制映射表
-        self.new("color_object", None)
-        self._last_count = 0
+        }
 
     def draw_config(self, canvas):
         """Config elements' properties before `draw()`."""
