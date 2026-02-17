@@ -9,7 +9,6 @@ class Window(WindowBase, Container):
 
     def __init__(self, *args, **kwargs):
         WindowBase.__init__(self, *args, **kwargs)
-        self.new("children", [])
         match self["framework"].drawing_name:
             case "SKIA":
                 self.set(

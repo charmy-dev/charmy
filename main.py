@@ -9,7 +9,7 @@ button = Button()
 window2 = Window(size=(500, 600))
 
 window2.config(title="muti-window test")
-import threading
-print(threading._count())
+# import threading
+# print(threading._count())
 
 mainloop()

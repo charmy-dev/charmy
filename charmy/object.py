@@ -80,18 +80,49 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     # region: Attributes set / unset
     
     def set(self, name: str, value: typing.Any):
-        """Set the value of a specific attribute with giver name."""
-        setattr(self, name, value)
+        """Set the value of a specific attribute with giver name.
+        
+        :param name: Name of the attribute to set
+        :param value: Value to set
+        """
+        self.__setattr__(name, value)
     
     def get(self, name: str):
-        """Get the value of a specific attribute with given name."""
-        return getattr(self, name)
+        """Get the value of a specific attribute with given name.
+        
+        :param name: Name of the attribute to get
+        """
+        return self.__getattribute__(name)
     
     def config(self, **kwargs):
-        """Batch set values of multiple attributes by giving params."""
+        """Batch set values of multiple attributes by giving params.
+        
+        :param **kwargs: Any configs to add
+        """
         param_list: dict[str, typing.Any] = {**kwargs}
         for name in param_list.keys():
             self.set(name, param_list[name])
+    
+    def __setitem__(self, name: str, value: typing.Any):
+        """Compatibility with set and get item.
+        
+        **To Charmy developers:** Rewrite all relating code to new set / get attr method **ASAP!!!**
+
+        :param name: Name of attr to set
+        :param value: Value to set
+        """
+        self.set(name, value)
+    
+    def __getitem__(self, name: str):
+        """Compatibility with set and get item.
+        
+        **To Charmy developers:** Rewrite all relating code to new set / get attr method **ASAP!!!**
+
+        :param name: Name of attr to get
+        """
+        return self.get(name)
+    
+    new = set # Compatibility for old interface
 
     # endregion
 

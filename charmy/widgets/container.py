@@ -14,7 +14,7 @@ class Container(CharmyObject):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.new("children", [])
+        self.children = []
 
     @property
     def rect(self):
