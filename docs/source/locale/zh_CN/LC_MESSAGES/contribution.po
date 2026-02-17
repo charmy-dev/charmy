@@ -6,34 +6,35 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Charmy GUI \n"
+"Project-Id-Version: Charmy GUI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-17 10:59+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2026-02-17 11:27+0800\n"
+"Last-Translator: \n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Poedit 3.8\n"
 
 #: ../../source/contribution.rst:2
 msgid "Contribution"
-msgstr ""
+msgstr "贡献"
 
 #: ../../source/contribution.rst:4
 msgid "Contributor / Xiao Baiyun (Little White Cloud)"
-msgstr ""
+msgstr "贡献者 / 小白云"
 
 #: ../../source/contribution.rst:6 ../../source/contribution.rst:18
 msgid "A Senior high school student from ``China``."
-msgstr ""
+msgstr "一名来自``中国``的高中生。"
 
 #: ../../source/contribution.rst:8
 msgid "Compiled Chinese content for 'charmy.this'"
-msgstr ""
+msgstr "完成中文`charmy.this`的编写"
 
 #: ../../source/contribution.rst:10
 msgid "xby_logo"
@@ -45,11 +46,11 @@ msgstr ""
 
 #: ../../source/contribution.rst:16
 msgid "Contributor / rgzz666"
-msgstr ""
+msgstr "贡献者 / rgzz666"
 
 #: ../../source/contribution.rst:20
 msgid "Compiled English content for 'charmy.this'"
-msgstr ""
+msgstr "完成`charmy.this`的英文翻译"
 
 #: ../../source/contribution.rst:22
 msgid "rgzz666_logo"
@@ -57,67 +58,66 @@ msgstr ""
 
 #: ../../source/contribution.rst:27
 msgid "Github Repository: https://github.com/XiangQinxi/charmy"
-msgstr ""
+msgstr "Github存储库: https://github.com/XiangQinxi/charmy"
 
 #: ../../source/contribution.rst:30
 msgid "How to *Contribute*"
-msgstr ""
+msgstr "如何 *贡献*"
 
 #: ../../source/contribution.rst:32
 msgid "Fork the project on GitHub."
-msgstr ""
+msgstr "在Github上给该项目创建分支"
 
 #: ../../source/contribution.rst:38
 msgid "Create a new branch for your feature or bug fix."
-msgstr ""
+msgstr "创建一个新分支来写下你的Bug修复与想法"
 
 #: ../../source/contribution.rst:44
 msgid "Make your changes and commit them."
-msgstr ""
+msgstr "做出改动并提交它们"
 
 #: ../../source/contribution.rst:51
 msgid "Push your branch to your fork."
-msgstr ""
+msgstr "在你的分支上推送你的分支"
 
 #: ../../source/contribution.rst:57
 msgid "Open a pull request on the original project."
-msgstr ""
+msgstr "在原项目打开一个pull请求"
 
 #: ../../source/contribution.rst:59
 msgid "Clearly describe the changes you made."
-msgstr ""
+msgstr "清楚地介绍你的改动"
 
 #: ../../source/contribution.rst:62
 msgid "Build Documents"
-msgstr ""
+msgstr "构建文档"
 
 #: ../../source/contribution.rst:64
 msgid "The documentation is built with Sphinx."
-msgstr ""
+msgstr "这个文档是用Sphinx构建的"
 
 #: ../../source/contribution.rst:66
 msgid "Run it to install the required packages:"
-msgstr ""
+msgstr "运行改命令以下载依赖库"
 
 #: ../../source/contribution.rst:78
 msgid "When writing documents, markdown or reStructuredText formats can be used."
-msgstr ""
+msgstr "在写文档时，可以使用Markdown、reStructuredText格式书写"
 
 #: ../../source/contribution.rst:81
 msgid "Code Standards"
-msgstr ""
+msgstr "代码规范"
 
 #: ../../source/contribution.rst:83
 msgid ""
-"We follow the `PEP 8 <https://www.python.org/dev/peps/pep-0008/>`_ style "
-"guide for Python code."
-msgstr ""
+"We follow the `PEP 8 <https://www.python.org/dev/peps/pep-0008/>`_ style guide "
+"for Python code."
+msgstr "我们遵循 `PEP 8 <https://www.python.org/dev/peps/pep-0008/>`_ 代码指导"
 
 #: ../../source/contribution.rst:85
 msgid "Annotations should be uniformly in ``Sphinx`` or ``Google`` format."
-msgstr ""
+msgstr "注释应使用`Sphinx`或`Goggle`注释格式"
 
 #: ../../source/contribution.rst:87
 msgid "such as"
-msgstr ""
-
+msgstr "例如"

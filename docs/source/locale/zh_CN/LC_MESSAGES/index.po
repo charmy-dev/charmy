@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Charmy GUI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-17 10:59+0800\n"
-"PO-Revision-Date: 2026-02-17 11:03+0800\n"
+"PO-Revision-Date: 2026-02-17 11:28+0800\n"
 "Last-Translator: \n"
 "Language-Team: zh_CN <LL@li.org>\n"
 "Language: zh_CN\n"
@@ -30,11 +30,11 @@ msgstr "其他："
 
 #: ../../source/index.rst:2
 msgid "Charmy GUI documentation"
-msgstr "Charmy 图形用户界面文档"
+msgstr "Charmy GUI 文档"
 
 #: ../../source/index.rst:4
 msgid "Author / Xiang Qinxi"
-msgstr "作者 / 向秦曦"
+msgstr "作者 / Xiang Qinxi"
 
 #: ../../source/index.rst:6
 msgid "A Senior high school student from ``China``."
@@ -53,4 +53,5 @@ msgid ""
 "Welcome to Charmy GUI documentation! ``Charmy GUI`` is modern, simple "
 "GUI library"
 msgstr ""
-"欢迎来到Charmy GUI文档！``Charmy GUI``是一款现代简约的图形用户界面库。"
+"欢迎来到Charmy GUI文档！``Charmy GUI`` 是一款现代简约的图形用户界面"
+"库。"

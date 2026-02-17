@@ -6,47 +6,44 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Charmy GUI \n"
+"Project-Id-Version: Charmy GUI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-17 10:59+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2026-02-17 11:26+0800\n"
+"Last-Translator: \n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Poedit 3.8\n"
 
 #: ../../source/license.md:1
 msgid "License"
-msgstr ""
+msgstr "许可证"
 
 #: ../../source/license.md:4
 msgid ""
-"This project uses the `Apache 2.0` protocol. Subsequently, commercial "
-"payment authorization will be conducted based on this."
-msgstr ""
+"This project uses the `Apache 2.0` protocol. Subsequently, commercial payment authorization will be conducted based "
+"on this."
+msgstr "本项目采用`Apache 2.0`协议。后续将基于此协议进行商业支付授权。"
 
 #: ../../source/license.md:6
 msgid "该项目使用`Apache 2.0`协议。后续将会据此进行商业付费授权。"
 msgstr ""
 
 #: ../../source/license.md:9
-msgid ""
-"Refer to the original text: [Apache "
-"2.0](https://www.apache.org/licenses/LICENSE-2.0.html)"
-msgstr ""
+msgid "Refer to the original text: [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)"
+msgstr "参见原协议文本：[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)"
 
 #: ../../source/license.md:13
 msgid "Contact me:"
-msgstr ""
+msgstr "联系我："
 
 #: ../../source/license.md:14
-msgid ""
-"[Email: XiangQinxi@outlook.com](mailto:XiangQinxi@outlook.com)(Less "
-"frequent inspection information)"
+msgid "[Email: XiangQinxi@outlook.com](mailto:XiangQinxi@outlook.com)(Less frequent inspection information)"
 msgstr ""
 
 #: ../../source/license.md:15
@@ -63,5 +60,4 @@ msgstr ""
 
 #: ../../source/license.md:21
 msgid "Content"
-msgstr ""
-
+msgstr "目录"

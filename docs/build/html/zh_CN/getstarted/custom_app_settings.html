@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="How does it work" href="../how_does_it_work/index.html"><link rel="prev" title="Window`s config" href="window_config.html">
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="工作原理" href="../how_does_it_work/index.html"><link rel="prev" title="窗口的配置" href="window_config.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Custom main manager settings - Charmy GUI 0.1.0 文档</title>
+        <title>自定义 Main Manager 设置 - Charmy GUI 0.1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -208,19 +208,19 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="install.html">Install Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="first_app.html">First application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="window_config.html">Window`s config</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Custom main manager settings</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">开始</a><input aria-label="Toggle navigation of 开始" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="install.html">安装Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_app.html">第一个程序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window_config.html">窗口的配置</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">自定义 <cite>Main Manager</cite> 设置</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">How does it work</a><input aria-label="Toggle navigation of How does it work" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API参考</a><input aria-label="Toggle navigation of API参考" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api/const.html">charmy.const</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/event.html">charmy.event</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/framework.html">charmy.framework</a></li>
@@ -252,8 +252,8 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../contribution.html">Contribution</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">贡献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">许可证</a></li>
 </ul>
 
 </div>
@@ -297,15 +297,14 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="custom-main-manager-settings">
-<h1>Custom main manager settings<a class="headerlink" href="#custom-main-manager-settings" title="链接到此标题。">¶</a></h1>
-<p>You can set the environment variables to customize the main manager settings before import charmy.</p>
+<h1>自定义 <cite>Main Manager</cite> 设置<a class="headerlink" href="#custom-main-manager-settings" title="链接到此标题。">¶</a></h1>
+<p>你可以在导入Charmy前通过设置环境变量来自定义 <cite>Main Manager</cite> 的设置。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">environ</span>
 </pre></div>
 </div>
 <section id="switch-ui-framework">
-<h2>Switch UI framework<a class="headerlink" href="#switch-ui-framework" title="链接到此标题。">¶</a></h2>
-<p>If you want to switch the ui framework,
-you can set the environment variable &quot;UI_FRAMEWORK&quot; to &quot;GLFW&quot; or ...</p>
+<h2>切换UI框架<a class="headerlink" href="#switch-ui-framework" title="链接到此标题。">¶</a></h2>
+<p>如果你想切换UI框架，可以通过设置环境变量“UI_FRAMEWORK”来选择“GLFW”或者...</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;UI_FRAMEWORK&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;GLFW&quot;</span>
 </pre></div>
 </div>
@@ -322,7 +321,7 @@ you can set the environment variable &quot;UI_FRAMEWORK&quot; to &quot;GLFW&quot
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">How does it work</div>
+                <div class="title">工作原理</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -333,7 +332,7 @@ you can set the environment variable &quot;UI_FRAMEWORK&quot; to &quot;GLFW&quot
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Window`s config</div>
+                <div class="title">窗口的配置</div>
                 
               </div>
             </a>
@@ -367,8 +366,8 @@ you can set the environment variable &quot;UI_FRAMEWORK&quot; to &quot;GLFW&quot
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Custom main manager settings</a><ul>
-<li><a class="reference internal" href="#switch-ui-framework">Switch UI framework</a></li>
+<li><a class="reference internal" href="#">自定义 <cite>Main Manager</cite> 设置</a><ul>
+<li><a class="reference internal" href="#switch-ui-framework">切换UI框架</a></li>
 </ul>
 </li>
 </ul>

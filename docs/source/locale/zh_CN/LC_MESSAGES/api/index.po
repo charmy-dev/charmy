@@ -6,48 +6,48 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Charmy GUI \n"
+"Project-Id-Version: Charmy GUI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-17 10:59+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2026-02-17 11:45+0800\n"
+"Last-Translator: \n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Poedit 3.8\n"
 
 #: ../../source/api/index.rst:13
 msgid "Core API:"
-msgstr ""
+msgstr "核心API："
 
 #: ../../source/api/index.rst:30
 msgid "Widgets:"
-msgstr ""
+msgstr "组件："
 
 #: ../../source/api/index.rst:39
 msgid "Styles:"
-msgstr ""
+msgstr "样式："
 
 #: ../../source/api/index.rst:2
 msgid "API Reference"
-msgstr ""
+msgstr "API参考"
 
 #: ../../source/api/index.rst:4
 msgid "Welcome to the Charmy GUI API reference."
-msgstr ""
+msgstr "欢迎查阅Charmy GUI的API参考。"
 
 #: ../../source/api/index.rst:7
 msgid "Core Modules"
-msgstr ""
+msgstr "核心模块"
 
 #: ../../source/api/index.rst:28
 msgid "Widgets"
-msgstr ""
+msgstr "组件"
 
 #: ../../source/api/index.rst:37
 msgid "Styles"
-msgstr ""
-
+msgstr "样式"

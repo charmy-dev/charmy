@@ -6,26 +6,27 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Charmy GUI \n"
+"Project-Id-Version: Charmy GUI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-17 10:59+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2026-02-17 11:43+0800\n"
+"Last-Translator: \n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Poedit 3.8\n"
 
 #: ../../source/how_does_it_work/index.rst:9
 msgid "Content:"
-msgstr ""
+msgstr "目录："
 
 #: ../../source/how_does_it_work/index.rst:2
 msgid "How does it work"
-msgstr ""
+msgstr "工作原理"
 
 #: ../../source/how_does_it_work/index.rst:3
 msgid ""
@@ -36,5 +37,4 @@ msgstr ""
 
 #: ../../source/how_does_it_work/index.rst:7
 msgid "Follow me to understand how it works step by step."
-msgstr ""
-
+msgstr "跟着我一步步理解工作原理"

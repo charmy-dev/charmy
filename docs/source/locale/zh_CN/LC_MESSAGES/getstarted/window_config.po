@@ -6,34 +6,36 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Charmy GUI \n"
+"Project-Id-Version: Charmy GUI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-17 10:59+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2026-02-17 11:39+0800\n"
+"Last-Translator: \n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Poedit 3.8\n"
 
 #: ../../source/getstarted/window_config.rst:2
 msgid "Window`s config"
-msgstr ""
+msgstr "窗口的配置"
 
 #: ../../source/getstarted/window_config.rst:4
 msgid ""
 "You can through ``configure`` function to set window`s config, through "
 "``cget`` function to get window`s config."
 msgstr ""
+"你可以通过 ``configure`` 方法来设置窗口的配置，通过 ``cget`` 方法来获取"
+"窗口的配置"
 
 #: ../../source/getstarted/window_config.rst:7
 msgid "Rename window`s title"
-msgstr ""
+msgstr "重命名窗口的标题"
 
 #: ../../source/getstarted/window_config.rst:13
 msgid "Or"
-msgstr ""
-
+msgstr "或者"

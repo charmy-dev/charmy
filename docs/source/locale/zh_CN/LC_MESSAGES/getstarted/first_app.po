@@ -6,46 +6,47 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Charmy GUI \n"
+"Project-Id-Version: Charmy GUI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-17 10:59+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2026-02-17 11:33+0800\n"
+"Last-Translator: \n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Poedit 3.8\n"
 
 #: ../../source/getstarted/first_app.rst:2
 msgid "First application"
-msgstr ""
+msgstr "第一个程序"
 
 #: ../../source/getstarted/first_app.rst:4
 msgid "Import ``Charmy``"
-msgstr ""
+msgstr "导入 ``Charmy``"
 
 #: ../../source/getstarted/first_app.rst:11
 msgid "Instead of developing `cm`, I'm playing `MC` here"
-msgstr ""
+msgstr "不在这开发 `cm` 反而在玩`MC`"
 
 #: ../../source/getstarted/first_app.rst:13
 msgid "Create a ``Window``"
-msgstr ""
+msgstr "创建一个 ``Window``"
 
 #: ../../source/getstarted/first_app.rst:19
 msgid ""
 "3. Run the application There is auto created ``App`` object. You can run "
 "it by ``cm.mainloop()``."
 msgstr ""
+"3. 运行改程序（将会自动创建 `CmManager` ，只需运行 `cm.mainloop()` 即可）"
 
 #: ../../source/getstarted/first_app.rst:26
 msgid "In all, your first application should look like this:"
-msgstr ""
+msgstr "综合起来这些代码，你的第一个程序代码应该长这样："
 
 #: ../../source/getstarted/first_app.rst:35
 msgid "Then, you can get a window."
-msgstr ""
-
+msgstr "之后，你将会得到一个窗口。"

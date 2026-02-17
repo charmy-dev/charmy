@@ -6,36 +6,39 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Charmy GUI \n"
+"Project-Id-Version: Charmy GUI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-17 10:59+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2026-02-17 11:41+0800\n"
+"Last-Translator: \n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Poedit 3.8\n"
 
 #: ../../source/getstarted/custom_app_settings.rst:2
 msgid "Custom main manager settings"
-msgstr ""
+msgstr "自定义 `Main Manager` 设置"
 
 #: ../../source/getstarted/custom_app_settings.rst:4
 msgid ""
 "You can set the environment variables to customize the main manager "
 "settings before import charmy."
 msgstr ""
+"你可以在导入Charmy前通过设置环境变量来自定义 `Main Manager` 的设置。"
 
 #: ../../source/getstarted/custom_app_settings.rst:11
 msgid "Switch UI framework"
-msgstr ""
+msgstr "切换UI框架"
 
 #: ../../source/getstarted/custom_app_settings.rst:13
 msgid ""
 "If you want to switch the ui framework, you can set the environment "
 "variable \"UI_FRAMEWORK\" to \"GLFW\" or ..."
 msgstr ""
-
+"如果你想切换UI框架，可以通过设置环境变量“UI_FRAMEWORK”来选择“GLFW”或"
+"者..."
