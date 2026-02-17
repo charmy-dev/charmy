@@ -40,6 +40,11 @@ class DrawingMode(Enum):
 MANAGER_ID = "manager"
 
 
+class Orient(Enum):
+    HORIZONTAL = H = "h"
+    VERTICAL = V = "v"
+
+
 if sys.platform.startswith("darwin"):
     PLATFORM = "macos"
 elif sys.platform == "win32":
