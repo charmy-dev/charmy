@@ -42,8 +42,11 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
         Args:
             id_ (ID | str): Optional, ID for the object
-
         """
+
+        self._attributes: dict[str, typing.Any | list] = {}  # NOQA: Expected to be user-modifiable.
+        # self._attributes -> {key: value, key2: ["@custom", value, set_func, get_func]}
+        # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
 
         if id_ == ID.AUTO:
             _prefix = self.class_name
@@ -80,13 +83,40 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     # region: Object search
 
-    def get_obj(self, id_: str, default=None) -> typing.Any | None:
+    def get_obj(self, target_id: str, default=None) -> typing.Any | None:
         """Get registered object by id. (If not found, return default)"""
-        if id_ in self.objects:
-            return self.objects[id_]
-        return default
-
-    find = get_obj
+        try:
+            return self.__class__.objects[target_id]
+        except KeyError:
+            return default
+        
+    # endregion
+    
+    # region: Attributes set / unset
+    
+    def set(self, name: str, value: typing.Any):
+        """Set the value of a specific attribute with giver name.
+        
+        :param name: Name of the attribute to set
+        :param value: Value to set
+        """
+        self.__setattr__(name, value)
+    
+    def get(self, name: str):
+        """Get the value of a specific attribute with given name.
+        
+        :param name: Name of the attribute to get
+        """
+        return self.__getattribute__(name)
+    
+    def config(self, **kwargs):
+        """Batch set values of multiple attributes by giving params.
+        
+        :param **kwargs: Any configs to add
+        """
+        param_list: dict[str, typing.Any] = {**kwargs}
+        for name in param_list.keys():
+            self.set(name, param_list[name])
 
     # endregion
 
@@ -94,6 +124,6 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     def __str__(self) -> str:
         """Happens when someone boring puts a Charmy stuff into str() or print()."""
-        return self.id
+        return str(f"CharmyObject[{self.id}]")
 
     # endregion
