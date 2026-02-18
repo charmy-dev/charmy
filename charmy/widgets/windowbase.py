@@ -71,7 +71,7 @@ class WindowBase(EventHandling, CharmyObject):
         self.canvas_pos = Pos(0, 0)  # Always (0, 0)
         self.root_pos = Pos(0, 0)  # The position of the window
         self.size = Size(size[0], size[1])  # The size of the window
-        self.title = title  # The title of the window
+        self._title = title  # The title of the window
 
         self.is_dirty: bool = True
         self.is_force_hardware_acceleration: bool = fha
@@ -276,7 +276,30 @@ class WindowBase(EventHandling, CharmyObject):
                         return False
         return True
 
-    # region Getters and Setters
+
+    # region Property
+    @property
+    def title(self) -> str | None:
+        """Get the title of the window.
+
+        Returns:
+            str | None: Title of the window
+        """
+        return self._title
+
+    @title.setter
+    def title(self, text: str) -> None:
+        """Set the title of the window.
+
+        Args:
+            text (str): Title to set
+        Returns:
+            None
+        """
+        self.framework.ui.set_title(the_window=self.the_window, title=text)
+    # endregion
+
+    # region Propetry methods
     def resize(self, size: Size | tuple[int, int]) -> None:
         """Resize the window to the given size.
 
@@ -296,17 +319,6 @@ class WindowBase(EventHandling, CharmyObject):
             None
         """
         self.framework.ui.set_pos(the_window=self.the_window, pos=pos)
-
-    def title(self, title: str) -> None:
-        """Set the title of the window.
-
-        Args:
-            title (str): Title to set
-        Returns:
-            None
-        """
-        self.framework.ui.set_title(the_window=self.the_window, title=title)
-
     # endregion
 
     # region Events

@@ -80,7 +80,7 @@ class CanvasBase(CharmyObject):
         return _["id"]
 
     def remove_element(self, index: int):
-        self.elements.remove(index)
+        self.elements.pop(index)
 
     def find_element(self, id_: ID) -> dict | None:
         for element in self.elements:
@@ -95,6 +95,3 @@ class CanvasBase(CharmyObject):
         if element is None:
             raise ValueError(f"Not found element {id_}")
         element.update(kwargs)
-
-    def _get_framework(self):
-        return self.manager["framework"]

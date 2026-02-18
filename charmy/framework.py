@@ -186,7 +186,7 @@ class GLFW(UIFramework):
         self.glfw.window_hint(self.glfw.OPENGL_PROFILE, self.glfw.OPENGL_CORE_PROFILE)
 
         # create window
-        window = self.glfw.create_window(size["width"], size["height"], title, None, None)
+        window = self.glfw.create_window(size.width, size.height, title, None, None)
 
         if window == None:
             raise RuntimeError("Can't create window")

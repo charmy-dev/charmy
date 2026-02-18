@@ -9,11 +9,10 @@ class Window(WindowBase, Container):
 
     def __init__(self, *args, **kwargs):
         WindowBase.__init__(self, *args, **kwargs)
-        match self["framework"].drawing_name:
+        match self.framework.drawing_name:
             case "SKIA":
-                self.set(
-                    "ui.draw_func", self.skia_draw_func
-                )  # When `draw` is called, trigger `ui.draw_func`
+                self.ui_draw_func = self.skia_draw_func
+                # When `draw` is called, trigger `ui_draw_func`
 
     # TODO: why specific drawing frame?
     def skia_draw_func(self, canvas):

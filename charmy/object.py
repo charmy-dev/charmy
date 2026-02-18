@@ -89,52 +89,6 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     find = get_obj
 
     # endregion
-    
-    # region: Attributes set / unset
-
-    def set(self, name: str, value: typing.Any):
-        """Set the object attribute with given name.
-
-        Args:
-            name (str): Name of the attribute to set
-            value (typing.Any): Value to set
-        """
-        self.__setattr__(name, value)
-
-    def configure(self, **kwargs):
-        """Batch set values of multiple attributes by giving params.
-        
-        Args:
-             **kwargs: Any configs to add
-        """
-        param_list: dict[str, typing.Any] = {**kwargs}
-        for name in param_list.keys():
-            self.set(name, param_list[name])
-
-    config = configure
-
-    def __setitem__(self, name: str, value: typing.Any):
-        """Compatibility with set and get item.
-
-        **To Charmy developers:** Rewrite all relating code to new set / get attr method **ASAP!!!**
-
-        Args:
-            name (str): Name of attr to set
-            value (typing.Any): Value to set
-        """
-        self.set(name, value)
-
-    def __getitem__(self, name: str):
-        """Compatibility with set and get item.
-
-        **To Charmy developers:** Rewrite all relating code to new set / get attr method **ASAP!!!**
-
-        Args:
-            name (str): Name of attr to get
-        """
-        return self.__getattribute__(name)
-
-    # endregion
 
     # region: __str__
 
