@@ -62,6 +62,8 @@ class CharmyObject(metaclass=InstanceCounterMeta):
             else:
                 self.objects_sorted[self.class_name][self.id] = self
 
+    # region: Properties
+
     @property
     def class_name(self) -> str:
         """Returns the class name."""
@@ -76,6 +78,19 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     def instance_count(self):
         """Returns the class instance count."""
         return len(self._instances)
+    
+    # endregion
+
+    # region: Object search
+
+    def get_obj(self, target_id: str, default=None) -> typing.Any | None:
+        """Get registered object by id. (If not found, return default)"""
+        try:
+            return self.__class__.objects[target_id]
+        except KeyError:
+            return default
+        
+    # endregion
     
     # region: Attributes set / unset
     
@@ -121,8 +136,6 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         :param name: Name of attr to get
         """
         return self.get(name)
-    
-    new = set # Compatibility for old interface
 
     # endregion
 
@@ -131,3 +144,5 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     def __str__(self) -> str:
         """Happens when someone boring puts a Charmy stuff into str() or print()."""
         return str(f"CharmyObject[{self.id}]")
+
+    # endregion
