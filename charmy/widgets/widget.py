@@ -14,7 +14,7 @@ class Widget(CanvasBase, EventHandling):
         super().__init__()
 
         if parent is None:
-            parent = self.find("window0", default=None)
+            parent = self.find("Window0", default=None)
 
         self.parent: Container = parent
         self.size = Size(100, 100)
