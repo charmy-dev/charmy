@@ -74,7 +74,7 @@ class CharmyManager(CharmyObject):
             if first_alive_window:
                 self.glfw.make_context_current(first_alive_window.the_window)
 
-        self.glfw.swap_interval(1 if self.cget("ui.is_vsync") else 0)  # 是否启用垂直同步
+            self.glfw.swap_interval(1 if self.cget("ui.is_vsync") else 0)  # 是否启用垂直同步
 
         # not implemented yet
         # input_mode: bool = True
