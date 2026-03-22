@@ -6,8 +6,8 @@ class Pos(CharmyObject):
 
     def __init__(self, x=0, y=0):
         super().__init__()
-        self.set("x", x)
-        self.set("y", y)
+        self.x: int | float = x
+        self.y: int | float = y
 
     def __call__(self, x: int | float | None = None, y: int | float | None = None):
         if x:

@@ -2,11 +2,8 @@ from charmy import Button, Window, mainloop
 
 window1 = Window(size=(300, 400))
 
-button = Button()
-
-window2 = Window(size=(500, 600))
-
-# import threading
-# print(threading._count())
+with window1:
+    Button().place(0, 0, 100, 100)
+    Button().place(100, 100, 100, 100)
 
 mainloop()

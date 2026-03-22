@@ -16,8 +16,8 @@ class Size(CharmyObject):
 
     def __init__(self, width=0, height=0):
         super().__init__()
-        self.set("width", width)
-        self.set("height", height)
+        self.width: int | float = width
+        self.height: int | float = height
 
     def __call__(self, width: int | float | None = None, height: int | float | None = None):
         if width:
