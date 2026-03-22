@@ -1,5 +1,6 @@
-from ..cmm import CharmyManager
-from ..const import MANAGER_ID, Backends
+import typing
+
+from ..const import Drawing
 from ..object import CharmyObject
 
 
@@ -9,22 +10,21 @@ class Color(CharmyObject):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Auto find CharmyManager Object
-        self.manager: CharmyManager = self.get_obj(MANAGER_ID)
-        self.framework = self.manager.framework
+        self.frameworks = self.cget("frameworks")
 
         # Import Drawing Framework
-        match self.framework.drawing_name:
+        match self.frameworks.drawing_name:
             case "SKIA":
-                self.skia = self["framework"].drawing.skia
+                self.skia = self.frameworks.drawing.skia
             case _:
                 raise ValueError(
-                    f"Not supported drawing framework: {self['framework'].drawing_name}"
+                    f"Not supported drawing frameworks: {self.frameworks.drawing_name}"
                 )
         self.color_object = None
 
     def set_color_rgba(
         self, r: int | float, g: int | float, b: int | float, a: int | float = 255
-    ) -> None:
+    ) -> typing.Self:
         """set_rgba(r=255, g=255, b=255, a=255) or set_rgba(r=1.0, g=1.0, b=1.0, a=1.0)
 
         Args:
@@ -36,11 +36,12 @@ class Color(CharmyObject):
         Returns:
             None
         """
-        match self.framework.drawing_name:
+        match self.frameworks.drawing_name:
             case "SKIA":
                 self.color_object = self.skia.Color(self._c(r), self._c(g), self._c(b), self._c(a))
+        return self
 
-    def set_color_hex(self, _hex: str) -> None:
+    def set_color_hex(self, _hex: str) -> typing.Self:
         """
         Convert hex color string to color.
 
@@ -58,21 +59,22 @@ class Color(CharmyObject):
             r = int(hex_color[0:2], 16)
             g = int(hex_color[2:4], 16)
             b = int(hex_color[4:6], 16)
-            match self.framework.drawing_name:
-                case Backends.SKIA:
+            match self.frameworks.drawing_name:
+                case Drawing.SKIA:
                     self.color_object = self.skia.ColorSetRGB(r, g, b)  # 返回不透明颜色
         elif len(hex_color) == 8:  # RGBA 格式(含 Alpha 通道)
             r = int(hex_color[0:2], 16)
             g = int(hex_color[2:4], 16)
             b = int(hex_color[4:6], 16)
             a = int(hex_color[6:8], 16)
-            match self.framework.drawing_name:
-                case Backends.SKIA:
+            match self.frameworks.drawing_name:
+                case Drawing.SKIA:
                     self.color_object = self.skia.ColorSetARGB(a, r, g, b)  # 返回含透明度的颜色
         else:
             raise ValueError("HEX Should be #RRGGBB or #RRGGBBAA format")
+        return self
 
-    def set_color_name(self, name: str) -> None:
+    def set_color_name(self, name: str) -> typing.Self:
         """Convert color name string to color.
 
         Args:
@@ -82,12 +84,13 @@ class Color(CharmyObject):
         Raises:
             ValueError: When color not exists
         """
-        match self.framework.drawing_name:
-            case Backends.SKIA:
+        match self.frameworks.drawing_name:
+            case Drawing.SKIA:
                 try:
                     self.color_object = getattr(self.skia, f"Color{name.upper()}")
                 except:
                     raise ValueError(f"Unknown color name: {name}")
+        return self
 
     @staticmethod
     def _c(x):

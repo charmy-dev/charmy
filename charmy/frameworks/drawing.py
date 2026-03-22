@@ -41,7 +41,7 @@ class SKIA(DrawingFramework):
             rx=radius,
             ry=radius,
             paint=self.skia.Paint(
-                Color=bg.get("color_object", self.skia.ColorBLUE),
+                Color=bg.get("color_object", self.skia.ColorBLACK),
                 Style=self.skia.Paint.kFill_Style,
             ),
         )

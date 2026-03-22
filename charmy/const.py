@@ -1,5 +1,5 @@
 """Charmy constants."""
-
+import dataclasses
 import sys
 from enum import Enum
 
@@ -15,15 +15,19 @@ class ID(Enum):
     NONE = 1
 
 
-class Backends(Enum):
-    """UIFrame is an enum to store UI frame.
+@dataclasses.dataclass
+class Backends:
+    OPENGL = opengl = "OPENGL"
 
-    GLFW, SDL, OPENGL, SKIA are consts representing those backends
-    """
 
+@dataclasses.dataclass
+class UI:
     GLFW = glfw = "GLFW"
     SDL = sdl = "SDL"
-    OPENGL = opengl = "OPENGL"
+
+
+@dataclasses.dataclass
+class Drawing:
     SKIA = skia = "SKIA"
 
 
