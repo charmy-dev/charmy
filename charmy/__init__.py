@@ -1,4 +1,4 @@
-# Copyright (C) 2026 XiangQinxi
+# Copyright (C) 2026 Charmy Development Team
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Author: XiangQinxi
+# Author: Charmy Development Team
 # Contributors: XiangQinxi, rgzz666, littlewhitecloud
 
 """A modern GUI library."""

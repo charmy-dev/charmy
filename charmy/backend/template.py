@@ -13,6 +13,8 @@ class Backend():
         # Make placeholders for APIs
         func = self.placeholder_function # Just for aliasing
 
+        self.init=func                          # Initialize this backend
+
         self.window_create = func               # Create win
         self.window_set_title = func            # Set window title
         self.window_set_icon = func             # Set window icon

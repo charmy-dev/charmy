@@ -59,8 +59,8 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         self._custom: typing.Dict[str, typing.Any] = {}  # Private custom attributes
 
         if id_ == ID.AUTO:
-            _prefix = self.class_name
-            id_ = _prefix + str(self.instance_count)
+            id_prefix = self.class_name
+            id_ = id_prefix + str(self.instance_count)
         if id_ in self.objects:
             raise KeyError(id_)
         if id_ != ID.NONE:
@@ -76,12 +76,12 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     @property
     def class_name(self) -> str:
-        """Returns the class name."""
+        """Returns class name."""
         return self.__class__.__name__
 
     @property
     def instances(self):
-        """Returns all the class instances."""
+        """Returns all class instances."""
         return self.__class__.objects_sorted[self.class_name]
 
     @property
@@ -104,42 +104,44 @@ class CharmyObject(metaclass=InstanceCounterMeta):
 
     # endregion
 
-    # region: Shared attributes set / get
+    # ? @XiangQinxi I told u to forget these fucking machanisms?
+    #
+    # # region: Shared attributes set / get
 
-    def cset(self, name: str, value: typing.Any):
-        """Set shared attributes in CharmyObject.
+    # def cset(self, name: str, value: typing.Any):
+    #     """Set shared attributes in CharmyObject.
 
-        Args:
-            name: Name of the attribute to set
-            value: Value to set
-        """
-        self.attributes[name] = value
+    #     Args:
+    #         name: Name of the attribute to set
+    #         value: Value to set
+    #     """
+    #     self.attributes[name] = value
 
-    def cget(self, name: str, default: typing.Any = None) -> typing.Any:
-        """Get shared attributes in CharmyObject.
+    # def cget(self, name: str, default: typing.Any = None) -> typing.Any:
+    #     """Get shared attributes in CharmyObject.
 
-        Args:
-            name: Name of the attribute to get
-            default: Default value to return if attribute not found
+    #     Args:
+    #         name: Name of the attribute to get
+    #         default: Default value to return if attribute not found
 
-        Returns:
-            Value of the attribute
+    #     Returns:
+    #         Value of the attribute
 
-        """
-        if name in self.attributes:
-            return self.attributes[name]
-        return default
+    #     """
+    #     if name in self.attributes:
+    #         return self.attributes[name]
+    #     return default
 
-    def cconfig(self, **kwargs):
-        """Batch set values of multiple shared attributes in CharmyObject by giving params.
+    # def cconfig(self, **kwargs):
+    #     """Batch set values of multiple shared attributes in CharmyObject by giving params.
 
-        Args:
-             **kwargs: Any configs to add
-        """
-        for name in kwargs.keys():
-            self.cset(name, kwargs[name])
+    #     Args:
+    #          **kwargs: Any configs to add
+    #     """
+    #     for name in kwargs.keys():
+    #         self.cset(name, kwargs[name])
 
-    # endregion
+    # # endregion
 
     def set(self, name: str, value: typing.Any):
         """Set attributes in CharmyObject.

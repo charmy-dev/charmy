@@ -3,8 +3,11 @@ import warnings
 
 from .const import MANAGER_ID
 from .event import WorkingThread
-from .frameworks import Frameworks
+# from .frameworks import Frameworks
 from .object import CharmyObject
+
+if typing.TYPE_CHECKING:
+    from .backend.template import Backend
 
 
 class GLFWError(Exception):
@@ -14,7 +17,30 @@ class GLFWError(Exception):
 
 
 class CharmyManager(CharmyObject):
-    """The manager of the charmy windows.
+    """Charmy windows manager. Used to manage windows created with one backend."""
+
+    def __init__(self, backend: Backend):
+        """Create a Charmy windows manager.
+
+        Args:
+            backend: The backend this manager uses
+        """
+        super().__init__(**kwargs)
+
+        self.backend=backend
+        self.backend.init() # Initialize the backend when manager created
+
+        self.windows=[] # This list stores all windows this CharmyManager manages
+        self.is_alive = True # This var stores if the manager is still alive
+    
+    def update(self):
+        for window in self.windows:
+            if window.is_visible and window.is_alive:
+                window.update()
+
+
+class CharmyManagerOld(CharmyObject):
+    """The manager of the charmy windows. About to be refactored.
 
     Args:
         is_vsync: Is vsync enabled.
@@ -33,6 +59,7 @@ class CharmyManager(CharmyObject):
         # TODO: maybe user will use it in later version?
         # if self.instance_count >= 1:
         #    warnings.warn("There should be only one instance of CApp.")
+        # 屎山留念 ——rgzz666
 
         self.event_thread = WorkingThread()
 
@@ -67,6 +94,7 @@ class CharmyManager(CharmyObject):
 
         # TODO: 能不能换个地方？比如说framework.py?
         # TODO: CharmyManager过度耦合glfw, 没有考虑其他框架
+        #       是的我来修正这个问题了！ —— 2026/04/14 rgzz666
 
         windows = self.cget("ui.windows")
         if windows:
