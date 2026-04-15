@@ -1,4 +1,8 @@
 THE_POEM = """
+====================================
+          THE CHARMY BIBLE          
+====================================
+
 There are two extremes in Python, 
 one is art while the other is fart. 
 Those who create art look down on those who fart, 
@@ -21,7 +25,7 @@ then do it yourself.
 
 Never mind, 
 it will be OK if it runs fast... 
-I mean myself...
+I mean myself... 
 
 —— Translated by rgzz666 from original text by LittleWhiteCloud
 """
@@ -49,5 +53,4 @@ print(THE_POEM)
 
 
 # The Charmy development team / Charmy 开发团队 敬上
-#
 # 2026/02/05 (Y/M/D)
