@@ -18,13 +18,13 @@ class Backend(template.Backend):
 
     def __init__(self):
         """Here goes the backend's metadata."""
-        super().__init__(self)
+        super().__init__()
         self.name = "genesis"
         self.friendly_name = "Genesis (early development)"
         self.version = "0.1.0"
         self.author = ["XiangQinXi", "rgzz666"]
 
-        self.class_WindowBase = WindowBase
+        self.WindowBase = WindowBase
     
     def init(self, **kwargs) -> None:
         if not glfw.init():
@@ -62,7 +62,7 @@ class WindowBase(template.WindowBase):
     
     def __init__(self):
         """Creates a window"""
-        super().__init__(self)
+        super().__init__()
 
         self.title = "Charmy GLFW Window"
         self.size = (540, 480)
@@ -85,7 +85,10 @@ class WindowBase(template.WindowBase):
         glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
 
         # create window
-        window = glfw.create_window(self.size[0], self.size[1], self.title, None, None)
+        self.window = glfw.create_window(self.size[0], self.size[1], self.title, None, None)
 
-        if window == None:
+        if self.window == None:
             raise RuntimeError("Can't create window")
+    
+    def show(self):
+        glfw.show_window(self.window)

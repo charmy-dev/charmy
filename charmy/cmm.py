@@ -20,7 +20,7 @@ class GLFWError(Exception):
 class CharmyManager(CharmyObject):
     """Charmy windows manager. Used to manage windows created with one backend."""
 
-    def __init__(self, backend: Backend, id_: str | None = None, **kwargs):
+    def __init__(self, backend: str | Backend, id_: str | None = None, **kwargs):
         """Create a Charmy windows manager.
 
         Args:
@@ -28,8 +28,10 @@ class CharmyManager(CharmyObject):
         """
         super().__init__(**kwargs)
 
-        self.backend=backend
-        self.backend.init(backend) # Initialize the backend when manager created
+        if type(backend) is str:
+            self.backend = backend_loader.load_backend(backend)()
+        else:
+            self.backend=backend
 
         self.windows=[] # This list stores all windows this CharmyManager manages
         self.is_alive = True # This var stores if the manager is still alive

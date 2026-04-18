@@ -12,15 +12,11 @@ if typing.TYPE_CHECKING:
 
 @dataclasses.dataclass
 class Configs():
-    single_manager_mode = environ.get("CHARMY_SINGLE_MANAGER", False)
-    default_manager     = environ.get("CHARMY_BACKEND", "auto")
+    default_backend: str         = environ.get("CHARMY_BACKEND", "auto")
 
 
 class Common():
     managers_instances: list[cmm.CharmyManager] = []
-    if Configs.single_manager_mode:
-        NotImplemented
-        managers_instances.append(NotImplemented)
 
 
 class ID(Enum):

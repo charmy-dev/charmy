@@ -18,12 +18,7 @@ class Backend():
         self.author = []
 
         # Make alias for WhateverBase classes
-        self.class_WindowBase = WindowBase
-
-        # Make placeholders for APIs
-        func = self.placeholder_function # Just for aliasing
-
-        self.init=func                          # Initialize this backend
+        self.WindowBase = WindowBase
 
     def placeholder_function(self, *args, **kwargs) -> bool:
         warnings.warn(f"This function is not implemented in backend {self.friendly_name}.")
@@ -76,7 +71,8 @@ class WindowBase():
         """Shows the window, although not supported in nobackend so will raise an error."""
         raise NotImplementedError(
             "nobackend is not a valid backend to make Charmy works. "
-            "You must install another backend that supports your system GUI. "
+            "You must install another backend that supports your system GUI.\n"
+            "Hint: If you already specified another backend, this means that backend is invalid."
         )
     
     def hide(self):
