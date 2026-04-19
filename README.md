@@ -14,7 +14,7 @@ Please DO NOT create issues irrelevant to software bugs or suggestions etc. in t
 
 ### For anyone outside China
 
-Unfortunately, currently there is other discussion group chat available on any other platforms that you may be easier to access. We will create one when we publish our first usable version, because there is no reason to do so before that since users cannot provide any feedback without a working version. **However,** the good news is, it is possible for international users to own a QQ account, you may sign up for QQ if you'd wish, and I'm sure that you will be welcomed by all China Mainland netizens! 
+Unfortunately, currently there is no other discussion group chat available on any other platforms that you may be easier to access. We will create one when we publish our first usable version, because there is no reason to do so before that since users cannot provide any feedback without a working version. **However,** the good news is, it is possible for international users to own a QQ account, you may sign up for QQ if you'd wish, and I'm sure that you will be welcomed by all China Mainland netizens! 
 
 **Another good new is:** I (totowang-hhh / rgzz666) can communicate in English (and that's why I was the one who wrote this README), so feel free to reach me via any method possible. For instance, simply email me (tt1224@hotmail.com) for further discussion.
 
