@@ -9,6 +9,7 @@
 from dataclasses import dataclass
 import glfw
 # import skia
+import typing
 import sys
 
 from . import template
@@ -90,11 +91,11 @@ class WindowBase(template.WindowBase):
         if self.window == None:
             raise RuntimeError("Can't create window")
     
-    def show(self) -> WindowBase:
+    def show(self) -> typing.Self:
         glfw.show_window(self.window)
         return self
 
-    def set_title(self, new: str) -> WindowBase:
+    def set_title(self, new: str) -> typing.Self:
         glfw.set_window_title(self.window, new)
         return self
     

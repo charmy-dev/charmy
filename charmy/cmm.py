@@ -215,4 +215,5 @@ def mainloop() -> None:
 
 def cquit():  # NOQA
     """Quit the main loop"""
-    manager.quit()
+    for manager in CharmyManager.instances.values():
+        manager.quit()

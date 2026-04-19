@@ -11,12 +11,12 @@ if typing.TYPE_CHECKING:
 
 
 @dataclasses.dataclass
-class Configs():
+class Configs:
     default_backend: str         = environ.get("CHARMY_BACKEND", "auto")
 
 
-class Common():
-    managers_instances: list[cmm.CharmyManager] = []
+class Common:
+    managers_instances: list["cmm.CharmyManager"] = []
 
 
 class ID(Enum):
