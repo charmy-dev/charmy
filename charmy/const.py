@@ -17,10 +17,6 @@ class Configs:
     default_backend: str         = environ.get("CHARMY_BACKEND", "auto")
 
 
-class Common:
-    managers_instances: list[cmm.CharmyManager] = []
-
-
 class ID(Enum):
     """ID is an enum to store object ID.
 
