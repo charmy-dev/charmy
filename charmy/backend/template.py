@@ -7,7 +7,7 @@ import warnings
 # ChatGPT says that my framework is good.   —— rgzz666 @2026/04/15
 
 
-def _placeholder_function(*args, backend_name: str = "currently used", **kwargs) -> bool:
+def placeholder_function(*args, backend_name: str = "currently used", **kwargs) -> bool:
     warnings.warn(f"This function is not implemented in backend {backend_name}.")
     return False
 
@@ -15,18 +15,23 @@ def _placeholder_function(*args, backend_name: str = "currently used", **kwargs)
 class Backend():
     """This is a template of Backend, does not have any actual function."""
 
-    def __init__(self):
-        """Here goes the backend's metadata. In nobackend, APIs are also aliased here."""
-        self.name = "nobackend"
-        self.friendly_name = "No available backend"
-        self.version = "0.0.0"
-        self.author = []
+    name: str =             "nobackend"
+    friendly_name: str =    "No available backend"
+    version: str =          "0.0.0"
+    author: list[str] =     ["Charmy dev team"]
 
+    def __init__(self):
+        """APIs are aliased here."""
         # Make alias for WhateverBase classes
         self.WindowBase = WindowBase
+        self.Shape = Shape
+        self.Texture = Texture
     
-    def backend_init(self):
+    def backend_init(self) -> None:
         return None
+    
+    def draw_shape(self, shape: Shape, window: WindowBase, pos: tuple[int, int] | None) -> None:
+        placeholder_function(Backend.friendly_name)
 
 
 @dataclass
@@ -71,15 +76,15 @@ class WindowBase():
 
         # And no need to perform any action to a dummy window
 
-    def show(self):
+    def show(self) -> typing.Self:
         """Shows the window, does nothing on dummy window."""
-        return None
+        return self
     
-    def hide(self):
+    def hide(self) -> typing.Self:
         """Hides the window, does nothing on a dummy window."""
-        return None
+        return self
     
-    def update(self):
+    def update(self) -> None:
         """Updates the window, although not supported in nobackend and will throw an error"""
         raise NotImplementedError(
             "nobackend is not a valid backend to make Charmy works. "
@@ -87,5 +92,42 @@ class WindowBase():
             "Hint: If you already specified another backend, this means that backend is invalid."
         )
     
-    def set_title(self, new: str):
-        _placeholder_function()
+    def set_title(self, new: str) -> typing.Self:
+        placeholder_function(Backend.friendly_name)
+        return self
+
+
+@dataclass
+class ShapeSupportState(SupportState):
+    """Represents support states of shapes of this backend."""
+    polygon         : bool = False
+    round_rect      : bool = False
+    oval            : bool = False
+    svg             : bool = False
+
+class Shape():
+    """Represent a shape in backend layer that can be drawn on window."""
+
+    def __init__(self, 
+                 type: str, 
+                 pos: tuple[int, int] = (0, 0), 
+                 size: tuple[int, int] = (10, 10), 
+                 texture: Texture | str | tuple[int, int, int] = "#00ff00", 
+                 ):
+        self.supports: ShapeSupportState = ShapeSupportState()
+
+        self.type: str = type
+        self.pos: tuple[int, int] = pos
+        self.size: tuple[int, int] = size
+        self.texture: Texture | str | tuple[int, int, int] = texture
+
+
+@dataclass
+class TextureSupportState(SupportState):
+    color           : bool = False
+    blur            : bool = False
+    image           : bool = False
+    func_shader     : bool = False
+
+class Texture():
+    pass

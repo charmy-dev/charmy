@@ -18,14 +18,16 @@ from . import template
 
 
 class Backend(template.Backend):
+    """The Genesis backend."""
+
+    name =          "genesis"
+    friendly_name = "Genesis (early development)"
+    version =       "0.1.0"
+    author =        ["XiangQinXi", "rgzz666"]
 
     def __init__(self):
-        """Here goes the backend's metadata."""
+        """APIs are alised here."""
         super().__init__()
-        self.name = "genesis"
-        self.friendly_name = "Genesis (early development)"
-        self.version = "0.1.0"
-        self.author = ["XiangQinXi", "rgzz666"]
 
         self.WindowBase = WindowBase
     
@@ -36,8 +38,6 @@ class Backend(template.Backend):
         glfw.window_hint(glfw.STENCIL_BITS, 8)
         glfw.window_hint(glfw.TRANSPARENT_FRAMEBUFFER, True)
         glfw.window_hint(glfw.COCOA_RETINA_FRAMEBUFFER, True)
-        # TODO: cmm also has samples, I have to figure out whether objects' attributes are shared or not
-        # TODO: combine them?
         glfw.window_hint(glfw.SAMPLES, kwargs.get("samples", 4))
 
         if sys.platform == "win32":
