@@ -108,22 +108,24 @@ class ShapeSupportState(SupportState):
     polygon         : bool = False
     round_rect      : bool = False
     oval            : bool = False
+    beizer_curve    : bool = False
     svg             : bool = False
+    func_shape      : bool = False
 
 class Shape():
     """Represent a shape in backend layer that can be drawn on window."""
 
     def __init__(self, 
-                 type: str, 
+                 shape_type: str, 
+                 shape_params: dict[str, typing.Any], 
                  pos: tuple[int, int] = (0, 0), 
-                 size: tuple[int, int] = (10, 10), 
                  texture: Texture | str | tuple[int, int, int] = "#00ff00", 
                  ):
         self.supports: ShapeSupportState = ShapeSupportState()
 
-        self.type: str = type
+        self.type: str = shape_type
+        self.shape_params: dict[str, typing.Any] = shape_params
         self.pos: tuple[int, int] = pos
-        self.size: tuple[int, int] = size
         self.texture: Texture | str | tuple[int, int, int] = texture
 
 

@@ -6,11 +6,13 @@
 
 # Under dev
 
+import typing
+
 from dataclasses import dataclass
 import sdl2
 import sdl2.ext
 import cairo
-import typing
+import rsvg
 import sys
 import ctypes
 
@@ -49,7 +51,7 @@ class WindowSupportState(template.WindowSupportState):
     customize_titlebar      = False
 
 class WindowBase(template.WindowBase):
-    """Window APIs in GLFW backend."""
+    """Window APIs in Genesis backend."""
     
     def __init__(self):
         """Creates a window."""
@@ -57,11 +59,11 @@ class WindowBase(template.WindowBase):
 
         self.supports = WindowSupportState()
 
-        self.title = "Charmy GLFW Window"
+        self.title = "Charmy SDL2 Window"
         self.size = (540, 480)
 
         # create window
-        self.window = sdl2.SDL_CreateWindow(
+        self.window: typing.Any = sdl2.SDL_CreateWindow(
             self.title.encode('utf-8'),
             sdl2.SDL_WINDOWPOS_UNDEFINED,
             sdl2.SDL_WINDOWPOS_UNDEFINED,
@@ -77,8 +79,9 @@ class WindowBase(template.WindowBase):
             raise RuntimeError("Can't create window")
         
         # Initialize Cairo canvas
-        self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, self.size[0], self.size[1])
-        self.cairo_context = cairo.Context(self.surface)
+        self.surface: cairo.ImageSurface = cairo.ImageSurface(
+            cairo.FORMAT_ARGB32, self.size[0], self.size[1])
+        self.cairo_context: cairo.Context = cairo.Context(self.surface)
         self.cairo_context.set_source_rgb(0, 0, 0)  # 黑色背景
         self.cairo_context.paint()
 
@@ -167,12 +170,52 @@ class WindowBase(template.WindowBase):
 
 @dataclass
 class ShapeSupportState(template.ShapeSupportState):
-    polygon      = True
-    round_rect   = True
-    oval         = True
-    svg          = False
+    polyline         = True
+    round_rect       = True
+    polygon          = True
+    round_rect       = True
+    arc              = True
+    oval             = True
+    sector           = True
+    beizer_curve     = True
+    svg              = True
+    func_shape       = False
+    paths_defined    = True
 
-class Shape():
+class Shape(template.Shape):
     """Represent a shape in the Genesis backend that can be drawn."""
-    def __init__(self):
-        pass
+    def __init__(self, 
+                 shape_type: str, 
+                 shape_params: dict[str, typing.Any], 
+                 pos: tuple[int, int] = (0, 0), 
+                 texture: Texture | str | tuple[int, int, int] = "#00ff00", 
+                 ):
+        """To create a shape in backend.
+        
+        Args:
+            type: Any of `polygon`, `round_rect`, `oval`, `beizer_curve`
+            shape_param:
+                - For polyline: `{"points": list[tuple[int, int]]}`
+                - For rect: `{"points": list[tuple[int, int]]}`
+                - For polygon: `{"points": list[tuple[int, int]]}`
+                - For round rect: `{"width": int, "height": int, "radius": int}`
+                - For arc: `{"radius": int, "start_orient": int | float, "end_orient": int | float}`
+                - For oval: `{"l_radius": int, "s_radius": int, "orientation": int | float}`
+                - For sector: `{"radius": int, "start_orient": int | float, "end_orient": int | float}`
+                - For beizer curve: `{"points": list[tuple[int, int]]}`
+                - For svg: `{"svg_data": str}`
+        """
+        super().__init__(shape_type, shape_params, pos, texture)
+    
+    def draw(self, window: WindowBase):
+        match self.type:
+            case "polygon":
+                points = self.shape_params["points"]
+                for i, (x, y) in enumerate(points):
+                    if i == 0:
+                        window.cairo_context.move_to(x, y)
+                    else:
+                        window.cairo_context.line_to(x, y)
+                window.cairo_context.fill()
+            case _:
+                template.placeholder_function("")
