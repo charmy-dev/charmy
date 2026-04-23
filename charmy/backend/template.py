@@ -30,7 +30,10 @@ class Backend():
     def backend_init(self) -> None:
         return None
     
-    def draw_shape(self, shape: Shape, window: WindowBase, pos: tuple[int, int] | None) -> None:
+    def draw_line(self, line: LineBase, window: WindowBase):
+        placeholder_function(Backend.friendly_name)
+    
+    def draw_shape(self, shape: ShapeBase, window: WindowBase, pos: tuple[int, int] | None) -> None:
         placeholder_function(Backend.friendly_name)
 
 
@@ -61,10 +64,16 @@ class WindowBase():
     """Base of the windows, abstracts window-level operations from the base UI lib."""
 
     supports: WindowSupportState = WindowSupportState()
-    
-    def __init__(self) -> None:
-        """Initializes the dummy window"""
+    Backend: type[Backend] = Backend
 
+    def __init__(self, backend: Backend) -> None:
+        """Initializes the dummy window.
+        
+        Args:
+            backend: The backend that this window uses
+        """
+
+        self.backend: Backend = backend
         self.title: str = "Charmy Dummy Window"
         self.icon: bytearray | None = None
         self.size: tuple[int, int] = (0, 0)
@@ -132,6 +141,11 @@ class LineBase():
         placeholder_function(Backend.friendly_name)
 
 
+class ShapeSupportState(SupportState):
+    ...
+
+class ShapeBase():
+    ...
 
 # class Shape():
 #     """Represent a shape in backend layer that can be drawn on window."""

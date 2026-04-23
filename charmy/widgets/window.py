@@ -44,7 +44,7 @@ class Window(Container):
         self.visible = True
         self._alive = True
         # Initialize the WindowBase
-        self.backend_base: WindowBase = self.parent.backend.WindowBase()
+        self.backend_base: WindowBase = self.parent.backend.WindowBase(self.parent.backend)
         self.show()
 
     @property
