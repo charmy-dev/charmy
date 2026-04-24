@@ -78,8 +78,7 @@ class Beizer(LinePath):
 
 # region Shapes
 
-class CharmyShapeError(Exception):
-    pass
+class CharmyShapeError(Exception): ...
 
 class AnyShape(CharmyObject):
     """Base class of all shapes."""

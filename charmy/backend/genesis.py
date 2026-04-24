@@ -38,7 +38,7 @@ class Backend(template.Backend):
 
 @dataclass
 class WindowSupportState(template.WindowSupportState):
-    """Flags all supported features."""
+    """Flags all supported window features."""
     set_title               = True
     set_icon                = True
     resize                  = True
@@ -51,12 +51,16 @@ class WindowSupportState(template.WindowSupportState):
 
 class WindowBase(template.WindowBase):
     """Window APIs in Genesis backend."""
-    
-    def __init__(self):
-        """Creates a window."""
-        super().__init__()
+    supports = WindowSupportState()
+    Backend = Backend
 
-        self.supports = WindowSupportState()
+    def __init__(self, backend: template.Backend):
+        """Creates a window.
+        
+        Args:
+            backend: The backend that this window uses (can be get from CharmyManager)
+        """
+        super().__init__(backend)
 
         self.title = "Charmy SDL2 Window"
         self.size = (540, 480)
@@ -108,39 +112,35 @@ class WindowBase(template.WindowBase):
 
         # Following Vibed with Deepseek
 
-        # 获取 Cairo 数据（memoryview）
+        # Get Cairo data（memoryview）
         cairo_data = self.surface.get_data()
-        
-        # 获取窗口表面
+
+        # Get SDL2 window surface
         self._window_surface = sdl2.SDL_GetWindowSurface(self.window)
-        
-        # 锁定表面
+        # Lock the surface
         sdl2.SDL_LockSurface(self._window_surface)
-        
-        # 获取像素指针
+
+        # Get pixels pointer
         pixels_ptr = self._window_surface.contents.pixels
-        
-        # 优化：直接从 memoryview 获取底层指针，避免 tobytes() 拷贝
-        # 计算数据大小
+        # Improvement: Get lower level pointer directly to avoid tobytes() copy
+        # Calc data size
         pitch = self._window_surface.contents.pitch
-        data_size = pitch * self.size[1]  # self.size[1] 是高度
-        
-        # 关键：将 memoryview 转换为 ctypes 指针，零拷贝
+        data_size = pitch * self.size[1]
+        # Convert memoryview to ctypes data
         cairo_ptr = ctypes.cast(
             (ctypes.c_char * data_size).from_buffer(cairo_data),
             ctypes.c_void_p
         )
-        
-        # 复制数据
+
+        # Copy data
         ctypes.memmove(pixels_ptr, cairo_ptr, data_size)
-        
-        # 解锁表面
+        # Unlock surface
         sdl2.SDL_UnlockSurface(self._window_surface)
-        
-        # 更新窗口显示
+
+        # Update display
         sdl2.SDL_UpdateWindowSurface(self.window)
 
-        # 处理事件
+        # Handle events
         for event in sdl2.ext.get_events():
             match event.type:
                 case sdl2.SDL_QUIT:
@@ -148,6 +148,8 @@ class WindowBase(template.WindowBase):
                     NotImplemented
 
     def draw_frame(self) -> None:
+        # Test code for drawing, vibed with Doubao or Deepseek (whatever, I forgot)
+
         self.cairo_context.set_source_rgb(1, 1, 1)  # 使用 set_source_rgb 而不是 set_source_rgba
         self.cairo_context.paint()
         
@@ -168,53 +170,17 @@ class WindowBase(template.WindowBase):
 
 
 @dataclass
-class ShapeSupportState(template.ShapeSupportState):
-    polyline         = True
-    round_rect       = True
-    polygon          = True
-    round_rect       = True
-    arc              = True
-    oval             = True
-    sector           = True
-    beizer_curve     = True
-    svg              = True
-    func_shape       = False
-    paths_defined    = True
+class LineSupportState(template.LineSupportState):
+    """Flags all supported line types."""
+    polyline     = True
+    arc          = True
+    beizer       = True
 
-class Shape(template.Shape):
-    """Represent a shape in the Genesis backend that can be drawn."""
-    def __init__(self, 
-                 shape_type: str, 
-                 shape_params: dict[str, typing.Any], 
-                 pos: tuple[int, int] = (0, 0), 
-                 texture: Texture | str | tuple[int, int, int] = "#00ff00", 
-                 ):
-        """To create a shape in backend.
-        
-        Args:
-            type: Any of `polygon`, `round_rect`, `oval`, `beizer_curve`
-            shape_param:
-                - For polyline: `{"points": list[tuple[int, int]]}`
-                - For rect: `{"points": list[tuple[int, int]]}`
-                - For polygon: `{"points": list[tuple[int, int]]}`
-                - For round rect: `{"width": int, "height": int, "radius": int}`
-                - For arc: `{"radius": int, "start_orient": int | float, "end_orient": int | float}`
-                - For oval: `{"l_radius": int, "s_radius": int, "orientation": int | float}`
-                - For sector: `{"radius": int, "start_orient": int | float, "end_orient": int | float}`
-                - For beizer curve: `{"points": list[tuple[int, int]]}`
-                - For svg: `{"svg_data": str}`
-        """
-        super().__init__(shape_type, shape_params, pos, texture)
-    
-    def draw(self, window: WindowBase):
-        match self.type:
-            case "polygon":
-                points = self.shape_params["points"]
-                for i, (x, y) in enumerate(points):
-                    if i == 0:
-                        window.cairo_context.move_to(x, y)
-                    else:
-                        window.cairo_context.line_to(x, y)
-                window.cairo_context.fill()
-            case _:
-                template.placeholder_function("")
+class LineBase():
+    """Represents lines in backend."""
+
+    supports: LineSupportState = LineSupportState()
+    Backend: type[Backend] = Backend
+
+    def __init__(self):
+        ...

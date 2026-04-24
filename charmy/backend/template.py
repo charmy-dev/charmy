@@ -37,6 +37,21 @@ class Backend():
         placeholder_function(Backend.friendly_name)
 
 
+class WhateverBase():
+    """Base class of all... WhateverBase classes?"""
+
+    supports: SupportState
+    Backend: type[Backend] = Backend
+
+    def __init__(self, backend):
+        # Check if using wrong backend
+        if not isinstance(backend, self.Backend):
+            raise TypeError(
+                "Wrong backend instance specified for WindowBase. "
+                f"Should be [{self.Backend.friendly_name}] but got [{backend.friendly_name}]. "
+                )
+
+
 @dataclass
 class SupportState():
     """To flag which features this backend supports."""
@@ -60,11 +75,10 @@ class WindowSupportState(SupportState):
     fullscreen             : bool = False
     customize_titlebar     : bool = False
 
-class WindowBase():
+class WindowBase(WhateverBase):
     """Base of the windows, abstracts window-level operations from the base UI lib."""
 
     supports: WindowSupportState = WindowSupportState()
-    Backend: type[Backend] = Backend
 
     def __init__(self, backend: Backend) -> None:
         """Initializes the dummy window.
@@ -72,6 +86,7 @@ class WindowBase():
         Args:
             backend: The backend that this window uses
         """
+        super().__init__(backend)
 
         self.backend: Backend = backend
         self.title: str = "Charmy Dummy Window"
@@ -119,12 +134,13 @@ class LineSupportState(SupportState):
     arc             : bool = False
     beizer          : bool = False
 
-class LineBase():
+class LineBase(WhateverBase):
     """Represents a line in backend layer"""
 
     supports: LineSupportState = LineSupportState()
 
     def __init__(self, 
+                 backend: Backend, 
                  line_type: str, 
                  points: list[tuple[int, int]], 
                  ) -> None:
@@ -134,6 +150,7 @@ class LineBase():
             line_type: Type of the line
             points: List of the points on line
         """
+        super().__init__(backend)
         self.line_type: str = line_type
         self.points: list[tuple[int, int]] = points
 
@@ -142,7 +159,12 @@ class LineBase():
 
 
 class ShapeSupportState(SupportState):
-    ...
+    any_shape       : bool = False
+    rect            : bool = False
+    round_rect      : bool = False
+    polygon         : bool = False
+    oval            : bool = False
+    sector          : bool = False
 
 class ShapeBase():
     ...
