@@ -1,3 +1,4 @@
+from __future__ import annotations as _
 import typing
 import warnings
 

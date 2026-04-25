@@ -52,7 +52,7 @@ class Window(Container):
         return self._title
 
     @title.setter
-    def title(self, new: str) -> Window:
+    def title(self, new: str) -> "Window":
         """Set title of the window.
         
         Returns:
@@ -62,7 +62,7 @@ class Window(Container):
         self._title = new
         return self
 
-    def show(self) -> Window:
+    def show(self) -> "Window":
         """Show the window.
         
         Returns:
