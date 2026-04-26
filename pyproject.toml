@@ -3,12 +3,15 @@ name = "charmy-gui"
 version = "0.0.1"
 description = ""
 authors = [
-    {name = "XiangQinxi",email = "XiangQinxi@outlook.com"}
+    {name = "XiangQinxi", email = "XiangQinxi@outlook.com"}, 
+    {name = "rgzz666", email = "tt1224@hotmail.com"}, 
+    {name = "LittleWhiteCloud", email = "placeholder@example.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "json5"
+    "json5", 
+    "pysdl2", "pysdl2-dll", "pycairo"
 ]
 license = "Apache 2.0"
 
@@ -16,9 +19,7 @@ license = "Apache 2.0"
 docs = [
     "myst-parser", "sphinx-design", "furo", "sphinx-copybutton", "sphinx", "sphinxcontrib-mermaid", 
     ]
-basic = [
-    "pysdl2", "pysdl2-dll", "pycairo"
-    ]
+basic = []
 
 [tool.poetry]
 packages = [{include = "charmy"}]
