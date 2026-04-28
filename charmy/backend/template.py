@@ -134,9 +134,12 @@ class WindowBase(WhateverBase):
 @dataclass
 class LineSupportState(SupportState):
     """Flags support state of line types of this backend."""
-    polyline        : bool = False
-    arc             : bool = False
-    beizer          : bool = False
+    line                : bool = False
+    polyline            : bool = False
+    circle_arc          : bool = False
+    ellipse_arc         : bool = False
+    quadratic_bezier    : bool = False
+    cubic_bezier        : bool = False
 
 class LineBase(WhateverBase):
     """Set of lines-related APIs"""

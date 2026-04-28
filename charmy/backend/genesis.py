@@ -39,15 +39,15 @@ class Backend(template.Backend):
 @dataclass
 class WindowSupportState(template.WindowSupportState):
     """Flags all supported window features."""
-    set_title               = True
-    set_icon                = True
-    resize                  = True
-    set_scale_mode          = False
-    set_background          = True
-    translucent             = True
-    set_state               = True
-    fullscreen              = True
-    customize_titlebar      = False
+    set_title              : bool = True
+    set_icon               : bool = True
+    resize                 : bool = True
+    set_scale_mode         : bool = True
+    set_background         : bool = True
+    translucent            : bool = True
+    set_state              : bool = True
+    fullscreen             : bool = True
+    customize_titlebar     : bool = True
 
 class WindowBase(template.WindowBase):
     """Window APIs in Genesis backend."""
@@ -172,15 +172,17 @@ class WindowBase(template.WindowBase):
 @dataclass
 class LineSupportState(template.LineSupportState):
     """Flags all supported line types."""
-    polyline     = True
-    arc          = True
-    beizer       = True
+    line                : bool = True
+    polyline            : bool = True
+    circle_arc          : bool = True
+    ellipse_arc         : bool = True
+    quadratic_bezier    : bool = True
+    cubic_bezier        : bool = True
 
-class LineBase():
+class LineBase(template.LineBase):
     """Represents lines in backend."""
 
     supports: LineSupportState = LineSupportState()
-    Backend: type[Backend] = Backend
 
     def __init__(self):
         ...
