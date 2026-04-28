@@ -5,7 +5,7 @@ from dataclasses import dataclass
 import warnings
 
 if typing.TYPE_CHECKING:
-    from charmy.styles.shape import LinePath
+    from charmy.styles.shape import LinePath, AnyShape
 
 
 # ChatGPT says that my framework is good.   —— rgzz666 @2026/04/15
@@ -133,34 +133,33 @@ class WindowBase(WhateverBase):
 
 @dataclass
 class LineSupportState(SupportState):
-    """Represents support states of shapes of this backend."""
+    """Flags support state of line types of this backend."""
     polyline        : bool = False
     arc             : bool = False
     beizer          : bool = False
 
 class LineBase(WhateverBase):
-    """Represents a line in backend layer"""
+    """Set of lines-related APIs"""
 
     supports: LineSupportState = LineSupportState()
 
-    def __init__(self, 
-                 backend: Backend, 
-                 line: LinePath
-                 ) -> None:
-        """To represent a drawable line in backend. 
-        
-        Args:
-            line_type: Type of the line
-            points: List of the points on line
-        """
-        super().__init__(backend)
-        self.line: LinePath = line
+    def __init__(self, *args, **kwargs):
+        """Not supposed to be instantiated."""
+        raise RuntimeError("LineBase is used to hold APIs, but not supposed to be instantiated.")
 
-    def draw(self):
+    @staticmethod
+    def draw_line(line: LinePath, window: WindowBase):
+        """To draw a line on a specific window.
+
+        Args:
+            line: The line to be drawn
+            window: The WindowBase to draw line
+        """
         placeholder_function(Backend.friendly_name)
 
 
 class ShapeSupportState(SupportState):
+    """Flags support state of shape types of this backend."""
     any_shape       : bool = False
     rect            : bool = False
     round_rect      : bool = False
@@ -169,7 +168,25 @@ class ShapeSupportState(SupportState):
     sector          : bool = False
 
 class ShapeBase():
-    ...
+    """Set of shape-related APIs"""
+
+    supports: ShapeSupportState = ShapeSupportState()
+
+    def __init__(self, *args, **kwargs):
+        """Not supposed to be instantiated."""
+        raise RuntimeError("ShapeBase is used to hold APIs, but not supposed to be instantiated.")
+
+    @staticmethod
+    def draw_shape(shape: AnyShape, window: WindowBase, fill: TextureBase, border: TextureBase):
+        """To draw a shape on a specific window.
+
+        Args:
+            shape: The shape to be drawn
+            window: The WindowBase to draw shape
+            fill: Texture to fill the shape
+            border: Texture to fill the shape border
+        """
+        placeholder_function(Backend.friendly_name)
 
 # class Shape():
 #     """Represent a shape in backend layer that can be drawn on window."""
