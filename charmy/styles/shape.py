@@ -13,7 +13,7 @@ if typing.TYPE_CHECKING:
 # region Lines
 
 @dataclass
-class LinePath(CharmyObject):
+class LinePath():
     """Base class of all line paths"""
 
     type: typing.ClassVar[str] = "line_path_class"
@@ -27,6 +27,7 @@ class LinePath(CharmyObject):
         else:
             if self.type in backend.LineBase.supports:
                 # If supported by the windows' backend.
+                backend.draw_line(self, window)
                 NotImplemented
             else:
                 warnings.warn(f"Line type {self.type} is not supported by "
@@ -190,12 +191,12 @@ class AnyShape(CharmyObject):
 
     def _validate_lines(self):
         """Validate if lines form a valid closed shape."""
-        last_line_end: tuple[int, int] = self.lines[-1].points[-1]
+        last_line_end: tuple[int, int] = self.lines[-1].end_point
         # 👆 Set last_line_end to end point of the last line, a valid shape must be closed.
         for line in self.lines:
-            if line.points[0] != last_line_end:
+            if line.start_point != last_line_end:
                 return False
-            last_line_end = line.points[-1]
+            last_line_end = line.end_point
             # 👆 Set last_line_end to end point of current line, lines must be connected.
         return True
 

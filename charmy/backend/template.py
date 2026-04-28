@@ -4,6 +4,9 @@ import typing
 from dataclasses import dataclass
 import warnings
 
+if typing.TYPE_CHECKING:
+    from charmy.styles.shape import LinePath
+
 
 # ChatGPT says that my framework is good.   —— rgzz666 @2026/04/15
 
@@ -142,8 +145,7 @@ class LineBase(WhateverBase):
 
     def __init__(self, 
                  backend: Backend, 
-                 line_type: str, 
-                 points: list[tuple[int, int]], 
+                 line: LinePath
                  ) -> None:
         """To represent a drawable line in backend. 
         
@@ -152,8 +154,7 @@ class LineBase(WhateverBase):
             points: List of the points on line
         """
         super().__init__(backend)
-        self.line_type: str = line_type
-        self.points: list[tuple[int, int]] = points
+        self.line: LinePath = line
 
     def draw(self):
         placeholder_function(Backend.friendly_name)
