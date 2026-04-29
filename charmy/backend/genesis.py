@@ -71,21 +71,21 @@ class WindowBase(template.WindowBase):
             sdl2.SDL_WINDOWPOS_UNDEFINED,
             sdl2.SDL_WINDOWPOS_UNDEFINED,
             self.size[0], self.size[1],
-            sdl2.SDL_WINDOW_SHOWN
+            sdl2.SDL_WINDOW_SHOWN,
         )
-        
+
         if not self.window:
             raise RuntimeError("Can't create window")
         self._window_surface = sdl2.SDL_GetWindowSurface(self.window)
 
         if self.window == None:
             raise RuntimeError("Can't create window")
-        
+
         # Initialize Cairo canvas
         self.surface: cairo.ImageSurface = cairo.ImageSurface(
             cairo.FORMAT_ARGB32, self.size[0], self.size[1])
         self.cairo_context: cairo.Context = cairo.Context(self.surface)
-        self.cairo_context.set_source_rgb(0, 0, 0)  # 黑色背景
+        self.cairo_context.set_source_rgba(0, 0, 0, 0)  # Transparent back
         self.cairo_context.paint()
 
     def show(self) -> typing.Self:
@@ -150,7 +150,7 @@ class WindowBase(template.WindowBase):
     def draw_frame(self) -> None:
         # Test code for drawing, vibed with Doubao or Deepseek (whatever, I forgot)
 
-        self.cairo_context.set_source_rgb(1, 1, 1)  # 使用 set_source_rgb 而不是 set_source_rgba
+        self.cairo_context.set_source_rgba(1, 1, 1, 0)
         self.cairo_context.paint()
         
         # 绘制红色圆形
