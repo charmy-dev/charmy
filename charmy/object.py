@@ -4,29 +4,31 @@ Basic object class.
 from __future__ import annotations as _
 
 import typing
+
 import weakref
+
 from .const import ID
 
 
-class InstanceCounterMeta(type):
-    """
-    InstanceCounterMeta
-    """
+# class InstanceCounterMeta(type):
+#     """
+#     InstanceCounterMeta
+#     """
 
-    def __init__(cls, name, bases, attrs):
-        super().__init__(name, bases, attrs)
-        cls._instances = weakref.WeakSet()
+#     def __init__(cls, name, bases, attrs):
+#         super().__init__(name, bases, attrs)
+#         cls._instances = weakref.WeakSet()
 
-    def __call__(cls, *args, **kwargs):
-        instance = super().__call__(*args, **kwargs)
+#     def __call__(cls, *args, **kwargs):
+#         instance = super().__call__(*args, **kwargs)
 
-        if type(instance) is cls:
-            cls._instances.add(instance)
+#         if type(instance) is cls:
+#             cls._instances.add(instance)
 
-        return instance
+#         return instance
 
 
-class CharmyObject(metaclass=InstanceCounterMeta):
+class CharmyObject():
     """CharmyObject is this project's basic class.
 
     CharmyObject provides abilities of cumulating ID and set attributes.
@@ -38,11 +40,13 @@ class CharmyObject(metaclass=InstanceCounterMeta):
     """
 
     # objects: typing.Dict[str, CharmyObject] = {}  # find by ID {1: OBJ1, 2: OBJ2}
-    objects_sorted: typing.Dict[str, dict[str, CharmyObject]] = (
+    objects_sorted: typing.ClassVar[typing.Dict[str, dict[str, CharmyObject]]] = (
         {}
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
-    instances: dict[str, typing.Self]
-    attributes: typing.Dict[str, typing.Any] = {}  # public attributes {key: value}
+
+    # TODO: Make a _InstacesList class and fuck away list and dict
+    instances: typing.ClassVar[list[weakref.ReferenceType[typing.Self]]]
+    instances_by_id: typing.ClassVar[dict[str, weakref.ReferenceType[typing.Self]]]
 
     def __init__(self, id_: ID | str = ID.AUTO):
         """CharmyObject is this project's basic class.
@@ -71,12 +75,14 @@ class CharmyObject(metaclass=InstanceCounterMeta):
                 self.objects_sorted[self.class_name] = {self.id: self}
             else:
                 self.objects_sorted[self.class_name][self.id] = self
-            
-            self.__class__.instances[self.id] = self
+
+            self.__class__.instances_by_id[self.id] = weakref.ref(self)
+            self.__class__.instances.append(weakref.ref(self))
 
     def __init_subclass__(cls):
-        super().__init_subclass__()
-        cls.instances = {}
+        """To initialize a CharmyObject subclass."""
+        cls.instances_by_id = {}
+        cls.instances = []
 
     # region: Properties
 
@@ -85,15 +91,10 @@ class CharmyObject(metaclass=InstanceCounterMeta):
         """Returns class name."""
         return self.__class__.__name__
 
-    # @property
-    # def instances(self) -> typing.Self:
-    #     """Returns all class instances."""
-    #     return self.__class__.objects_sorted[self.class_name]
-
     @property
     def instance_count(self) -> int:
         """Returns the class instance count."""
-        return len(self._instances)
+        return len(self.__class__.instances_by_id)
 
     # endregion
 
@@ -108,6 +109,7 @@ class CharmyObject(metaclass=InstanceCounterMeta):
             return default
 
     find = get_obj
+
 
     # endregion
 

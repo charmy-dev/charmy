@@ -6,8 +6,8 @@ from ..object import CharmyObject
 from ..rect import Rect
 
 
-class Container(CharmyObject):
-    """CContainer is a class to store child objects"""
+class Container():
+    """Container represents a widget's ability to contain and arrange other widgets inside."""
 
     _local = threading.local()
 
@@ -18,13 +18,8 @@ class Container(CharmyObject):
 
     @property
     def rect(self):
-        """Get window rect."""
-        return Rect(
-            x=self["pos"]["x"],
-            y=self["pos"]["y"],
-            width=self["size"]["width"],
-            height=self["size"]["height"],
-        )
+        """Get the container's rect."""
+        return ((0, 0), (0, 0))
 
     # region Context
 
@@ -68,33 +63,33 @@ class Container(CharmyObject):
     # endregion
 
 
-def auto_find_parent(widget_class: typing.Callable) -> typing.Callable:
-    """Add a decorator to automatically inject the parent container to the widget constructor"""
+# def auto_find_parent(widget_class: typing.Callable) -> typing.Callable:
+#     """Add a decorator to automatically inject the parent container to the widget constructor"""
 
-    # Save the original constructor
-    original_init = widget_class.__init__  # NOQA
+#     # Save the original constructor
+#     # original_init = widget_class.__init__  # NOQA
 
-    @functools.wraps(original_init)
-    def new_init(self, *args, **kwargs):
-        # Check if parent is specified in keyword arguments
-        parent_specified = False
+#     @functools.wraps(original_init)
+#     def new_init(self, *args, **kwargs):
+#         # Check if parent is specified in keyword arguments
+#         parent_specified = False
 
-        # Check if parent is specified in keyword arguments
-        if "parent" in kwargs:
-            parent_specified = True
-        # Check if parent is specified in positional arguments
-        elif len(args) >= 2:
-            parent_specified = True
+#         # Check if parent is specified in keyword arguments
+#         if "parent" in kwargs:
+#             parent_specified = True
+#         # Check if parent is specified in positional arguments
+#         elif len(args) >= 2:
+#             parent_specified = True
 
-        # If parent is not specified, try to get it from context
-        if not parent_specified:
-            parent = Container.get_context()
-            if parent is not None:
-                kwargs["parent"] = parent
+#         # If parent is not specified, try to get it from context
+#         if not parent_specified:
+#             parent = Container.get_context()
+#             if parent is not None:
+#                 kwargs["parent"] = parent
 
-        # Call the original constructor
-        original_init(self, *args, **kwargs)
+#         # Call the original constructor
+#         original_init(self, *args, **kwargs)
 
-    # Replace the constructor
-    widget_class.__init__ = new_init
-    return widget_class
+#     # Replace the constructor
+#     widget_class.__init__ = new_init
+#     return widget_class

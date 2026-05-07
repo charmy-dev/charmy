@@ -16,11 +16,11 @@ class SkHynix():
 
         print(NO_RAM_HERE)
 
-        print(
+        raise MemoryError(
         "Sorry, we don't have any money to grab a new RAM stick for you, as they are getting too "
-        "expensive these days. :("
+        "expensive these days. :(\n\n"
+        "(In the best memories of Suzaku and its unique 'Sk' namespace)"
         )
-        print("(In the best memories of Suzaku and its unique 'Sk' namespace)")
 
 
 if __name__ == "__main__":

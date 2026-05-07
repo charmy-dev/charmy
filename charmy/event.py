@@ -11,7 +11,7 @@ from .const import ID
 from .object import CharmyObject
 
 
-class EventHandling(CharmyObject):
+class EventHandling():
 
     # fmt: off
     EVENT_TYPES: list[str] = [
@@ -198,6 +198,10 @@ class EventHandling(CharmyObject):
             self.EVENT_TYPES.append(event_type)
         if event_type not in self.tasks:
             self.tasks[event_type] = []
+        try:
+            assert isinstance(self, CharmyObject)
+        except AssertionError as e:
+            raise AssertionError("Each EventHandling object must by a CharmyObject.")
         task_id = f"{self.id}.{event_type}.{len(self.tasks[event_type])}"
         # e.g. CButton114.focus_gain.514 / CEventHandling114.focus_gain.514
         match parsed_event_type["type"]:
@@ -233,6 +237,10 @@ class EventHandling(CharmyObject):
 
         :return: The EventTask object of the task, or False if not found
         """
+        try:
+            assert isinstance(self, CharmyObject)
+        except AssertionError as e:
+            raise AssertionError("Each EventHandling object must by a CharmyObject.")
         task_id_parsed = task_id.split(".")
         if len(task_id_parsed) == 2:  # If is a shortened ID (without widget indicator)
             task_id_parsed.insert(0, self.id)  # We assume that this indicates self
@@ -375,7 +383,8 @@ class EventTask:
 
 
 class DelayTask(EventTask):
-    NotImplemented  # NOQA
+    # TODO: DelayTask
+    pass  # NOQA
 
 
 class WorkingThread(threading.Thread, CharmyObject):

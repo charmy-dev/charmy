@@ -1,6 +1,7 @@
 import typing
 
-from ..rect import Rect
+from ..event import EventHandling, Event
+from ..object import CharmyObject
 from .container import Container
 from .. import const
 from ..cmm import CharmyManager
@@ -9,25 +10,28 @@ if typing.TYPE_CHECKING:
     from ..backend.template import WindowBase
 
 
-class Window(Container):
-    """Window class."""
+class WindowEntity():
+    """Represents abilities of window entities."""
 
     def __init__(self, 
-                 parent: CharmyManager | None = None, 
-                 size: tuple[int | float, int | float] = (540, 480), 
-                 title: str = "Charmy Window", 
-                 *args, **kwargs):
+                parent: CharmyManager | None = None, 
+                size: tuple[int | float, int | float] = (540, 480), 
+                title: str = "Charmy Window", 
+                *args, **kwargs):
         """To create and initialize a window."""
         super().__init__(*args, **kwargs)
         # Store parent maanger
         if parent != None: # Parent manager already specified
             self.parent: CharmyManager = parent
-        elif len(CharmyManager.instances.values()) == 1: # Only one manager present
-            self.parent: CharmyManager = list(CharmyManager.instances.values())[0]
+        elif len(CharmyManager.instances_by_id.values()) == 1: # Only one manager present
+            parent = CharmyManager.instances[0]()
+            if parent != None:
+                self.parent: CharmyManager = parent
+            else:
+                self.parent: CharmyManager = CharmyManager(const.Configs.default_backend)
         else:
-            if len(CharmyManager.instances) == 0:
+            if len(CharmyManager.instances_by_id) == 0:
                 # If no manager present, create a default
-                from ..backend import loader
                 self.parent: CharmyManager = CharmyManager(const.Configs.default_backend)
             else:
                 raise RuntimeError(
@@ -52,7 +56,7 @@ class Window(Container):
         return self._title
 
     @title.setter
-    def title(self, new: str) -> "Window":
+    def title(self, new: str) -> typing.Self:
         """Set title of the window.
         
         Returns:
@@ -62,7 +66,7 @@ class Window(Container):
         self._title = new
         return self
 
-    def show(self) -> "Window":
+    def show(self) -> typing.Self:
         """Show the window.
         
         Returns:
@@ -71,5 +75,33 @@ class Window(Container):
         self.backend_base.show()
         return self
     
-    def update(self):
+    def update(self, force_redraw: bool = False):
+        """Update the window.
+
+        :param _force_redraw: Redraw the window content regardless presence of changes
+        """
         self.backend_base.update()
+
+
+class Window(CharmyObject, WindowEntity, Container, EventHandling):
+    """Windows in Charmy."""
+
+    def __init__(self, 
+                parent: CharmyManager | None = None, 
+                size: tuple[int | float, int | float] = (540, 480), 
+                title: str = "Charmy Window", 
+                ):
+        """To create a window in Charmy."""
+        CharmyObject.__init__(self)
+        WindowEntity.__init__(self, parent, size, title)
+        Container.__init__(self)
+        EventHandling.__init__(self)
+
+    def update(self, force_redraw: bool = False):
+        """Update the window.
+
+        :param _force_redraw: Redraw the window content regardless presence of changes
+        """
+        update_event = Event(self, "update")
+        self.trigger(update_event)
+        WindowEntity.update(self, force_redraw)

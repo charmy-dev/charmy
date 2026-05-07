@@ -25,8 +25,7 @@ class CharmyManager(CharmyObject):
     def __init__(self, backend: str | Backend, id_: str | None = None, **kwargs):
         """Create a Charmy windows manager.
 
-        Args:
-            backend: The backend this manager uses
+        :param backend: The backend this manager uses
         """
         super().__init__(**kwargs)
 
@@ -37,13 +36,24 @@ class CharmyManager(CharmyObject):
         
         self.backend.backend_init()
 
-        self.windows: list[window.Window] = [] # Stores all windows this CharmyManager manages
+        self.windows: list[window.WindowEntity] = [] 
+        # 👆 Stores all windows this CharmyManager manages
         self.is_alive = True # This var stores if the manager is still alive
 
-    def update(self):
+    def update(self) -> typing.Self:
+        """Update all windows under this manager,
+
+        :return self: The manager itself
+        """
         for window in self.windows:
             if window.visible and window._alive:
                 window.update()
+        return self
+
+    def destroy(self) -> None:
+        """Destroy the manager."""
+        del self
+        return
 
 
 # class CharmyManagerOld(CharmyObject):
@@ -211,11 +221,15 @@ class CharmyManager(CharmyObject):
 def mainloop() -> None:
     """Start main loop."""
     while True:
-        for manager in CharmyManager.instances.values():
-            manager.update()
+        for manager_ref in CharmyManager.instances:
+            manager = manager_ref()
+            if manager != None:
+                manager.update()
 
 
-def cquit():  # NOQA
-    """Quit the main loop"""
-    for manager in CharmyManager.instances.values():
-        manager.quit()
+def quit():  # NOQA
+    """Quit Charmy."""
+    for manager_ref in CharmyManager.instances_by_id.values():
+        manager = manager_ref()
+        if manager != None:
+            manager.destroy()
