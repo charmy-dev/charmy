@@ -23,9 +23,6 @@ from . import backend
 from . import draw
 from .event import Event, EventHandling, EventTask, WorkingThread
 from .object import CharmyObject
-from .pos import Pos
-from .rect import Rect
-from .size import Size
 # from .frameworks import Frameworks
 from .styles import shape, texture, theme
 from .var import BooleanVar, FloatVar, IntVar, StringVar, Var

@@ -3,7 +3,6 @@ import threading
 import typing
 
 from ..object import CharmyObject
-from ..rect import Rect
 
 
 class Container():

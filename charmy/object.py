@@ -115,9 +115,6 @@ class CharmyObject():
         {}
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
 
-    # TODO: Make a _InstacesList class and fuck away list and dict
-    # instances: typing.ClassVar[list[weakref.ReferenceType[typing.Self]]]
-    # instances_by_id: typing.ClassVar[dict[str, weakref.ReferenceType[typing.Self]]]
     instances: typing.ClassVar[_InstancesList[typing.Self]]
 
     def __init__(self, id_: ID | str = ID.AUTO):
