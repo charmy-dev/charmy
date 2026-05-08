@@ -23,14 +23,14 @@ class WindowEntity():
         # Store parent maanger
         if parent != None: # Parent manager already specified
             self.parent: CharmyManager = parent
-        elif len(CharmyManager.instances_by_id.values()) == 1: # Only one manager present
-            parent = CharmyManager.instances[0]()
+        elif len(CharmyManager.instances) == 1: # Only one manager present
+            parent = CharmyManager.instances[0]
             if parent != None:
                 self.parent: CharmyManager = parent
             else:
                 self.parent: CharmyManager = CharmyManager(const.Configs.default_backend)
         else:
-            if len(CharmyManager.instances_by_id) == 0:
+            if len(CharmyManager.instances) == 0:
                 # If no manager present, create a default
                 self.parent: CharmyManager = CharmyManager(const.Configs.default_backend)
             else:

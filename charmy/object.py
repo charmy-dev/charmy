@@ -28,6 +28,77 @@ from .const import ID
 #         return instance
 
 
+class CharmyInstanceDestroyedError(Exception): ...
+
+
+# region _InstancesList
+
+_InstanceType = typing.TypeVar("_InstanceType", bound="CharmyObject")
+
+class _InstancesList(typing.Generic[_InstanceType]):
+    """Instances list of each CharmyObject subclass, with customized abilities."""
+
+    def __init__(self):
+        """To create a list that stores instances of CharmyObject or its subclasses.
+
+        This is mainly for internal use, but you are welcomed to find any other usage of this. 
+        Remember to tell me your idea via GitHub discussions of this project (if available).
+        """
+        self.instances: list[weakref.ReferenceType[_InstanceType]] = []
+        self.instances_by_id: weakref.WeakValueDictionary[str, _InstanceType] = \
+            weakref.WeakValueDictionary()
+
+    def append(self, item: _InstanceType) -> typing.Self:
+        """Add an object to this list.
+
+        :param item: The object to add
+        """
+        self.instances.append(weakref.ref(item))
+        self.instances_by_id[item.id] = item
+        return self
+
+    def __getitem__(self, item: int | str) -> _InstanceType:
+        """Get or find an object from this list.
+
+        :param item: Either the index or the ID of the target object
+        """
+        instance: _InstanceType | None = None
+        if isinstance(item, int):
+            # int expressing an index
+            if item < len(self.instances):
+                ref: weakref.ReferenceType = self.instances[item]
+                instance: _InstanceType | None = ref()
+        else:
+            # str expressing an ID
+            if item in self.instances_by_id:
+                instance: _InstanceType | None = None
+        if instance is None:
+            raise CharmyInstanceDestroyedError("Trying to access a destroyed or inexisted object.")
+        else:
+            return instance
+
+    def __iter__(self):
+        """Iterate this list."""
+        return iter(self.instances)
+
+    def __contains__(self, item: str| CharmyObject) -> bool:
+        """Check if a specific object available.
+
+        :param item: Either the object itself or its ID
+        """
+        if isinstance(item, CharmyObject):
+            return weakref.ref(item) in self.instances
+        else:
+            return item in self.instances_by_id.keys()
+
+    def __len__(self) -> int:
+        """Get the length of this list."""
+        return len(self.instances)
+
+# endregion
+
+# region CharmyObject
+
 class CharmyObject():
     """CharmyObject is this project's basic class.
 
@@ -45,8 +116,9 @@ class CharmyObject():
     )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
 
     # TODO: Make a _InstacesList class and fuck away list and dict
-    instances: typing.ClassVar[list[weakref.ReferenceType[typing.Self]]]
-    instances_by_id: typing.ClassVar[dict[str, weakref.ReferenceType[typing.Self]]]
+    # instances: typing.ClassVar[list[weakref.ReferenceType[typing.Self]]]
+    # instances_by_id: typing.ClassVar[dict[str, weakref.ReferenceType[typing.Self]]]
+    instances: typing.ClassVar[_InstancesList[typing.Self]]
 
     def __init__(self, id_: ID | str = ID.AUTO):
         """CharmyObject is this project's basic class.
@@ -76,13 +148,11 @@ class CharmyObject():
             else:
                 self.objects_sorted[self.class_name][self.id] = self
 
-            self.__class__.instances_by_id[self.id] = weakref.ref(self)
-            self.__class__.instances.append(weakref.ref(self))
+            self.__class__.instances.append(self)
 
     def __init_subclass__(cls):
         """To initialize a CharmyObject subclass."""
-        cls.instances_by_id = {}
-        cls.instances = []
+        cls.instances = _InstancesList()
 
     # region: Properties
 
@@ -94,7 +164,7 @@ class CharmyObject():
     @property
     def instance_count(self) -> int:
         """Returns the class instance count."""
-        return len(self.__class__.instances_by_id)
+        return len(self.__class__.instances)
 
     # endregion
 
