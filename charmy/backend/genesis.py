@@ -172,15 +172,15 @@ class WindowBase(template.WindowBase):
                     NotImplemented
 
     def draw_frame(self, 
-                   drawing_list: list[charmy_stuff.shape.DrawnShape | charmy_stuff.shape.DrawnLine]) -> None:
+                   drawing_list: list[charmy_stuff.draw.DrawnShape | charmy_stuff.draw.DrawnLine]) -> None:
         """Draw a frame for the window.
         
         :param drawing_list: The list of the objects to draw
         """
         for drawing_obj in drawing_list:
-            if isinstance(drawing_obj, charmy_stuff.shape.DrawnLine):
+            if isinstance(drawing_obj, charmy_stuff.draw.DrawnLine):
                 LineBase.draw_line(drawing_obj.line, self, drawing_obj.texture, drawing_obj.width)
-            elif isinstance(drawing_obj, charmy_stuff.shape.DrawnShape):
+            elif isinstance(drawing_obj, charmy_stuff.draw.DrawnShape):
                 ShapeBase.draw_shape(drawing_obj.shape, self, drawing_obj.texture, 
                                      drawing_obj.border_width, drawing_obj.border_texture)
             else:

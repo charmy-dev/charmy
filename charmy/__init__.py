@@ -20,7 +20,7 @@ from .const import *
 
 from . import backend
 
-# from .drawing import *
+from . import draw
 from .event import Event, EventHandling, EventTask, WorkingThread
 from .object import CharmyObject
 from .pos import Pos

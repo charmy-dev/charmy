@@ -6,3 +6,4 @@ referencing Charmy objects while less likely to trigger circular import errors.
 
 from ..styles import shape
 from ..styles import texture
+from .. import draw

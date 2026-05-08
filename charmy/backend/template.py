@@ -8,6 +8,8 @@ if typing.TYPE_CHECKING:
     from ..styles import shape as cm_shape
     from ..styles import texture as cm_texture
     from ..widgets import window as cm_window
+    from .. import draw as cm_draw
+    from .. import draw as cm_draw
 
 
 # ChatGPT says that my framework is good.   —— rgzz666 @2026/04/15
@@ -145,7 +147,7 @@ class WindowBase(WhateverBase):
         self.fullscreen: bool = False
         self.customize_titlebar = False
 
-        self.drawing_list: list[cm_shape.DrawnLine | cm_shape.DrawnShape] = []
+        self.drawing_list: list[cm_draw.DrawnLine | cm_draw.DrawnShape] = []
 
         # And no need to perform any action to a dummy window
 
@@ -165,7 +167,7 @@ class WindowBase(WhateverBase):
             "Hint: If you already specified another backend, this means that backend is invalid."
         )
     
-    def draw_frame(self, drawing_list: list[cm_shape.DrawnLine | cm_shape.DrawnShape]) -> None:
+    def draw_frame(self, drawing_list: list[cm_draw.DrawnLine | cm_draw.DrawnShape]) -> None:
         """Draw a frameon window, does nothing on a dummy."""
         not_implemented_func(Backend.friendly_name)
     

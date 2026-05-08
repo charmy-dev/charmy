@@ -33,8 +33,8 @@ import warnings
 from dataclasses import dataclass
 import math
 
-from .texture import ensure_texture as _ensure_texture
-from .texture import Texture
+from . import texture as cm_texture
+from .. import draw as cm_draw
 
 if typing.TYPE_CHECKING:
     from .texture import Texture, TextureLike
@@ -73,7 +73,7 @@ class LinePath():
         :return self: The LinePath object itself
         """
         # window.backend_base.drawing_list.append(DrawnLine(self, texture, width))
-        DrawnLine(self, texture, width).draw(window, _fallback_from)
+        cm_draw.DrawnLine(self, texture, width).draw(window, _fallback_from)
         return self
 
     def fallback(self, _from: list[type[LinePath]] = []) -> typing.Sequence[LinePath]:
@@ -414,7 +414,7 @@ class AnyShape():
         :param border_width: Width of borderline in px, positive for outer and negative for inner
         :param border_texture: Texture used on border
         """
-        DrawnShape(self, texture, border_width, border_texture).draw(window)
+        cm_draw.DrawnShape(self, texture, border_width, border_texture).draw(window)
         return self
 
 class Rect(AnyShape):
@@ -500,120 +500,5 @@ class RoundRect(AnyShape):
                 radii[0], 270, 360
                 )
             ]
-
-# endregion
-
-# region Drawn Lines / Shapes
-
-class DrawnLine():
-    """A class used to represent lines drawn to windows."""
-    line: LinePath
-    _texture: Texture
-    width: int = 5
-
-    def __init__(self, line: LinePath, texture: Texture | TextureLike, width: int = 5):
-        """Used to express lines drawn on GUI or canvas.
-
-        :param line: The line (to be drawn)
-        :param texture: Texture of the drawn line        :param width:  width
-        """
-        self.line = line
-        self.texture = texture
-        self.width = width
-
-    @property
-    def texture(self) -> Texture:
-        return self._texture
-
-    @texture.setter
-    def texture(self, new_texture: Texture | TextureLike) -> None:
-        if isinstance(new_texture, Texture):
-            self._texture = new_texture
-        else:
-            # Convert into texture
-            self._texture = _ensure_texture(new_texture)
-
-    def draw(self, window: Window, _fallback_from: list[type[LinePath]] = []) -> typing.Self:
-        """Draw the line.
-
-        :param _fallback_from: Fallback path, for internal use
-        :param window: The window to draw line to
-        """
-        backend = window.backend_base.backend
-        # 👆 Alias to avoid path to backend properties getting too long. 😅
-        if self.line.type == "line_path_class":
-            raise TypeError("LinePath class is a template, cannot be drawn.")
-        else:
-            if self.line.type in backend.LineBase.supports:
-                # If supported by the windows' backend.
-                window.backend_base.drawing_list.append(self)
-                # backend.LineBase.draw_line(self, window, texture)
-            else:
-                _fallback_from.append(self.line.__class__)
-                for fallback_line in self.line.fallback(_from = _fallback_from):
-                    fallback_line.draw(window, self.texture, self.width, 
-                                       _fallback_from=_fallback_from)
-                # warnings.warn(f"Line type {self.line.type} is not supported by "
-                #               f"backend {backend.friendly_name}")
-        return self
-
-
-class DrawnShape():
-    """A Class used to represent shapes drawn to windows"""
-    shape: AnyShape
-    _texture: Texture
-    border_width: int = 0
-    _border_texture: Texture = _ensure_texture(None)
-
-    def __init__(self, shape: AnyShape, texture: Texture | TextureLike, 
-                 border_width: int = 5, border_texture: Texture | TextureLike = None):
-        """Used to express shapes drawn on GUI or canvas.
-
-        :param shape: The shape (to be drawn)
-        :param texture: Texture inside the drawn shape
-        :param border_width: Border width in px, positive for outer and negative for inner
-        :param border_texture: Texture of the drawn border
-        """
-        self.shape = shape
-        self.texture = texture
-        self.border_width = border_width
-        self.border_texture = border_texture
-
-    @property
-    def texture(self) -> Texture:
-        return self._texture
-
-    @texture.setter
-    def texture(self, new_texture: Texture | TextureLike) -> None:
-        if isinstance(new_texture, Texture):
-            self._texture = new_texture
-        else:
-            # Convert into texture
-            self._texture = _ensure_texture(new_texture)
-
-    @property
-    def border_texture(self) -> Texture:
-        return self._border_texture
-
-    @border_texture.setter
-    def border_texture(self, new_texture: Texture | TextureLike) -> None:
-        if isinstance(new_texture, Texture):
-            self._border_texture = new_texture
-        else:
-            # Convert into texture
-            self._border_texture = _ensure_texture(new_texture)
-
-    def draw(self, window: Window) -> typing.Self:
-        """Draw the shape using backend.
-
-        :param window: The window to draw shape to
-        :param texture: Texture within the shape
-        :param border_width: Width of borderline in px, positive for outer and negative for inner
-        :param border_texture: Texture used on border
-        """
-        backend = window.backend_base.backend
-        if self.shape.type in backend.ShapeBase.supports or "any_shape" in backend.ShapeBase.supports:
-            window.backend_base.drawing_list.append(self)
-        return self
 
 # endregion
