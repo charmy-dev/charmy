@@ -1,18 +1,22 @@
+"""A set of classes represent drawn objects on window. Part of the graphics layer of Charmy."""
+
 from __future__ import annotations as _
 
 import typing
 
 from .styles import texture as cm_texture
+from . import object as cm_object
 
 if typing.TYPE_CHECKING:
     from .widgets import window as cm_window
     from .styles import shape as cm_shape
+    from .styles import font as cm_font
 
 
-# region Drawn Lines / Shapes
+# region Lines & Shapes
 
-class DrawnLine():
-    """A class used to represent lines drawn to windows."""
+class DrawnLine(cm_object.CharmyObject):
+    """A class used to represent lines drawn to GUI or canvas."""
     line: cm_shape.LinePath
     _texture: cm_texture.Texture
     width: int = 5
@@ -64,8 +68,8 @@ class DrawnLine():
         return self
 
 
-class DrawnShape():
-    """A Class used to represent shapes drawn to windows"""
+class DrawnShape(cm_object.CharmyObject):
+    """A Class used to represent shapes drawn to GUI or canvas."""
     shape: cm_shape.AnyShape
     _texture: cm_texture.Texture
     border_width: int = 0
@@ -123,3 +127,12 @@ class DrawnShape():
         return self
 
 # endregion
+
+# region Text
+
+class DrawnText(cm_object.CharmyObject):
+    """A class used to represent texts drawn to GUI or canvas."""
+
+    def __init__(self, text: str, font: cm_font.Font, texture = cm_texture.Texture):
+        """Used to express text drawn on GUI or canvas"""
+        pass # TODO: Implement this fuck
