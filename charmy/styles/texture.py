@@ -1,7 +1,28 @@
-import typing
+"""Texture classes in Charmy.
 
-# from ..const import Drawing
-# from ..object import CharmyObject as _CharmyObject
+Charmy provides several types of textures, ranging from basid colors (with trasnsparency) to 
+more complicated effects such as Gaussian blur implemented by filters.
+
+Types of Textures
+-----------------
+Currently, following types of textures are provided.
+
+:Color:         Represents pure RGBA colors
+:Transparent:   Represents transparent (not visible) and will not be rendered
+
+For details, see docstrings of each class inside this file.
+
+TextureLike Types
+-----------------
+TextureLike types are type aliases that are used to represent types that are not subclasses of the 
+`Texture` base class, but can be used to represent colors. e.g. `tuple[int, int, int, int]` can be 
+used to represent RGBA colors.
+
+For full list of TextureLike types, see (NOT WRITTEN YET) section in the document.
+"""
+# TODO: Write the fucking document
+
+import typing
 
 
 # region Texture base class
@@ -9,7 +30,6 @@ import typing
 class Texture():
     pass
 
-# endregion
 
 # region Color
 
@@ -18,6 +38,9 @@ RGB: typing.TypeAlias = tuple[int, int, int]
 RGBA: typing.TypeAlias = tuple[int, int, int, int]
 HEX: typing.TypeAlias = str
 
+ColorLike: typing.TypeAlias = RGB | RGBA | HEX
+
+# Color class
 class Color(Texture):
     """Represents pure colors."""
 
@@ -64,9 +87,6 @@ class Color(Texture):
     def a(self) -> int:
         return self.color[3]
 
-ColorLike: typing.TypeAlias = RGB | RGBA | HEX
-
-# endregion
 
 # region Transparent
 

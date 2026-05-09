@@ -1,3 +1,12 @@
+"""Template backend, identified as `nobackend` in Charmy runtime.
+
+This is a template of all backends, providing basic fallback for functions that might be used but 
+not implemented by actual backends. This template backend shall not be used in actual development.
+
+This backend is identified as `nobackend` in Charmy, and will throw an error when trying to create 
+window with it.
+"""
+
 from __future__ import annotations as _
 import typing
 
@@ -9,11 +18,12 @@ if typing.TYPE_CHECKING:
     from ..styles import texture as cm_texture
     from ..widgets import window as cm_window
     from .. import draw as cm_draw
-    from .. import draw as cm_draw
 
 
 # ChatGPT says that my framework is good.   —— rgzz666 @2026/04/15
 
+
+# region Placeholder function
 
 def not_implemented_func(
         backend_name: str = "currently used", 
@@ -30,6 +40,8 @@ def not_implemented_func(
     return False
 
 
+# region Backend class
+
 class Backend():
     """This is a template of Backend, does not have any actual function."""
 
@@ -42,6 +54,7 @@ class Backend():
     LineBase: type[LineBase]
     ShapeBase: type[ShapeBase]
     TextureBase: type[TextureBase]
+    TextBase: type[TextBase]
 
     def __init__(self):
         """Initialize a backend"""
@@ -56,6 +69,8 @@ class Backend():
     def draw_shape(self, shape: ShapeBase, window: WindowBase, pos: tuple[int, int] | None) -> None:
         not_implemented_func(Backend.friendly_name)
 
+
+# region Base classes
 
 class WhateverBase():
     """Base class of all... WhateverBase classes?"""
@@ -83,6 +98,8 @@ class SupportState():
 
     pass
 
+
+# region Window-relating
 
 class WindowBackdropSupportState(SupportState):
     """Represents support states of backdrop effects of windows held by this backend.
@@ -177,6 +194,8 @@ class WindowBase(WhateverBase):
         return self
 
 
+# region Line-relating
+
 class LineSupportState(SupportState):
     """Flags support state of line types of this backend."""
     line                : bool = False
@@ -187,7 +206,7 @@ class LineSupportState(SupportState):
     cubic_bezier        : bool = False
 
 class LineBase(WhateverBase):
-    """Set of lines-related APIs"""
+    """Set of lines-relating APIs"""
 
     supports: LineSupportState = LineSupportState()
 
@@ -197,7 +216,7 @@ class LineBase(WhateverBase):
 
     @staticmethod
     def draw_line(line: cm_shape.LinePath, window: cm_window.Window, texture: cm_texture.Texture):
-        """To draw a line on a specific window.
+        """To draw a line on a specific GUI or canvas.
 
         Args:
             line: The line to be drawn
@@ -205,6 +224,8 @@ class LineBase(WhateverBase):
         """
         not_implemented_func(Backend.friendly_name)
 
+
+# region Shape-relating
 
 class ShapeSupportState(SupportState):
     """Flags support state of shape types of this backend."""
@@ -216,7 +237,7 @@ class ShapeSupportState(SupportState):
     sector          : bool = False
 
 class ShapeBase():
-    """Set of shape-related APIs"""
+    """Set of shape-relating APIs"""
 
     supports: ShapeSupportState = ShapeSupportState()
 
@@ -226,7 +247,7 @@ class ShapeBase():
 
     @staticmethod
     def draw_shape(shape: cm_shape.AnyShape, window: WindowBase, fill: TextureBase, border: TextureBase):
-        """To draw a shape on a specific window.
+        """To draw a shape on a specific GUI or canvas.
 
         :param shape: The shape to be drawn
         :param window: The WindowBase to draw shape
@@ -236,18 +257,45 @@ class ShapeBase():
         not_implemented_func(Backend.friendly_name)
 
 
+# region Texture-relating
+
 class TextureSupportState(SupportState):
-    color           : bool = False
-    linear_gradient : bool = False
-    radial_gradient : bool = False
-    filter          : bool = False
-    image           : bool = False
-    func_shader     : bool = False
+    """Flags support state of texture types of this backend."""
+    color               : bool = False
+    linear_gradient     : bool = False
+    radial_gradient     : bool = False
+    filter              : bool = False
+    image               : bool = False
+    func_shader         : bool = False
 
 class TextureBase():
+    """Set of texture-relating APIs"""
+
+    supports: TextureSupportState = TextureSupportState()
+
     def __init__(self, *args, **kwargs):
         """Not supposed to be instantiated."""
         raise RuntimeError("TextureBase is used to hold APIs, but not supposed to be instantiated.")
+
+
+# region Text-relating
+
+class TextSupportState(SupportState):
+    """Flags support state of text features of this backend."""
+    direct_render       : bool = False
+    stock_filter        : bool = False
+    render_as_shape     : bool = False
+
+class TextBase():
+    """Set of text-relating APIs."""
+
+    def __init__(self):
+        """Not supported to be instantiated."""
+        raise RuntimeError('TextBase is used to hold APIs, but not supposed to be instantiated.')
+
+    @staticmethod
+    def draw_text(drawn_text: cm_draw.DrawnText):
+        """Draw text """
 
 
 # region: Alias WhateverBase classes
@@ -256,5 +304,6 @@ Backend.WindowBase = WindowBase
 Backend.LineBase = LineBase
 Backend.ShapeBase = ShapeBase
 Backend.TextureBase = TextureBase
+Backend.TextBase = TextBase
 
 # endregion
