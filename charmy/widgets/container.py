@@ -1,11 +1,10 @@
-import functools
 import threading
 import typing
 
 from ..object import CharmyObject
 
 
-class Container():
+class Container:
     """Container represents a widget's ability to contain and arrange other widgets inside."""
 
     _local = threading.local()
@@ -18,7 +17,7 @@ class Container():
     @property
     def rect(self):
         """Get the container's rect."""
-        return ((0, 0), (0, 0))
+        return (0, 0), (0, 0)
 
     # region Context
 
