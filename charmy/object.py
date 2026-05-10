@@ -73,7 +73,7 @@ class _InstancesList(typing.Generic[_InstanceType]):
             if item in self.instances_by_id:
                 instance: _InstanceType | None = None
         if instance is None:
-            raise CharmyInstanceDestroyedError("Trying to access a destroyed or inexistent object.")
+            raise CharmyInstanceDestroyedError("Trying to access a destroyed or inexisting object.")
         else:
             return instance
 
