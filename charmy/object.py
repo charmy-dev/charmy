@@ -73,7 +73,7 @@ class _InstancesList(typing.Generic[_InstanceType]):
             if item in self.instances_by_id:
                 instance: _InstanceType | None = None
         if instance is None:
-            raise CharmyInstanceDestroyedError("Trying to access a destroyed or inexisted object.")
+            raise CharmyInstanceDestroyedError("Trying to access a destroyed or inexistent object.")
         else:
             return instance
 
@@ -99,15 +99,10 @@ class _InstancesList(typing.Generic[_InstanceType]):
 
 # region CharmyObject
 
-class CharmyObject():
+class CharmyObject:
     """CharmyObject is this project's basic class.
 
     CharmyObject provides abilities of cumulating ID and set attributes.
-
-    Attributes:
-        _attributes: Private attributes. {key: value}
-        attributes: Public attributes. {key: value}
-        id: ID for the object
     """
 
     # objects: typing.Dict[str, CharmyObject] = {}  # find by ID {1: OBJ1, 2: OBJ2}
@@ -180,7 +175,7 @@ class CharmyObject():
 
     # endregion
 
-    # ? @XiangQinxi I told u to forget these fucking machanisms?
+    # ? @XiangQinxi I told u to forget these fucking mechanisms?
     #
     # # region: Shared attributes set / get
 
