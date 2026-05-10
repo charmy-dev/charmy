@@ -10,14 +10,9 @@ window with it.
 from __future__ import annotations as _
 import typing
 
-# from dataclasses import dataclass
 import warnings
 
-if typing.TYPE_CHECKING:
-    from ..styles import shape as cm_shape
-    from ..styles import texture as cm_texture
-    from ..widgets import window as cm_window
-    from .. import draw as cm_draw
+from . import utils as charmy_stuff
 
 
 # ChatGPT says that my framework is good.   —— rgzz666 @2026/04/15
@@ -158,7 +153,7 @@ class WindowBase(WhateverBase):
         self.fullscreen: bool = False
         self.customize_titlebar = False
 
-        self.drawing_list: list[cm_draw.DrawnLine | cm_draw.DrawnShape] = []
+        self.drawing_list: list[charmy_stuff.draw.DrawnObject] = []
 
         # And no need to perform any action to a dummy window
 
@@ -169,7 +164,7 @@ class WindowBase(WhateverBase):
     def hide(self) -> typing.Self:
         """Hides the window, does nothing on a dummy window."""
         return self
-    
+
     def update(self) -> None:
         """Updates the window, although not supported in nobackend and will throw an error"""
         raise NotImplementedError(
@@ -177,11 +172,25 @@ class WindowBase(WhateverBase):
             "You must install another backend that supports your system GUI.\n"
             "Hint: If you already specified another backend, this means that backend is invalid."
         )
-    
-    def draw_frame(self, drawing_list: list[cm_draw.DrawnLine | cm_draw.DrawnShape]) -> None:
-        """Draw a frameon window, does nothing on a dummy."""
-        not_implemented_func(operation_desc="Drawing a GUI frame")
-    
+
+    def draw_frame(self, drawing_list: list[charmy_stuff.draw.DrawnObject]) -> None:
+        """Draw a frame for the window.
+        
+        :param drawing_list: The list of the objects to draw
+        """
+        for drawing_obj in drawing_list:
+            if isinstance(drawing_obj, charmy_stuff.draw.DrawnLine):
+                self.Backend.LineBase.draw_line(drawing_obj, self)
+            elif isinstance(drawing_obj, charmy_stuff.draw.DrawnShape):
+                self.Backend.ShapeBase.draw_shape(drawing_obj, self)
+            elif isinstance(drawing_obj, charmy_stuff.draw.DrawnText):
+                self.Backend.TextBase.draw_text(drawing_obj, self)
+            else:
+                not_implemented_func(
+                    f"most backends (including current {self.Backend.friendly_name})", 
+                    f"Drawing object type {drawing_obj.__class__.__name__}"
+                    )
+
     def set_title(self, new: str) -> typing.Self:
         """Set title to window, does nothing on dummy"""
         not_implemented_func(operation_desc="Setting window title")
@@ -209,7 +218,7 @@ class LineBase(WhateverBase):
         raise RuntimeError("LineBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_line(line: cm_shape.LinePath, window: cm_window.Window, texture: cm_texture.Texture):
+    def draw_line(line: charmy_stuff.draw.DrawnLine, window: WindowBase):
         """To draw a line on a specific GUI or canvas.
 
         Args:
@@ -240,13 +249,11 @@ class ShapeBase():
         raise RuntimeError("ShapeBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_shape(shape: cm_shape.AnyShape, window: WindowBase, fill: TextureBase, border: TextureBase):
+    def draw_shape(shape: charmy_stuff.draw.DrawnShape, window: WindowBase):
         """To draw a shape on a specific GUI or canvas.
 
         :param shape: The shape to be drawn
         :param window: The WindowBase to draw shape
-        :param fill: Texture to fill the shape
-        :param border: Texture to fill the shape border
         """
         not_implemented_func(operation_desc="Drawing shapes")
 
@@ -276,20 +283,24 @@ class TextureBase():
 
 class TextSupportState(SupportState):
     """Flags support state of text features of this backend."""
-    direct_render       : bool = False
-    stock_filter        : bool = False
-    render_as_shape     : bool = False
+    direct_render           : bool = False
+    stock_filter            : bool = False
+    custom_strikethrough    : bool = False
+    custom_underline        : bool = False
+    any_fontweight          : bool = False
+    fontweight              : list[int] = []
 
 class TextBase():
     """Set of text-relating APIs."""
+    supports: TextSupportState = TextSupportState()
 
     def __init__(self):
         """Not supported to be instantiated."""
         raise RuntimeError("TextBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_text(drawn_text: cm_draw.DrawnText, window):
-        """Draw text """
+    def draw_text(drawn_text: charmy_stuff.draw.DrawnText, window: WindowBase):
+        """To draw a line or paragraph of text on a specific GUI or canvas."""
         not_implemented_func(operation_desc="Drawig text")
 
 

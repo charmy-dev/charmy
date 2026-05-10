@@ -1,4 +1,4 @@
-"""Charmy font module.
+"""Charmy text style module.
 
 This module is relatively simple, which only contains ability to express fonts.
 """
@@ -48,7 +48,7 @@ work-4.8#remarks).
     BLACK       : int = 900
     EXTRABLACK  : int = 950
 
-class Font():
+class TextStyle():
     """Represents text styles in Charmy."""
 
     sys_fonts: typing.ClassVar[list[str]] = ["Arial"]
@@ -96,4 +96,4 @@ eights?view=netframework-4.8#remarks) to learn more about the values. Presets ar
         self.strikethrough: bool | cm_draw.DrawnLine = strikethrough
 
 
-Font.sys_default = Font("Arial")
+TextStyle.sys_default = TextStyle("Arial", 14)

@@ -2,7 +2,7 @@ import charmy as cm
 
 
 window = cm.Window(size=(540, 480))
-window.title = "Lines & Shapes"
+window.title = "Graphics"
 
 test_polyline = cm.shape.PolyLine([
     (500, 10), (50, 150), (200, 300), (70, 30)
@@ -21,6 +21,14 @@ test_polygon = cm.shape.AnyShape([cm.shape.PolyLine([
 
 test_rounded_rect = cm.shape.RoundRect(
     (300, 100), (150, 100), 25) .draw(window, (150, 150, 255))
+
+
+test_text = cm.draw.DrawnText(
+    "Hello, this CHARMY world!", 
+    cm.styles.text_style.TextStyle(font="Consolas", size=24), 
+    (200, 250), 
+    (255, 255, 255), 
+    ) .draw(window)
 
 
 cm.mainloop()

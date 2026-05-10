@@ -73,6 +73,8 @@ class LinePath():
         :return self: The LinePath object itself
         """
         # window.backend_base.drawing_list.append(DrawnLine(self, texture, width))
+        warnings.warn("Directly drawing lines is not suggested, and may be removed in future.", 
+                      DeprecationWarning, stacklevel=2)
         cm_draw.DrawnLine(self, texture, width).draw(window, _fallback_from)
         return self
 
@@ -414,6 +416,8 @@ class AnyShape():
         :param border_width: Width of borderline in px, positive for outer and negative for inner
         :param border_texture: Texture used on border
         """
+        warnings.warn("Directly drawing shapes is not suggested, and may be removed in future.", 
+                      DeprecationWarning, stacklevel=2)
         cm_draw.DrawnShape(self, texture, border_width, border_texture).draw(window)
         return self
 

@@ -175,22 +175,6 @@ class WindowBase(template.WindowBase):
                     sys.exit(0)
                     NotImplemented
 
-    def draw_frame(self, 
-                   drawing_list: list[charmy_stuff.draw.DrawnShape | charmy_stuff.draw.DrawnLine]) -> None:
-        """Draw a frame for the window.
-        
-        :param drawing_list: The list of the objects to draw
-        """
-        for drawing_obj in drawing_list:
-            if isinstance(drawing_obj, charmy_stuff.draw.DrawnLine):
-                LineBase.draw_line(drawing_obj, self)
-            elif isinstance(drawing_obj, charmy_stuff.draw.DrawnShape):
-                ShapeBase.draw_shape(drawing_obj, self)
-            else:
-                template.not_implemented_func(
-                    Backend.friendly_name, f"Drawing object type {drawing_obj.__class__.__name__}"
-                    )
-    
     def mainloop(self):
         while True:
             self.update()
@@ -343,14 +327,42 @@ class TextureBase(template.TextureBase):
         return True
 
 
+class TextSupportState(template.TextSupportState):
+    """Flags support state of text features of this backend."""
+    direct_render           : bool = True
+    stock_filter            : bool = False
+    custom_strikethrough    : bool = True
+    custom_underline        : bool = True
+    any_fontweight          : bool = False
+    fontweights             : list[int] = [
+                                charmy_stuff.text_style.WEIGHT.REGULAR, 
+                                charmy_stuff.text_style.WEIGHT.BOLD, 
+                                ]
+
 # region Texts
 class TextBase(template.TextBase):
     """Text-related APIs in Genesis backend."""
+    supports: TextSupportState = TextSupportState()
 
     @staticmethod
-    def draw_text(text):
-        # TODO: Implement this fucking text-drawing func
-        pass
+    def draw_text(drawn_text: charmy_stuff.draw.DrawnText, window: WindowBase):
+        """To draw text on GUI or canvas."""
+        # Set Cairo font
+        if not TextureBase.cairo_set_context_texture(window.cairo_context, drawn_text.texture):
+            # Set text texture and skip drawing if not necessary to draw
+            return
+        window.cairo_context.select_font_face(
+            drawn_text.style.font, 
+            cairo.FontSlant.NORMAL if not drawn_text.style.italic else cairo.FontSlant.ITALIC, 
+            cairo.FontWeight.BOLD if drawn_text.style.weight >= \
+                charmy_stuff.text_style.WEIGHT.BOLD else cairo.FontWeight.NORMAL
+            )
+        window.cairo_context.set_font_size(drawn_text.style.size)
+        # Draw text itself
+        window.cairo_context.move_to(*drawn_text.pos)
+        window.cairo_context.show_text(drawn_text.text)
+        # Underline & strikethrough
+        # TODO: Implement underline and strikethrough of text
 
 # region: Alias WhateverBase classes
 
@@ -358,5 +370,6 @@ Backend.WindowBase = WindowBase
 Backend.LineBase = LineBase
 Backend.ShapeBase = ShapeBase
 Backend.TextureBase = TextureBase
+Backend.TextBase = TextBase
 
 # endregion
