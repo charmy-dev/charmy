@@ -10,7 +10,7 @@ if typing.TYPE_CHECKING:
     from ..backend.template import WindowBase
 
 
-class WindowEntity():
+class WindowEntity:
     """Represents abilities of window entities."""
 
     def __init__(self, 
@@ -21,11 +21,11 @@ class WindowEntity():
         """To create and initialize a window."""
         super().__init__(*args, **kwargs)
         # Store parent maanger
-        if parent != None: # Parent manager already specified
+        if parent is not None: # Parent manager already specified
             self.parent: CharmyManager = parent
         elif len(CharmyManager.instances) == 1: # Only one manager present
             parent = CharmyManager.instances[0]
-            if parent != None:
+            if parent is not None:
                 self.parent: CharmyManager = parent
             else:
                 self.parent: CharmyManager = CharmyManager(const.Configs.default_backend)
@@ -56,7 +56,7 @@ class WindowEntity():
         return self._title
 
     @title.setter
-    def title(self, new: str) -> typing.Self:
+    def title(self, new: str):
         """Set title of the window.
         
         Returns:
@@ -64,7 +64,6 @@ class WindowEntity():
         """
         self.backend_base.set_title(new)
         self._title = new
-        return self
 
     def show(self) -> typing.Self:
         """Show the window.
@@ -78,7 +77,7 @@ class WindowEntity():
     def update(self, force_redraw: bool = False):
         """Update the window.
 
-        :param _force_redraw: Redraw the window content regardless presence of changes
+        :param force_redraw: Redraw the window content regardless presence of changes
         """
         self.backend_base.update()
 
@@ -100,7 +99,7 @@ class Window(CharmyObject, WindowEntity, Container, EventHandling):
     def update(self, force_redraw: bool = False):
         """Update the window.
 
-        :param _force_redraw: Redraw the window content regardless presence of changes
+        :param force_redraw: Redraw the window content regardless presence of changes
         """
         update_event = Event(self, "update")
         self.trigger(update_event)
