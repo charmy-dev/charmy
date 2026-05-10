@@ -27,6 +27,8 @@ import charmy.backend.utils as charmy_stuff
 #     import charmy_stuff.styles.texture as cm_texture
 
 
+# region Backend class
+
 class Backend(template.Backend):
     """The Genesis backend."""
 
@@ -48,6 +50,8 @@ class Backend(template.Backend):
         # sdl2.ext.init()
         return
 
+
+# region Window
 
 class WindowBackdropSupportState(template.WindowBackdropSupportState):
     """Represents support states of backdrop effects of windows held by this backend."""
@@ -179,10 +183,9 @@ class WindowBase(template.WindowBase):
         """
         for drawing_obj in drawing_list:
             if isinstance(drawing_obj, charmy_stuff.draw.DrawnLine):
-                LineBase.draw_line(drawing_obj.line, self, drawing_obj.texture, drawing_obj.width)
+                LineBase.draw_line(drawing_obj, self)
             elif isinstance(drawing_obj, charmy_stuff.draw.DrawnShape):
-                ShapeBase.draw_shape(drawing_obj.shape, self, drawing_obj.texture, 
-                                     drawing_obj.border_width, drawing_obj.border_texture)
+                ShapeBase.draw_shape(drawing_obj, self)
             else:
                 template.not_implemented_func(
                     Backend.friendly_name, f"Drawing object type {drawing_obj.__class__.__name__}"
@@ -192,6 +195,8 @@ class WindowBase(template.WindowBase):
         while True:
             self.update()
 
+
+# region Lines
 
 class LineSupportState(template.LineSupportState):
     """Flags all supported line types."""
@@ -203,19 +208,21 @@ class LineSupportState(template.LineSupportState):
     cubic_bezier        : bool = True
 
 class LineBase(template.LineBase):
-    """Line-related APIs in backend."""
+    """Line-related APIs in Genesis backend."""
     supports: LineSupportState = LineSupportState()
 
     @staticmethod
-    def draw_line(line: charmy_stuff.shape.LinePath, window: WindowBase, 
-                  texture: charmy_stuff.texture.Texture, line_width: int = 5, 
-                  stroke: bool = True):
+    def draw_line(drawn_line: charmy_stuff.draw.DrawnLine, window: WindowBase, stroke: bool = True):
         """To draw a line on a specific window.
 
         Args:
             line: The line to be drawn
             window: The WindowBase to draw line
         """
+        # Unpack the DrawnLine
+        line = drawn_line.line
+        texture = drawn_line.texture
+        line_width = drawn_line.width
         # Detect wrong backend
         if window.Backend != Backend:
             raise RuntimeError(
@@ -255,6 +262,8 @@ class LineBase(template.LineBase):
             window.cairo_context.stroke()
 
 
+# region Shapes
+
 class ShapeSupportState(template.ShapeSupportState):
     """Flags support state of shape types of this backend."""
     any_shape       : bool = True
@@ -265,36 +274,39 @@ class ShapeSupportState(template.ShapeSupportState):
     sector          : bool = False
 
 class ShapeBase(template.ShapeBase):
-    """Shape-related APIs in backend."""
+    """Shape-related APIs in Genesis backend."""
     supports: ShapeSupportState = ShapeSupportState()
 
     @staticmethod
-    def draw_any_shape(shape: charmy_stuff.shape.AnyShape, window: WindowBase, 
-                       texture: charmy_stuff.texture.Texture, border_width: int = 0, 
-                       border_texture: charmy_stuff.texture.Texture = \
-                        charmy_stuff.texture.Transparent()):
+    def draw_any_shape(drawn_shape: charmy_stuff.draw.DrawnShape, window: WindowBase):
         """Draw shape by lines."""
-        for line in shape.lines: # Border drawn at this time will be covered by shape itself
+        for line in drawn_shape.shape.lines:
+            # Border drawn at this time will be covered by shape itself
             # These lines are for drawing the shape itself, not for border
-            LineBase.draw_line(line, window, texture, 1, stroke=False)
+            drawn_line = charmy_stuff.draw.DrawnLine(line, drawn_shape.texture, 1)
+            LineBase.draw_line(drawn_line, window, stroke=False)
         window.cairo_context.close_path()
-        if TextureBase.cairo_set_context_texture(window.cairo_context, texture):
+        if TextureBase.cairo_set_context_texture(window.cairo_context, drawn_shape.texture):
             window.cairo_context.fill()
         window.cairo_context.stroke()
-        if TextureBase.cairo_set_context_texture(window.cairo_context, border_texture) and \
-           border_width != 0:
+        if TextureBase.cairo_set_context_texture(window.cairo_context, drawn_shape.border_texture) \
+            and drawn_shape.border_width != 0:
             # If still need visible border, then draw again
-            for line in shape.lines:
-                LineBase.draw_line(line, window, border_texture, border_width)
+            for line in drawn_shape.shape.lines:
+                drawn_line = charmy_stuff.draw.DrawnLine(
+                    line, drawn_shape.border_texture, drawn_shape.border_width)
+                LineBase.draw_line(drawn_line, window)
 
     @staticmethod
-    def draw_shape(shape: charmy_stuff.shape.AnyShape, window: WindowBase, 
-                   texture: charmy_stuff.texture.Texture, border_width: int = 0, 
-                   border_texture: charmy_stuff.texture.Texture = \
-                    charmy_stuff.texture.Transparent()):
-        if isinstance(shape, charmy_stuff.shape.AnyShape):
-            ShapeBase.draw_any_shape(shape, window, texture, border_width, border_texture)
+    def draw_shape(shape: charmy_stuff.draw.DrawnShape, window: WindowBase):
+        if isinstance(shape.shape, charmy_stuff.shape.AnyShape):
+            ShapeBase.draw_any_shape(shape, window)
+        else:
+            template.not_implemented_func(Backend.friendly_name, 
+                    f"Drawing an shae that is not a subclass of AnyShape")
 
+
+# region Textures
 
 class TextureSupportState(template.TextureSupportState):
     color           : bool = False
@@ -305,7 +317,7 @@ class TextureSupportState(template.TextureSupportState):
     func_shader     : bool = False
 
 class TextureBase(template.TextureBase):
-    """Texture-related APIs in backend."""
+    """Texture-related APIs in Genesis backend."""
 
     @staticmethod
     def cairo_set_context_texture(context: cairo.Context, 
@@ -330,6 +342,15 @@ class TextureBase(template.TextureBase):
                 )
         return True
 
+
+# region Texts
+class TextBase(template.TextBase):
+    """Text-related APIs in Genesis backend."""
+
+    @staticmethod
+    def draw_text(text):
+        # TODO: Implement this fucking text-drawing func
+        pass
 
 # region: Alias WhateverBase classes
 

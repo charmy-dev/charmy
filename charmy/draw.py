@@ -133,7 +133,7 @@ class DrawnShape(cm_object.CharmyObject):
 class DrawnText(cm_object.CharmyObject):
     """A class used to represent texts drawn to GUI or canvas."""
 
-    def __init__(self, text: str, font: cm_font.Font, texture: cm_texture.Texture):
+    def __init__(self, text: str, font: cm_font.Font, pos: cm_shape.Point, texture: cm_texture.Texture):
         """Used to express text drawn on GUI or canvas.
 
         :param text: The text content, in Python string
@@ -142,6 +142,7 @@ class DrawnText(cm_object.CharmyObject):
         """
         self.text: str = text
         self.font: cm_font.Font = font
+        self.pos: cm_shape.Point = pos
         self.texture: cm_texture.Texture = texture
 
     def draw(self):

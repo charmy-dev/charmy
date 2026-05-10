@@ -62,12 +62,6 @@ class Backend():
     
     def backend_init(self) -> None:
         return None
-    
-    def draw_line(self, line: LineBase, window: WindowBase):
-        not_implemented_func(Backend.friendly_name)
-    
-    def draw_shape(self, shape: ShapeBase, window: WindowBase, pos: tuple[int, int] | None) -> None:
-        not_implemented_func(Backend.friendly_name)
 
 
 # region Base classes
@@ -186,11 +180,11 @@ class WindowBase(WhateverBase):
     
     def draw_frame(self, drawing_list: list[cm_draw.DrawnLine | cm_draw.DrawnShape]) -> None:
         """Draw a frameon window, does nothing on a dummy."""
-        not_implemented_func(Backend.friendly_name)
+        not_implemented_func(operation_desc="Drawing a GUI frame")
     
     def set_title(self, new: str) -> typing.Self:
         """Set title to window, does nothing on dummy"""
-        not_implemented_func(Backend.friendly_name)
+        not_implemented_func(operation_desc="Setting window title")
         return self
 
 
@@ -222,7 +216,7 @@ class LineBase(WhateverBase):
             line: The line to be drawn
             window: The WindowBase to draw line
         """
-        not_implemented_func(Backend.friendly_name)
+        not_implemented_func(operation_desc="Drawing lines")
 
 
 # region Shape-relating
@@ -254,7 +248,7 @@ class ShapeBase():
         :param fill: Texture to fill the shape
         :param border: Texture to fill the shape border
         """
-        not_implemented_func(Backend.friendly_name)
+        not_implemented_func(operation_desc="Drawing shapes")
 
 
 # region Texture-relating
@@ -291,11 +285,12 @@ class TextBase():
 
     def __init__(self):
         """Not supported to be instantiated."""
-        raise RuntimeError('TextBase is used to hold APIs, but not supposed to be instantiated.')
+        raise RuntimeError("TextBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_text(drawn_text: cm_draw.DrawnText):
+    def draw_text(drawn_text: cm_draw.DrawnText, window):
         """Draw text """
+        not_implemented_func(operation_desc="Drawig text")
 
 
 # region: Alias WhateverBase classes
