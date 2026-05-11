@@ -4,57 +4,69 @@ from . import window
 from ..object import CharmyObject
 from ..event import EventHandling
 from .container import Container
+from .. import styles
 
 
 class Widget(CharmyObject, EventHandling):
     """Widget base class."""
 
-    def __init__(self, parent: typing.Optional[Container] = None):
+    def __init__(self, parent: Container):
         super().__init__()
-        if parent is None:
-            for window_ref in window.Window.instances:
-                if window_ref() is not None:
-                    parent = window_ref()
-            else:
-                raise RuntimeError("No available window to put widget!")
+        # if parent is None:
+        #     for window_ref in window.Window.instances:
+        #         if window_ref() is not None:
+        #             parent = window_ref()
+        #     else:
+        #         raise RuntimeError("No available window to put widget!")
         self.parent: Container = parent
         self.parent.add_child(self)
 
-        self._x: int | float = 0
-        self._y: int | float = 0
-        self._width: int | float = 0
-        self._height: int | float = 0
+        self.pos: styles.shape.Point = (0, 0)
+        self.size: styles.shape.Size = (0, 0)
         self.is_visible: bool = False
         self._draw_list: list = []
 
     @property
-    def x(self) -> int | float:
+    def x(self) -> int:
         """x position of the widget."""
-        return self._x
+        return self.pos[0]
+
+    @x.setter
+    def x(self, new: int):
+        self.pos = (new, self.pos[1])
 
     @property
-    def y(self) -> int | float:
+    def y(self) -> int:
         """y position of the widget."""
-        return self._y
+        return self.pos[1]
+
+    @x.setter
+    def x(self, new: int):
+        self.pos = (self.pos[0], new)
 
     @property
-    def width(self) -> int | float:
+    def width(self) -> int:
         """Width of the widget."""
-        return self._width
+        return self.size[0]
+
+    @width.setter
+    def width(self, new: int):
+        self.size = (new, self.size[1])
 
     @property
-    def height(self) -> int | float:
+    def height(self) -> int:
         """Height of the widget."""
-        return self._height
+        return self.size[1]
 
-    def place(self, x: int | float, y: int | float, width: int | float = None, height: int | float = None):
+    @height.setter
+    def height(self, new: int):
+        self.size = (self.size[0], new)
+
+    def place(self, pos: styles.shape.Point, size: typing.Optional[styles.shape.Size] = None):
         """Add the widget to window, using place layout"""
-        self._x = x
-        self._y = y
-        if width is not None:
-            self._width = width
-        if height is not None:
-            self._height = height
+        self.pos = pos
+        if size is not None:
+            self.size = size
 
     def add_element(self, element):
         """Add an element to this widget's draw list."""
