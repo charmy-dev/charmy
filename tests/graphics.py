@@ -6,6 +6,7 @@ window.title = "Graphics"
 window.background = (200, 200, 200)
 
 
+# region Lines
 test_polyline = cm.draw.DrawnLine(cm.shape.PolyLine([
     (500, 10), (50, 150), (200, 300), (70, 30)
     ]), (255, 100, 100)) .draw(window)
@@ -15,6 +16,7 @@ test_quadratic_bezier = cm.draw.DrawnLine(cm.shape.QuadraticBezier([
     ]), (100, 255, 100, 100), width=8) .draw(window)
 
 
+# region Shapes
 test_rect = cm.draw.DrawnShape(
     cm.shape.Rect((300, 300), (100, 80)), (0, 255, 255), 3, (255, 0, 0)) .draw(window)
 
@@ -29,6 +31,7 @@ test_rounded_rect_2 = cm.draw.DrawnShape(cm.shape.RoundRect(
     (350, 150), (150, 100), 25), (255, 255, 0, 50)) .draw(window)
 
 
+# region Texts
 test_text = cm.draw.DrawnText(
     "Hello, this CHARMY world!", 
     cm.styles.text_style.TextStyle(
@@ -41,6 +44,8 @@ test_text = cm.draw.DrawnText(
     (200, 250), 
     (0, 0, 0), 
     ) .draw(window)
+
+# endregion
 
 
 cm.mainloop()

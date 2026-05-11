@@ -14,6 +14,12 @@ Charmy is still under development, and many of its details are not yet designed 
 
 If you are interested in this project, you may join our discussion to see our latest progress. See [To Follow Up](#to-follow-up) section for more.
 
+## Latest Progress
+
+Firstly, the basic structural design must be introduced here. Charmy is designed to be devided into three layer, which are backend layer, graphics layer, widget layer, from bottom to top.
+
+Currently, we almost completed the basic functions of backend and graphics layer, and the effect can be seen by running `/tests/graphics.py`.
+
 ## To Follow Up
 
 We (The development team members) discuss our latest progress and the next steps in a QQ group chat, which many other Chinese developers also do. Anyone who is interested in (or even better, willing to contribute to) this project will be welcomed to join. The group chat number is: `887102507` .
