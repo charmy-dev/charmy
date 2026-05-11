@@ -83,7 +83,7 @@ class TextStyle():
 eights?view=netframework-4.8#remarks) to learn more about the values. Presets are provided in 
         `charmy.font.WEIGHT` class, which my be used in the way shown below
 
-        .. code-blocks:: Python
+        .. code-block:: python
             import charmy
             myfont = charmy.font.Font("Arial", 14, charmy.font.WEIGHT.REGULAR)
 

@@ -27,6 +27,10 @@ import charmy.backend.utils as charmy_stuff
 #     import charmy_stuff.styles.texture as cm_texture
 
 
+class DEBUG_FLAGS:
+    DRAW_CAIRO_STOCK_TEXT_BOUND = False
+
+
 # region Backend class
 
 class Backend(template.Backend):
@@ -56,7 +60,7 @@ class Backend(template.Backend):
 class WindowBackdropSupportState(template.WindowBackdropSupportState):
     """Represents support states of backdrop effects of windows held by this backend."""
     color                   : bool = True
-    gradient                : bool = False
+    gradient                : bool = True
     image                   : bool = False
     transparent             : bool = False
     alpha                   : bool = False
@@ -114,8 +118,19 @@ class WindowBase(template.WindowBase):
         self.cairo_context: cairo.Context = cairo.Context(self.surface)
         self.cairo_context.set_line_join(cairo.LINE_JOIN_ROUND)
         self.cairo_context.set_line_cap(cairo.LINE_CAP_ROUND)
-        self.cairo_context.set_source_rgba(0, 0, 0, 0)  # Transparent back
+        self.cairo_context.set_source_rgba(0, 0, 0, 255)  # Black back
         self.cairo_context.paint()
+
+    # def draw_background(self) -> typing.Self:
+    #     """Set the background of the window.
+
+    #     :return self: The WindowBase itself
+    #     """
+    #     TextureBase.cairo_set_context_texture(
+    #         self.cairo_context, charmy_stuff.texture.ensure_texture(self.background))
+    #     self.cairo_context.rectangle(0, 0, *self.size)
+    #     self.cairo_context.paint()
+    #     return self
 
     def show(self) -> typing.Self:
         """Show the window.
@@ -338,6 +353,7 @@ class TextSupportState(template.TextSupportState):
                                 charmy_stuff.text_style.WEIGHT.REGULAR, 
                                 charmy_stuff.text_style.WEIGHT.BOLD, 
                                 ]
+    prefer_conversion       : bool = True
 
 # region Texts
 class TextBase(template.TextBase):
@@ -347,7 +363,7 @@ class TextBase(template.TextBase):
     @staticmethod
     def draw_text(drawn_text: charmy_stuff.draw.DrawnText, window: WindowBase):
         """To draw text on GUI or canvas."""
-        # Set Cairo font
+        ## Set Cairo font
         if not TextureBase.cairo_set_context_texture(window.cairo_context, drawn_text.texture):
             # Set text texture and skip drawing if not necessary to draw
             return
@@ -358,11 +374,50 @@ class TextBase(template.TextBase):
                 charmy_stuff.text_style.WEIGHT.BOLD else cairo.FontWeight.NORMAL
             )
         window.cairo_context.set_font_size(drawn_text.style.size)
-        # Draw text itself
-        window.cairo_context.move_to(*drawn_text.pos)
+        ## Calc text size
+        extents = window.cairo_context.text_extents(drawn_text.text)
+        text_size = (int(round(extents.width, 0)), int(round(extents.height, 0)))
+        if DEBUG_FLAGS.DRAW_CAIRO_STOCK_TEXT_BOUND:
+            text_bound = charmy_stuff.draw.DrawnShape(
+                charmy_stuff.shape.Rect(drawn_text.pos, text_size), 
+                (255, 0, 0, 50), 
+                2, (255, 0, 0)
+                )
+            window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, text_bound)
+        ## Draw text itself
+        window.cairo_context.move_to(drawn_text.pos[0], drawn_text.pos[1] + text_size[1])
+        # 👆 Cairo use bottom-left as anchor, while Charmy uses top-left, so needs conversion on y
         window.cairo_context.show_text(drawn_text.text)
-        # Underline & strikethrough
-        # TODO: Implement underline and strikethrough of text
+        ## Underline & strikethrough
+        offset = int(drawn_text.style.size // 5)
+        if drawn_text.style.underlined != False:
+            # Underline
+            underline: charmy_stuff.draw.DrawnLine
+            if isinstance(drawn_text.style.underlined, bool):
+                underline = charmy_stuff.draw.DrawnLine(charmy_stuff.shape.Line([
+                    (drawn_text.pos[0] - 2, drawn_text.pos[1] + text_size[1] + offset), 
+                    (drawn_text.pos[0] + text_size[0] + 2, 
+                     drawn_text.pos[1] + text_size[1] + offset)
+                    ]), 
+                    drawn_text.texture, max(1, int(drawn_text.style.size) // 15))
+            else:
+                underline = drawn_text.style.underlined
+            # Insert the underline right after the text
+            window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, underline)
+        if drawn_text.style.strikethrough != False:
+            # Strikethrough
+            strikethrough: charmy_stuff.draw.DrawnLine
+            if isinstance(drawn_text.style.strikethrough, bool):
+                strikethrough = charmy_stuff.draw.DrawnLine(charmy_stuff.shape.Line([
+                    (drawn_text.pos[0] - 2, drawn_text.pos[1] + text_size[1] // 2 + offset), 
+                    (drawn_text.pos[0] + text_size[0] + 2, 
+                     drawn_text.pos[1] + text_size[1]//2 + offset)
+                    ]), 
+                    drawn_text.texture, max(1, int(drawn_text.style.size) // 15))
+            else:
+                strikethrough = drawn_text.style.strikethrough
+            # Insert the underline right after the text
+            window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, strikethrough)
 
 # region: Alias WhateverBase classes
 

@@ -22,8 +22,9 @@ if typing.TYPE_CHECKING:
 class DrawnObject(cm_object.CharmyObject):
     """Base class of drawn objects in Charmy."""
 
-    @abstractmethod
-    def __init__(self): ...
+    def __init__(self):
+        """Base class of drawn objects, should not be instantiated directly."""
+        self.anchor: styles.shape.Point = (0, 0)
 
     @abstractmethod
     def draw(self, window: cm_window.Window): ...
@@ -188,25 +189,34 @@ class DrawnText(DrawnObject):
     def draw(self, window: cm_window.Window):
         backend = window.backend_base.backend
         if backend.TextBase.supports.direct_render:
-            ### Direct render
-            ## Handle fallback of styles
+            # TODO: Add support for backend's prefer_conversion flag
+            #### Direct render
+            ### Handle fallback of styles
             if not False in [
                     backend.TextBase.supports.custom_strikethrough, 
                     backend.TextBase.supports.custom_underline, 
                     backend.TextBase.supports.any_fontweight, 
                     ]:
-                # Custom underline and strikethrough
+                ## Make a copy of current style
                 rendered_style = copy.deepcopy(self.style)
+                ## Custom underline and strikethrough
                 if not backend.TextBase.supports.custom_underline:
                     rendered_style.underlined = True
                 if not backend.TextBase.supports.custom_strikethrough:
                     rendered_style.strikethrough = True
+                ## Fontweight
+                # This part vibed with GitHub Copilot using model GPT-5 mini
+                available_weights = backend.TextBase.supports.fontweight
+                if self.style.weight not in available_weights:
+                    closest = min(available_weights, key=lambda w: abs(w - self.style.weight))
+                    rendered_style.weight = closest
+                ## Make new render object
                 rendered_text = copy.deepcopy(self)
                 rendered_text.style = rendered_style
             else:
                 rendered_text = self
             window.backend_base.drawing_list.append(rendered_text)
         else:
-            ### Render as shape
+            #### Render as shape
             # TODO: Implement text → shape fallback
             raise NotImplementedError("Currently cannot render text as shape!")

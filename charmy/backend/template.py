@@ -147,7 +147,8 @@ class WindowBase(WhateverBase):
         self.icon: bytearray | None = None
         self.size: tuple[int, int] = (0, 0)
         self.scale_mode: str = "default_scale"
-        self.background: str | tuple[int, int, int] | typing.Any = "#ffffff"
+        self.background: charmy_stuff.texture.Texture | charmy_stuff.texture.TextureLike = \
+                        (150, 150, 150)
         self.alpha: float = 1
         self.state: str = "normal"
         self.fullscreen: bool = False
@@ -159,10 +160,29 @@ class WindowBase(WhateverBase):
 
     def show(self) -> typing.Self:
         """Shows the window, does nothing on dummy window."""
+        not_implemented_func(operation_desc="Showing window")
         return self
     
     def hide(self) -> typing.Self:
         """Hides the window, does nothing on a dummy window."""
+        not_implemented_func(operation_desc="Hiding window")
+        return self
+
+    def draw_background(self) -> typing.Self:
+        """Draw the background of the window.
+
+        This is a fallback of such function, draws a rect that fills the window.
+
+        :return self: The WindowBase itself
+        """
+        # not_implemented_func(operation_desc="Drawing window background")
+        self.Backend.ShapeBase.draw_shape(
+            charmy_stuff.draw.DrawnShape(
+                charmy_stuff.shape.Rect((0, 0), self.size), 
+                self.background
+                ), 
+            self
+            )
         return self
 
     def update(self) -> None:
@@ -178,6 +198,7 @@ class WindowBase(WhateverBase):
         
         :param drawing_list: The list of the objects to draw
         """
+        self.draw_background()
         for drawing_obj in drawing_list:
             if isinstance(drawing_obj, charmy_stuff.draw.DrawnLine):
                 self.Backend.LineBase.draw_line(drawing_obj, self)
@@ -289,6 +310,7 @@ class TextSupportState(SupportState):
     custom_underline        : bool = False
     any_fontweight          : bool = False
     fontweight              : list[int] = []
+    prefer_conversion       : bool = False
 
 class TextBase():
     """Set of text-relating APIs."""
