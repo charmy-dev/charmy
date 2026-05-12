@@ -101,6 +101,8 @@ class WindowEntity:
 class Window(CharmyObject, WindowEntity, Container, EventHandling):
     """Windows in Charmy."""
 
+    is_root_container: typing.ClassVar[bool] = True
+
     def __init__(self, 
                 parent: CharmyManager | None = None, 
                 size: styles.shape.Size = (540, 480), 

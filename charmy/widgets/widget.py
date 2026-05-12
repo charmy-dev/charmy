@@ -62,11 +62,45 @@ class Widget(CharmyObject, EventHandling):
     def height(self, new: int):
         self.size = (self.size[0], new)
 
-    def place(self, pos: styles.shape.Point, size: typing.Optional[styles.shape.Size] = None):
-        """Add the widget to window, using place layout"""
+    @property
+    def root_container(self) -> Container | None:
+        """Get the root container that contains the widget.
+
+        :return window: Either the window, or None meaning that not contained in a root container
+        """
+        if self.parent.is_root_container:
+            return self.parent
+        else:
+            if isinstance(self.parent, Widget):
+                # If parent is widget, then get widget's root_container to trace root
+                return self.parent.root_container
+            else:
+                # If not contained by neither a widget nor a root_container, …
+                # … then the widget is not inside in a root container
+                return None
+
+    def draw(self, 
+            pos: styles.shape.Point, 
+            size: typing.Optional[styles.shape.Size], 
+            ) -> typing.Self:
+        """Draw the widget, does nothing on base class."""
+        if size is None:
+            size = self.size
+        return self
+
+    def place(self, 
+            pos: styles.shape.Point, 
+            size: typing.Optional[styles.shape.Size] = None, 
+            ) -> typing.Self:
+        """Add the widget to parent, using place layout.
+
+        :param pos: The position to place the widget
+        :param size: The size of this widget
+        """
         self.pos = pos
         if size is not None:
             self.size = size
+        return self
 
     def add_element(self, element):
         """Add an element to this widget's draw list."""
