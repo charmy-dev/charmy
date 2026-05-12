@@ -18,6 +18,10 @@ if typing.TYPE_CHECKING:
     # from .styles import text_style as cm_font
 
 
+class DEBUG_OPTIONS:
+    DRAW_OBJECTS_BOUNDARY: bool = True
+
+
 # region DrawnObject base class
 class DrawnObject(cm_object.CharmyObject):
     """Base class of drawn objects in Charmy."""
@@ -77,14 +81,18 @@ class DrawnLine(DrawnObject):
             if self.line.type in backend.LineBase.supports:
                 # If supported by the windows' backend.
                 window.backend_base.drawing_list.append(self)
-                # backend.LineBase.draw_line(self, window, texture)
             else:
+                # If not supported, enters the fallback process
                 _fallback_from.append(self.line.__class__)
                 for fallback_line in self.line.fallback(_from = _fallback_from):
                     fallback_line.draw(window, self.texture, self.width, 
                                        _fallback_from=_fallback_from)
-                # warnings.warn(f"Line type {self.line.type} is not supported by "
-                #               f"backend {backend.friendly_name}")
+            if DEBUG_OPTIONS.DRAW_OBJECTS_BOUNDARY:
+                window.backend_base.drawing_list.append(DrawnShape(
+                    styles.shape.Rect(*self.line.boundary), 
+                    (0, 0, 255, 30), 
+                    1, (0, 0, 255), 
+                    ))
         return self
 
 

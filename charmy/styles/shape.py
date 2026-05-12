@@ -4,7 +4,7 @@ This module implements Charmy's ability to express and draw lines and shapes.
 
 Lines
 -----
-Lines are divided into following types: lines for straight lines, polylines, circle arcs, ellipse
+Lines are devided into following types: lines for straight lines, polylines, circle arcs, ellipse 
 arcs (not implemented), quadratic Bezier curves and cubic Bezier curves.
 
 Each `LinePath` object can either be used to express a path, to be used to express a part of a 
@@ -15,7 +15,7 @@ and adjusted.
 
 Shapes
 ------
-In Charmy, all shapes can be expressed by a sequence of lines. Shapes are divided into following
+In Charmy, all shapes can be expressed by a sequence of lines. Shapes are devided into following 
 types: (...TO BE WRITTEN...). Backends that does not support drawing `any_shape` (line-sequence-
 expressed shapes) will be able to draw some of the other shape types directly using its drawing 
 module's API.
@@ -32,7 +32,6 @@ import typing
 import warnings
 from dataclasses import dataclass
 import math
-
 from . import texture as cm_texture
 from .. import draw as cm_draw
 
@@ -504,5 +503,3 @@ class RoundRect(AnyShape):
                 radii[0], 270, 360
                 )
             ]
-
-# endregion
