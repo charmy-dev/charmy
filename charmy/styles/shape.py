@@ -4,7 +4,7 @@ This module implements Charmy's ability to express and draw lines and shapes.
 
 Lines
 -----
-Lines are devided into following types: lines for straight lines, polylines, circle arcs, ellipse 
+Lines are divided into following types: lines for straight lines, polylines, circle arcs, ellipse
 arcs (not implemented), quadratic Bezier curves and cubic Bezier curves.
 
 Each `LinePath` object can either be used to express a path, to be used to express a part of a 
@@ -15,7 +15,7 @@ and adjusted.
 
 Shapes
 ------
-In Charmy, all shapes can be expressed by a sequence of lines. Shapes are devided into following 
+In Charmy, all shapes can be expressed by a sequence of lines. Shapes are divided into following
 types: (...TO BE WRITTEN...). Backends that does not support drawing `any_shape` (line-sequence-
 expressed shapes) will be able to draw some of the other shape types directly using its drawing 
 module's API.
@@ -32,17 +32,13 @@ import typing
 import warnings
 from dataclasses import dataclass
 import math
+
 from . import texture as cm_texture
 from .. import draw as cm_draw
 
 if typing.TYPE_CHECKING:
     from .texture import Texture, TextureLike
     from ..widgets.window import Window
-
-
-# Type Point / Coords
-Point: typing.TypeAlias = tuple[int, int]
-Size: typing.TypeAlias = tuple[int, int]
 
 
 # region Lines
@@ -86,6 +82,12 @@ class LinePath():
         warnings.warn(f"Line type {self.type} could not be drawn in any alternative method.")
         return []
 
+    @property
+    def boundary(self) -> ShapeRange:
+        """Rectangle boundary of the line."""
+        warnings.warn(f"Line type {self.type} does not support getting boundary.")
+        return (0, 0), (0, 0)
+
 
 @dataclass
 class Line(LinePath):
@@ -120,6 +122,14 @@ class Line(LinePath):
     @property
     def end_point(self) -> Point:
         return self.points[-1]
+
+    @property
+    def boundary(self) -> ShapeRange:
+        """Rectangle boundary of single-section line."""
+        return (
+            (min(self.points[0][0], self.points[1][0]), min(self.points[0][1], self.points[1][1])), 
+            (self.points[1][0] - self.points[0][0], self.points[1][1] - self.points[0][1])
+            )
 
 @dataclass
 class PolyLine(LinePath):
@@ -165,6 +175,18 @@ class PolyLine(LinePath):
     def end_point(self) -> Point:
         return self.points[-1]
 
+    @property
+    def boundary(self) -> ShapeRange:
+        """Rectangle boundary of polyline."""
+        points_x: list[int] = [point[0] for point in self.points]
+        points_y: list[int] = [point[1] for point in self.points]
+        min_x, max_x = min(points_x), max(points_x)
+        min_y, max_y = min(points_y), max(points_y)
+        width = max_x - min_x
+        height = max_y - min_y
+        return (min_x, min_y), (width, height)
+
+
 @dataclass
 class CircleArc(LinePath):
     """Represents circle arcs.
@@ -182,7 +204,7 @@ class CircleArc(LinePath):
 
     @property
     def start_point(self) -> Point:
-        # Vibed with VSCode Copilot, model GPT-5 mini
+        # Vibed with GitHub Copilot, model GPT-5 mini
         # Compute start point from center, radius and start_orient (degrees).
         theta = math.radians(self.start_orient)
         x = self.center[0] + int(round(self.radius * math.cos(theta)))
@@ -191,7 +213,7 @@ class CircleArc(LinePath):
 
     @property
     def end_point(self) -> Point:
-        # Vibed with VSCode Copilot, model GPT-5 mini
+        # Vibed with GitHub Copilot, model GPT-5 mini
         # Compute end point from center, radius and end_orient (degrees).
         theta = math.radians(self.end_orient)
         x = self.center[0] + int(round(self.radius * math.cos(theta)))
@@ -210,78 +232,68 @@ class CircleArc(LinePath):
         :param _from: Fallback path, for internal use
         :return value: Alternative sequence of lines that represents or simulate the same line
         """
-        if CubicBezier not in _from:
-            # If backend reports circle arc not supported, then use cubic bezier to simulate
-
-            cx, cy = self.center
-
-            # --- Convert custom angle system to standard math radians ---
-            # Math system: 0 rad at +X axis, CCW positive
-            def to_math_rad(deg: float) -> float:
-                return math.radians(90 - deg)
-
-            start = to_math_rad(self.start_orient)
-            end = to_math_rad(self.end_orient)
-
-            # --- Ensure clockwise traversal ---
-            # In math coordinates, clockwise means decreasing angle
-            delta = end - start
-            if delta > 0:
-                delta -= 2 * math.pi
-
-            # Clamp to at most one full circle
-            if delta < -2 * math.pi:
-                delta = -2 * math.pi
-
-            # # Handle full circles
-            # if self.start_orient == self.end_orient:
-            #     delta = -2 * math.pi
-
-            # --- Split into segments (max 90° each) ---
-            max_step = math.pi / 2
-            segments = max(1, int(math.ceil(abs(delta) / max_step)))
-            step = delta / segments
-
-            beziers: list[CubicBezier] = []
-
-            for i in range(segments):
-                t0 = start + i * step
-                t1 = start + (i + 1) * step
-                dt = t1 - t0
-
-                # Cubic Bézier approximation factor
-                alpha = 4 / 3 * math.tan(dt / 4)
-
-                cos0, sin0 = math.cos(t0), math.sin(t0)
-                cos1, sin1 = math.cos(t1), math.sin(t1)
-
-                # For y coords, must use negative operations, because y-axis is reversed on a window
-
-                # Endpoints
-                x0: int = int(round(cx + self.radius * cos0, 0))
-                y0: int = int(round(cy - self.radius * sin0, 0))
-
-                x3: int = int(round(cx + self.radius * cos1, 0))
-                y3: int = int(round(cy - self.radius * sin1, 0))
-
-                # Tangent directions
-                dx0, dy0 = -sin0, cos0
-                dx1, dy1 = -sin1, cos1
-
-                # Control points
-                x1: int = int(round(x0 + alpha * self.radius * dx0, 0))
-                y1: int = int(round(y0 - alpha * self.radius * dy0, 0))
-
-                x2: int = int(round(x3 - alpha * self.radius * dx1))
-                y2: int = int(round(y3 + alpha * self.radius * dy1))
-
-                beziers.append(
-                    CubicBezier([(x0, y0), (x1, y1), (x2, y2), (x3, y3)])
-                    )
-
-            return beziers
-        else:
+        if CubicBezier in _from:
             return LinePath.fallback(self, [*_from, self.__class__])
+
+        # If fallback required, use cubic bezier to simulate
+        cx, cy = self.center
+        # --- Convert custom angle system to standard math radians ---
+        # Math system: 0 rad at +X axis, CCW positive
+        def to_math_rad(deg: float) -> float:
+            return math.radians(90 - deg)
+        start = to_math_rad(self.start_orient)
+        end = to_math_rad(self.end_orient)
+        # --- Ensure clockwise traversal ---
+        # In math coordinates, clockwise means decreasing angle
+        delta = end - start
+        if delta > 0:
+            delta -= 2 * math.pi
+        # Clamp to at most one full circle
+        if delta < -2 * math.pi:
+            delta = -2 * math.pi
+        # # Handle full circles
+        # if self.start_orient == self.end_orient:
+        #     delta = -2 * math.pi
+        # --- Split into segments (max 90° each) ---
+        max_step = math.pi / 2
+        segments = max(1, int(math.ceil(abs(delta) / max_step)))
+        step = delta / segments
+        beziers: list[CubicBezier] = []
+        for i in range(segments):
+            t0 = start + i * step
+            t1 = start + (i + 1) * step
+            dt = t1 - t0
+            # Cubic Bézier approximation factor
+            alpha = 4 / 3 * math.tan(dt / 4)
+            cos0, sin0 = math.cos(t0), math.sin(t0)
+            cos1, sin1 = math.cos(t1), math.sin(t1)
+            # For y coords, must use negative operations, because y-axis is reversed on a window
+            # Endpoints
+            x0: int = int(round(cx + self.radius * cos0, 0))
+            y0: int = int(round(cy - self.radius * sin0, 0))
+            x3: int = int(round(cx + self.radius * cos1, 0))
+            y3: int = int(round(cy - self.radius * sin1, 0))
+            # Tangent directions
+            dx0, dy0 = -sin0, cos0
+            dx1, dy1 = -sin1, cos1
+            # Control points
+            x1: int = int(round(x0 + alpha * self.radius * dx0, 0))
+            y1: int = int(round(y0 - alpha * self.radius * dy0, 0))
+            x2: int = int(round(x3 - alpha * self.radius * dx1))
+            y2: int = int(round(y3 + alpha * self.radius * dy1))
+            beziers.append(
+                CubicBezier([(x0, y0), (x1, y1), (x2, y2), (x3, y3)])
+                )
+        return beziers
+
+    @property
+    def boundary(self) -> ShapeRange:
+        """Rectangle boundary of polyline."""
+        min_x = min(self.start_point[0], self.end_point[0])
+        max_x = max(self.start_point[0], self.end_point[0])
+        min_y = min(self.start_point[1], self.end_point[1])
+        max_y = max(self.start_point[1], self.end_point[1])
+        return (0, 0), (0, 0)
 
 @dataclass
 class EllipseArc(LinePath):
@@ -373,7 +385,6 @@ class CubicBezier(LinePath):
     def end_point(self) -> Point:
         return self.points[-1]
 
-# endregion
 
 # region Shapes
 
@@ -503,3 +514,15 @@ class RoundRect(AnyShape):
                 radii[0], 270, 360
                 )
             ]
+
+
+# region Type aliases
+
+# Type Point / Coords
+Point: typing.TypeAlias = tuple[int, int]
+Size: typing.TypeAlias = tuple[int, int]
+
+# Type Range
+ShapeRange: typing.TypeAlias = tuple[Point, Size]
+
+# endregion
