@@ -32,6 +32,7 @@ import typing
 import warnings
 from dataclasses import dataclass
 import math
+from ..utils import geo_math
 
 from . import texture as cm_texture
 from .. import draw as cm_draw
@@ -209,21 +210,11 @@ class CircleArc(LinePath):
 
     @property
     def start_point(self) -> Point:
-        # Vibed with GitHub Copilot, model GPT-5 mini
-        # Compute start point from center, radius and start_orient (degrees).
-        theta = math.radians(self.start_orient - 90)
-        x = self.center[0] + int(round(self.radius * math.cos(theta)))
-        y = self.center[1] + int(round(self.radius * math.sin(theta)))
-        return (x, y)
+        return geo_math.point_on_circle(self.center, self.radius, self.start_orient)
 
     @property
     def end_point(self) -> Point:
-        # Vibed with GitHub Copilot, model GPT-5 mini
-        # Compute end point from center, radius and end_orient (degrees).
-        theta = math.radians(self.end_orient - 90)
-        x = self.center[0] + int(round(self.radius * math.cos(theta)))
-        y = self.center[1] + int(round(self.radius * math.sin(theta)))
-        return (x, y)
+        return geo_math.point_on_circle(self.center, self.radius, self.end_orient)
 
     def fallback(self, _from: list[type[LinePath]] = []) -> typing.Sequence[LinePath]:
         """
@@ -231,52 +222,9 @@ class CircleArc(LinePath):
         """
         if CubicBezier in _from:
             return LinePath.fallback(self, [*_from, self.__class__])
-
-        cx, cy = self.center
-        # 1. Convert GUI degrees (0=North, CW) to Math Radians (0=East, CCW)
-        # GUI 0 -> Math 90; GUI 90 -> Math 0; GUI 180 -> Math -90
-        def to_math_rad(gui_deg):
-            return math.radians(90 - gui_deg)
-        start_rad = to_math_rad(self.start_orient)
-        end_rad = to_math_rad(self.end_orient)
-        # 2. Determine the angular sweep (delta)
-        # Since GUI is CW, math must be CCW (decreasing angle)
-        total_delta = end_rad - start_rad
-        if total_delta > 0:
-            total_delta -= 2 * math.pi
-        # Clamp to a full circle maximum
-        if total_delta < -2 * math.pi:
-            total_delta = -2 * math.pi
-        # 3. Split into segments (max 90° or pi/2 radians per Bezier)
-        segments = max(1, int(math.ceil(abs(total_delta) / (math.pi / 2))))
-        segment_delta = total_delta / segments
-        # 4. Calculate Bezier control point offset factor
-        # Standard approximation: (4/3) * tan(theta / 4)
-        alpha = (4/3) * math.tan(segment_delta / 4)
-        beziers: list[CubicBezier] = []
-        for i in range(segments):
-            angle0 = start_rad + i * segment_delta
-            angle1 = start_rad + (i + 1) * segment_delta
-            # Unit coordinates and tangents
-            cos0, sin0 = math.cos(angle0), math.sin(angle0)
-            cos1, sin1 = math.cos(angle1), math.sin(angle1)
-            # Endpoints (P0 and P3)
-            # Note: GUI Y is inverted compared to Math Y
-            p0 = (int(round(cx + self.radius * cos0)), 
-                  int(round(cy - self.radius * sin0)))
-            p3 = (int(round(cx + self.radius * cos1)), 
-                  int(round(cy - self.radius * sin1)))
-            # Control Points (P1 and P2)
-            # P1 = P0 + alpha * radius * tangent0
-            # Math Tangent at angle0 is (-sin0, cos0)
-            p1 = (int(round(p0[0] + (alpha * self.radius * -sin0))),
-                  int(round(p0[1] - (alpha * self.radius * cos0)))) # Inverted GUI Y
-            # P2 = P3 - alpha * radius * tangent1
-            p2 = (int(round(p3[0] - (alpha * self.radius * -sin1))),
-                  int(round(p3[1] + (alpha * self.radius * cos1)))) # Inverted GUI Y
-            beziers.append(CubicBezier([p0, p1, p2, p3]))
-
-        return beziers
+        beziers = geo_math.arc_to_cubic_beziers(
+            self.center, self.radius, self.start_orient, self.end_orient)
+        return [CubicBezier(b) for b in beziers]
 
     @property
     def boundary(self) -> ShapeRange:
@@ -285,26 +233,14 @@ class CircleArc(LinePath):
         Calculation code written by Gemini, model: 3 Flash
         """
         considered_points: list[tuple[int, int]] = [self.start_point, self.end_point]
-        # Quadrant points based on: 0=Up, 90=Right, 180=Down, 270=Left
-        # Order: (Angle, (X, Y))
         extremes = [
             (0,   (self.center[0],               self.center[1] - self.radius)),
             (90,  (self.center[0] + self.radius, self.center[1])),
             (180, (self.center[0],               self.center[1] + self.radius)),
             (270, (self.center[0] - self.radius, self.center[1]))
         ]
-        def is_angle_covered(target, start, end):
-            # Normalize angles to 0~360 degrees
-            start_norm = start % 360
-            end_norm = end % 360
-            target_norm = target % 360
-            if start_norm <= end_norm:
-                return start_norm <= target_norm <= end_norm
-            else:
-                # Handles the wrap-around case (e.g., 350 to 20)
-                return target_norm >= start_norm or target_norm <= end_norm
         for angle, pt in extremes:
-            if is_angle_covered(angle, self.start_orient, self.end_orient):
+            if geo_math.is_angle_covered(angle, self.start_orient, self.end_orient):
                 considered_points.append(pt)
         points_x = [p[0] for p in considered_points]
         points_y = [p[1] for p in considered_points]
