@@ -191,6 +191,11 @@ class PolyLine(LinePath):
 class CircleArc(LinePath):
     """Represents circle arcs.
 
+    Coordinate System
+    -----------------
+    - 0° is at the top (positive Y direction)
+    - Angles increase clockwise
+
     :param center: Coordinates of the center of the circle
     :param radius: Radius of the circle, in integer
     :param start_orient: Starting orientation in integer degrees
@@ -206,7 +211,7 @@ class CircleArc(LinePath):
     def start_point(self) -> Point:
         # Vibed with GitHub Copilot, model GPT-5 mini
         # Compute start point from center, radius and start_orient (degrees).
-        theta = math.radians(self.start_orient)
+        theta = math.radians(self.start_orient - 90)
         x = self.center[0] + int(round(self.radius * math.cos(theta)))
         y = self.center[1] + int(round(self.radius * math.sin(theta)))
         return (x, y)
@@ -215,85 +220,97 @@ class CircleArc(LinePath):
     def end_point(self) -> Point:
         # Vibed with GitHub Copilot, model GPT-5 mini
         # Compute end point from center, radius and end_orient (degrees).
-        theta = math.radians(self.end_orient)
+        theta = math.radians(self.end_orient - 90)
         x = self.center[0] + int(round(self.radius * math.cos(theta)))
         y = self.center[1] + int(round(self.radius * math.sin(theta)))
         return (x, y)
 
     def fallback(self, _from: list[type[LinePath]] = []) -> typing.Sequence[LinePath]:
-        """Convert circle arc to Bezier curves.
-
-        This function is vibed with ChatGPT.
-
-        Coordinate system assumptions:
-        - 0° is at the top (positive Y direction)
-        - Angles increase clockwise
-
-        :param _from: Fallback path, for internal use
-        :return value: Alternative sequence of lines that represents or simulate the same line
+        """
+        Simulates the circle arc using a sequence of Cubic Bezier curves.
         """
         if CubicBezier in _from:
             return LinePath.fallback(self, [*_from, self.__class__])
 
-        # If fallback required, use cubic bezier to simulate
         cx, cy = self.center
-        # --- Convert custom angle system to standard math radians ---
-        # Math system: 0 rad at +X axis, CCW positive
-        def to_math_rad(deg: float) -> float:
-            return math.radians(90 - deg)
-        start = to_math_rad(self.start_orient)
-        end = to_math_rad(self.end_orient)
-        # --- Ensure clockwise traversal ---
-        # In math coordinates, clockwise means decreasing angle
-        delta = end - start
-        if delta > 0:
-            delta -= 2 * math.pi
-        # Clamp to at most one full circle
-        if delta < -2 * math.pi:
-            delta = -2 * math.pi
-        # # Handle full circles
-        # if self.start_orient == self.end_orient:
-        #     delta = -2 * math.pi
-        # --- Split into segments (max 90° each) ---
-        max_step = math.pi / 2
-        segments = max(1, int(math.ceil(abs(delta) / max_step)))
-        step = delta / segments
+        # 1. Convert GUI degrees (0=North, CW) to Math Radians (0=East, CCW)
+        # GUI 0 -> Math 90; GUI 90 -> Math 0; GUI 180 -> Math -90
+        def to_math_rad(gui_deg):
+            return math.radians(90 - gui_deg)
+        start_rad = to_math_rad(self.start_orient)
+        end_rad = to_math_rad(self.end_orient)
+        # 2. Determine the angular sweep (delta)
+        # Since GUI is CW, math must be CCW (decreasing angle)
+        total_delta = end_rad - start_rad
+        if total_delta > 0:
+            total_delta -= 2 * math.pi
+        # Clamp to a full circle maximum
+        if total_delta < -2 * math.pi:
+            total_delta = -2 * math.pi
+        # 3. Split into segments (max 90° or pi/2 radians per Bezier)
+        segments = max(1, int(math.ceil(abs(total_delta) / (math.pi / 2))))
+        segment_delta = total_delta / segments
+        # 4. Calculate Bezier control point offset factor
+        # Standard approximation: (4/3) * tan(theta / 4)
+        alpha = (4/3) * math.tan(segment_delta / 4)
         beziers: list[CubicBezier] = []
         for i in range(segments):
-            t0 = start + i * step
-            t1 = start + (i + 1) * step
-            dt = t1 - t0
-            # Cubic Bézier approximation factor
-            alpha = 4 / 3 * math.tan(dt / 4)
-            cos0, sin0 = math.cos(t0), math.sin(t0)
-            cos1, sin1 = math.cos(t1), math.sin(t1)
-            # For y coords, must use negative operations, because y-axis is reversed on a window
-            # Endpoints
-            x0: int = int(round(cx + self.radius * cos0, 0))
-            y0: int = int(round(cy - self.radius * sin0, 0))
-            x3: int = int(round(cx + self.radius * cos1, 0))
-            y3: int = int(round(cy - self.radius * sin1, 0))
-            # Tangent directions
-            dx0, dy0 = -sin0, cos0
-            dx1, dy1 = -sin1, cos1
-            # Control points
-            x1: int = int(round(x0 + alpha * self.radius * dx0, 0))
-            y1: int = int(round(y0 - alpha * self.radius * dy0, 0))
-            x2: int = int(round(x3 - alpha * self.radius * dx1))
-            y2: int = int(round(y3 + alpha * self.radius * dy1))
-            beziers.append(
-                CubicBezier([(x0, y0), (x1, y1), (x2, y2), (x3, y3)])
-                )
+            angle0 = start_rad + i * segment_delta
+            angle1 = start_rad + (i + 1) * segment_delta
+            # Unit coordinates and tangents
+            cos0, sin0 = math.cos(angle0), math.sin(angle0)
+            cos1, sin1 = math.cos(angle1), math.sin(angle1)
+            # Endpoints (P0 and P3)
+            # Note: GUI Y is inverted compared to Math Y
+            p0 = (int(round(cx + self.radius * cos0)), 
+                  int(round(cy - self.radius * sin0)))
+            p3 = (int(round(cx + self.radius * cos1)), 
+                  int(round(cy - self.radius * sin1)))
+            # Control Points (P1 and P2)
+            # P1 = P0 + alpha * radius * tangent0
+            # Math Tangent at angle0 is (-sin0, cos0)
+            p1 = (int(round(p0[0] + (alpha * self.radius * -sin0))),
+                  int(round(p0[1] - (alpha * self.radius * cos0)))) # Inverted GUI Y
+            # P2 = P3 - alpha * radius * tangent1
+            p2 = (int(round(p3[0] - (alpha * self.radius * -sin1))),
+                  int(round(p3[1] + (alpha * self.radius * cos1)))) # Inverted GUI Y
+            beziers.append(CubicBezier([p0, p1, p2, p3]))
+
         return beziers
 
     @property
     def boundary(self) -> ShapeRange:
-        """Rectangle boundary of polyline."""
-        min_x = min(self.start_point[0], self.end_point[0])
-        max_x = max(self.start_point[0], self.end_point[0])
-        min_y = min(self.start_point[1], self.end_point[1])
-        max_y = max(self.start_point[1], self.end_point[1])
-        return (0, 0), (0, 0)
+        """Rect range of the circle arc.
+
+        Calculation code written by Gemini, model: 3 Flash
+        """
+        considered_points: list[tuple[int, int]] = [self.start_point, self.end_point]
+        # Quadrant points based on: 0=Up, 90=Right, 180=Down, 270=Left
+        # Order: (Angle, (X, Y))
+        extremes = [
+            (0,   (self.center[0],               self.center[1] - self.radius)),
+            (90,  (self.center[0] + self.radius, self.center[1])),
+            (180, (self.center[0],               self.center[1] + self.radius)),
+            (270, (self.center[0] - self.radius, self.center[1]))
+        ]
+        def is_angle_covered(target, start, end):
+            # Normalize angles to 0~360 degrees
+            start_norm = start % 360
+            end_norm = end % 360
+            target_norm = target % 360
+            if start_norm <= end_norm:
+                return start_norm <= target_norm <= end_norm
+            else:
+                # Handles the wrap-around case (e.g., 350 to 20)
+                return target_norm >= start_norm or target_norm <= end_norm
+        for angle, pt in extremes:
+            if is_angle_covered(angle, self.start_orient, self.end_orient):
+                considered_points.append(pt)
+        points_x = [p[0] for p in considered_points]
+        points_y = [p[1] for p in considered_points]
+        min_x, max_x = min(points_x), max(points_x)
+        min_y, max_y = min(points_y), max(points_y)
+        return (min_x, min_y), (max_x - min_x, max_y - min_y)
 
 @dataclass
 class EllipseArc(LinePath):

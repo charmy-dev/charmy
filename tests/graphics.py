@@ -10,7 +10,10 @@ window.background = (200, 200, 200)
 test_polyline = cm.draw.DrawnLine(cm.shape.PolyLine([
     (500, 10), (50, 150), (200, 300), (70, 30)
     ]), (255, 100, 100)) .draw(window)
-test_arc = cm.draw.DrawnLine(cm.shape.CircleArc((100, 100), 50, 0, 290), (100, 100, 255)) .draw(window)
+test_arc = cm.draw.DrawnLine(
+    cm.shape.CircleArc((100, 100), 50, 0, 290), (100, 100, 255)) .draw(window)
+test_arc_2 = cm.draw.DrawnLine(
+    cm.shape.CircleArc((200, 100), 50, 320, 50), (100, 100, 255)) .draw(window)
 test_quadratic_bezier = cm.draw.DrawnLine(cm.shape.QuadraticBezier([
     (100, 150), (250, 250), (-40, 350)
     ]), (100, 255, 100, 100), width=8) .draw(window)
