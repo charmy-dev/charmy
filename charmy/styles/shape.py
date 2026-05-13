@@ -30,6 +30,7 @@ from __future__ import annotations as _
 import typing
 
 import warnings
+import inspect
 from dataclasses import dataclass
 import math
 from ..utils import geo_math
@@ -44,7 +45,6 @@ if typing.TYPE_CHECKING:
 
 # region Lines
 
-@dataclass
 class LinePath():
     """Base class of all line paths."""
 
@@ -345,17 +345,14 @@ class CharmyShapeError(Exception): ...
 
 class AnyShape():
     """Base class of all shapes."""
-    type: str = "any_shape"
+    type: typing.ClassVar[str] = "any_shape"
 
     def __init__(self, lines: typing.Sequence[LinePath]):
-        """To represent a shape.
+        """To initialize and validate a shape.
 
-        :param lines: List of lines forming the shape.
+        :param lines: The lines that form the shape
         """
-        super().__init__()
-
         self.lines: typing.Sequence[LinePath] = lines
-
         if not self._validate_lines():
             raise CharmyShapeError("Specified lines do not form a valid closed shape.")
 
@@ -384,18 +381,69 @@ class AnyShape():
         cm_draw.DrawnShape(self, texture, border_width, border_texture).draw(window)
         return self
 
-class Rect(AnyShape):
-    """Represents rectangles in Charmy."""
-    type: str = "rect"
+    @staticmethod
+    def find_class_by_type(type_name: str) -> type[AnyShape] | None:
+        """Find a shape class by shape type, return `None` if not found.
 
-    def __init__(self, position: Point, size: Size):
-        """To initialize a rectangle.
-        
-        :param position: The position of the rectangle
-        :param size: The size of the rectangle
+        :param type_name: Shape type in string
         """
-        self.position: Point = position
-        self.size: Size = size
+        for cls in AnyShape.__subclasses__():
+            if cls.type == type_name:
+                return AnyShape
+        else:
+            return None
+
+    @staticmethod
+    def load_from_json(json_content: dict | str) -> AnyShape:
+        """Create a shape object from json content.
+
+        This function is a static method of AnyShape and its subclasses. It creates and returns a 
+        shape object base on the JSON content given. This will be useful when loading shape config 
+        from styles.
+
+        :param json_content: The JSON content, either Python dict or raw string data
+
+        JSON Format
+        -----------
+        Shapes can be represented in JSON in a structured way. The following will be the brief 
+        introduction of the JSON structure, with values replaced with descriptive strings.
+
+        .. code-block:: json
+            {
+            "type": "The type of the shape, in string", 
+            "param 1": "Value of that parameter", 
+            "param 2": "Value of that parameter", 
+            }
+
+        The detailed structure of each shape will be introduced in their classes' docstring. Here, 
+        the detailed structure of defining a shape with type `any_shape`, which are shapes defined 
+        by a sequence of `LinePath`s, will be introduced.
+
+        .. code-block:: json
+            {
+            "type": "any_shape", 
+            "lines": [
+                {
+                "type": "A line type", 
+                "...": "See docs of `LinePath` to learn more about how to define a line with json…"
+                }
+            ]
+            }
+        """
+        # TODO: Implement load shape by styles JSON
+        return NotImplemented
+
+@dataclass
+class Rect(AnyShape):
+    """Represents rectangles in Charmy.
+
+    :param position: The position of the rectangle
+    :param size: The size of the rectangle
+    """
+    type: typing.ClassVar[str] = "rect"
+
+    position: Point
+    size: Size
 
     @property
     def lines(self) -> typing.Sequence[LinePath]:
@@ -408,20 +456,19 @@ class Rect(AnyShape):
             ])
         return [polyline]
 
+@dataclass
 class RoundRect(AnyShape):
-    """Represents round-corner rectangles in Charmy."""
-    type: str = "round_rect"
+    """Represents round-corner rectangles in Charmy.
 
-    def __init__(self, position: Point, size: Size, radius: int | tuple[int, int, int, int]):
-        """To initialize a round-corner rectangle.
-        
-        :param position: The position of the round-corner rectangle
-        :param size: The size of the round-corner rectangle
-        :param radius: Radius of the round corners or of each corner, in px
-        """
-        self.position: Point = position
-        self.size: Size = size
-        self.radius: int | tuple[int, int, int, int] = radius
+    :param position: The position of the round-corner rectangle
+    :param size: The size of the round-corner rectangle
+    :param radius: Radius of the round corners or of each corner, in px
+    """
+    type: typing.ClassVar[str] = "round_rect"
+
+    position: Point
+    size: Size
+    radius: int | tuple[int, int, int, int]
 
     @property
     def lines(self) -> typing.Sequence[LinePath]:
@@ -475,7 +522,7 @@ class RoundRect(AnyShape):
 Point: typing.TypeAlias = tuple[int, int]
 Size: typing.TypeAlias = tuple[int, int]
 
-# Type Range
+# Type ShapeRange
 ShapeRange: typing.TypeAlias = tuple[Point, Size]
 
 # endregion

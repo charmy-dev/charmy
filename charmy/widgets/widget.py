@@ -10,8 +10,9 @@ from .. import styles
 class Widget(CharmyObject, EventHandling):
     """Widget base class."""
 
-    def __init__(self, parent: Container):
+    def __init__(self, parent: Container, style: dict):
         super().__init__()
+        # DEPRECATED: Auto find parent for widgets
         # if parent is None:
         #     for window_ref in window.Window.instances:
         #         if window_ref() is not None:
@@ -20,6 +21,8 @@ class Widget(CharmyObject, EventHandling):
         #         raise RuntimeError("No available window to put widget!")
         self.parent: Container = parent
         self.parent.add_child(self)
+
+        self.style: dict = style
 
         self.pos: styles.shape.Point = (0, 0)
         self.size: styles.shape.Size = (0, 0)
@@ -82,11 +85,17 @@ class Widget(CharmyObject, EventHandling):
     def draw(self, 
             pos: styles.shape.Point, 
             size: typing.Optional[styles.shape.Size], 
+            *args, **kwargs, 
             ) -> typing.Self:
         """Draw the widget, does nothing on base class."""
         if size is None:
             size = self.size
+        self.draw_ext(pos, size, *args, **kwargs)
         return self
+
+    def draw_ext(self, *args, **kwargs) -> typing.Any:
+        """Extention of draw func. To be override by subclasses or users etc."""
+        return None
 
     def place(self, 
             pos: styles.shape.Point, 
