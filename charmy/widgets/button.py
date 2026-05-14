@@ -27,4 +27,4 @@ class TextButton(Widget):
             *args, **kwargs, 
             ):
         Widget.draw(self, pos, size) # Set self size and run extensive drawings
-        self.
+        # self.

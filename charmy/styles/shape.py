@@ -30,11 +30,10 @@ from __future__ import annotations as _
 import typing
 
 import warnings
-import inspect
 from dataclasses import dataclass
-import math
-from ..utils import geo_math
+import json
 
+from ..utils import geo_math
 from . import texture as cm_texture
 from .. import draw as cm_draw
 
@@ -88,6 +87,56 @@ class LinePath():
         """Rectangle boundary of the line."""
         warnings.warn(f"Line type {self.type} does not support getting boundary.")
         return (0, 0), (0, 0)
+
+    @staticmethod
+    def find_class_by_type(type_name: str) -> type[LinePath] | None:
+        """Find a line class by line type, return `None` if not found.
+
+        :param type_name: Line type in string
+        """
+        for cls in LinePath.__subclasses__():
+            if cls.type == type_name:
+                return cls
+        else:
+            return None
+
+    @staticmethod
+    def load_from_json(json_content: dict[str, typing.Any] | str) -> LinePath:
+        """Create a shape object from json content.
+
+        This function is a static method of LinePath and its subclasses. It creates and returns a 
+        line object base on the JSON content given. This will be useful when loading line config 
+        from styles.
+
+        :param json_content: The JSON content, either Python dict or raw string data
+
+        JSON Format
+        -----------
+        Lines can be represented in JSON in a structured way. Each JSON data must has a `type` key 
+        that defines the type of the line, and also other keys and values that specify the params 
+        for that line. The following is an example for polylines.
+
+        .. code-block:: python
+            {
+            "type": "polyline", 
+            "points": [
+                (10, 10), (100, 50), (50, 100)
+            ],
+            }
+        """
+        # Convert raw content to JSON
+        if isinstance(json_content, str):
+            json_content = json.loads(json_content)
+            assert type(json_content) is dict
+            # 👆 Must assert the type here, because the fucking json module did not specify the 
+            # type of the return value of loads()
+        if not isinstance(json_content["type"], str):
+            raise TypeError("Invalid line JSON.")
+        cls = LinePath.find_class_by_type(json_content["type"])
+        if cls is None:
+            raise CharmyShapeError(f"Invalid line type {json_content["type"]}.")
+        params = json_content.copy().pop("type", json_content)
+        return cls(*params)
 
 
 @dataclass
@@ -347,12 +396,17 @@ class AnyShape():
     """Base class of all shapes."""
     type: typing.ClassVar[str] = "any_shape"
 
-    def __init__(self, lines: typing.Sequence[LinePath]):
+    def __init__(self, lines: typing.Sequence[LinePath | LineJSON]):
         """To initialize and validate a shape.
 
         :param lines: The lines that form the shape
         """
-        self.lines: typing.Sequence[LinePath] = lines
+        
+        self.lines: typing.Sequence[LinePath] = [
+            # Append as-is or load from json
+            line if isinstance(line, LinePath) else LinePath.load_from_json(line) \
+                for line in lines
+            ]
         if not self._validate_lines():
             raise CharmyShapeError("Specified lines do not form a valid closed shape.")
 
@@ -389,12 +443,12 @@ class AnyShape():
         """
         for cls in AnyShape.__subclasses__():
             if cls.type == type_name:
-                return AnyShape
+                return cls
         else:
             return None
 
     @staticmethod
-    def load_from_json(json_content: dict | str) -> AnyShape:
+    def load_from_json(json_content: dict[str, typing.Any] | str) -> AnyShape:
         """Create a shape object from json content.
 
         This function is a static method of AnyShape and its subclasses. It creates and returns a 
@@ -405,33 +459,30 @@ class AnyShape():
 
         JSON Format
         -----------
-        Shapes can be represented in JSON in a structured way. The following will be the brief 
-        introduction of the JSON structure, with values replaced with descriptive strings.
+        Shapes can be represented in JSON in a structured way. Each JSON data must has a `type` key 
+        that defines the type of the shape, and also other keys and values that specify the params 
+        for that shape. The following is an example for rectangles.
 
-        .. code-block:: json
+        .. code-block:: python
             {
-            "type": "The type of the shape, in string", 
-            "param 1": "Value of that parameter", 
-            "param 2": "Value of that parameter", 
-            }
-
-        The detailed structure of each shape will be introduced in their classes' docstring. Here, 
-        the detailed structure of defining a shape with type `any_shape`, which are shapes defined 
-        by a sequence of `LinePath`s, will be introduced.
-
-        .. code-block:: json
-            {
-            "type": "any_shape", 
-            "lines": [
-                {
-                "type": "A line type", 
-                "...": "See docs of `LinePath` to learn more about how to define a line with json…"
-                }
-            ]
+            "type": "rect", 
+            "pos": (50, 50), 
+            "size": (100, 100), 
             }
         """
-        # TODO: Implement load shape by styles JSON
-        return NotImplemented
+        # Convert raw content to JSON
+        if isinstance(json_content, str):
+            json_content = json.loads(json_content)
+            assert type(json_content) is dict
+            # 👆 Must assert the type here, because the fucking json module did not specify the 
+            # type of the return value of loads()
+        if not isinstance(json_content["type"], str):
+            raise TypeError("Invalid shape JSON.")
+        cls = AnyShape.find_class_by_type(json_content["type"])
+        if cls is None:
+            raise CharmyShapeError(f"Invalid shape type {json_content["type"]}.")
+        params = json_content.copy().pop("type", json_content)
+        return cls(*params)
 
 @dataclass
 class Rect(AnyShape):
@@ -524,5 +575,9 @@ Size: typing.TypeAlias = tuple[int, int]
 
 # Type ShapeRange
 ShapeRange: typing.TypeAlias = tuple[Point, Size]
+
+# Type LineJSON and ShapeJSON
+LineJSON: typing.TypeAlias = dict
+ShapeJSON: typing.TypeAlias = dict
 
 # endregion
