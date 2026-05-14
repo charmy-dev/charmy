@@ -178,7 +178,7 @@ class Line(LinePath):
         """Rectangle boundary of single-section line."""
         return (
             (min(self.points[0][0], self.points[1][0]), min(self.points[0][1], self.points[1][1])), 
-            (self.points[1][0] - self.points[0][0], self.points[1][1] - self.points[0][1])
+            (abs(self.points[1][0] - self.points[0][0]), abs(self.points[1][1] - self.points[0][1]))
             )
 
 @dataclass
@@ -366,6 +366,31 @@ class QuadraticBezier(LinePath):
         else:
             return LinePath.fallback(self, [*_from, self.__class__])
 
+    @property
+    def boundary(self) -> ShapeRange:
+        """Rectangle boundary of quadratic Bezier.
+
+        This function was vibed with GitHub Copilot, model GPT-5 mini. 
+        **No white box tests carried out so far.**
+
+        Compute extrema by solving derivative = 0 for x and y separately, include
+        t in (0,1) and endpoints.
+        """
+        p0, p1, p2 = self.points
+        from ..utils.geo_math import evaluate_quadratic_bezier, quadratic_bezier_internal_t_roots
+
+        candidate_points: list[tuple[int, int]] = [p0, p2]
+        ts = quadratic_bezier_internal_t_roots((p0, p1, p2))
+        for t in ts:
+            x_f, y_f = evaluate_quadratic_bezier((p0, p1, p2), t)
+            candidate_points.append((int(round(x_f)), int(round(y_f))))
+
+        xs = [pt[0] for pt in candidate_points]
+        ys = [pt[1] for pt in candidate_points]
+        min_x, max_x = min(xs), max(xs)
+        min_y, max_y = min(ys), max(ys)
+        return (min_x, min_y), (max_x - min_x, max_y - min_y)
+
 @dataclass
 class CubicBezier(LinePath):
     """Represents cubic Bezier curves.
@@ -386,6 +411,31 @@ class CubicBezier(LinePath):
     @property
     def end_point(self) -> Point:
         return self.points[-1]
+
+    @property
+    def boundary(self) -> ShapeRange:
+        """Rectangle boundary of cubic Bezier using helpers in geo_math.
+        
+        This function was vibed by GitHub Copilot, model GPT-5 mini. 
+        **No white box tests carried out so far.**
+        """
+        p0, p1, p2, p3 = self.points
+        from ..utils.geo_math import (
+            evaluate_cubic_bezier,
+            cubic_bezier_derivative_roots,
+        )
+
+        candidate_points: list[tuple[int, int]] = [p0, p3]
+        ts = cubic_bezier_derivative_roots((p0, p1, p2, p3))
+        for t in ts:
+            x_f, y_f = evaluate_cubic_bezier((p0, p1, p2, p3), t)
+            candidate_points.append((int(round(x_f)), int(round(y_f))))
+
+        xs = [pt[0] for pt in candidate_points]
+        ys = [pt[1] for pt in candidate_points]
+        min_x, max_x = min(xs), max(xs)
+        min_y, max_y = min(ys), max(ys)
+        return (min_x, min_y), (max_x - min_x, max_y - min_y)
 
 
 # region Shapes
@@ -409,6 +459,22 @@ class AnyShape():
             ]
         if not self._validate_lines():
             raise CharmyShapeError("Specified lines do not form a valid closed shape.")
+
+    @property
+    def boundary(self) -> ShapeRange:
+        """Rect range of a shape."""
+        line_boundaries = [line.boundary for line in self.lines]
+        xs = [
+            *[pos[0] for pos, size in line_boundaries], 
+            *[pos[0] + size[0] for pos, size in line_boundaries], 
+            ]
+        ys = [
+            *[pos[1] for pos, size in line_boundaries], 
+            *[pos[1] + size[1] for pos, size in line_boundaries], 
+            ]
+        min_x, max_x = min(xs), max(xs)
+        min_y, max_y = min(ys), max(ys)
+        return (min_x, min_y), (max_x - min_x, max_y - min_y)
 
     def _validate_lines(self):
         """Validate if lines form a valid closed shape."""

@@ -19,7 +19,7 @@ if typing.TYPE_CHECKING:
 
 
 class DEBUG_OPTIONS:
-    DRAW_OBJECTS_BOUNDARY: bool = True
+    DRAW_OBJECTS_BOUNDARY: bool = False
 
 
 # region DrawnObject base class
@@ -90,7 +90,7 @@ class DrawnLine(DrawnObject):
             if DEBUG_OPTIONS.DRAW_OBJECTS_BOUNDARY:
                 window.backend_base.drawing_list.append(DrawnShape(
                     styles.shape.Rect(*self.line.boundary), 
-                    (0, 0, 255, 30), 
+                    (0, 0, 255, 10), 
                     1, (0, 0, 255), 
                     ))
         return self
@@ -157,6 +157,12 @@ class DrawnShape(DrawnObject):
         if self.shape.type in backend.ShapeBase.supports or \
             "any_shape" in backend.ShapeBase.supports:
             window.backend_base.drawing_list.append(self)
+        if DEBUG_OPTIONS.DRAW_OBJECTS_BOUNDARY:
+                window.backend_base.drawing_list.append(DrawnShape(
+                    styles.shape.Rect(*self.shape.boundary), 
+                    (0, 0, 255, 10), 
+                    1, (0, 0, 255), 
+                    ))
         return self
 
 # endregion

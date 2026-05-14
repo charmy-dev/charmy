@@ -2,6 +2,16 @@
 
 This module centralizes math utilities used for shapes: angle conversions,
 circle-point computations, arc-to-bezier conversion, and angle coverage tests.
+
+!! THIS IS A VIBED MODULE !!
+----------------------------
+This module was mostly vibed by GitHub Copilot, ChatGPT, and Google Gemini. 
+It includes geometric knowledge that the core devs (in 2026) have not learned 
+yet.
+
+This module is impossible to be completed by three secondary school students 
+without the help from third-party, and here, in this era, we chose AI. We 
+provide no guarantee for codes this file.
 """
 from __future__ import annotations
 
@@ -9,6 +19,134 @@ import math
 from typing import Tuple, List
 
 Point = tuple[int, int]
+
+
+def evaluate_quadratic_bezier(points: Tuple[Point, Point, Point], t: float) -> tuple[float, float]:
+    """Evaluate a quadratic Bezier at parameter t (0..1).
+
+    Returns (x, y) as floats.
+    """
+    start_point, control_point, end_point = points
+    one_minus_t = 1.0 - t
+    x = one_minus_t * one_minus_t * start_point[0] + \
+        2 * one_minus_t * t * control_point[0] + t * t * end_point[0]
+    y = one_minus_t * one_minus_t * start_point[1] + \
+        2 * one_minus_t * t * control_point[1] + t * t * end_point[1]
+    return x, y
+
+
+def _unique_t_values(values: List[float], abs_tolerance: float = 1e-9) -> List[float]:
+    """Return unique t values within abs_tolerance preserving order."""
+    unique: List[float] = []
+    for value in values:
+        if not any(math.isclose(value, existing, abs_tol=abs_tolerance) for existing in unique):
+            unique.append(value)
+    return unique
+
+
+def quadratic_bezier_internal_t_roots(points: Tuple[Point, Point, Point], eps: float = 1e-12) -> List[float]:
+    """Return the list of unique t roots (0<t<1) where derivative in x or y is zero.
+
+    This mirrors solving (p0 - 2*p1 + p2) * t = (p0 - p1) for each coordinate.
+    """
+    start_point, control_point, end_point = points
+    candidate_ts: List[float] = []
+    for coord_index in (0, 1):
+        denom_coord = (
+            start_point[coord_index]
+            - 2 * control_point[coord_index]
+            + end_point[coord_index]
+        )
+        if math.isclose(denom_coord, 0.0, abs_tol=eps):
+            continue
+        t_candidate = (
+            (start_point[coord_index] - control_point[coord_index]) / denom_coord
+        )
+        if 0.0 < t_candidate < 1.0:
+            candidate_ts.append(t_candidate)
+
+    return _unique_t_values(candidate_ts, abs_tolerance=1e-9)
+
+
+def evaluate_cubic_bezier(points: Tuple[Point, Point, Point, Point], t: float) -> tuple[float, float]:
+    """Evaluate a cubic Bezier at parameter t (0..1). Returns (x, y) floats."""
+    start_point, control_point_first, control_point_second, end_point = points
+    one_minus_t = 1.0 - t
+    x = (
+        (one_minus_t**3) * start_point[0]
+        + 3 * (one_minus_t**2) * t * control_point_first[0]
+        + 3 * one_minus_t * (t**2) * control_point_second[0]
+        + (t**3) * end_point[0]
+    )
+    y = (
+        (one_minus_t**3) * start_point[1]
+        + 3 * (one_minus_t**2) * t * control_point_first[1]
+        + 3 * one_minus_t * (t**2) * control_point_second[1]
+        + (t**3) * end_point[1]
+    )
+    return x, y
+
+
+def cubic_bezier_derivative_roots(
+        points: Tuple[Point, Point, Point, Point], eps: float = 1e-12) -> List[float]:
+    """Return t roots (0<t<1) where derivative in x or y is zero.
+
+    Solves quadratic 3*a t^2 + 2*b t + c = 0 for each coordinate, where
+    a = -p0 + 3*p1 - 3*p2 + p3
+    b = 3*(p0 - 2*p1 + p2)
+    c = 3*(p1 - p0)
+    """
+    start_point, control_point_first, control_point_second, end_point = points
+    candidate_ts: List[float] = []
+
+    def compute_polynomial_coefficients(
+        coord_start_value,
+        coord_control_first,
+        coord_control_second,
+        coord_end_value,
+    ):
+        coeff_a = (
+            -coord_start_value
+            + 3 * coord_control_first
+            - 3 * coord_control_second
+            + coord_end_value
+        )
+        coeff_b = 3 * (
+            coord_start_value - 2 * coord_control_first + coord_control_second
+        )
+        coeff_c = 3 * (coord_control_first - coord_start_value)
+        return coeff_a, coeff_b, coeff_c
+
+    for coord_index in (0, 1):
+        coeff_a, coeff_b, coeff_c = compute_polynomial_coefficients(
+            start_point[coord_index],
+            control_point_first[coord_index],
+            control_point_second[coord_index],
+            end_point[coord_index],
+        )
+        deriv_coeff_A = 3 * coeff_a
+        deriv_coeff_B = 2 * coeff_b
+        deriv_coeff_C = coeff_c
+        if math.isclose(deriv_coeff_A, 0.0, abs_tol=eps):
+            # linear case: deriv_coeff_B * t + deriv_coeff_C = 0
+            if not math.isclose(deriv_coeff_B, 0.0, abs_tol=eps):
+                t_candidate = -deriv_coeff_C / deriv_coeff_B
+                if 0.0 < t_candidate < 1.0:
+                    candidate_ts.append(t_candidate)
+            continue
+        discriminant_val = deriv_coeff_B * deriv_coeff_B - 4 * deriv_coeff_A * deriv_coeff_C
+        if discriminant_val < 0:
+            continue
+        sqrt_discriminant = math.sqrt(discriminant_val)
+        root_candidate_plus = (-deriv_coeff_B + sqrt_discriminant) / (2 * deriv_coeff_A)
+        root_candidate_minus = (-deriv_coeff_B - sqrt_discriminant) / (2 * deriv_coeff_A)
+        for t_candidate in (root_candidate_plus, root_candidate_minus):
+            if 0.0 < t_candidate < 1.0:
+                candidate_ts.append(t_candidate)
+
+    # unique with tolerance
+    return _unique_t_values(candidate_ts, abs_tolerance=1e-9)
+
 
 def gui_deg_to_math_rad(gui_deg: float) -> float:
     """Convert GUI degrees (0=North, clockwise) to math radians (0=East, CCW).
@@ -41,7 +179,8 @@ def is_angle_covered(target: float, start: float, end: float) -> bool:
     else:
         return target_norm >= start_norm or target_norm <= end_norm
 
-def arc_to_cubic_beziers(center: Point, radius: int, start_orient: int, end_orient: int) -> List[List[Point]]:
+def arc_to_cubic_beziers(
+        center: Point, radius: int, start_orient: int, end_orient: int) -> List[List[Point]]:
     """Convert a circle arc (in GUI degrees) to a list of cubic Bezier point lists.
 
     Returns a list where each item is [p0, p1, p2, p3] with integer points.
