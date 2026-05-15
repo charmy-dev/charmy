@@ -97,7 +97,7 @@ eights?view=netframework-4.8#remarks) to learn more about the values. Presets ar
 
     @staticmethod
     def from_json(json_content):
-        return TextStyle(*json_content)
+        return TextStyle(**json_content)
 
 
 TextStyle.sys_default = TextStyle("Arial", 14)

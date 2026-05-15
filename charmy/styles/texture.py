@@ -26,6 +26,8 @@ import typing
 
 import json
 
+from . import style
+
 
 # region Texture base class
 
@@ -74,12 +76,13 @@ class Texture:
             # 👆 Must assert the type here, because the fucking json module did not specify the 
             # type of the return value of loads()
         if not isinstance(json_content["type"], str):
-            raise TypeError("Invalid texture JSON.")
+            raise TypeError(f"Invalid texture JSON: {json_content}")
         cls = Texture.find_class_by_type(json_content["type"])
         if cls is None:
             raise ValueError(f"Invalid texture type {json_content["type"]}.")
-        params = json_content.copy().pop("type", json_content)
-        return cls(*params)
+        params = json_content.copy()
+        params.pop("type")
+        return cls(**params)
 
 
 # region Color
@@ -188,6 +191,11 @@ def ensure_texture(texture_like: Texture | TextureLike) -> Texture:
             result = Color(texture_like)
         elif texture_like is None: # Transparent
             result = Transparent()
+        else:
+            raise ValueError(
+                f"Value {texture_like} in type {type(texture_like)} does not "
+                "represent a valid texture!"
+                )
     return result
 
 # endregion

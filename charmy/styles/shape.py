@@ -34,8 +34,8 @@ from dataclasses import dataclass
 import json
 
 from ..utils import geo_math
-from . import texture as cm_texture
 from .. import graphics as cm_draw
+from . import style
 
 if typing.TYPE_CHECKING:
     from .texture import Texture, TextureLike
@@ -135,8 +135,9 @@ class LinePath():
         cls = LinePath.find_class_by_type(json_content["type"])
         if cls is None:
             raise CharmyShapeError(f"Invalid line type {json_content["type"]}.")
-        params = json_content.copy().pop("type", json_content)
-        return cls(*params)
+        params = json_content.copy()
+        params.pop("type")
+        return cls(**params)
 
 
 @dataclass
@@ -547,8 +548,9 @@ class AnyShape():
         cls = AnyShape.find_class_by_type(json_content["type"])
         if cls is None:
             raise CharmyShapeError(f"Invalid shape type {json_content["type"]}.")
-        params = json_content.copy().pop("type", json_content)
-        return cls(*params)
+        params = json_content.copy()
+        params.pop("type")
+        return cls(**params)
 
 @dataclass
 class Rect(AnyShape):
@@ -559,17 +561,17 @@ class Rect(AnyShape):
     """
     type: typing.ClassVar[str] = "rect"
 
-    position: Point
+    pos: Point
     size: Size
 
     @property
     def lines(self) -> typing.Sequence[LinePath]:
         polyline = PolyLine([
-            (self.position[0], self.position[1]), 
-            (self.position[0] + self.size[0], self.position[1]), 
-            (self.position[0] + self.size[0], self.position[1] + self.size[1]), 
-            (self.position[0], self.position[1] + self.size[1]), 
-            (self.position[0], self.position[1]), 
+            (self.pos[0], self.pos[1]), 
+            (self.pos[0] + self.size[0], self.pos[1]), 
+            (self.pos[0] + self.size[0], self.pos[1] + self.size[1]), 
+            (self.pos[0], self.pos[1] + self.size[1]), 
+            (self.pos[0], self.pos[1]), 
             ])
         return [polyline]
 

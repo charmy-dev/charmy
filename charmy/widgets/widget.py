@@ -12,14 +12,16 @@ class Widget(CharmyObject, EventHandling):
     """Widget base class."""
 
     def __init__(self, parent: Container, style: dict):
+        """To initialize a widget.
+
+        :param parent: Parent of tht widget
+        :param style: Style of the widget
+        """
+
+        self._initialized: bool = False
+
         super().__init__()
-        # DEPRECATED: Auto find parent for widgets
-        # if parent is None:
-        #     for window_ref in window.Window.instances:
-        #         if window_ref() is not None:
-        #             parent = window_ref()
-        #     else:
-        #         raise RuntimeError("No available window to put widget!")
+
         self.parent: Container = parent
         self.parent.add_child(self)
 
@@ -29,6 +31,11 @@ class Widget(CharmyObject, EventHandling):
         self.size: styles.shape.Size = (0, 0)
         self.is_visible: bool = False
         self._draw_list: list[graphics.DrawnObject] = []
+
+    def __post_init__(self):
+        """After initialization of widget."""
+        self._initialized = True
+        self._update_draw_list()
 
     @property
     def x(self) -> int:
@@ -67,12 +74,12 @@ class Widget(CharmyObject, EventHandling):
         self.size = (self.size[0], new)
 
     @property
-    def root_container(self) -> Container | None:
+    def root_container(self) -> window.Window | None:
         """Get the root container that contains the widget.
 
         :return window: Either the window, or None meaning that not contained in a root container
         """
-        if self.parent.is_root_container:
+        if isinstance(self.parent, window.Window):
             return self.parent
         else:
             if isinstance(self.parent, Widget):
@@ -99,7 +106,10 @@ class Widget(CharmyObject, EventHandling):
         :param value: The new value
         """
         return_val = super().__setattr__(name, value)
-        self._update_draw_list()
+        if not name.startswith("_"): # Skip internal vars to avoid endless recursion
+            # (only do update for props changes)
+            if self._initialized: # Skip update for initialization
+                self._update_draw_list()
         return return_val
 
     def draw(self, 
@@ -108,8 +118,14 @@ class Widget(CharmyObject, EventHandling):
             *args, **kwargs, 
             ) -> typing.Self:
         """Draw the widget, does nothing on base class."""
-        if size is None:
-            size = self.size
+        if pos is not None:
+            self.pos = pos
+        if size is not None:
+            self.size = size
+        for draw_object in self._draw_list:
+            if self.root_container:
+                if draw_object not in self.root_container.backend_base.drawing_list:
+                    draw_object.draw(self.root_container)
         self.draw_ext(pos, size, *args, **kwargs)
         return self
 

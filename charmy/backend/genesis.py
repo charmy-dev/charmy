@@ -28,7 +28,8 @@ import charmy.backend.utils as charmy_stuff
 
 
 class DEBUG_FLAGS:
-    DRAW_CAIRO_STOCK_TEXT_BOUND = False
+    DRAW_CAIRO_STOCK_TEXT_BOUND: bool = False
+    FORCE_CLOSE_SHAPE: bool = False
 
 
 # region Backend class
@@ -121,17 +122,6 @@ class WindowBase(template.WindowBase):
         self.cairo_context.set_source_rgba(0, 0, 0, 255)  # Black back
         self.cairo_context.paint()
 
-    # def draw_background(self) -> typing.Self:
-    #     """Set the background of the window.
-
-    #     :return self: The WindowBase itself
-    #     """
-    #     TextureBase.cairo_set_context_texture(
-    #         self.cairo_context, charmy_stuff.styles.texture.ensure_texture(self.background))
-    #     self.cairo_context.rectangle(0, 0, *self.size)
-    #     self.cairo_context.paint()
-    #     return self
-
     def show(self) -> typing.Self:
         """Show the window.
 
@@ -146,12 +136,13 @@ class WindowBase(template.WindowBase):
         sdl2.SDL_SetWindowTitle(self.window, self.title.encode("utf-8"))
         return self
     
-    def update(self):
+    def update(self, redraw: bool = True):
         """Update the window.
         
         :return self: The WindowBase itself
         """
-        self.draw_frame(self.drawing_list)
+        if redraw:
+            self.draw_frame(self.drawing_list)
 
         # Following Vibed with Deepseek
 
@@ -249,7 +240,8 @@ class LineBase(template.LineBase):
         if isinstance(line, charmy_stuff.styles.shape.Line):
             # Straight line
             painting_pos = tuple([int(v) for v in window.cairo_context.get_current_point()])
-            if painting_pos != line.points[0]: # Avoid unnecessary move_to() when drawing shapes
+            if painting_pos != calc_point_actual_pos(line.points[0], anchor, offset):
+                # Avoid unnecessary move_to() when drawing shapes
                 window.cairo_context.move_to(
                     *calc_point_actual_pos(line.points[0], anchor, offset)
                     )
@@ -306,10 +298,20 @@ class ShapeBase(template.ShapeBase):
     @staticmethod
     def draw_any_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, window: WindowBase):
         """Draw shape by lines."""
+        import time
         for line in drawn_shape.shape.lines:
             # Border drawn at this time will be covered by shape itself
             # These lines are for drawing the shape itself, not for border
-            drawn_line = charmy_stuff.graphics.DrawnLine(line, drawn_shape.texture, 1)
+            if DEBUG_FLAGS.FORCE_CLOSE_SHAPE:
+                # Dirty fix of closing shape: connect the path manually after drawing each line
+                window.cairo_context.line_to(
+                    line.start_point[0] + drawn_shape.offset[0] - drawn_shape.anchor[0], 
+                    line.start_point[1] + drawn_shape.offset[1] - drawn_shape.anchor[1], 
+                )
+            drawn_line = charmy_stuff.graphics.DrawnLine(
+                line, drawn_shape.texture, 1, offset=drawn_shape.offset, 
+                )
+            drawn_line.anchor = drawn_shape.shape.boundary[0]
             LineBase.draw_line(drawn_line, window, stroke=False)
         window.cairo_context.close_path()
         if TextureBase.cairo_set_context_texture(window.cairo_context, drawn_shape.texture):

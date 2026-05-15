@@ -147,7 +147,7 @@ class WindowBase(WhateverBase):
         self.icon: bytearray | None = None
         self.size: tuple[int, int] = (0, 0)
         self.scale_mode: str = "default_scale"
-        self.background: charmy_stuff.texture.Texture | charmy_stuff.texture.TextureLike = \
+        self.background: charmy_stuff.styles.texture.Texture | charmy_stuff.styles.texture.TextureLike = \
                         (150, 150, 150)
         self.alpha: float = 1
         self.state: str = "normal"
@@ -178,7 +178,7 @@ class WindowBase(WhateverBase):
         # not_implemented_func(operation_desc="Drawing window background")
         self.Backend.ShapeBase.draw_shape(
             charmy_stuff.graphics.DrawnShape(
-                charmy_stuff.shape.Rect((0, 0), self.size), 
+                charmy_stuff.styles.shape.Rect((0, 0), self.size), 
                 self.background
                 ), 
             self

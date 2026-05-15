@@ -28,7 +28,7 @@ test_polygon = cm.graphics.DrawnShape(cm.styles.shape.AnyShape([cm.styles.shape.
     ])]), (150, 150, 150), 5, (255, 0, 0)) .draw(window)
 
 test_rounded_rect = cm.graphics.DrawnShape(cm.styles.shape.RoundRect(
-    (300, 100), (150, 100), 25), (150, 150, 255)) .draw(window)
+    (0, 0), (150, 100), 25), (150, 150, 255), offset=(300, 100)) .draw(window)
 
 test_rounded_rect_2 = cm.graphics.DrawnShape(cm.styles.shape.RoundRect(
     (350, 150), (150, 100), 25), (255, 255, 0, 50)) .draw(window)
@@ -44,8 +44,8 @@ test_text = cm.graphics.DrawnText(
         underlined=True, 
         # strikethrough=True, 
         ), 
-    (200, 250), 
     (0, 0, 0), 
+    (200, 250), 
     ) .draw(window)
 
 # endregion

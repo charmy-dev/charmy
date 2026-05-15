@@ -18,7 +18,7 @@ if typing.TYPE_CHECKING:
     # from .styles import text_style as cm_font
 
 
-class DEBUG_OPTIONS:
+class DEBUG_FLAGS:
     DRAW_OBJECTS_BOUNDARY: bool = False
 
 
@@ -38,7 +38,7 @@ class DrawnLine(DrawnObject):
                 line: styles.shape.LinePath, 
                 texture: styles.texture.Texture | styles.texture.TextureLike, 
                 width: int = 5, 
-                offset: styles.shape.Point | typing.Literal["auto"]= "auto", 
+                offset: styles.shape.Point | typing.Literal["auto"] = "auto", 
                 ):
         """Used to express lines drawn on GUI or canvas.
 
@@ -87,7 +87,7 @@ class DrawnLine(DrawnObject):
                 for fallback_line in self.line.fallback(_from = _fallback_from):
                     fallback_line.draw(window, self.texture, self.width, 
                                        _fallback_from=_fallback_from)
-            if DEBUG_OPTIONS.DRAW_OBJECTS_BOUNDARY:
+            if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 window.backend_base.drawing_list.append(DrawnShape(
                     styles.shape.Rect(*self.line.boundary), 
                     (0, 0, 255, 10), 
@@ -162,7 +162,7 @@ class DrawnShape(DrawnObject):
         if self.shape.type in backend.ShapeBase.supports or \
             "any_shape" in backend.ShapeBase.supports:
             window.backend_base.drawing_list.append(self)
-        if DEBUG_OPTIONS.DRAW_OBJECTS_BOUNDARY:
+        if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 window.backend_base.drawing_list.append(DrawnShape(
                     styles.shape.Rect(*self.shape.boundary), 
                     (0, 0, 255, 10), 
@@ -180,9 +180,9 @@ class DrawnText(DrawnObject):
 
     def __init__(self, 
                 text: str, 
-                offset: styles.shape.Point, 
                 style: styles.text_style.TextStyle, 
                 texture: styles.texture.Texture | styles.texture.TextureLike, 
+                offset: styles.shape.Point | typing.Literal["auto"] = "auto", 
                 ):
         """Used to express text drawn on GUI or canvas.
 
@@ -192,6 +192,8 @@ class DrawnText(DrawnObject):
         :param texture: The texture to use on text
         """
         self.text: str = text
+        if offset == "auto":
+            offset = (0, 0)
         self.offset: styles.shape.Point = offset
         self.style: styles.text_style.TextStyle = style
         self._texture: styles.texture.Texture = styles.texture.ensure_texture(texture)
