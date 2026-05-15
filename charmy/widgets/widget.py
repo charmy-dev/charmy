@@ -5,6 +5,7 @@ from ..object import CharmyObject
 from ..event import EventHandling
 from .container import Container
 from .. import styles
+from .. import graphics
 
 
 class Widget(CharmyObject, EventHandling):
@@ -27,7 +28,7 @@ class Widget(CharmyObject, EventHandling):
         self.pos: styles.shape.Point = (0, 0)
         self.size: styles.shape.Size = (0, 0)
         self.is_visible: bool = False
-        self._draw_list: list = []
+        self._draw_list: list[graphics.DrawnObject] = []
 
     @property
     def x(self) -> int:
@@ -81,6 +82,25 @@ class Widget(CharmyObject, EventHandling):
                 # If not contained by neither a widget nor a root_container, …
                 # … then the widget is not inside in a root container
                 return None
+
+    def _update_draw_list(self):
+        """Update a widget's draw list, for internal use only.
+
+        For widget base, this clears the draw list.
+        """
+        self._draw_list = []
+
+    def __setattr__(self, name: str, value: typing.Any) -> None:
+        """When changing attributes of a widget.
+
+        Currently, updates the draw list of the widget after setting new attributes.
+
+        :param name: Name of the attribute to set
+        :param value: The new value
+        """
+        return_val = super().__setattr__(name, value)
+        self._update_draw_list()
+        return return_val
 
     def draw(self, 
             pos: styles.shape.Point, 

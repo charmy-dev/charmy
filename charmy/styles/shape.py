@@ -35,7 +35,7 @@ import json
 
 from ..utils import geo_math
 from . import texture as cm_texture
-from .. import draw as cm_draw
+from .. import graphics as cm_draw
 
 if typing.TYPE_CHECKING:
     from .texture import Texture, TextureLike
@@ -101,7 +101,7 @@ class LinePath():
             return None
 
     @staticmethod
-    def load_from_json(json_content: dict[str, typing.Any] | str) -> LinePath:
+    def from_json(json_content: dict[str, typing.Any] | str) -> LinePath:
         """Create a shape object from json content.
 
         This function is a static method of LinePath and its subclasses. It creates and returns a 
@@ -454,7 +454,7 @@ class AnyShape():
         
         self.lines: typing.Sequence[LinePath] = [
             # Append as-is or load from json
-            line if isinstance(line, LinePath) else LinePath.load_from_json(line) \
+            line if isinstance(line, LinePath) else LinePath.from_json(line) \
                 for line in lines
             ]
         if not self._validate_lines():
@@ -514,7 +514,7 @@ class AnyShape():
             return None
 
     @staticmethod
-    def load_from_json(json_content: dict[str, typing.Any] | str) -> AnyShape:
+    def from_json(json_content: dict[str, typing.Any] | str) -> AnyShape:
         """Create a shape object from json content.
 
         This function is a static method of AnyShape and its subclasses. It creates and returns a 

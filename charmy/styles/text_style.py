@@ -8,7 +8,7 @@ from __future__ import annotations as _
 import typing
 
 if typing.TYPE_CHECKING:
-    from .. import draw as cm_draw
+    from .. import graphics as cm_draw
 
 
 class WEIGHT:
@@ -94,6 +94,10 @@ eights?view=netframework-4.8#remarks) to learn more about the values. Presets ar
         self.italic: bool = italic
         self.underlined: bool | cm_draw.DrawnLine = underlined
         self.strikethrough: bool | cm_draw.DrawnLine = strikethrough
+
+    @staticmethod
+    def from_json(json_content):
+        return TextStyle(*json_content)
 
 
 TextStyle.sys_default = TextStyle("Arial", 14)

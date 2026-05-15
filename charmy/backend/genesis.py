@@ -23,7 +23,7 @@ from . import template
 import charmy.backend.utils as charmy_stuff
 
 # if typing.TYPE_CHECKING:
-#     import charmy_stuff.styles.shape as charmy_stuff.shape
+#     import charmy_stuff.styles.shape as charmy_stuff.styles.shape
 #     import charmy_stuff.styles.texture as cm_texture
 
 
@@ -127,7 +127,7 @@ class WindowBase(template.WindowBase):
     #     :return self: The WindowBase itself
     #     """
     #     TextureBase.cairo_set_context_texture(
-    #         self.cairo_context, charmy_stuff.texture.ensure_texture(self.background))
+    #         self.cairo_context, charmy_stuff.styles.texture.ensure_texture(self.background))
     #     self.cairo_context.rectangle(0, 0, *self.size)
     #     self.cairo_context.paint()
     #     return self
@@ -211,7 +211,8 @@ class LineBase(template.LineBase):
     supports: LineSupportState = LineSupportState()
 
     @staticmethod
-    def draw_line(drawn_line: charmy_stuff.draw.DrawnLine, window: WindowBase, stroke: bool = True):
+    def draw_line(drawn_line: charmy_stuff.graphics.DrawnLine, 
+                  window: WindowBase, stroke: bool = True):
         """To draw a line on a specific window.
 
         Args:
@@ -222,6 +223,18 @@ class LineBase(template.LineBase):
         line = drawn_line.line
         texture = drawn_line.texture
         line_width = drawn_line.width
+        anchor = drawn_line.anchor
+        offset = drawn_line.offset
+
+        def calc_point_actual_pos(
+                line_point: charmy_stuff.styles.shape.Point, 
+                anchor: charmy_stuff.styles.shape.Point, 
+                offset: charmy_stuff.styles.shape.Point, 
+                ) -> charmy_stuff.styles.shape.Point:
+            return (
+                line_point[0] - anchor[0] + offset[0], 
+                line_point[1] - anchor[1] + offset[1]
+                )
         # Detect wrong backend
         if window.Backend != Backend:
             raise RuntimeError(
@@ -233,27 +246,41 @@ class LineBase(template.LineBase):
             return
         window.cairo_context.set_line_width(line_width)
         # Draw line
-        if isinstance(line, charmy_stuff.shape.Line):
+        if isinstance(line, charmy_stuff.styles.shape.Line):
+            # Straight line
             painting_pos = tuple([int(v) for v in window.cairo_context.get_current_point()])
             if painting_pos != line.points[0]: # Avoid unnecessary move_to() when drawing shapes
-                window.cairo_context.move_to(*line.points[0])
-            window.cairo_context.line_to(*line.points[1])
-        elif isinstance(line, charmy_stuff.shape.PolyLine):
-            window.cairo_context.move_to(*line.points[0])
+                window.cairo_context.move_to(
+                    *calc_point_actual_pos(line.points[0], anchor, offset)
+                    )
+            window.cairo_context.line_to(
+                *calc_point_actual_pos(line.points[1], anchor, offset)
+                )
+        elif isinstance(line, charmy_stuff.styles.shape.PolyLine):
+            # Polyline
+            window.cairo_context.move_to(
+                *calc_point_actual_pos(line.points[0], anchor, offset)
+                )
             for index, point in enumerate(line.points):
                 if index == 0:
                     continue
-                window.cairo_context.line_to(*point)
-        elif isinstance(line, charmy_stuff.shape.CircleArc):
-            # window.cairo_context.move_to(*line.center)
+                window.cairo_context.line_to(
+                    *calc_point_actual_pos(point, anchor, offset)
+                    )
+        elif isinstance(line, charmy_stuff.styles.shape.CircleArc):
+            # Circle arc
             start_orient_rad = (line.start_orient - 90) * (math.pi / 180)
             end_orient_rad = (line.end_orient - 90) * (math.pi / 180)
-            window.cairo_context.arc(line.center[0], line.center[1], line.radius, 
-                                     start_orient_rad, end_orient_rad)
-        elif isinstance(line, charmy_stuff.shape.CubicBezier):
+            window.cairo_context.arc(
+                *calc_point_actual_pos(line.center, anchor, offset), 
+                line.radius, 
+                start_orient_rad, end_orient_rad)
+        elif isinstance(line, charmy_stuff.styles.shape.CubicBezier):
             window.cairo_context.move_to(*line.points[0])
             window.cairo_context.curve_to(
-                *line.points[1], *line.points[2], *line.points[3]
+                *calc_point_actual_pos(line.points[1], anchor, offset), 
+                *calc_point_actual_pos(line.points[2], anchor, offset), 
+                *calc_point_actual_pos(line.points[3], anchor, offset), 
                 )
         else:
             template.not_implemented_func(Backend.friendly_name, f"Drawing line type {line.type}")
@@ -277,12 +304,12 @@ class ShapeBase(template.ShapeBase):
     supports: ShapeSupportState = ShapeSupportState()
 
     @staticmethod
-    def draw_any_shape(drawn_shape: charmy_stuff.draw.DrawnShape, window: WindowBase):
+    def draw_any_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, window: WindowBase):
         """Draw shape by lines."""
         for line in drawn_shape.shape.lines:
             # Border drawn at this time will be covered by shape itself
             # These lines are for drawing the shape itself, not for border
-            drawn_line = charmy_stuff.draw.DrawnLine(line, drawn_shape.texture, 1)
+            drawn_line = charmy_stuff.graphics.DrawnLine(line, drawn_shape.texture, 1)
             LineBase.draw_line(drawn_line, window, stroke=False)
         window.cairo_context.close_path()
         if TextureBase.cairo_set_context_texture(window.cairo_context, drawn_shape.texture):
@@ -292,13 +319,13 @@ class ShapeBase(template.ShapeBase):
             and drawn_shape.border_width != 0:
             # If still need visible border, then draw again
             for line in drawn_shape.shape.lines:
-                drawn_line = charmy_stuff.draw.DrawnLine(
+                drawn_line = charmy_stuff.graphics.DrawnLine(
                     line, drawn_shape.border_texture, drawn_shape.border_width)
                 LineBase.draw_line(drawn_line, window)
 
     @staticmethod
-    def draw_shape(shape: charmy_stuff.draw.DrawnShape, window: WindowBase):
-        if isinstance(shape.shape, charmy_stuff.shape.AnyShape):
+    def draw_shape(shape: charmy_stuff.graphics.DrawnShape, window: WindowBase):
+        if isinstance(shape.shape, charmy_stuff.styles.shape.AnyShape):
             ShapeBase.draw_any_shape(shape, window)
         else:
             template.not_implemented_func(Backend.friendly_name, 
@@ -320,7 +347,7 @@ class TextureBase(template.TextureBase):
 
     @staticmethod
     def cairo_set_context_texture(context: cairo.Context, 
-                                  texture: charmy_stuff.texture.Texture) -> bool:
+                                  texture: charmy_stuff.styles.texture.Texture) -> bool:
         """Set texture of a Cairo context, and returns if following drawing still needs to be done. 
         
         function only available in Genesis backend.
@@ -329,7 +356,7 @@ class TextureBase(template.TextureBase):
         :param texture: The texture to set
         :return bool: If the object needs to be drawn
         """
-        cmtx = charmy_stuff.texture
+        cmtx = charmy_stuff.styles.texture # CMTX = abbr. CharMy TeXture
         if isinstance(texture, cmtx.Transparent):
             context.set_source_rgba(0, 0, 0, 0)
             return False
@@ -350,8 +377,8 @@ class TextSupportState(template.TextSupportState):
     custom_underline        : bool = True
     any_fontweight          : bool = False
     fontweights             : list[int] = [
-                                charmy_stuff.text_style.WEIGHT.REGULAR, 
-                                charmy_stuff.text_style.WEIGHT.BOLD, 
+                                charmy_stuff.styles.text_style.WEIGHT.REGULAR, 
+                                charmy_stuff.styles.text_style.WEIGHT.BOLD, 
                                 ]
     prefer_conversion       : bool = True
 
@@ -361,7 +388,7 @@ class TextBase(template.TextBase):
     supports: TextSupportState = TextSupportState()
 
     @staticmethod
-    def draw_text(drawn_text: charmy_stuff.draw.DrawnText, window: WindowBase):
+    def draw_text(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase):
         """To draw text on GUI or canvas."""
         ## Set Cairo font
         if not TextureBase.cairo_set_context_texture(window.cairo_context, drawn_text.texture):
@@ -371,33 +398,33 @@ class TextBase(template.TextBase):
             drawn_text.style.font, 
             cairo.FontSlant.NORMAL if not drawn_text.style.italic else cairo.FontSlant.ITALIC, 
             cairo.FontWeight.BOLD if drawn_text.style.weight >= \
-                charmy_stuff.text_style.WEIGHT.BOLD else cairo.FontWeight.NORMAL
+                charmy_stuff.styles.text_style.WEIGHT.BOLD else cairo.FontWeight.NORMAL
             )
         window.cairo_context.set_font_size(drawn_text.style.size)
         ## Calc text size
         extents = window.cairo_context.text_extents(drawn_text.text)
         text_size = (int(round(extents.width, 0)), int(round(extents.height, 0)))
         if DEBUG_FLAGS.DRAW_CAIRO_STOCK_TEXT_BOUND:
-            text_bound = charmy_stuff.draw.DrawnShape(
-                charmy_stuff.shape.Rect(drawn_text.pos, text_size), 
+            text_bound = charmy_stuff.graphics.DrawnShape(
+                charmy_stuff.styles.shape.Rect(drawn_text.offset, text_size), 
                 (255, 0, 0, 50), 
                 2, (255, 0, 0)
                 )
             window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, text_bound)
         ## Draw text itself
-        window.cairo_context.move_to(drawn_text.pos[0], drawn_text.pos[1] + text_size[1])
+        window.cairo_context.move_to(drawn_text.offset[0], drawn_text.offset[1] + text_size[1])
         # 👆 Cairo use bottom-left as anchor, while Charmy uses top-left, so needs conversion on y
         window.cairo_context.show_text(drawn_text.text)
         ## Underline & strikethrough
         offset = int(drawn_text.style.size // 5)
         if drawn_text.style.underlined != False:
             # Underline
-            underline: charmy_stuff.draw.DrawnLine
+            underline: charmy_stuff.graphics.DrawnLine
             if isinstance(drawn_text.style.underlined, bool):
-                underline = charmy_stuff.draw.DrawnLine(charmy_stuff.shape.Line([
-                    (drawn_text.pos[0] - 2, drawn_text.pos[1] + text_size[1] + offset), 
-                    (drawn_text.pos[0] + text_size[0] + 2, 
-                     drawn_text.pos[1] + text_size[1] + offset)
+                underline = charmy_stuff.graphics.DrawnLine(charmy_stuff.styles.shape.Line([
+                    (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] + offset), 
+                    (drawn_text.offset[0] + text_size[0] + 2, 
+                     drawn_text.offset[1] + text_size[1] + offset)
                     ]), 
                     drawn_text.texture, max(1, int(drawn_text.style.size) // 15))
             else:
@@ -406,12 +433,12 @@ class TextBase(template.TextBase):
             window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, underline)
         if drawn_text.style.strikethrough != False:
             # Strikethrough
-            strikethrough: charmy_stuff.draw.DrawnLine
+            strikethrough: charmy_stuff.graphics.DrawnLine
             if isinstance(drawn_text.style.strikethrough, bool):
-                strikethrough = charmy_stuff.draw.DrawnLine(charmy_stuff.shape.Line([
-                    (drawn_text.pos[0] - 2, drawn_text.pos[1] + text_size[1] // 2 + offset), 
-                    (drawn_text.pos[0] + text_size[0] + 2, 
-                     drawn_text.pos[1] + text_size[1]//2 + offset)
+                strikethrough = charmy_stuff.graphics.DrawnLine(charmy_stuff.styles.shape.Line([
+                    (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] // 2 + offset), 
+                    (drawn_text.offset[0] + text_size[0] + 2, 
+                     drawn_text.offset[1] + text_size[1]//2 + offset)
                     ]), 
                     drawn_text.texture, max(1, int(drawn_text.style.size) // 15))
             else:

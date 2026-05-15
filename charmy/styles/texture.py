@@ -24,11 +24,62 @@ For full list of TextureLike types, see (NOT WRITTEN YET) section in the documen
 
 import typing
 
+import json
+
 
 # region Texture base class
 
-class Texture():
-    pass
+class Texture:
+    """Texture base class in Charmy."""
+    type: typing.ClassVar[str] = "texture"
+
+    @staticmethod
+    def find_class_by_type(type_name: str) -> type[Texture] | None:
+        """Find a texture class by line type, return `None` if not found.
+
+        :param type_name: Texture type in string
+        """
+        for cls in Texture.__subclasses__():
+            if cls.type == type_name:
+                return cls
+        else:
+            return None
+
+    @staticmethod
+    def from_json(json_content: dict[str, typing.Any] | str) -> Texture:
+        """Create a texture object from json content.
+
+        This function is a static method of Texture and its subclasses. It creates and returns a 
+        textre object base on the JSON content given. This will be useful when loading line config 
+        from styles.
+
+        :param json_content: The JSON content, either Python dict or raw string data
+
+        JSON Format
+        -----------
+        Textures can be represented in JSON in a structured way. Each JSON data must has a `type` 
+        key that defines the type of the texture, and also other keys and values that specify the 
+        params for that texture. The following is an example for pure colors.
+
+        .. code-block:: python
+            {
+            "type": "color", 
+            "color": (255, 0, 0, 100),
+            }
+        """
+        # Convert raw content to JSON
+        if isinstance(json_content, str):
+            json_content = json.loads(json_content)
+            assert type(json_content) is dict
+            # 👆 Must assert the type here, because the fucking json module did not specify the 
+            # type of the return value of loads()
+        if not isinstance(json_content["type"], str):
+            raise TypeError("Invalid texture JSON.")
+        cls = Texture.find_class_by_type(json_content["type"])
+        if cls is None:
+            raise ValueError(f"Invalid texture type {json_content["type"]}.")
+        params = json_content.copy().pop("type", json_content)
+        return cls(*params)
 
 
 # region Color
@@ -43,6 +94,7 @@ ColorLike: typing.TypeAlias = RGB | RGBA | HEX
 # Color class
 class Color(Texture):
     """Represents pure colors."""
+    type: typing.ClassVar[str] = "color"
 
     # @typing.overload
     # def __init__(self, r: int, g: int, b: int, a: int = 255): ... # RGB(A)
@@ -69,7 +121,8 @@ class Color(Texture):
             if color[0] == "#": # Remove leading hash if exists
                 color = color[1:]
             if len(color) == 6:
-                NotImplemented
+                raise NotImplementedError("HEX colors conversion not implemented")
+                # TODO: Implement HEX colors
 
     def __iter__(self):
         return iter(self.color)
@@ -95,6 +148,7 @@ class Transparent(Texture):
 
     Note that, in actual rendering, items with Transparent texture should be skipped.
     """
+    type: typing.ClassVar[str] = "transparent"
 
     def __init__(self):
         """Initialize a Transparent object."""

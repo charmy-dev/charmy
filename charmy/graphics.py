@@ -26,33 +26,33 @@ class DEBUG_OPTIONS:
 class DrawnObject(cm_object.CharmyObject):
     """Base class of drawn objects in Charmy."""
 
-    def __init__(self):
-        """Base class of drawn objects, should not be instantiated directly."""
-        self.anchor: styles.shape.Point = (0, 0)
-
     @abstractmethod
     def draw(self, window: cm_window.Window): ...
 
-# region Lines & Shapes
+# region Line
 
 class DrawnLine(DrawnObject):
     """A class used to represent lines drawn to GUI or canvas."""
-    line: styles.shape.LinePath
-    _texture: styles.texture.Texture
-    width: int = 5
 
     def __init__(self, 
                 line: styles.shape.LinePath, 
                 texture: styles.texture.Texture | styles.texture.TextureLike, 
-                width: int = 5):
+                width: int = 5, 
+                offset: styles.shape.Point | typing.Literal["auto"]= "auto", 
+                ):
         """Used to express lines drawn on GUI or canvas.
 
         :param line: The line (to be drawn)
-        :param texture: styles.texture.Texture of the drawn line        :param width:  width
+        :param texture: Texture of the drawn line
+        :param width: Line width
         """
         self.line: styles.shape.LinePath = line
         self._texture: styles.texture.Texture = styles.texture.ensure_texture(texture)
         self.width: int = width
+        if offset == "auto":
+            offset = self.line.boundary[0]
+        self.offset: styles.shape.Point = offset
+        self.anchor: styles.shape.Point = self.line.boundary[0]
 
     @property
     def texture(self) -> styles.texture.Texture:
@@ -92,22 +92,23 @@ class DrawnLine(DrawnObject):
                     styles.shape.Rect(*self.line.boundary), 
                     (0, 0, 255, 10), 
                     1, (0, 0, 255), 
+                    self.offset, 
                     ))
         return self
 
 
+# region Shape
+
 class DrawnShape(DrawnObject):
     """A Class used to represent shapes drawn to GUI or canvas."""
-    shape: styles.shape.AnyShape
-    _texture: styles.texture.Texture
-    border_width: int = 0
-    _border_texture: styles.texture.Texture = styles.texture.ensure_texture(None)
 
     def __init__(self, 
                 shape: styles.shape.AnyShape, 
                 texture: styles.texture.Texture | styles.texture.TextureLike, 
                 border_width: int = 5, 
-                border_texture: styles.texture.Texture | styles.texture.TextureLike = None):
+                border_texture: styles.texture.Texture | styles.texture.TextureLike = None, 
+                offset: styles.shape.Point | typing.Literal["auto"] = "auto", 
+                ):
         """Used to express shapes drawn on GUI or canvas.
 
         :param shape: The shape (to be drawn)
@@ -119,6 +120,10 @@ class DrawnShape(DrawnObject):
         self._texture: styles.texture.Texture = styles.texture.ensure_texture(texture)
         self.border_width: int = border_width
         self._border_texture: styles.texture.Texture = styles.texture.ensure_texture(border_texture)
+        if offset == "auto":
+            offset = self.shape.boundary[0]
+        self.offset: styles.shape.Point = offset
+        self.anchor: styles.shape.Point = self.shape.boundary[0]
 
     @property
     def texture(self) -> styles.texture.Texture:
@@ -162,6 +167,7 @@ class DrawnShape(DrawnObject):
                     styles.shape.Rect(*self.shape.boundary), 
                     (0, 0, 255, 10), 
                     1, (0, 0, 255), 
+                    self.offset, 
                     ))
         return self
 
@@ -174,19 +180,22 @@ class DrawnText(DrawnObject):
 
     def __init__(self, 
                 text: str, 
-                font: styles.text_style.TextStyle, 
-                pos: styles.shape.Point, 
-                texture: styles.texture.Texture | styles.texture.TextureLike):
+                offset: styles.shape.Point, 
+                style: styles.text_style.TextStyle, 
+                texture: styles.texture.Texture | styles.texture.TextureLike, 
+                ):
         """Used to express text drawn on GUI or canvas.
 
         :param text: The text content, in Python string
-        :param font: The text style to use
+        :param style: The text style to use
+        :param offset: Position of the drawn text
         :param texture: The texture to use on text
         """
         self.text: str = text
-        self.style: styles.text_style.TextStyle = font
-        self.pos: styles.shape.Point = pos
+        self.offset: styles.shape.Point = offset
+        self.style: styles.text_style.TextStyle = style
         self._texture: styles.texture.Texture = styles.texture.ensure_texture(texture)
+        self.anchor: styles.shape.Point = (0, 0)
 
     @property
     def texture(self) -> styles.texture.Texture:
@@ -219,6 +228,7 @@ class DrawnText(DrawnObject):
                 if not backend.TextBase.supports.custom_strikethrough:
                     rendered_style.strikethrough = True
                 ## Fontweight
+                # Set font weight to closest supported one
                 # This part vibed with GitHub Copilot using model GPT-5 mini
                 available_weights = backend.TextBase.supports.fontweight
                 if self.style.weight not in available_weights:

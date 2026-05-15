@@ -4,7 +4,5 @@ This module imports limited parts of Charmy and provide it to backends, allowing
 referencing Charmy objects while less likely to trigger circular import errors.
 """
 
-from ..styles import shape
-from ..styles import texture
-from ..styles import text_style
-from .. import draw
+from .. import styles
+from .. import graphics

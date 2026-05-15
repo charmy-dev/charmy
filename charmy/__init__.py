@@ -20,10 +20,10 @@ from .const import *
 
 from . import backend
 
-from . import draw
+from . import graphics
 from .event import Event, EventHandling, EventTask, WorkingThread
 from .object import CharmyObject
 # from .frameworks import Frameworks
-from .styles import shape, texture, theme
+from . import styles
 from .var import BooleanVar, FloatVar, IntVar, StringVar, Var
 from .widgets import *
