@@ -29,7 +29,7 @@ class Button(Widget):
                             }, 
                         "background": {
                             "type": "color", 
-                            "color": (150, 150, 150), 
+                            "color": (200, 200, 200), 
                             }, 
                         "border_width": 2, 
                         "border_texture": {
@@ -87,11 +87,9 @@ class Button(Widget):
                 offset=self.pos, 
                 )
             )
-        self._draw_list.append(
-            graphics.DrawnText(
-                self.text, 
-                styles.text_style.TextStyle.from_json(curr_style["text_style"]), 
-                styles.texture.Texture.from_json(curr_style["text_texture"]), 
-                (0, 0), 
-                )
+        drawn_text = graphics.DrawnText(
+            self.text, 
+            styles.text_style.TextStyle.from_json(curr_style["text_style"]), 
+            styles.texture.Texture.from_json(curr_style["text_texture"]), 
+            (0, 0), 
             )

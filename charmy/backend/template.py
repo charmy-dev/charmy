@@ -185,7 +185,7 @@ class WindowBase(WhateverBase):
             )
         return self
 
-    def update(self) -> None:
+    def update(self, redraw: bool = True) -> typing.Self:
         """Updates the window, although not supported in nobackend and will throw an error"""
         raise NotImplementedError(
             f"{Backend.friendly_name} is not a valid backend to make Charmy work. "
@@ -193,7 +193,7 @@ class WindowBase(WhateverBase):
             "Hint: If you already specified another backend, this means that backend is invalid."
         )
 
-    def draw_frame(self, drawing_list: list[charmy_stuff.graphics.DrawnObject]) -> None:
+    def draw_frame(self, drawing_list: list[charmy_stuff.graphics.DrawnObject]) -> typing.Self:
         """Draw a frame for the window.
         
         :param drawing_list: The list of the objects to draw
@@ -211,6 +211,12 @@ class WindowBase(WhateverBase):
                     f"most backends (including current {self.Backend.friendly_name})", 
                     f"Drawing object type {drawing_obj.__class__.__name__}"
                     )
+        return self
+
+    def clear_screen(self) -> typing.Self:
+        """To clear all content from a window"""
+        self.drawing_list = []
+        return self
 
     def set_title(self, new: str) -> typing.Self:
         """Set title to window, does nothing on dummy"""
@@ -239,7 +245,7 @@ class LineBase(WhateverBase):
         raise RuntimeError("LineBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_line(line: charmy_stuff.graphics.DrawnLine, window: WindowBase):
+    def draw_line(line: charmy_stuff.graphics.DrawnLine, window: WindowBase, *args, **kwargs):
         """To draw a line on a specific GUI or canvas.
 
         Args:
@@ -270,7 +276,7 @@ class ShapeBase():
         raise RuntimeError("ShapeBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_shape(shape: charmy_stuff.graphics.DrawnShape, window: WindowBase):
+    def draw_shape(shape: charmy_stuff.graphics.DrawnShape, window: WindowBase, *args, **kwargs):
         """To draw a shape on a specific GUI or canvas.
 
         :param shape: The shape to be drawn
@@ -295,7 +301,7 @@ class TextureBase():
 
     supports: TextureSupportState = TextureSupportState()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         """Not supposed to be instantiated."""
         raise RuntimeError("TextureBase is used to hold APIs, but not supposed to be instantiated.")
 
@@ -321,9 +327,14 @@ class TextBase():
         raise RuntimeError("TextBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_text(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase):
+    def draw_text(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase, *args, **kwargs):
         """To draw a line or paragraph of text on a specific GUI or canvas."""
-        not_implemented_func(operation_desc="Drawig text")
+        not_implemented_func(operation_desc="Drawing text")
+
+    @staticmethod
+    def get_text_bound(drawn_text: charmy_stuff.graphics.DrawnText, *args, **kwargs):
+        """To get the text's boundary when it is rendered by a specific backend."""
+        not_implemented_func(operation_desc="Getting text boundary.")
 
 
 # region: Alias WhateverBase classes

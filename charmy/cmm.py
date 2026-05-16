@@ -1,5 +1,8 @@
 from __future__ import annotations as _
+
 import typing
+
+import time
 import warnings
 
 from .backend import loader as backend_loader
@@ -56,13 +59,18 @@ class CharmyManager(CharmyObject):
         return
 
 
-def mainloop() -> None:
-    """Start main loop."""
+def mainloop(interval: float = 0) -> None:
+    """Start main loop.
+
+    :param interval: Time to wait between each loop, in integer seconds
+    """
     while True:
         for manager_ref in CharmyManager.instances:
             manager = manager_ref()
             if manager != None:
                 manager.update()
+        if interval > 0:
+            time.sleep(interval)
 
 
 def quit():  # NOQA

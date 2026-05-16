@@ -6,16 +6,13 @@ import typing
 
 from abc import abstractmethod
 import copy
+from PIL import ImageFont
 
-# from .styles import texture as cm_texture
-# from .styles import text_style as cm_text_style
 from . import styles
 from . import object as cm_object
 
 if typing.TYPE_CHECKING:
     from .widgets import window as cm_window
-    # from .styles import shape as cm_shape
-    # from .styles import text_style as cm_font
 
 
 class DEBUG_FLAGS:
@@ -176,7 +173,12 @@ class DrawnShape(DrawnObject):
 # region Text
 
 class DrawnText(DrawnObject):
-    """A class used to represent texts drawn to GUI or canvas."""
+    """A class used to represent texts drawn to GUI or canvas.
+
+    Notes For Getting Boundary
+    --------------------------
+    Text relies on backend to render in most cases, so its boundary should be get from backend.
+    """
 
     def __init__(self, 
                 text: str, 

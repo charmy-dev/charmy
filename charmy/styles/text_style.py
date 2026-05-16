@@ -9,6 +9,7 @@ import typing
 
 if typing.TYPE_CHECKING:
     from .. import graphics as cm_draw
+    from ..backend import template as cm_backend
 
 
 class WEIGHT:
@@ -98,6 +99,17 @@ eights?view=netframework-4.8#remarks) to learn more about the values. Presets ar
     @staticmethod
     def from_json(json_content):
         return TextStyle(**json_content)
+
+    def get_text_boundary(self, text: str, backend: typing.Optional[cm_backend.Backend]):
+        """Get boundary of a specific text in this style."""
+        if backend is not None:
+            # If backend specified, then get size from backend
+            from .. import graphics
+            return backend.TextBase.get_text_bound(graphics.DrawnText(
+                text, self, (0, 0, 0)
+                ))
+        else:
+            pass
 
 
 TextStyle.sys_default = TextStyle("Arial", 14)
