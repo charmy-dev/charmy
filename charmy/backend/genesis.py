@@ -10,11 +10,12 @@ from __future__ import annotations as _
 
 import typing
 
-from dataclasses import dataclass
-import sdl2
+# import sdl2
 import sdl2.ext
 import cairo
 import sys
+import os
+import tempfile
 import ctypes
 import math
 import warnings
@@ -184,6 +185,21 @@ class WindowBase(template.WindowBase):
                 case sdl2.SDL_QUIT:
                     sys.exit(0)
                     NotImplemented
+        return self
+
+    def set_icon(self, new: bytes) -> typing.Self:
+        """Set window icon from image bytes.
+
+        :param new: New icon in bytes data
+        """
+        icon_f = tempfile.NamedTemporaryFile(delete=False)
+        icon_f.write(new)
+        temp_path = icon_f.name
+        icon_f.close()
+        surface = sdl2.ext.image.load_img(temp_path)
+        sdl2.SDL_SetWindowIcon(self.window, surface)
+        sdl2.SDL_FreeSurface(surface)
+        os.unlink(temp_path)
         return self
 
 

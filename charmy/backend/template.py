@@ -188,9 +188,8 @@ class WindowBase(WhateverBase):
     def update(self, redraw: bool = True) -> typing.Self:
         """Updates the window, although not supported in nobackend and will throw an error"""
         raise NotImplementedError(
-            f"{Backend.friendly_name} is not a valid backend to make Charmy work. "
+            f"{self.Backend.friendly_name} is not a valid backend to make Charmy work. "
             "You must install another backend that supports your system GUI.\n"
-            "Hint: If you already specified another backend, this means that backend is invalid."
         )
 
     def draw_frame(self, drawing_list: list[charmy_stuff.graphics.DrawnObject]) -> typing.Self:
@@ -219,6 +218,11 @@ class WindowBase(WhateverBase):
         return self
 
     def set_title(self, new: str) -> typing.Self:
+        """Set title to window, does nothing on dummy"""
+        not_implemented_func(operation_desc="Setting window title")
+        return self
+
+    def set_icon(self, new: bytes) -> typing.Self:
         """Set title to window, does nothing on dummy"""
         not_implemented_func(operation_desc="Setting window title")
         return self
