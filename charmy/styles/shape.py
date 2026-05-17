@@ -31,6 +31,7 @@ import typing
 
 import warnings
 from dataclasses import dataclass
+from abc import abstractmethod, abstractproperty
 import json
 import re
 
@@ -44,7 +45,7 @@ if typing.TYPE_CHECKING:
 
 # region Lines
 
-class LinePath():
+class LinePath:
     """Base class of all line paths."""
 
     type: typing.ClassVar[str] = "line_path_class"
@@ -56,22 +57,6 @@ class LinePath():
     @property
     def end_point(self) -> Point:
         raise NotImplementedError
-
-    def draw(self, window: Window, texture: Texture | TextureLike, width: int = 5, 
-             _fallback_from: list[type[LinePath]] = []) -> typing.Self:
-        """Create DrawnLine object and draw the line.
-
-        :param window: The window to draw line to
-        :param texture: The texture of the line
-        :param width: Line width in pixels
-        :param _fallback_from: Fallback path, for internal use
-        :return self: The LinePath object itself
-        """
-        # window.backend_base.drawing_list.append(DrawnLine(self, texture, width))
-        warnings.warn("Directly drawing lines is not suggested, and may be removed in future.", 
-                      DeprecationWarning, stacklevel=2)
-        cm_draw.DrawnLine(self, texture, width).draw(window, _fallback_from)
-        return self
 
     def fallback(self, _from: list[type[LinePath]] = []) -> typing.Sequence[LinePath]:
         """Fallback ability of the line. For final fallback, warn that the line cannot be drawn.
@@ -452,7 +437,18 @@ class CubicBezier(LinePath):
 class CharmyShapeError(Exception): ...
 class CharmySVGIntepreterError(Exception): ...
 
-class AnyShape():
+class ShapeType:
+    """Base class of shapes"""
+    type: typing.ClassVar[str] = "shape_type"
+
+    @abstractmethod
+    def __init__(self, *args, **kwargs): ...
+
+    @property
+    @abstractmethod
+    def boundary(self) -> ShapeRange: ...
+
+class AnyShape(ShapeType):
     """Base class of all shapes."""
     type: typing.ClassVar[str] = "any_shape"
 
@@ -477,11 +473,11 @@ class AnyShape():
             return (0, 0), (0, 0)
         line_boundaries = [line.boundary for line in self.lines]
         xs = [
-            *[pos[0] for pos, size in line_boundaries], 
+            *[pos[0] for pos, _ in line_boundaries], 
             *[pos[0] + size[0] for pos, size in line_boundaries], 
             ]
         ys = [
-            *[pos[1] for pos, size in line_boundaries], 
+            *[pos[1] for pos, _ in line_boundaries], 
             *[pos[1] + size[1] for pos, size in line_boundaries], 
             ]
         min_x, max_x = min(xs), max(xs)
@@ -500,20 +496,6 @@ class AnyShape():
             last_line_end = line.end_point
             # 👆 Set last_line_end to end point of current line, lines must be connected.
         return True
-
-    def draw(self, window: Window, texture: Texture | TextureLike, 
-             border_width: int = 0, border_texture: Texture | TextureLike = None) -> typing.Self:
-        """Draw the shape using backend.
-
-        :param window: The window to draw shape to
-        :param texture: Texture within the shape
-        :param border_width: Width of borderline in px, positive for outer and negative for inner
-        :param border_texture: Texture used on border
-        """
-        warnings.warn("Directly drawing shapes is not suggested, and may be removed in future.", 
-                      DeprecationWarning, stacklevel=2)
-        cm_draw.DrawnShape(self, texture, border_width, border_texture).draw(window)
-        return self
 
     @staticmethod
     def find_class_by_type(type_name: str) -> type[AnyShape] | None:
@@ -647,6 +629,55 @@ class RoundRect(AnyShape):
                 )
             ]
 
+# region ShapeGroup
+class ShapeGroup(ShapeType):
+    """Complicated shapes formed by a group of AnyShape."""
+    type: typing.ClassVar[str] = "shape_group"
+
+    def __init__(self, shapes: typing.Sequence[AnyShape | ShapeGroup]) -> None:
+        self._shapes: typing.Sequence[AnyShape] = []
+        self.shapes = shapes
+
+    @property
+    def shapes(self) -> typing.Sequence[AnyShape]:
+        return self._shapes
+
+    @shapes.setter
+    def shapes(self, new: typing.Sequence[AnyShape | ShapeGroup]) -> None:
+        self._shapes = []
+        for shape in new:
+            if isinstance(shape, ShapeGroup):
+                for subshape in shape.shapes:
+                    self._shapes.append(subshape)
+            else:
+                self._shapes.append(shape)
+
+    @property
+    def boundary(self) -> ShapeRange:
+        """Rect range of a group of shape."""
+        if len(self.shapes) == 0:
+            return (0, 0), (0, 0)
+        shape_boundaries = [shape.boundary for shape in self.shapes]
+        xs = [
+            *[pos[0] for pos, _ in shape_boundaries], 
+            *[pos[0] + size[0] for pos, size in shape_boundaries], 
+            ]
+        ys = [
+            *[pos[1] for pos, _ in shape_boundaries], 
+            *[pos[1] + size[1] for pos, size in shape_boundaries], 
+            ]
+        min_x, max_x = min(xs), max(xs)
+        min_y, max_y = min(ys), max(ys)
+        return (min_x, min_y), (max_x - min_x, max_y - min_y)
+
+    def __getitem__(self, item: int) -> AnyShape:
+        return self.shapes[item]
+
+    def __iter__(self) -> typing.Iterator[AnyShape]:
+        return iter(self.shapes)
+
+    def __len__(self) -> int:
+        return len(self.shapes)
 
 # region Type aliases
 
@@ -665,7 +696,7 @@ ShapeJSON: typing.TypeAlias = dict
 # region SVG conversion
 
 @staticmethod
-def shapes_from_svg_path(svg_path: str, scale: float = 1) -> list[AnyShape]:
+def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGroup:
     """This converts SVG path into sequence of Charmy lines.
 
     I made a fucking complete SVG path intepreter man!!!   —— rgzz666 @ 26/05/16
@@ -810,7 +841,9 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> list[AnyShape]:
                 command_index += 1
             case _:
                 raise CharmySVGIntepreterError(f"Invalid or unsupported command: {command}.")
-    return shapes
-
+    if len(shapes) == 1:
+        return shapes[0]
+    else:
+        return ShapeGroup(shapes)
 
 # endregion

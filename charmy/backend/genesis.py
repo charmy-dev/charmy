@@ -17,6 +17,8 @@ import cairo
 import sys
 import ctypes
 import math
+import warnings
+import time
 
 from . import template
 
@@ -226,6 +228,7 @@ class LineBase(template.LineBase):
                 line_point[0] - anchor[0] + offset[0], 
                 line_point[1] - anchor[1] + offset[1]
                 )
+
         # Detect wrong backend
         if window.Backend != Backend:
             raise RuntimeError(
@@ -305,7 +308,9 @@ class ShapeBase(template.ShapeBase):
     def draw_any_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, 
                        window: WindowBase, noskip: bool = False):
         """Draw shape by lines."""
-        import time
+        if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.AnyShape):
+            warnings.warn("draw_any_shape() is only for drawing AnyShape")
+            return
         if DEBUG_FLAGS.WARN_UNCLOSED_SHAPES:
             last_line_end = drawn_shape.shape.lines[-1].end_point
         for line in drawn_shape.shape.lines:
@@ -321,9 +326,10 @@ class ShapeBase(template.ShapeBase):
                 line, 
                 (255, 0, 0, 255 if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING else 0), 
                 1, 
-                offset=drawn_shape.offset
+                offset=drawn_shape.offset, 
+                anchor=drawn_shape.anchor, 
                 )
-            drawn_line.anchor = drawn_shape.shape.boundary[0]
+            # drawn_line.anchor = drawn_shape.shape.boundary[0]
             LineBase.draw_line(drawn_line, window, stroke=False, noskip=True)
             if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING:
                 window.cairo_context.stroke_preserve()
@@ -341,15 +347,17 @@ class ShapeBase(template.ShapeBase):
             window.cairo_context.stroke_preserve()
             window.update(redraw=False)
             time.sleep(0.5)
-        if TextureBase.cairo_set_context_texture(window.cairo_context, drawn_shape.texture):
+        if TextureBase.cairo_set_context_texture(window.cairo_context, drawn_shape.texture, noskip):
             window.cairo_context.fill()
         window.cairo_context.stroke()
-        if TextureBase.cairo_set_context_texture(window.cairo_context, drawn_shape.border_texture) \
+        if TextureBase.cairo_set_context_texture(
+            window.cairo_context, drawn_shape.border_texture, noskip) \
             and drawn_shape.border_width != 0:
             # If still need visible border, then draw again
             for line in drawn_shape.shape.lines:
                 drawn_line = charmy_stuff.graphics.DrawnLine(
-                    line, drawn_shape.border_texture, drawn_shape.border_width)
+                    line, drawn_shape.border_texture, drawn_shape.border_width, 
+                    offset=drawn_shape.offset, anchor=drawn_shape.anchor)
                 LineBase.draw_line(drawn_line, window)
 
     @staticmethod

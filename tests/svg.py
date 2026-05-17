@@ -13,15 +13,12 @@ APPLE_SVG = \
     "5.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13"\
     " 3.5Z"
 
-shape_list = cm.styles.shape.shapes_from_svg_path(APPLE_SVG, scale=10)
-print(len(shape_list))
-[print(lines) for lines in [[line.type for line in shape.lines] for shape in shape_list]]
+shape = cm.styles.shape.shapes_from_svg_path(APPLE_SVG, scale=10)
 
-for shape in shape_list:
-    apple_logo = cm.graphics.DrawnShape(
-        shape, 
-        (0, 0, 0)
-        ) .draw(window)
+apple_logo = cm.graphics.DrawnShape(
+    shape, 
+    (0, 0, 0)
+    ) .draw(window)
 
 # Disclaimer
 cm.graphics.DrawnText(
@@ -36,7 +33,7 @@ cm.graphics.DrawnText(
     (50, 250), 
     ) .draw(window)
 cm.graphics.DrawnText(
-    "The Apple logo is is an Apple, Inc. property.", 
+    "The Apple logo is is an Apple Inc. property.", 
     cm.styles.text_style.TextStyle(
         font="Consolas", 
         size=16, 
