@@ -1,13 +1,19 @@
 import typing
 
+import pathlib
+
+import io
+
 from ..event import EventHandling, Event
 from ..object import CharmyObject
 from .container import Container
 from .. import const
 from ..cmm import CharmyManager
 from .. import styles
+from ..utils import type_checking
 
 if typing.TYPE_CHECKING:
+    from PIL import Image as PIL_Image
     from ..backend.template import WindowBase
 
 
@@ -44,6 +50,7 @@ class WindowEntity:
         self._size: styles.shape.Size
         self._title: str
         self._background: styles.texture.Texture | styles.texture.TextureLike
+        self._icon: bytes
         # Other flags
         self.visible = True
         self._alive = True
@@ -52,22 +59,22 @@ class WindowEntity:
         # Set props
         self.size = size
         self.title = title
+        self.icon = pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / "icon.ico"
         self.background = background
         # Show window
         self.show()
 
     @property
     def title(self) -> str:
-        """Window title"""
+        """Window title.
+
+        Type string, internally stored as string. Getting value of this property will return 
+        current window title, while setting value will immediately change window's title.
+        """
         return self._title
 
     @title.setter
     def title(self, new: str):
-        """Set title of the window.
-        
-        Returns:
-            self: The window itself
-        """
         self.backend_base.set_title(new)
         self._title = new
 
@@ -80,6 +87,39 @@ class WindowEntity:
     def background(self, new: styles.texture.Texture | styles.texture.TextureLike):
         self.backend_base.background = styles.texture.ensure_texture(new)
         self._background = new
+
+    @property
+    def icon(self) -> bytes:
+        """Window title.
+
+        Type string, `pathlib.Path`, bytes or `Image.Image` from PIL, internally stored as bytes. 
+        Getting value of this property will return current window icon, while setting value will 
+        immediately change window's title.
+
+        When setting value, values of type string or `Path` express a path to the icon file, while 
+        those of type bytes or `Image` express icon image content
+        """
+        return self._icon
+
+    @icon.setter
+    def icon(self, new: str | pathlib.Path | bytes | type_checking.PILImageType) -> None:
+        if isinstance(new, str) or isinstance(new, pathlib.Path):
+            # Icon file path
+            if isinstance(new, str):
+                new = pathlib.Path(new)
+            icon_f = open(new, mode="rb")
+            self._icon = icon_f.read()
+            icon_f.close()
+        else:
+            # Icon image raw content
+            if isinstance(new, type_checking.PILImageType):
+                buffer = io.BytesIO()
+                new.save(buffer, format="PNG")
+                new = buffer.getvalue()
+                buffer.close()
+            self._icon = new
+        # Call backend set icon
+        self.backend_base.set_icon(self._icon)
 
     def show(self) -> typing.Self:
         """Show the window.
