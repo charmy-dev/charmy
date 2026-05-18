@@ -18,7 +18,7 @@ if typing.TYPE_CHECKING:
 
 
 class WindowEntity:
-    """Represents abilities of window entities."""
+    """Contains abilities of window entities."""
 
     def __init__(self, 
                 parent: CharmyManager | None = None, 
@@ -63,6 +63,15 @@ class WindowEntity:
         self.background = background
         # Show window
         self.show()
+
+    @property
+    def size(self) -> styles.shape.Size:
+        return self.size
+
+    @size.setter
+    def size(self, new: styles.shape.Size) -> None:
+        self._size = new
+        self.backend_base.set_size(new)
 
     @property
     def title(self) -> str:

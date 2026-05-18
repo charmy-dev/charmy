@@ -109,7 +109,7 @@ class WindowBase(template.WindowBase):
             sdl2.SDL_WINDOWPOS_UNDEFINED,
             sdl2.SDL_WINDOWPOS_UNDEFINED,
             self.size[0], self.size[1],
-            sdl2.SDL_WINDOW_SHOWN,
+            sdl2.SDL_WINDOW_SHOWN | sdl2.SDL_WINDOW_RESIZABLE, 
         )
 
         if not self.window:
@@ -135,56 +135,34 @@ class WindowBase(template.WindowBase):
         # self.window.show()
         return self
 
+    def cairo_reinit_surface(self):
+        """Re-init Cairo surface and canvas, only avail in Genesis backend."""
+        self.surface = cairo.ImageSurface(
+            cairo.FORMAT_ARGB32, self.size[0], self.size[1])
+        self.cairo_context = cairo.Context(self.surface)
+
+    def set_size(self, new: charmy_stuff.styles.shape.Size, _passive: bool = False) -> typing.Self:
+        """Set window size.
+
+        :param new: The new window size in tuple of `(width, height)`
+        :param _passive: Whether the resize is triggered by dragging window etc., internal use only
+        """
+        if new == self.size:
+            return self
+        self.size = new
+        if not _passive:
+            sdl2.SDL_SetWindowSize(self.window, new[0], new[1])
+        self.cairo_reinit_surface()
+        # print(f"Set size to {self.size}")
+        return self
+
     def set_title(self, new: str) -> typing.Self:
-        """Set window title."""
+        """Set window title.
+
+        :param new: The new window size in string
+        """
         self.title = new
         sdl2.SDL_SetWindowTitle(self.window, self.title.encode("utf-8"))
-        return self
-    
-    def update(self, redraw: bool = True) -> typing.Self:
-        """Update the window.
-        
-        :return self: The WindowBase itself
-        """
-        if redraw:
-            self.draw_frame(self.drawing_list)
-
-        # Following Vibed with Deepseek
-
-        # Get Cairo data（memoryview）
-        cairo_data = self.surface.get_data()
-
-        # Get SDL2 window surface
-        self._window_surface = sdl2.SDL_GetWindowSurface(self.window)
-        # Lock the surface
-        sdl2.SDL_LockSurface(self._window_surface)
-
-        # Get pixels pointer
-        pixels_ptr = self._window_surface.contents.pixels
-        # Improvement: Get lower level pointer directly to avoid tobytes() copy
-        # Calc data size
-        pitch = self._window_surface.contents.pitch
-        data_size = pitch * self.size[1]
-        # Convert memoryview to ctypes data
-        cairo_ptr = ctypes.cast(
-            (ctypes.c_char * data_size).from_buffer(cairo_data),
-            ctypes.c_void_p
-        )
-
-        # Copy data
-        ctypes.memmove(pixels_ptr, cairo_ptr, data_size)
-        # Unlock surface
-        sdl2.SDL_UnlockSurface(self._window_surface)
-
-        # Update display
-        sdl2.SDL_UpdateWindowSurface(self.window)
-
-        # Handle events
-        for event in sdl2.ext.get_events():
-            match event.type:
-                case sdl2.SDL_QUIT:
-                    sys.exit(0)
-                    NotImplemented
         return self
 
     def set_icon(self, new: bytes) -> typing.Self:
@@ -200,6 +178,61 @@ class WindowBase(template.WindowBase):
         sdl2.SDL_SetWindowIcon(self.window, surface)
         sdl2.SDL_FreeSurface(surface)
         os.unlink(temp_path)
+        return self
+
+    def update(self, redraw: bool = True) -> typing.Self:
+        """Update the window.
+        
+        :return self: The WindowBase itself
+        """
+        if redraw:
+            self.draw_frame(self.drawing_list)
+
+
+        if self.surface.get_width() == self.size[0] and self.surface.get_height() == self.size[1]:
+            # Following Vibed with Deepseek
+
+            # Get Cairo data（memoryview）
+            cairo_data = self.surface.get_data()
+
+            # Get SDL2 window surface
+            self._window_surface = sdl2.SDL_GetWindowSurface(self.window)
+            # Lock the surface
+            sdl2.SDL_LockSurface(self._window_surface)
+
+            # Get pixels pointer
+            pixels_ptr = self._window_surface.contents.pixels
+            # Improvement: Get lower level pointer directly to avoid tobytes() copy
+            # Calc data size
+            pitch = self._window_surface.contents.pitch
+            data_size = pitch * self.size[1]
+            # Convert memoryview to ctypes data
+            cairo_ptr = ctypes.cast(
+                (ctypes.c_char * data_size).from_buffer(cairo_data),
+                ctypes.c_void_p
+            )
+
+            # Copy data
+            ctypes.memmove(pixels_ptr, cairo_ptr, data_size)
+            # Unlock surface
+            sdl2.SDL_UnlockSurface(self._window_surface)
+
+        # Update display
+        sdl2.SDL_UpdateWindowSurface(self.window)
+
+        # Handle events
+        for event in sdl2.ext.get_events():
+            match event.type:
+                case sdl2.SDL_QUIT:
+                    sys.exit(0)
+                    NotImplemented
+                case sdl2.SDL_WINDOWEVENT:
+                    match event.window.event:
+                        case sdl2.SDL_WINDOWEVENT_RESIZED:
+                            w = ctypes.c_int()
+                            h = ctypes.c_int()
+                            sdl2.SDL_GetWindowSize(self.window, w, h)
+                            self.set_size((w.value, h.value), _passive = True)
         return self
 
 

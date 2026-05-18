@@ -217,13 +217,18 @@ class WindowBase(WhateverBase):
         self.drawing_list = []
         return self
 
+    def set_size(self, new: charmy_stuff.styles.shape.Size) -> typing.Self:
+        """Set window size, does nothing on dummy."""
+        not_implemented_func(operation_desc="Setting window size")
+        return self
+
     def set_title(self, new: str) -> typing.Self:
-        """Set title to window, does nothing on dummy"""
+        """Set title to window, does nothing on dummy."""
         not_implemented_func(operation_desc="Setting window title")
         return self
 
     def set_icon(self, new: bytes) -> typing.Self:
-        """Set title to window, does nothing on dummy"""
+        """Set title to window, does nothing on dummy."""
         not_implemented_func(operation_desc="Setting window title")
         return self
 
