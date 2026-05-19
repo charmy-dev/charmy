@@ -15,15 +15,22 @@ if typing.TYPE_CHECKING:
 
 
 class DEBUG_FLAGS:
-    DRAW_OBJECTS_BOUNDARY: bool = False
+    DRAW_OBJECTS_BOUNDARY: bool = True
 
 
 # region DrawnObject base class
 class DrawnObject(cm_object.CharmyObject):
     """Base class of drawn objects in Charmy."""
 
+    def __init__(self):
+        self._actual_draw_list: dict[cm_window.Window, list[DrawnObject]] = {}
+
     @abstractmethod
-    def draw(self, window: cm_window.Window): ...
+    def draw(self, window: cm_window.Window, *args, **kwargs) -> typing.Self: ...
+
+    @property
+    @abstractmethod
+    def boundary(self) -> styles.shape.ShapeRange: ...
 
 # region Line
 
@@ -45,6 +52,8 @@ class DrawnLine(DrawnObject):
         :param offset: Position offset of the drawn line
         :param anchor: Point of anchor on the original line
         """
+        super().__init__()
+
         self.line: styles.shape.LinePath = line
         self._texture: styles.texture.Texture = styles.texture.ensure_texture(texture)
         self.width: int = width
@@ -57,6 +66,7 @@ class DrawnLine(DrawnObject):
 
     @property
     def texture(self) -> styles.texture.Texture:
+        """Texture of the drawn line."""
         return self._texture
 
     @texture.setter
@@ -67,6 +77,14 @@ class DrawnLine(DrawnObject):
             # Convert into texture
             self._texture = styles.texture.ensure_texture(new_texture)
 
+    @property
+    def boundary(self) -> styles.shape.ShapeRange:
+        """Rect boundary of the drawn line"""
+        return (
+            self.offset[0] + self.line.boundary[0][0] - self.anchor[0], 
+            self.offset[1] + self.line.boundary[0][1] - self.anchor[1]
+            ), self.line.boundary[1]
+
     def draw(self, window: cm_window.Window, 
              _fallback_from: list[type[styles.shape.LinePath]] = []) -> typing.Self:
         """Draw the line.
@@ -76,12 +94,24 @@ class DrawnLine(DrawnObject):
         """
         backend = window.backend_base.backend
         # 👆 Alias to avoid path to backend properties getting too long. 😅
+        # Remove currently rencdered copy of this object on the current window
+        if window not in self._actual_draw_list.keys():
+            self._actual_draw_list[window] = []
+        for draw_object in self._actual_draw_list[window]:
+            if draw_object in window.backend_base.drawing_list:
+                window.backend_base.drawing_list.remove(draw_object)
+        self._actual_draw_list[window] = []
+        # Rendering process
+        for draw_object in self._actual_draw_list:
+            if draw_object in window.backend_base.drawing_list:
+                window.backend_base.drawing_list.remove(draw_object)
         if self.line.type == "line_path_class":
             raise TypeError("styles.shape.LinePath class is a template, cannot be drawn.")
         else:
             if self.line.type in backend.LineBase.supports:
                 # If supported by the windows' backend.
                 window.backend_base.drawing_list.append(self)
+                self._actual_draw_list[window].append(self)
             else:
                 # If not supported, enters the fallback process
                 _fallback_from.append(self.line.__class__)
@@ -89,14 +119,17 @@ class DrawnLine(DrawnObject):
                     drawn_host = copy.copy(self)
                     drawn_host.line = fallback_line
                     drawn_host.draw(window, _fallback_from)
+                    self._actual_draw_list[window].append(drawn_host)
             if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
-                window.backend_base.drawing_list.append(DrawnShape(
+                range_rect = DrawnShape(
                     styles.shape.Rect(*self.line.boundary), 
                     (0, 0, 255, 10), 
                     1, (0, 0, 255), 
                     self.offset, 
                     self.anchor, 
-                    ))
+                    )
+                window.backend_base.drawing_list.append(range_rect)
+                self._actual_draw_list[window].append(range_rect)
         return self
 
 
@@ -122,6 +155,8 @@ class DrawnShape(DrawnObject):
         :param offset: Position offset of the drawn shape
         :param anchor: Point of anchor on the original shape
         """
+        super().__init__()
+
         self.shape: styles.shape.ShapeType = shape
         self._texture: styles.texture.Texture = styles.texture.ensure_texture(texture)
         self.border_width: int = border_width
@@ -135,6 +170,7 @@ class DrawnShape(DrawnObject):
 
     @property
     def texture(self) -> styles.texture.Texture:
+        """Texture of the drawn shape."""
         return self._texture
 
     @texture.setter
@@ -147,6 +183,7 @@ class DrawnShape(DrawnObject):
 
     @property
     def border_texture(self) -> styles.texture.Texture:
+        """Texture used on the border of the drawn shape."""
         return self._border_texture
 
     @border_texture.setter
@@ -158,6 +195,14 @@ class DrawnShape(DrawnObject):
             # Convert into texture
             self._border_texture = styles.texture.ensure_texture(new_texture)
 
+    @property
+    def boundary(self) -> styles.shape.ShapeRange:
+        """Rect boundary of the drawn shape."""
+        return (
+            self.offset[0] + self.shape.boundary[0][0] - self.anchor[0], 
+            self.offset[1] + self.shape.boundary[0][1] - self.anchor[1]
+            ), self.shape.boundary[1]
+
     def draw(self, 
             window: cm_window.Window, 
             _fallback_from: list[type[styles.shape.LinePath]] = [], 
@@ -167,24 +212,36 @@ class DrawnShape(DrawnObject):
         :param window: The window to draw shape to
         :param _fallback_from: Internal use only, the fallback path
         """
+        backend = window.backend_base.backend
+        # Remove currently rencdered copy of this object on the current window
+        if window not in self._actual_draw_list.keys():
+            self._actual_draw_list[window] = []
+        for draw_object in self._actual_draw_list[window]:
+            if draw_object in window.backend_base.drawing_list:
+                window.backend_base.drawing_list.remove(draw_object)
+        self._actual_draw_list[window] = []
+        # Rendering process
         if isinstance(self.shape, styles.shape.ShapeGroup):
             for subshape in self.shape.shapes:
                 drawn_host = copy.copy(self)
                 drawn_host.shape = subshape
                 drawn_host.draw(window, _fallback_from)
+                self._actual_draw_list[window].append(drawn_host)
         else:
             backend = window.backend_base.backend
             if self.shape.type in backend.ShapeBase.supports or \
                 "any_shape" in backend.ShapeBase.supports:
                 window.backend_base.drawing_list.append(self)
             if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
-                    window.backend_base.drawing_list.append(DrawnShape(
+                    range_rect = DrawnShape(
                         styles.shape.Rect(*self.shape.boundary), 
                         (0, 0, 255, 50), 
                         1, (0, 0, 255), 
                         self.offset, 
                         self.anchor
-                        ))
+                        )
+                    window.backend_base.drawing_list.append(range_rect)
+                    self._actual_draw_list[window].append(range_rect)
         return self
 
 
@@ -213,6 +270,8 @@ class DrawnText(DrawnObject):
         :param offset: Position of the drawn text
         :param anchor: Point of anchor on the text
         """
+        super().__init__()
+
         self.text: str = text
         self.style: styles.text_style.TextStyle = style
         self._texture: styles.texture.Texture = styles.texture.ensure_texture(texture)
@@ -223,8 +282,11 @@ class DrawnText(DrawnObject):
             anchor = (0, 0)
         self.anchor: styles.shape.Point = anchor
 
+        self._backend_reported_boundary: styles.shape.ShapeRange = (0, 0), (0, 0)
+
     @property
     def texture(self) -> styles.texture.Texture:
+        """Texture of the drawn text."""
         return self._texture
 
     @texture.setter
@@ -235,8 +297,26 @@ class DrawnText(DrawnObject):
             # Convert into texture
             self._texture = styles.texture.ensure_texture(new_texture)
 
+    @property
+    def boundary(self) -> styles.shape.ShapeRange:
+        """Rect boundary of the drawn text."""
+        # TODO: Implement getting text boundary via text-shape conversion
+        return self._backend_reported_boundary
+
     def draw(self, window: cm_window.Window):
+        """Draw the text.
+
+        :param window: The window to draw text to
+        """
         backend = window.backend_base.backend
+        # Remove currently rencdered copy of this object on the current window
+        if window not in self._actual_draw_list.keys():
+            self._actual_draw_list[window] = []
+        for draw_object in self._actual_draw_list[window]:
+            if draw_object in window.backend_base.drawing_list:
+                window.backend_base.drawing_list.remove(draw_object)
+        self._actual_draw_list[window] = []
+        # Rendering process
         if backend.TextBase.supports.direct_render:
             # TODO: Add support for backend's prefer_conversion flag
             #### Direct render
@@ -266,6 +346,7 @@ class DrawnText(DrawnObject):
             else:
                 rendered_text = self
             window.backend_base.drawing_list.append(rendered_text)
+            self._actual_draw_list[window].append(self)
         else:
             #### Render as shape
             # TODO: Implement text → shape fallback

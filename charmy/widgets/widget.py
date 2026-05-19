@@ -30,7 +30,6 @@ class Widget(CharmyObject, EventHandling):
         self.pos: styles.shape.Point = (0, 0)
         self.size: styles.shape.Size = (0, 0)
         self.is_visible: bool = False
-        self._draw_list: list[graphics.DrawnObject] = []
 
     def __post_init__(self):
         """After initialization of widget."""
@@ -122,10 +121,10 @@ class Widget(CharmyObject, EventHandling):
             self.pos = pos
         if size is not None:
             self.size = size
-        for draw_object in self._draw_list:
-            if self.root_container:
-                if draw_object not in self.root_container.backend_base.drawing_list:
-                    draw_object.draw(self.root_container)
+        # for draw_object in self._draw_list:
+        #     if self.root_container:
+        #         if draw_object not in self.root_container.backend_base.drawing_list:
+        #             draw_object.draw(self.root_container)
         self.draw_ext(pos, size, *args, **kwargs)
         return self
 

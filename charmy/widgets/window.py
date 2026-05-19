@@ -22,7 +22,7 @@ class WindowEntity:
 
     def __init__(self, 
                 parent: CharmyManager | None = None, 
-                size: styles.shape.Size = (540, 480), 
+                size: styles.shape.Size = (150, 150), 
                 title: str = "Charmy Window", 
                 background: styles.texture.Texture | styles.texture.TextureLike = (150, 150, 150), 
                 *args, **kwargs):
@@ -154,7 +154,7 @@ class Window(CharmyObject, WindowEntity, Container, EventHandling):
 
     def __init__(self, 
                 parent: CharmyManager | None = None, 
-                size: styles.shape.Size = (540, 480), 
+                size: styles.shape.Size = (540, 360), 
                 title: str = "Charmy Window", 
                 background: styles.texture.Texture | styles.texture.TextureLike = (255, 255, 255), 
                 ):

@@ -33,7 +33,6 @@ test_rounded_rect = cm.graphics.DrawnShape(cm.styles.shape.RoundRect(
 test_rounded_rect_2 = cm.graphics.DrawnShape(cm.styles.shape.RoundRect(
     (350, 150), (150, 100), 25), (255, 255, 0, 50)) .draw(window)
 
-
 # region Texts
 test_text = cm.graphics.DrawnText(
     "Hello, this CHARMY world!", 

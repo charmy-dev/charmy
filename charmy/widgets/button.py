@@ -62,9 +62,32 @@ class Button(Widget):
         self.style: dict[str, typing.Any] = style
         self.theme: typing.Optional[styles.theme.Theme] = None
         self.state: str = "normal"
-        # self._initialized = True
         self._initialized = True
-        self._update_draw_list()
+
+        # Drawn objects, used by internal drawing functions
+        self._background_shape: graphics.DrawnShape
+
+    def draw(self, 
+            pos: styles.shape.Point, 
+            size: typing.Optional[styles.shape.Size], 
+            *args, **kwargs, 
+            ) -> typing.Self:
+        """Draw the button."""
+        # Fill vars to style
+        style_vars = (
+            self.theme, 
+            self.root_container, 
+            self
+            )
+        style_state = ':' + (self.state if self.state in self.style.keys() else "default")
+        curr_style = styles.style.fill_vars(self.style[style_state], *style_vars)
+        # Widget.draw
+        Widget.draw(self, pos, size, *args, **kwargs)
+        # Background shape
+        self._background_shape.offset = self.pos
+        self._background_shape.shape = self.style["shape"]
+        self._background_shape.draw
+        return self
 
     def _update_draw_list(self):
         """Update draw list of a button, for internal use only."""
@@ -87,9 +110,9 @@ class Button(Widget):
                 offset=self.pos, 
                 )
             )
-        drawn_text = graphics.DrawnText(
+        self._draw_list.append(graphics.DrawnText(
             self.text, 
             styles.text_style.TextStyle.from_json(curr_style["text_style"]), 
             styles.texture.Texture.from_json(curr_style["text_texture"]), 
-            (0, 0), 
-            )
+            (self.x + (self.width - self._draw_list) // 2, 0), 
+            ))

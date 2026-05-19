@@ -25,12 +25,12 @@ class GLFWError(Exception):
 class CharmyManager(CharmyObject):
     """Charmy windows manager. Used to manage windows created with one backend."""
 
-    def __init__(self, backend: str | Backend, id_: str | None = None, **kwargs):
+    def __init__(self, backend: str | Backend, **kwargs):
         """Create a Charmy windows manager.
 
         :param backend: The backend this manager uses
         """
-        super().__init__(**kwargs)
+        CharmyObject.__init__(self, **kwargs)
 
         if isinstance(backend, str):
             self.backend: Backend = backend_loader.load_backend(backend)()
