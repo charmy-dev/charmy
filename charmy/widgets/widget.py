@@ -34,7 +34,7 @@ class Widget(CharmyObject, EventHandling):
     def __post_init__(self):
         """After initialization of widget."""
         self._initialized = True
-        self._update_draw_list()
+        self._update_drawing_objects()
 
     @property
     def x(self) -> int:
@@ -50,9 +50,9 @@ class Widget(CharmyObject, EventHandling):
         """y position of the widget."""
         return self.pos[1]
 
-    @x.setter
-    def x(self, new: int):
-        self.pos = (self.pos[0], new)
+    @y.setter
+    def y(self, new: int):
+        self.pos = (self.pos[1], new)
 
     @property
     def width(self) -> int:
@@ -73,7 +73,7 @@ class Widget(CharmyObject, EventHandling):
         self.size = (self.size[0], new)
 
     @property
-    def root_container(self) -> window.Window | None:
+    def root_container(self) -> window.Window:
         """Get the root container that contains the widget.
 
         :return window: Either the window, or None meaning that not contained in a root container
@@ -87,33 +87,34 @@ class Widget(CharmyObject, EventHandling):
             else:
                 # If not contained by neither a widget nor a root_container, …
                 # … then the widget is not inside in a root container
-                return None
+                raise RuntimeError(f"Nowhere to put {self.id} as it is not in a valid window!")
 
-    def _update_draw_list(self):
+    def _update_drawing_objects(self):
         """Update a widget's draw list, for internal use only.
 
         For widget base, this clears the draw list.
         """
-        self._draw_list = []
+        # self.trigger(NotImplemented) # TODO: Trigger style change event
+        self.draw()
 
-    def __setattr__(self, name: str, value: typing.Any) -> None:
-        """When changing attributes of a widget.
+    # def __setattr__(self, name: str, value: typing.Any) -> None:
+    #     """When changing attributes of a widget.
 
-        Currently, updates the draw list of the widget after setting new attributes.
+    #     Currently, updates the draw list of the widget after setting new attributes.
 
-        :param name: Name of the attribute to set
-        :param value: The new value
-        """
-        return_val = super().__setattr__(name, value)
-        if not name.startswith("_"): # Skip internal vars to avoid endless recursion
-            # (only do update for props changes)
-            if self._initialized: # Skip update for initialization
-                self._update_draw_list()
-        return return_val
+    #     :param name: Name of the attribute to set
+    #     :param value: The new value
+    #     """
+    #     return_val = super().__setattr__(name, value)
+    #     if not name.startswith("_"): # Skip internal vars to avoid endless recursion
+    #         # (only do update for props changes)
+    #         if self._initialized: # Skip update for initialization
+    #             self._update_drawing_objects()
+    #     return return_val
 
     def draw(self, 
-            pos: styles.shape.Point, 
-            size: typing.Optional[styles.shape.Size], 
+            pos: typing.Optional[styles.shape.Point] = None, 
+            size: typing.Optional[styles.shape.Size] = None, 
             *args, **kwargs, 
             ) -> typing.Self:
         """Draw the widget, does nothing on base class."""
@@ -121,6 +122,7 @@ class Widget(CharmyObject, EventHandling):
             self.pos = pos
         if size is not None:
             self.size = size
+        self._update_drawing_objects()
         # for draw_object in self._draw_list:
         #     if self.root_container:
         #         if draw_object not in self.root_container.backend_base.drawing_list:
@@ -129,7 +131,7 @@ class Widget(CharmyObject, EventHandling):
         return self
 
     def draw_ext(self, *args, **kwargs) -> typing.Any:
-        """Extention of draw func. To be override by subclasses or users etc."""
+        """Extention of draw func. To be overrided by subclasses or users etc."""
         return None
 
     def place(self, 
@@ -145,7 +147,3 @@ class Widget(CharmyObject, EventHandling):
         if size is not None:
             self.size = size
         return self
-
-    def add_element(self, element):
-        """Add an element to this widget's draw list."""
-        self._draw_list.append(element)

@@ -15,7 +15,7 @@ if typing.TYPE_CHECKING:
 
 
 class DEBUG_FLAGS:
-    DRAW_OBJECTS_BOUNDARY: bool = True
+    DRAW_OBJECTS_BOUNDARY: bool = False
 
 
 # region DrawnObject base class
@@ -347,6 +347,16 @@ class DrawnText(DrawnObject):
                 rendered_text = self
             window.backend_base.drawing_list.append(rendered_text)
             self._actual_draw_list[window].append(self)
+            if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
+                range_rect = DrawnShape(
+                    styles.shape.Rect(*self.boundary), 
+                    (0, 0, 255, 50), 
+                    1, (0, 0, 255), 
+                    # self.offset, 
+                    # self.anchor, 
+                    )
+                window.backend_base.drawing_list.append(range_rect)
+                self._actual_draw_list[window].append(range_rect)
         else:
             #### Render as shape
             # TODO: Implement text → shape fallback
