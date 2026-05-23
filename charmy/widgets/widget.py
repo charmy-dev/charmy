@@ -47,6 +47,7 @@ class Widget(CharmyObject, EventHandling):
 
     @property
     def pos(self) -> styles.shape.Point:
+        """Position of the widget"""
         match self.layout_profile:
             case layout_profiles.PlaceProfile():
                 return self.layout_profile.pos
@@ -56,16 +57,17 @@ class Widget(CharmyObject, EventHandling):
 
     @property
     def x(self) -> int:
-        """x position of the widget."""
+        """x-position of the widget."""
         return self.pos[0]
 
     @property
     def y(self) -> int:
-        """y position of the widget."""
+        """y-position of the widget."""
         return self.pos[1]
 
     @property
     def size(self) -> styles.shape.Size:
+        """Size of the widget"""
         if self.layout_profile.final_size is not None:
             # If specified by layout
             return self.layout_profile.final_size
@@ -108,6 +110,12 @@ class Widget(CharmyObject, EventHandling):
                 # If not contained by neither a widget nor a root_container, …
                 # … then the widget is not inside in a root container
                 raise RuntimeError(f"Nowhere to put {self.id} as it is not in a valid window!")
+
+    @property
+    def abs_pos(self) -> styles.shape.Point:
+        """Absolute position of the widget in its root container."""
+        # TODO: Implement getting abs_pos
+        return NotImplemented
 
     def _update_drawing_objects(self):
         """Update a widget's draw list, for internal use only.
