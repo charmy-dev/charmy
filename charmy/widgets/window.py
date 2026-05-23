@@ -171,4 +171,5 @@ class Window(CharmyObject, WindowEntity, Container, EventHandling):
         """
         update_event = Event(self, "update")
         self.trigger(update_event)
+        self.draw_children()
         WindowEntity.update(self, force_redraw)

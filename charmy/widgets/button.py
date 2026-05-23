@@ -15,13 +15,14 @@ class Button(Widget):
     """Text buttons in Charmy."""
 
     def __init__(self, 
-                parent: container.Container, 
-                text: str, 
+                parent: container.Container | None = None, 
+                text: str = "Button", 
                 on_click: typing.Callable = lambda: None, 
                 style: dict[str, typing.Any] = {
                     # Default button style (bootstrap)
                     # These styles JSON might be moved to somewhere else in future...
                     ":default": { # Default state
+                        "size": (72, 28), 
                         "shape": {
                             "type": "rect", 
                             "pos": (0, 0), 
@@ -56,7 +57,7 @@ class Button(Widget):
         :param *args: → See `Widget.__init__(...)`
         :param **kwargs: → See `Widget.__init__(...)`
         """
-        super().__init__(parent, style, *args, **kwargs)
+        super().__init__(parent, style)
         self.text: str = text
         self.on_click: typing.Callable = on_click
         self.style: dict[str, typing.Any] = style
@@ -71,29 +72,15 @@ class Button(Widget):
 
         self._update_drawing_objects()
 
-        self._initialized = True
-
-    def draw(self, 
-            pos: typing.Optional[styles.shape.Point] = None, 
-            size: typing.Optional[styles.shape.Size] = None, 
-            *args, **kwargs, 
-            ) -> typing.Self:
+    def draw_components(self, *args, **kwargs) -> typing.Self:
         """Draw the button."""
-        Widget.draw(self, pos, size, *args, **kwargs)
         self._drawn_background_shape.draw(self.root_container)
         self._drawn_text.draw(self.root_container)
         return self
 
     def _update_drawing_objects(self):
         """Update draw list of a button, for internal use only."""
-        # Fill vars to style
-        style_vars = (
-            self.theme, 
-            self.root_container, 
-            self
-            )
-        style_state = ':' + (self.state if self.state in self.style.keys() else "default")
-        curr_style = styles.style.fill_vars(self.style[style_state], *style_vars)
+        curr_style = self.curr_state_styles
         # Make background shape
         self._drawn_background_shape.shape = \
             styles.shape.AnyShape.from_json(curr_style["shape"])

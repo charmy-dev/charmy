@@ -1,9 +1,11 @@
-"""The container base class."""
+"""This module contains all ability of a container to manage layouts."""
 
-import threading
 import typing
 
-from ..object import CharmyObject
+from ..utils import layout_profiles # Expose them as (...).container.layout_profiles
+
+if typing.TYPE_CHECKING:
+    from . import widget
 
 
 class Container:
@@ -12,17 +14,9 @@ class Container:
     The `Container` class contains the ability of managing widgets within the container, and should 
     be inherited by all types of containers including windows, frames, etc., but not supposed to be 
     instantiated directly.
-
-    What is a Root Container?
-    -------------------------
-    A root container is a `Container` object (which allows containing other widgets inside) that 
-    operates backend modules to serve items within it. Root containers are marked with class 
-    property `is_root_container`.
     """
 
-    is_root_container: typing.ClassVar[bool] = False # Flags if the container is a root container
-
-    _local = threading.local()
+    _with_stack: typing.ClassVar[list[Container]] = [] # Used to store embedding stack in with as
 
     def __init__(self, *args, **kwargs):
         """Initialize a container base class.
@@ -32,62 +26,28 @@ class Container:
         """
         super().__init__(*args, **kwargs)
 
-        self.children = []
-
-    def __post_init__(self):
-        """Validates self status. Not supposed to be called from outside."""
-        if True in [
-            self.is_root_container and hasattr(self, "parent"), 
-            not self.is_root_container and not hasattr(self, "parent"), 
-            not self.is_root_container and not hasattr(self, "root_container"), 
-            ]:
-            raise RuntimeError(
-                "A container must either be a root continer, or has a parent and contained within "
-                "a root container."
-                )
-
-    @property
-    def rect(self):
-        """Get the container's rect."""
-        return (0, 0), (0, 0)
+        self.children: list[widget.Widget] = []
 
     # region Context
 
-    @classmethod
-    def _get_context_stack(cls) -> typing.List["Container"]:
-        """Get the context stack of the current thread"""
-        if not hasattr(cls._local, "context_stack"):
-            cls._local.context_stack = []
-        return cls._local.context_stack
-
-    @classmethod
-    def get_context(cls) -> typing.Optional["Container"]:
-        """Get the current context container"""
-        stack = cls._get_context_stack()
-        return stack[-1] if stack else None
-
     def __enter__(self) -> "Container":
-        """Enter the context"""
-        stack = self._get_context_stack()
-        stack.append(self)
+        """Enter the context."""
+        Container._with_stack.append(self)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Exit the context"""
-        stack = self._get_context_stack()
-        if stack and stack[-1] is self:
-            stack.pop()
-        return False  # 不抑制异常
+        """Exit the context."""
+        Container._with_stack.pop()
+        return False # Does not handle exceptions
 
-    def add_child(self, child: "CharmyObject"):
-        """Add a child object"""
+    def add_child(self, child: widget.Widget):
+        """Add a child object."""
         if child not in self.children:
             self.children.append(child)
 
-    def draw_children(self, canvas):
+    def draw_children(self):
         """Draw the container and its children"""
         for child in self.children:
-            if hasattr(child, "draw"):
-                child.draw(canvas)
+            child.draw()
 
     # endregion

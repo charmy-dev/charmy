@@ -3,20 +3,27 @@ import typing
 from . import window
 from ..object import CharmyObject
 from ..event import EventHandling
-from .container import Container
+from .container import Container, layout_profiles
 from .. import styles
-from .. import graphics
 
 
 class Widget(CharmyObject, EventHandling):
     """Widget base class."""
 
-    def __init__(self, parent: Container, style: dict):
+    def __init__(self, parent: Container | None = None, style: dict = {":default": {"size": (0, 0)}}):
         """To initialize a widget.
 
-        :param parent: Parent of tht widget
+        :param parent: Parent of the widget, or None in `with` context
         :param style: Style of the widget
         """
+
+        if parent is None:
+            if len(Container._with_stack) == 0:
+                raise TypeError(
+                    "Param parent can only be None within a with Container() context."
+                    )
+            else:
+                parent = Container._with_stack[-1]
 
         self._initialized: bool = False
 
@@ -26,10 +33,12 @@ class Widget(CharmyObject, EventHandling):
         self.parent.add_child(self)
 
         self.style: dict = style
+        self.theme: typing.Optional[styles.theme.Theme] = None
 
-        self.pos: styles.shape.Point = (0, 0)
-        self.size: styles.shape.Size = (0, 0)
         self.is_visible: bool = False
+        self.layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
+
+        self.state: str = "normal"
 
     def __post_init__(self):
         """After initialization of widget."""
@@ -37,40 +46,51 @@ class Widget(CharmyObject, EventHandling):
         self._update_drawing_objects()
 
     @property
+    def pos(self) -> styles.shape.Point:
+        match self.layout_profile:
+            case layout_profiles.PlaceProfile():
+                return self.layout_profile.pos
+            case _:
+                return (0, 0)
+        return (0, 0)
+
+    @property
     def x(self) -> int:
         """x position of the widget."""
         return self.pos[0]
-
-    @x.setter
-    def x(self, new: int):
-        self.pos = (new, self.pos[1])
 
     @property
     def y(self) -> int:
         """y position of the widget."""
         return self.pos[1]
 
-    @y.setter
-    def y(self, new: int):
-        self.pos = (self.pos[1], new)
+    @property
+    def size(self) -> styles.shape.Size:
+        if self.layout_profile.final_size is not None:
+            # If specified by layout
+            return self.layout_profile.final_size
+        else:
+            # If not, get from style
+            # curr_style = self.curr_state_styles
+            target_style_state = self.state if self.state in self.style else "default"
+            if not "size" in self.style[f":{target_style_state}"]:
+                if "size" in self.style[f":default"]:
+                    target_style_state = "default" # Fallback to default style
+                else:
+                    return (0, 0) # Unspecified in style
+            return styles.style.fill_vars(
+                self.style[f":{target_style_state}"]["size"]
+                )
 
     @property
     def width(self) -> int:
         """Width of the widget."""
         return self.size[0]
 
-    @width.setter
-    def width(self, new: int):
-        self.size = (new, self.size[1])
-
     @property
     def height(self) -> int:
         """Height of the widget."""
         return self.size[1]
-
-    @height.setter
-    def height(self, new: int):
-        self.size = (self.size[0], new)
 
     @property
     def root_container(self) -> window.Window:
@@ -95,7 +115,8 @@ class Widget(CharmyObject, EventHandling):
         For widget base, this clears the draw list.
         """
         # self.trigger(NotImplemented) # TODO: Trigger style change event
-        self.draw()
+        # self.draw()
+        pass
 
     # def __setattr__(self, name: str, value: typing.Any) -> None:
     #     """When changing attributes of a widget.
@@ -112,27 +133,30 @@ class Widget(CharmyObject, EventHandling):
     #             self._update_drawing_objects()
     #     return return_val
 
-    def draw(self, 
-            pos: typing.Optional[styles.shape.Point] = None, 
-            size: typing.Optional[styles.shape.Size] = None, 
-            *args, **kwargs, 
-            ) -> typing.Self:
-        """Draw the widget, does nothing on base class."""
-        if pos is not None:
-            self.pos = pos
-        if size is not None:
-            self.size = size
-        self._update_drawing_objects()
-        # for draw_object in self._draw_list:
-        #     if self.root_container:
-        #         if draw_object not in self.root_container.backend_base.drawing_list:
-        #             draw_object.draw(self.root_container)
-        self.draw_ext(pos, size, *args, **kwargs)
+    @property
+    def curr_state_styles(self) -> dict[str, typing.Any]:
+        style_vars = (
+            self.theme, 
+            self.root_container, 
+            self
+            )
+        style_state = ':' + (self.state if self.state in self.style.keys() else "default")
+        curr_style = styles.style.fill_vars(self.style[style_state], *style_vars)
+        return curr_style
+
+    def draw_components(self, *args, **kwargs) -> typing.Self:
         return self
 
-    def draw_ext(self, *args, **kwargs) -> typing.Any:
-        """Extention of draw func. To be overrided by subclasses or users etc."""
-        return None
+    def draw(self, *args, **kwargs) -> typing.Self:
+        """Draw the widget, does nothing on base class."""
+        self._update_drawing_objects()
+
+        self.draw_components(*args, **kwargs)
+
+        if isinstance(self, Container):
+            self.draw_children()
+
+        return self
 
     def place(self, 
             pos: styles.shape.Point, 
@@ -143,7 +167,5 @@ class Widget(CharmyObject, EventHandling):
         :param pos: The position to place the widget
         :param size: The size of this widget
         """
-        self.pos = pos
-        if size is not None:
-            self.size = size
+        self.layout_profile = layout_profiles.PlaceProfile(pos, size)
         return self
