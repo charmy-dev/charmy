@@ -30,24 +30,26 @@ class Container:
 
     # region Context
 
-    def __enter__(self) -> "Container":
+    def __enter__(self) -> typing.Self:
         """Enter the context."""
         Container._with_stack.append(self)
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> typing.Literal[False]:
         """Exit the context."""
         Container._with_stack.pop()
         return False # Does not handle exceptions
 
-    def add_child(self, child: widget.Widget):
+    def add_child(self, child: widget.Widget) -> typing.Self:
         """Add a child object."""
         if child not in self.children:
             self.children.append(child)
+        return self
 
-    def draw_children(self):
+    def draw_children(self) -> typing.Self:
         """Draw the container and its children"""
         for child in self.children:
             child.draw()
+        return self
 
     # endregion
