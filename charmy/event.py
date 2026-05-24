@@ -6,30 +6,32 @@ import threading
 import time
 import typing
 import warnings
+from dataclasses import dataclass
 
 from .const import ID
+from .styles import shape
 from .object import CharmyObject
 
 
 class EventHandling():
 
-    # fmt: off
-    EVENT_TYPES: list[str] = [
-        # Window size & pos
-        "resize", "move", 
-        # Widget internal changes
-        "configure", "update", "draw",
-        # Mouse events
-        "mouse_move", "mouse_enter", "mouse_leave", "mouse_press", "mouse_release", "click", 
-        "double_click",
-        # Focus events
-        "focus_gain", "focus_loss", 
-        # Key events
-        "key_press", "key_release", "key_repeat", "char", 
-        # Special events
-        "delay", "repeat", 
-    ]
-    # fmt: on
+    # # fmt: off
+    # EVENT_TYPES: list[str] = [
+    #     # Window size & pos
+    #     "resize", "move", 
+    #     # Widget internal changes
+    #     "configure", "update", "draw",
+    #     # Mouse events
+    #     "mouse_move", "mouse_enter", "mouse_leave", "mouse_press", "mouse_release", "click", 
+    #     "double_click",
+    #     # Focus events
+    #     "focus_gain", "focus_loss", 
+    #     # Key events
+    #     "key_press", "key_release", "key_repeat", "char", 
+    #     # Special events
+    #     "delay", "repeat", 
+    # ]
+    # # fmt: on
     multithread_tasks: list[tuple[EventTask, Event]] = []
     WORKING_THREAD: threading.Thread
 
@@ -298,51 +300,79 @@ class EventHandling():
                 return False
 
 
+@dataclass
 class Event(CharmyObject):
     """Used to represent an event."""
 
-    latest: "Event"
+    widget: typing.Optional[EventHandling]
 
-    def __init__(  # NOQA
-        self,
-        widget: EventHandling | None = None,
-        event_type: str = "[Unspecified]",
-        **kwargs,
-    ):
-        """This class is used to represent events.
+    def __init_subclass__(cls):
+        cls.latest: typing.Self
 
-        Some properties owned by all types of events are stored as attributes, such as widget and type.
-        Others are stored as items, which can be accessed or manipulated just like dict, e.g.
-        `CEvent["x"]` for get and `CEvent["y"] = 16` for set.
+@dataclass
+class UpdateEvent(Event):
+    """Will be generated when a widget or window is updated.
 
-        Included in description.
+    Note on Param `subject`
+    -----------------------
+    When `subject` is set to none, it means Charmy's global update routine is triggered.
+    """
 
-        :param widget: The widget of the event, None by default
-        :param event_type: Type of the event, in string, `"[Unspecified]"` by default
-        :param **kwargs: Other properties of the event, will be added as items
-        """
-        self.event_type: str = event_type  # Type of event
-        self.widget: typing.Optional[typing.Any] = widget  # Relating widget
-        self.window_base: typing.Optional[typing.Any] = None  # WindowBase of the current window
-        self.window: typing.Optional[typing.Any] = None  # Current window
-        self.event_data: dict = {}
-        # Not all properties above will be used
-        # Update stuff from args into attributes
-        for prop in kwargs.keys():
-            if prop not in ["widget", "event_type"]:
-                self[prop] = kwargs[prop]
+    widget: typing.Optional[EventHandling]
+    redraw: bool | shape.ShapeRange = False
 
-    def __setitem__(self, key: str, value: typing.Any):
-        self.event_data[key] = value
+@dataclass
+class DrawEvent(Event):
+    """Will be generated when a widget or window is redrawn."""
 
-    def __getitem__(self, key: str) -> typing.Any:
-        if key in self.event_data:
-            return self.event_data[key]
-        else:
-            return None  # If no such item avail, returns None
+    subject: EventHandling
+    pos: shape.Point = (0, 0)
+    size: shape.Size = (0, 0)
+
+@dataclass
+class ConfigureEvent(Event):
+    """Will be generated when a widget or window has its configuration changed."""
+
+    subject: EventHandling
+    attrs_changed: dict
+
+@dataclass
+class ResizeEvent(Event):
+    """Will be generated when a widget or window is resized."""
+
+    subject: EventHandling
+    new_size: shape.Size
+    old_pos: typing.Optional[shape.Size]
+
+@dataclass
+class MoveEvent(Event):
+    """Will be generated when a widget or window is moved."""
+
+    subject: EventHandling
+    new_pos: shape.Point
+    old_pos: typing.Optional[shape.Point]
+
+class MOUSE_KEYS:
+    LEFT    : int = 0
+    MIDDLE  : int = 1
+    RIGHT   : int = 2
+
+@dataclass
+class MousEvent(Event):
+    """The type of events that represents mouse actions.
+
+    Notes on Param `subject`
+    ------------------------
+    `subject` should be the window that detected the mouse event.
+    """
+
+    subject: EventHandling
+    mouse_pos: shape.Point
+    mouse_pressed_keys: list[int]
 
 
-Event.latest = Event(widget=None, event_type="NO_EVENT")
+
+Event.latest = Event(widget=None)
 
 
 class EventTask:
