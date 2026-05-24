@@ -91,7 +91,7 @@ class Button(Widget):
         self._drawn_background_shape.border_texture = \
             styles.texture.Texture.from_json(curr_style["border_texture"])
         self._drawn_background_shape.offset = \
-            self.pos # TODO: Support parent container offset
+            self.abs_pos
         # Drawn text
         self._drawn_text.text = \
             self.text
@@ -100,6 +100,5 @@ class Button(Widget):
         self._drawn_text.texture = \
             styles.texture.Texture.from_json(curr_style["text_texture"])
         self._drawn_text.offset = \
-            (self.x + ((self.width - self._drawn_text.boundary[1][0]) // 2), 
-             self.y + ((self.height - self._drawn_text.boundary[1][1]) // 2))
-        # TODO: Support parent container offset
+            (self.abs_pos[0] + ((self.width - self._drawn_text.boundary[1][0]) // 2), 
+             self.abs_pos[1] + ((self.height - self._drawn_text.boundary[1][1]) // 2))

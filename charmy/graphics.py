@@ -223,10 +223,14 @@ class DrawnShape(DrawnObject):
         # Rendering process
         if isinstance(self.shape, styles.shape.ShapeGroup):
             for subshape in self.shape.shapes:
-                drawn_host = copy.copy(self)
-                drawn_host.shape = subshape
+                drawn_host = DrawnShape(
+                    subshape, self.texture, self.border_width, 
+                    self.border_texture, self.offset, self.anchor
+                    )
+                # drawn_host.shape = subshape
                 drawn_host.draw(window, _fallback_from)
                 self._actual_draw_list[window].append(drawn_host)
+                print(self._actual_draw_list)
         else:
             backend = window.backend_base.backend
             if self.shape.type in backend.ShapeBase.supports or \

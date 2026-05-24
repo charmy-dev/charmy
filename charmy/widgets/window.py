@@ -173,3 +173,8 @@ class Window(CharmyObject, WindowEntity, Container, EventHandling):
         self.trigger(update_event)
         self.draw_children()
         WindowEntity.update(self, force_redraw)
+
+    @property
+    def pos(self):
+        """Pos of the window"""
+        return (0, 0)

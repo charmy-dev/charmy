@@ -114,8 +114,9 @@ class Widget(CharmyObject, EventHandling):
     @property
     def abs_pos(self) -> styles.shape.Point:
         """Absolute position of the widget in its root container."""
-        # TODO: Implement getting abs_pos
-        return NotImplemented
+        parent_pos = self.parent.pos
+        self_pos = self.pos
+        return (parent_pos[0] + self_pos[0], parent_pos[1] + self_pos[1])
 
     def _update_drawing_objects(self):
         """Update a widget's draw list, for internal use only.

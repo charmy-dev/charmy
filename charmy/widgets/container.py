@@ -2,7 +2,10 @@
 
 import typing
 
+from abc import abstractmethod
+
 from ..utils import layout_profiles # Expose them as (...).container.layout_profiles
+from ..styles import shape
 
 if typing.TYPE_CHECKING:
     from . import widget
@@ -51,5 +54,9 @@ class Container:
         for child in self.children:
             child.draw()
         return self
+
+    @property
+    @abstractmethod
+    def pos(self) -> shape.Point: ...
 
     # endregion

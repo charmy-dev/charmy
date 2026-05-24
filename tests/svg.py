@@ -13,7 +13,7 @@ APPLE_SVG = \
     "5.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13"\
     " 3.5Z"
 
-shape = cm.styles.shape.shapes_from_svg_path(APPLE_SVG, scale=10)
+shape = cm.styles.shape.from_svg_path(APPLE_SVG, scale=10)
 
 apple_logo = cm.graphics.DrawnShape(
     shape, 
