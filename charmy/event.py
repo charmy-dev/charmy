@@ -46,6 +46,7 @@ class EventHandling():
                     task_step(event_obj)
             case _:
                 raise ValueError(
+                    # TODO: *suzaku* Task target 🤔
                     "Error type for suzaku Task target! Excepted callable or "
                     f"iterable but received {type(task.target)}"
                 )
@@ -67,14 +68,22 @@ class EventHandling():
         This shows subclassing EventHandling to let Widget gain the ability of handling events.
         """
         super().__init__()
-        self.latest_event: Event = Event(widget=None, event_type="NO_EVENT")
-        self.tasks: dict[str, list[EventTask]] = {}
-        ## Initialize tasks list
-        for event_type in self.__class__.EVENT_TYPES:
-            self.tasks[event_type] = []
+        self.latest_event: Event = Event(None)
+        self.tasks: dict[type[Event], list[EventTask]] = {}
 
     def parse_event_type_str(self, event_type_str: str) -> dict:  # NOQA
         """This function parses event type string.
+
+        Type String Format
+        ------------------
+        Either in `{Event type}` or `{Event type}[{Param 1}, {Param 2}]`. Example: `MousePressed` 
+        or `MousePressed[0]`
+
+        Return Value & Deprecation
+        --------------------------
+        The return value is a `dict` containing the type and params expressed in string. This kind 
+        of return value might be unused in the new events system designed for Charmy. Therefore, 
+        this function might be removed in the future.
 
         :param event_type_str: The event type string to be parsed
         :returns: JSON, parsed event type
@@ -83,13 +92,15 @@ class EventHandling():
             return {"type": event_type_str, "params": []}
         event_type = re.findall("^(.*?)\\[", event_type_str)[0]
         params_raw = re.findall("\\[(.*?)\\]$", event_type_str)[0]  # NOQA
+        assert type(event_type) is str
+        assert type(params_raw) is str
         params = params_raw.split(",")
         if len(params) == 1:
             if params[0].strip() == "":
                 params = []
         return {"type": event_type, "params": params}
 
-    def execute_task(self, task: EventTask, event_obj: Event | None = None):
+    def execute_task(self, task: EventTask, event_obj: Event | None = None) -> typing.Any:
         """To execute a task
 
         Example
@@ -101,10 +112,9 @@ class EventHandling():
 
         """
         if event_obj is None:
-            event_obj = Event()
-        assert event_obj is not None
-        if event_obj.widget is None:
-            event_obj.widget = self
+            event_obj = Event(self)
+        if event_obj.subject is None:
+            event_obj.subject = self
         if not task.multithread:
             # If not multitask, execute directly
             EventHandling._execute_task(task, event_obj)
@@ -124,7 +134,7 @@ class EventHandling():
                 task.target = lambda event_obj: self_destruct_template(task, event_obj)
             EventHandling.multithread_tasks.append((task, event_obj))
 
-    def trigger_event(self, event_obj: Event) -> None:
+    def trigger(self, event_obj: Event) -> typing.Self:
         """To trigger a type of event
 
         Args:
@@ -143,30 +153,8 @@ class EventHandling():
         This shows triggering a `mouse_press` event in a `Widget`, which inherited
         `EventHandling` so has the ability to handle events.
         """
-        # Parse event type string
-        parsed_event_type = self.parse_event_type_str(event_obj.event_type)
-        # Create a default Event object if not specified
-        if event_obj is None:
-            event_obj = Event(widget=self, event_type=tuple(parsed_event_type.keys())[0])
-        # Add the event to event lists (the widget itself and the global list)
-        self.latest_event = event_obj
-        Event.latest = event_obj
-        # Find targets
-        targets = [parsed_event_type["type"]]
-        if not parsed_event_type["params"]:
-            targets.append(parsed_event_type["type"] + "[*]")
-        else:
-            targets.append(event_obj.event_type)
-        # if parsed_event_type["params"][0] in ["", "*"]: # If match all
-        #     targets.append(parsed_event_type["type"])
-        #     targets.append(parsed_event_type["type"] + "[*]")
-        for target in targets:
-            if target in self.tasks:
-                for task in self.tasks[target]:
-                    # To execute all tasks bound under this event
-                    self.execute_task(task, event_obj)
-
-    trigger = trigger_event  # Alias for trigger
+        # TODO: This fuck (trigger() method) should be rewritten
+        return self
 
     def bind(
         self,
@@ -299,12 +287,13 @@ class EventHandling():
                 )
                 return False
 
+# region Events
 
 @dataclass
 class Event(CharmyObject):
-    """Used to represent an event."""
+    """Used to represent an event. Can be regarded as a placeholder if directly used."""
 
-    widget: typing.Optional[EventHandling]
+    subject: typing.Optional[EventHandling]
 
     def __init_subclass__(cls):
         cls.latest: typing.Self
@@ -317,14 +306,12 @@ class UpdateEvent(Event):
     -----------------------
     When `subject` is set to none, it means Charmy's global update routine is triggered.
     """
-
-    widget: typing.Optional[EventHandling]
+    subject: typing.Optional[EventHandling]
     redraw: bool | shape.ShapeRange = False
 
 @dataclass
 class DrawEvent(Event):
     """Will be generated when a widget or window is redrawn."""
-
     subject: EventHandling
     pos: shape.Point = (0, 0)
     size: shape.Size = (0, 0)
@@ -332,14 +319,12 @@ class DrawEvent(Event):
 @dataclass
 class ConfigureEvent(Event):
     """Will be generated when a widget or window has its configuration changed."""
-
     subject: EventHandling
     attrs_changed: dict
 
 @dataclass
 class ResizeEvent(Event):
     """Will be generated when a widget or window is resized."""
-
     subject: EventHandling
     new_size: shape.Size
     old_pos: typing.Optional[shape.Size]
@@ -347,33 +332,57 @@ class ResizeEvent(Event):
 @dataclass
 class MoveEvent(Event):
     """Will be generated when a widget or window is moved."""
-
     subject: EventHandling
     new_pos: shape.Point
     old_pos: typing.Optional[shape.Point]
 
-class MOUSE_KEYS:
-    LEFT    : int = 0
-    MIDDLE  : int = 1
-    RIGHT   : int = 2
+@dataclass
+class FocusGain(Event):
+    """Will be generated when a widget or window gained focus."""
+    subject: EventHandling
 
 @dataclass
-class MousEvent(Event):
+class FocusLoss(Event):
+    """Will be generated when a widget or window lose focus."""
+    subject: EventHandling
+
+@dataclass
+class MouseEvent(Event):
     """The type of events that represents mouse actions.
 
     Notes on Param `subject`
     ------------------------
     `subject` should be the window that detected the mouse event.
     """
-
     subject: EventHandling
     mouse_pos: shape.Point
-    mouse_pressed_keys: list[int]
+
+@dataclass
+class MouseMove(MouseEvent):
+    """Will be generated when mouse movement is detected."""
+    pass
+
+@dataclass
+class MousePress(MouseEvent):
+    """Will be generated when a mouse button is pressed."""
+    button: int
+
+@dataclass
+class MouseRelease(MouseEvent):
+    """Will be generated when a mouse button is released."""
+    button: int
+
+@dataclass
+class MouseScroll(MouseEvent):
+    """Will be generated when a mouse button is released."""
+    steps: int
+    horizontal: bool = False
 
 
+Event.latest = Event(subject=None)
 
-Event.latest = Event(widget=None)
 
+# region Tasks
 
 class EventTask:
     """A class to represent event task when an event is triggered."""

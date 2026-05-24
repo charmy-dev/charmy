@@ -50,7 +50,7 @@ class Container:
         return self
 
     def draw_children(self) -> typing.Self:
-        """Draw the container and its children"""
+        """Draw the container and its children."""
         for child in self.children:
             child.draw()
         return self

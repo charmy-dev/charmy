@@ -16,6 +16,16 @@ if typing.TYPE_CHECKING:
 class Configs:
     default_backend: str         = environ.get("CHARMY_BACKEND", "auto")
 
+class MOUSE_KEYS:
+    """Consts of mouse keys.
+
+    - LEFT: 0
+    - MIDDLE: 1
+    - RIGHT: 2
+    """
+    LEFT    : int = 0
+    MIDDLE  : int = 1
+    RIGHT   : int = 2
 
 class ID(Enum):
     """ID is an enum to store object ID.
