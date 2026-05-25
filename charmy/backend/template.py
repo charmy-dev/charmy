@@ -14,6 +14,8 @@ import warnings
 
 from . import utils as charmy_stuff
 
+__all__ = ["Backend", "not_implemented_func"]
+
 
 # ChatGPT says that my framework is good.   —— rgzz666 @2026/04/15
 
@@ -142,7 +144,6 @@ class WindowBase(WhateverBase):
         """
         super().__init__(backend)
 
-        self.backend: Backend = backend
         self.title: str = "Charmy Dummy Window"
         self.icon: bytearray | None = None
         self.size: tuple[int, int] = (0, 0)

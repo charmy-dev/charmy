@@ -27,20 +27,14 @@ border width, and border texture be specified and adjusted.
 
 from __future__ import annotations as _
 
-import typing
+import typing as _typing
 
-import warnings
-from dataclasses import dataclass
-from abc import abstractmethod, abstractproperty
-import json
-import re
+import warnings as _warnings
+from dataclasses import dataclass as _dataclass
+from abc import abstractmethod as _abstractmethod
+import json as _json
 
-from ..utils import geo_math
-from .. import graphics as cm_draw
-
-if typing.TYPE_CHECKING:
-    from .texture import Texture, TextureLike
-    from ..widgets.window import Window
+from ..utils import geo_math as _geo_math
 
 
 # region Lines
@@ -48,7 +42,7 @@ if typing.TYPE_CHECKING:
 class LinePath:
     """Base class of all line paths."""
 
-    type: typing.ClassVar[str] = "line_path_class"
+    type: _typing.ClassVar[str] = "line_path_class"
 
     @property
     def start_point(self) -> Point:
@@ -58,19 +52,19 @@ class LinePath:
     def end_point(self) -> Point:
         raise NotImplementedError
 
-    def fallback(self, _from: list[type[LinePath]] = []) -> typing.Sequence[LinePath]:
+    def fallback(self, _from: list[type[LinePath]] = []) -> _typing.Sequence[LinePath]:
         """Fallback ability of the line. For final fallback, warn that the line cannot be drawn.
 
         :param _from: Fallback path, for internal use
         :return value: Alternative sequence of lines that represents or simulate the same line
         """
-        warnings.warn(f"Line type {self.type} could not be drawn in any alternative method.")
+        _warnings.warn(f"Line type {self.type} could not be drawn in any alternative method.")
         return []
 
     @property
     def boundary(self) -> ShapeRange:
         """Rectangle boundary of the line."""
-        warnings.warn(f"Line type {self.type} does not support getting boundary.")
+        _warnings.warn(f"Line type {self.type} does not support getting boundary.")
         return (0, 0), (0, 0)
 
     @staticmethod
@@ -86,7 +80,7 @@ class LinePath:
             return None
 
     @staticmethod
-    def from_json(json_content: dict[str, typing.Any] | str) -> LinePath:
+    def from_json(json_content: dict[str, _typing.Any] | str) -> LinePath:
         """Create a shape object from json content.
 
         This function is a static method of LinePath and its subclasses. It creates and returns a 
@@ -111,7 +105,7 @@ class LinePath:
         """
         # Convert raw content to JSON
         if isinstance(json_content, str):
-            json_content = json.loads(json_content)
+            json_content = _json.loads(json_content)
             assert type(json_content) is dict
             # 👆 Must assert the type here, because the fucking json module did not specify the 
             # type of the return value of loads()
@@ -125,20 +119,20 @@ class LinePath:
         return cls(**params)
 
 
-@dataclass
+@_dataclass
 class Line(LinePath):
     """Represents lines.
 
     :param points: List of the 2 points that determines the line
     """
-    type: typing.ClassVar[str] = "line"
+    type: _typing.ClassVar[str] = "line"
     points: list[Point]
 
     def __post_init__(self):
         if len(self.points) != 2:
             raise ValueError("A line must be defined with and only with 2 points.")
 
-    def fallback(self, _from: list[type[LinePath]] = []) -> typing.Sequence[LinePath]:
+    def fallback(self, _from: list[type[LinePath]] = []) -> _typing.Sequence[LinePath]:
         """Convert line to single polyline.
 
         :param _from: Fallback path, for internal use
@@ -167,13 +161,13 @@ class Line(LinePath):
             (abs(self.points[1][0] - self.points[0][0]), abs(self.points[1][1] - self.points[0][1]))
             )
 
-@dataclass
+@_dataclass
 class PolyLine(LinePath):
     """Represents polylines.
 
     :param points: List of points that determines the line(s)
     """
-    type: typing.ClassVar[str] = "polyline"
+    type: _typing.ClassVar[str] = "polyline"
     points: list[Point]
 
     def __post_init__(self):
@@ -185,7 +179,7 @@ class PolyLine(LinePath):
         #         stacklevel=2
         #     )
 
-    def fallback(self, _from: list[type[LinePath]] = []) -> typing.Sequence[LinePath]:
+    def fallback(self, _from: list[type[LinePath]] = []) -> _typing.Sequence[LinePath]:
         """Convert polyline to list of lines.
 
         :param _from: Fallback path, for internal use
@@ -223,7 +217,7 @@ class PolyLine(LinePath):
         return (min_x, min_y), (width, height)
 
 
-@dataclass
+@_dataclass
 class CircleArc(LinePath):
     """Represents circle arcs.
 
@@ -238,26 +232,26 @@ class CircleArc(LinePath):
     :param end_orient: Ending orientation in integer degrees
     """
     center: Point
-    type: typing.ClassVar[str] = "circle_arc"
+    type: _typing.ClassVar[str] = "circle_arc"
     radius: int
     start_orient: int
     end_orient: int
 
     @property
     def start_point(self) -> Point:
-        return geo_math.point_on_circle(self.center, self.radius, self.start_orient)
+        return _geo_math.point_on_circle(self.center, self.radius, self.start_orient)
 
     @property
     def end_point(self) -> Point:
-        return geo_math.point_on_circle(self.center, self.radius, self.end_orient)
+        return _geo_math.point_on_circle(self.center, self.radius, self.end_orient)
 
-    def fallback(self, _from: list[type[LinePath]] = []) -> typing.Sequence[LinePath]:
+    def fallback(self, _from: list[type[LinePath]] = []) -> _typing.Sequence[LinePath]:
         """
         Simulates the circle arc using a sequence of Cubic Bezier curves.
         """
         if CubicBezier in _from:
             return LinePath.fallback(self, [*_from, self.__class__])
-        beziers = geo_math.arc_to_cubic_beziers(
+        beziers = _geo_math.arc_to_cubic_beziers(
             self.center, self.radius, self.start_orient, self.end_orient)
         return [CubicBezier(b) for b in beziers]
 
@@ -275,7 +269,7 @@ class CircleArc(LinePath):
             (270, (self.center[0] - self.radius, self.center[1]))
         ]
         for angle, pt in extremes:
-            if geo_math.is_angle_covered(angle, self.start_orient, self.end_orient):
+            if _geo_math.is_angle_covered(angle, self.start_orient, self.end_orient):
                 considered_points.append(pt)
         points_x = [p[0] for p in considered_points]
         points_y = [p[1] for p in considered_points]
@@ -283,7 +277,7 @@ class CircleArc(LinePath):
         min_y, max_y = min(points_y), max(points_y)
         return (min_x, min_y), (max_x - min_x, max_y - min_y)
 
-@dataclass
+@_dataclass
 class EllipseArc(LinePath):
     """Represents arcs trimmed from ellipses.
 
@@ -298,7 +292,7 @@ class EllipseArc(LinePath):
     :param end_orient: Ending orientation in integer degrees
     """
     center: Point
-    type: typing.ClassVar[str] = "ellipse_arc"
+    type: _typing.ClassVar[str] = "ellipse_arc"
     v_radius: int
     h_radius: int
     rotation: int
@@ -310,13 +304,13 @@ class EllipseArc(LinePath):
         if not -360 < self.rotation < 360:
             self.rotation = self.rotation % 360
 
-@dataclass
+@_dataclass
 class QuadraticBezier(LinePath):
     """Represents quadratic Bezier curves.
 
     :param points: List of the 3 points that determines the curve.
     """
-    type: typing.ClassVar[str] = "quadratic_bezier"
+    type: _typing.ClassVar[str] = "quadratic_bezier"
     points: list[Point]
 
     def __post_init__(self):
@@ -331,7 +325,7 @@ class QuadraticBezier(LinePath):
     def end_point(self) -> Point:
         return self.points[-1]
     
-    def fallback(self, _from: list[type[LinePath]] = []) -> typing.Sequence[LinePath]:
+    def fallback(self, _from: list[type[LinePath]] = []) -> _typing.Sequence[LinePath]:
         """Convert quadratic Bezier curves to cubic.
 
         :param _from: Fallback path, for internal use
@@ -377,7 +371,7 @@ class QuadraticBezier(LinePath):
         min_y, max_y = min(ys), max(ys)
         return (min_x, min_y), (max_x - min_x, max_y - min_y)
 
-@dataclass
+@_dataclass
 class CubicBezier(LinePath):
     """Represents cubic Bezier curves.
 
@@ -391,7 +385,7 @@ class CubicBezier(LinePath):
 
     :param points: List of the 3 points that determines the curve
     """
-    type: typing.ClassVar[str] = "cubic_bezier"
+    type: _typing.ClassVar[str] = "cubic_bezier"
     points: list[Point]
 
     def __post_init__(self):
@@ -439,32 +433,32 @@ class CharmySVGIntepreterError(Exception): ...
 
 class ShapeType:
     """Base class of shapes"""
-    type: typing.ClassVar[str] = "shape_type"
+    type: _typing.ClassVar[str] = "shape_type"
 
-    @abstractmethod
+    @_abstractmethod
     def __init__(self, *args, **kwargs): ...
 
     @property
-    @abstractmethod
+    @_abstractmethod
     def boundary(self) -> ShapeRange: ...
 
 class AnyShape(ShapeType):
     """Base class of all shapes."""
-    type: typing.ClassVar[str] = "any_shape"
+    type: _typing.ClassVar[str] = "any_shape"
 
-    def __init__(self, lines: typing.Sequence[LinePath | LineJSON]):
+    def __init__(self, lines: _typing.Sequence[LinePath | LineJSON]):
         """To initialize and validate a shape.
 
         :param lines: The lines that form the shape
         """
         
-        self.lines: typing.Sequence[LinePath] = [
+        self.lines: _typing.Sequence[LinePath] = [
             # Append as-is or load from json
             line if isinstance(line, LinePath) else LinePath.from_json(line) \
                 for line in lines
             ]
         if not self._validate_lines():
-            warnings.warn("Specified lines do not form a valid closed shape.")
+            _warnings.warn("Specified lines do not form a valid closed shape.")
 
     @property
     def boundary(self) -> ShapeRange:
@@ -510,7 +504,7 @@ class AnyShape(ShapeType):
             return None
 
     @staticmethod
-    def from_json(json_content: dict[str, typing.Any] | str) -> AnyShape:
+    def from_json(json_content: dict[str, _typing.Any] | str) -> AnyShape:
         """Create a shape object from json content.
 
         This function is a static method of AnyShape and its subclasses. It creates and returns a 
@@ -534,7 +528,7 @@ class AnyShape(ShapeType):
         """
         # Convert raw content to JSON
         if isinstance(json_content, str):
-            json_content = json.loads(json_content)
+            json_content = _json.loads(json_content)
             assert type(json_content) is dict
             # 👆 Must assert the type here, because the fucking json module did not specify the 
             # type of the return value of loads()
@@ -547,20 +541,20 @@ class AnyShape(ShapeType):
         params.pop("type")
         return cls(**params)
 
-@dataclass
+@_dataclass
 class Rect(AnyShape):
     """Represents rectangles in Charmy.
 
     :param position: The position of the rectangle
     :param size: The size of the rectangle
     """
-    type: typing.ClassVar[str] = "rect"
+    type: _typing.ClassVar[str] = "rect"
 
     pos: Point
     size: Size
 
     @property
-    def lines(self) -> typing.Sequence[LinePath]:
+    def lines(self) -> _typing.Sequence[LinePath]:
         polyline = PolyLine([
             (self.pos[0], self.pos[1]), 
             (self.pos[0] + self.size[0], self.pos[1]), 
@@ -570,7 +564,7 @@ class Rect(AnyShape):
             ])
         return [polyline]
 
-@dataclass
+@_dataclass
 class RoundRect(AnyShape):
     """Represents round-corner rectangles in Charmy.
 
@@ -578,14 +572,14 @@ class RoundRect(AnyShape):
     :param size: The size of the round-corner rectangle
     :param radius: Radius of the round corners or of each corner, in px
     """
-    type: typing.ClassVar[str] = "round_rect"
+    type: _typing.ClassVar[str] = "round_rect"
 
     position: Point
     size: Size
     radius: int | tuple[int, int, int, int]
 
     @property
-    def lines(self) -> typing.Sequence[LinePath]:
+    def lines(self) -> _typing.Sequence[LinePath]:
         radii: tuple[int, int, int, int]
         if isinstance(self.radius, int):
             radii = (self.radius, self.radius, self.radius, self.radius)
@@ -632,18 +626,18 @@ class RoundRect(AnyShape):
 # region ShapeGroup
 class ShapeGroup(ShapeType):
     """Complicated shapes formed by a group of AnyShape."""
-    type: typing.ClassVar[str] = "shape_group"
+    type: _typing.ClassVar[str] = "shape_group"
 
-    def __init__(self, shapes: typing.Sequence[AnyShape | ShapeGroup]) -> None:
-        self._shapes: typing.Sequence[AnyShape] = []
+    def __init__(self, shapes: _typing.Sequence[AnyShape | ShapeGroup]) -> None:
+        self._shapes: _typing.Sequence[AnyShape] = []
         self.shapes = shapes
 
     @property
-    def shapes(self) -> typing.Sequence[AnyShape]:
+    def shapes(self) -> _typing.Sequence[AnyShape]:
         return self._shapes
 
     @shapes.setter
-    def shapes(self, new: typing.Sequence[AnyShape | ShapeGroup]) -> None:
+    def shapes(self, new: _typing.Sequence[AnyShape | ShapeGroup]) -> None:
         self._shapes = []
         for shape in new:
             if isinstance(shape, ShapeGroup):
@@ -673,7 +667,7 @@ class ShapeGroup(ShapeType):
     def __getitem__(self, item: int) -> AnyShape:
         return self.shapes[item]
 
-    def __iter__(self) -> typing.Iterator[AnyShape]:
+    def __iter__(self) -> _typing.Iterator[AnyShape]:
         return iter(self.shapes)
 
     def __len__(self) -> int:
@@ -682,15 +676,15 @@ class ShapeGroup(ShapeType):
 # region Type aliases
 
 # Type Point / Coords
-Point: typing.TypeAlias = tuple[int, int]
-Size: typing.TypeAlias = tuple[int, int]
+Point: _typing.TypeAlias = tuple[int, int]
+Size: _typing.TypeAlias = tuple[int, int]
 
 # Type ShapeRange
-ShapeRange: typing.TypeAlias = tuple[Point, Size]
+ShapeRange: _typing.TypeAlias = tuple[Point, Size]
 
 # Type LineJSON and ShapeJSON
-LineJSON: typing.TypeAlias = dict
-ShapeJSON: typing.TypeAlias = dict
+LineJSON: _typing.TypeAlias = dict
+ShapeJSON: _typing.TypeAlias = dict
 
 
 # region SVG conversion

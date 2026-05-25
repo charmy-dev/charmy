@@ -1,10 +1,10 @@
 from __future__ import annotations as _
 
-import typing
+import typing as _typing
 
-import re
+import re as _re
 
-if typing.TYPE_CHECKING:
+if _typing.TYPE_CHECKING:
     import charmy as cm
 
 
@@ -12,14 +12,14 @@ class DEBUG_FLAGS:
     FILL_VARS_DEBUG_OUTPUT: bool = False
 
 
-StyleType: typing.TypeAlias = dict[str, typing.Any]
+StyleType: _typing.TypeAlias = dict[str, _typing.Any]
 
 
-def fill_vars(style_value: typing.Any, 
-            theme: typing.Optional[cm.styles.theme.Theme] = None, 
-            window: typing.Optional[cm.window.WindowEntity | cm.widgets.Container] = None, 
-            widget: typing.Optional[cm.Widget] = None, 
-            ) -> typing.Any:
+def fill_vars(style_value: _typing.Any, 
+            theme: _typing.Optional[cm.styles.theme.Theme] = None, 
+            window: _typing.Optional[cm.window.WindowEntity | cm.widgets.Container] = None, 
+            widget: _typing.Optional[cm.Widget] = None, 
+            ) -> _typing.Any:
     """To replace vars in a style value.
 
     :param style_value: The style value containing the var
@@ -28,7 +28,7 @@ def fill_vars(style_value: typing.Any,
     :param widget: Current widget
     """
     if isinstance(style_value, str):
-        requested_vars = re.findall("\\$\\[.*?\\]", style_value)
+        requested_vars = _re.findall("\\$\\[.*?\\]", style_value)
         if DEBUG_FLAGS.FILL_VARS_DEBUG_OUTPUT:
             print(f"{style_value=} | {requested_vars=}")
         if len(requested_vars) == 0: # If no vars requested

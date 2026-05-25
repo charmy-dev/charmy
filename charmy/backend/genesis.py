@@ -25,9 +25,7 @@ from . import template
 
 import charmy.backend.utils as charmy_stuff
 
-# if typing.TYPE_CHECKING:
-#     import charmy_stuff.styles.shape as charmy_stuff.styles.shape
-#     import charmy_stuff.styles.texture as cm_texture
+__all__ = ["Backend", "DEBUG_FLAGS"]
 
 
 class DEBUG_FLAGS:
@@ -94,14 +92,13 @@ class WindowBase(template.WindowBase):
 
     def __init__(self, backend: template.Backend):
         """Creates a window.
-        
+
         :param backend: The backend that this window uses (can be get from CharmyManager)
         """
         super().__init__(backend)
 
         self.title: str = "Charmy SDL2 Window"
         self.size: tuple[int, int] = (540, 480)
-
 
         # create window
         self.window: typing.Any = sdl2.SDL_CreateWindow(
@@ -282,7 +279,7 @@ class LineBase(template.LineBase):
         if window.Backend != Backend:
             raise RuntimeError(
                 "Wrong backend for draw_line()! Asked to draw on a window held by "
-                f"{window.backend.friendly_name} but I serve backend {Backend.friendly_name}!"
+                f"{window.Backend.friendly_name} but I serve backend {Backend.friendly_name}!"
                 )
         # Set texture & line width
         if not TextureBase.cairo_set_context_texture(window.cairo_context, texture, noskip):

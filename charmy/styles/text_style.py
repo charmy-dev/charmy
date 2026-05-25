@@ -5,9 +5,10 @@ This module is relatively simple, which only contains ability to express fonts.
 
 from __future__ import annotations as _
 
-import typing
+import typing as _typing
 
-if typing.TYPE_CHECKING:
+
+if _typing.TYPE_CHECKING:
     from .. import graphics as cm_draw
     from ..backend import template as cm_backend
 
@@ -52,12 +53,12 @@ work-4.8#remarks).
 class TextStyle():
     """Represents text styles in Charmy."""
 
-    sys_fonts: typing.ClassVar[list[str]] = ["Arial"]
-    sys_default: typing.ClassVar[typing.Self]
+    sys_fonts: _typing.ClassVar[list[str]] = ["Arial"]
+    sys_default: _typing.ClassVar[_typing.Self]
 
     def __init__(self, 
-                font: typing.Optional[str] = None, 
-                size: typing.Optional[int] | float = None, 
+                font: _typing.Optional[str] = None, 
+                size: _typing.Optional[int] | float = None, 
                 weight: int = WEIGHT.REGULAR, 
                 italic: bool = False, 
                 underlined: bool | cm_draw.DrawnLine = False, 
@@ -100,7 +101,7 @@ eights?view=netframework-4.8#remarks) to learn more about the values. Presets ar
     def from_json(json_content):
         return TextStyle(**json_content)
 
-    def get_text_boundary(self, text: str, backend: typing.Optional[cm_backend.Backend]):
+    def get_text_boundary(self, text: str, backend: _typing.Optional[cm_backend.Backend]):
         """Get boundary of a specific text in this style."""
         if backend is not None:
             # If backend specified, then get size from backend

@@ -92,7 +92,7 @@ class DrawnLine(DrawnObject):
         :param window: The window to draw line to
         :param _fallback_from: Internal use only, the fallback path
         """
-        backend = window.backend_base.backend
+        backend = window.parent.backend
         # 👆 Alias to avoid path to backend properties getting too long. 😅
         # Remove currently rencdered copy of this object on the current window
         if window not in self._actual_draw_list.keys():
@@ -212,7 +212,7 @@ class DrawnShape(DrawnObject):
         :param window: The window to draw shape to
         :param _fallback_from: Internal use only, the fallback path
         """
-        backend = window.backend_base.backend
+        backend = window.parent.backend
         # Remove currently rencdered copy of this object on the current window
         if window not in self._actual_draw_list.keys():
             self._actual_draw_list[window] = []
@@ -232,7 +232,7 @@ class DrawnShape(DrawnObject):
                 self._actual_draw_list[window].append(drawn_host)
                 print(self._actual_draw_list)
         else:
-            backend = window.backend_base.backend
+            backend = window.parent.backend
             if self.shape.type in backend.ShapeBase.supports or \
                 "any_shape" in backend.ShapeBase.supports:
                 window.backend_base.drawing_list.append(self)
@@ -312,7 +312,7 @@ class DrawnText(DrawnObject):
 
         :param window: The window to draw text to
         """
-        backend = window.backend_base.backend
+        backend = window.parent.backend
         # Remove currently rencdered copy of this object on the current window
         if window not in self._actual_draw_list.keys():
             self._actual_draw_list[window] = []

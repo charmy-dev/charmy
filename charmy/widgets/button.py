@@ -3,12 +3,13 @@ from __future__ import annotations
 import typing
 
 from .widget import Widget
-from .window import Window
 from .. import styles
 from .. import graphics
 
 if typing.TYPE_CHECKING:
     from .. import container
+
+__all__ = ["Button"]
 
 
 class Button(Widget):

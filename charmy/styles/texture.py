@@ -22,18 +22,16 @@ For full list of TextureLike types, see (NOT WRITTEN YET) section in the documen
 """
 # TODO: Write the fucking document
 
-import typing
+import typing as _typing
 
 import json
-
-from . import style
 
 
 # region Texture base class
 
 class Texture:
     """Texture base class in Charmy."""
-    type: typing.ClassVar[str] = "texture"
+    type: _typing.ClassVar[str] = "texture"
 
     @staticmethod
     def find_class_by_type(type_name: str) -> type[Texture] | None:
@@ -48,7 +46,7 @@ class Texture:
             return None
 
     @staticmethod
-    def from_json(json_content: dict[str, typing.Any] | str) -> Texture:
+    def from_json(json_content: dict[str, _typing.Any] | str) -> Texture:
         """Create a texture object from json content.
 
         This function is a static method of Texture and its subclasses. It creates and returns a 
@@ -88,16 +86,16 @@ class Texture:
 # region Color
 
 # Color types
-RGB: typing.TypeAlias = tuple[int, int, int]
-RGBA: typing.TypeAlias = tuple[int, int, int, int]
-HEX: typing.TypeAlias = str
+RGB: _typing.TypeAlias = tuple[int, int, int]
+RGBA: _typing.TypeAlias = tuple[int, int, int, int]
+HEX: _typing.TypeAlias = str
 
-ColorLike: typing.TypeAlias = RGB | RGBA | HEX
+ColorLike: _typing.TypeAlias = RGB | RGBA | HEX
 
 # Color class
 class Color(Texture):
     """Represents pure colors."""
-    type: typing.ClassVar[str] = "color"
+    type: _typing.ClassVar[str] = "color"
 
     # @typing.overload
     # def __init__(self, r: int, g: int, b: int, a: int = 255): ... # RGB(A)
@@ -151,7 +149,7 @@ class Transparent(Texture):
 
     Note that, in actual rendering, items with Transparent texture should be skipped.
     """
-    type: typing.ClassVar[str] = "transparent"
+    type: _typing.ClassVar[str] = "transparent"
 
     def __init__(self):
         """Initialize a Transparent object."""
@@ -160,14 +158,14 @@ class Transparent(Texture):
     def __iter__(self):
         return iter(self.color)
 
-TransparentLike: typing.TypeAlias = None | tuple[int, int, int, typing.Literal[0]]
+TransparentLike: _typing.TypeAlias = None | tuple[int, int, int, _typing.Literal[0]]
 
 # endregion
 
 
 # region ensure_texture
 
-TextureLike: typing.TypeAlias = ColorLike | TransparentLike
+TextureLike: _typing.TypeAlias = ColorLike | TransparentLike
 
 def ensure_texture(texture_like: Texture | TextureLike) -> Texture:
     """Convert TextureLike types into Texture objects.

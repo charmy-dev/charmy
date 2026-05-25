@@ -1,4 +1,5 @@
 from ..styles.shape import *
+import re as _re
 
 
 @staticmethod
@@ -16,7 +17,7 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGro
         # This regex matches:
         # 1. Any SVG command letter: [a-zA-Z]
         # 2. Any integer/floating point number (including negatives): -?\d*\.?\d+
-        token_pattern = re.compile(r'([a-zA-Z]|-?\d*\.?\d+)')
+        token_pattern = _re.compile(r'([a-zA-Z]|-?\d*\.?\d+)')
         # Find all matching tokens in the string
         tokens = token_pattern.findall(path_string)
         return tokens

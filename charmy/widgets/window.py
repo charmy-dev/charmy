@@ -4,7 +4,7 @@ import pathlib
 
 import io
 
-from ..event import EventHandling, Event
+from ..event import EventHandling, event_types
 from ..object import CharmyObject
 from .container import Container
 from .. import const
@@ -16,8 +16,10 @@ if typing.TYPE_CHECKING:
     from PIL import Image as PIL_Image
     from ..backend.template import WindowBase
 
+__all__ = ["WindowEntity"]
 
-class WindowEntity:
+
+class WindowEntity(EventHandling):
     """Contains abilities of window entities."""
 
     def __init__(self, 
@@ -169,7 +171,7 @@ class Window(CharmyObject, WindowEntity, Container, EventHandling):
 
         :param force_redraw: Redraw the window content regardless presence of changes
         """
-        update_event = Event(self, "update")
+        update_event = event_types.UpdateEvent(self)
         self.trigger(update_event)
         self.draw_children()
         WindowEntity.update(self, force_redraw)
