@@ -1,9 +1,9 @@
 import typing
 
-from .event import event_types.Event, EventHandling
+from .event import event_types, EventHandling
 
 
-class Var(EventHandling):
+class Var():
     """Similar to Tkinter's `Var`, it is used for data transfer and synchronization.
 
     Args:
@@ -29,7 +29,8 @@ class Var(EventHandling):
             except ValueError:
                 pass
             else:
-                self.trigger(event_types.Event(self, "change", value=value))
+                pass # TODO: Complete var module
+                # self.trigger(event_types.Event(self, "change", value=value))
 
 
 class StringVar(Var):

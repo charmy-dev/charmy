@@ -120,7 +120,9 @@ class EventHandling():
         `EventHandling` so has the ability to handle events.
         """
         # TODO: This fuck (trigger() method) should be rewritten
-        for task in self.tasks[event_obj.__class__]:
+        if type(event_obj) not in self.tasks:
+            return self
+        for task in self.tasks[type(event_obj)]:
             if event_obj.meets(task.condition):
                 task.execute()
         return self

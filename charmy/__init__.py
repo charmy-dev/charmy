@@ -21,7 +21,7 @@ from .const import *
 from . import backend
 
 from . import graphics
-from .event import event_types.Event, EventHandling, EventTask, WorkingThread
+from .event import event_types, EventHandling, EventTask
 from .object import CharmyObject
 # from .frameworks import Frameworks
 from . import styles
