@@ -8,9 +8,10 @@ import typing
 import warnings
 from dataclasses import dataclass
 
-from .const import ID
-from .styles import shape
 from .object import CharmyObject
+from .utils import event_types # Expose this as event_types
+
+__all__ = ["EventHandling", "EventTask", "DelayTask", "event_types"]
 
 
 class EventHandling():
@@ -100,40 +101,6 @@ class EventHandling():
                 params = []
         return {"type": event_type, "params": params}
 
-    def execute_task(self, task: EventTask, event_obj: Event | None = None) -> typing.Any:
-        """To execute a task
-
-        Example
-        -------
-        .. code-block:: python
-
-            my_task = Widget.bind("delay[5]", lambda: print("Hello Suzaku"))
-            Widget.execute_task(my_task)
-
-        """
-        if event_obj is None:
-            event_obj = Event(self)
-        if event_obj.subject is None:
-            event_obj.subject = self
-        if not task.multithread:
-            # If not multitask, execute directly
-            EventHandling._execute_task(task, event_obj)
-            # If is a delay event, it should be removed right after execution
-            if isinstance(task, DelayTask):
-                self.unbind(task)
-        else:
-            # Otherwise add to multithread tasks list and let the working thread to deal with it
-            # If is a delay task, should add some code to let it unbind itself, here is a way,
-            # which is absolutely not perfect, though works, to implement this mechanism, by
-            # overriding its target with a modified version
-            def self_destruct_template(task, event_obj):
-                EventHandling._execute_task(task, event_obj)
-                self.unbind(task)
-
-            if isinstance(task, DelayTask):
-                task.target = lambda event_obj: self_destruct_template(task, event_obj)
-            EventHandling.multithread_tasks.append((task, event_obj))
-
     def trigger(self, event_obj: Event) -> typing.Self:
         """To trigger a type of event
 
@@ -154,6 +121,8 @@ class EventHandling():
         `EventHandling` so has the ability to handle events.
         """
         # TODO: This fuck (trigger() method) should be rewritten
+        for task in self.tasks[event_obj.__class__]:
+            if task.condition.meets
         return self
 
     def bind(
@@ -287,176 +256,53 @@ class EventHandling():
                 )
                 return False
 
-# region Events
-
-@dataclass
-class Event(CharmyObject):
-    """Used to represent an event. Can be regarded as a placeholder if directly used."""
-
-    subject: typing.Optional[EventHandling]
-
-    def __init_subclass__(cls):
-        cls.latest: typing.Self
-
-@dataclass
-class UpdateEvent(Event):
-    """Will be generated when a widget or window is updated.
-
-    Note on Param `subject`
-    -----------------------
-    When `subject` is set to none, it means Charmy's global update routine is triggered.
-    """
-    subject: typing.Optional[EventHandling]
-    redraw: bool | shape.ShapeRange = False
-
-@dataclass
-class DrawEvent(Event):
-    """Will be generated when a widget or window is redrawn."""
-    subject: EventHandling
-    pos: shape.Point = (0, 0)
-    size: shape.Size = (0, 0)
-
-@dataclass
-class ConfigureEvent(Event):
-    """Will be generated when a widget or window has its configuration changed."""
-    subject: EventHandling
-    attrs_changed: dict
-
-@dataclass
-class ResizeEvent(Event):
-    """Will be generated when a widget or window is resized."""
-    subject: EventHandling
-    new_size: shape.Size
-    old_pos: typing.Optional[shape.Size]
-
-@dataclass
-class MoveEvent(Event):
-    """Will be generated when a widget or window is moved."""
-    subject: EventHandling
-    new_pos: shape.Point
-    old_pos: typing.Optional[shape.Point]
-
-@dataclass
-class FocusGain(Event):
-    """Will be generated when a widget or window gained focus."""
-    subject: EventHandling
-
-@dataclass
-class FocusLoss(Event):
-    """Will be generated when a widget or window lose focus."""
-    subject: EventHandling
-
-@dataclass
-class MouseEvent(Event):
-    """The type of events that represents mouse actions.
-
-    Notes on Param `subject`
-    ------------------------
-    `subject` should be the window that detected the mouse event.
-    """
-    subject: EventHandling
-    mouse_pos: shape.Point
-
-@dataclass
-class MouseMove(MouseEvent):
-    """Will be generated when mouse movement is detected."""
-    pass
-
-@dataclass
-class MousePress(MouseEvent):
-    """Will be generated when a mouse button is pressed."""
-    button: int
-
-@dataclass
-class MouseRelease(MouseEvent):
-    """Will be generated when a mouse button is released."""
-    button: int
-
-@dataclass
-class MouseScroll(MouseEvent):
-    """Will be generated when a mouse button is released."""
-    steps: int
-    horizontal: bool = False
-
-
-Event.latest = Event(subject=None)
-
 
 # region Tasks
 
+@dataclass
 class EventTask:
-    """A class to represent event task when an event is triggered."""
+    """A class to represent event task when an event is triggered.
 
-    def __init__(
-        self,
-        target: typing.Callable | typing.Iterable,
-        multithread: bool = False,
-        _keep_at_clear: bool = False,
-        id_: str | int | typing.Literal[ID.AUTO] = ID.AUTO,
-    ):
-        """Each object is to represent a task bound to the event.
+    Each object is to represent a task bound to the event.
 
-        Example
-        -------
-        This is mostly for internal use of suzaku.
+    Example
+    -------
+    This is mostly for internal use of Charmy.
 
-        .. code-block:: python
+    .. code-block:: python
+        class EventHandling():
+            ...
+            def bind(self, ...):
+                ...
+                task = EventTask(event_id, target, multithread, _keep_at_clear)
+                ...
+            ...
 
-            class EventHandling():
-                def bind(self, ...):
-                    ...
-                    task = EventTask(event_id, target, multithread, _keep_at_clear)
-                    ...
+    This shows where this class is used for storing task properties in most cases.
 
-        This shows where this class is used for storing task properties in most cases.
+    :param target: A callable thing, what to do when this task is executed
+    :param multithread: If this task should be executed in another thread (False by default)
+    :param _internal_task: If the task is internally created and used by Charmy
+    """
+    target: typing.Callable
+    condition: Event
+    multithread: bool = False
+    _internal_task: bool = False
 
-        :param target: A callable thing, what to do when this task is executed
-        :param multithread: If this task should be executed in another thread (False by default)
-        :param _keep_at_clear: If the task should be kept when cleaning the event's binding
-        :param id_: The task id of this task
+    task_threads: typing.ClassVar[list[threading.Thread]] = []
+
+    def execute(self, event: Event = Event(None)) -> typing.Any | None:
+        """Execute the task.
+
+        :return value: Return value of the target if not multitask, otherwise None
         """
-        self.id: str | int | typing.Literal[ID.AUTO] = id_
-        self.target: typing.Callable | typing.Iterable = target
-        self.multithread: bool = multithread
-        self.keep_at_clear: bool = _keep_at_clear
-
+        if self.multithread:
+            task_thread = threading.Thread(target=lambda: self.target(event))
+            self.__class__.task_threads.append(task_thread)
+            task_thread.run()
+        else:
+            return self.target(event)
 
 class DelayTask(EventTask):
     # TODO: DelayTask
     pass  # NOQA
-
-
-class WorkingThread(threading.Thread, CharmyObject):
-    """CWorkingThread is a class represent the event working thread."""
-
-    def __init__(self, *args, **kwargs):
-        threading.Thread.__init__(self, *args, **kwargs)
-        CharmyObject.__init__(self, id_="event.main_thread")
-        self.tasks: list[tuple[Event, EventTask | DelayTask]] = []  # [(event, task), ...]
-        self.is_alive: bool = True
-        self.lock: threading.Lock = threading.Lock()
-
-    def execute_tasks(self):
-        self.lock.acquire()
-        for task in self.tasks:
-            if callable(task[1].target):
-                task[1].target(task[0])
-            elif isinstance(task[1], collections.abc.Iterable):
-                # Function list
-                for func in task[1]:
-                    func(task[0])
-            self.tasks.remove(task)
-        else:
-            # warnings.warn("")
-            pass
-        self.lock.release()
-
-    def run(self):
-        while self.is_alive:
-            self.execute_tasks()
-            if len(self.tasks) == 0:
-                # If idle, then rest for 0.02s to save CPU time
-                time.sleep(0.02)
-
-    def add_task(self, task: EventTask | DelayTask, event: Event):
-        self.tasks.append((event, task))
