@@ -1,6 +1,7 @@
 import typing
 
 from dataclasses import dataclass as _dataclass
+import time as _time
 
 from ..object import CharmyObject as _CharmyObject
 
@@ -20,12 +21,18 @@ class Event(_CharmyObject):
     def __init_subclass__(cls):
         cls.latest: typing.Self
 
-    def meets(self, target_condition: dict) -> bool:
+    def meets(self, target_condition: dict, allow_inexist: bool = False) -> bool:
         """Check if current event meets the target condition.
 
         :param target_condition: Condition specified by task etc. to meet
         """
-        return NotImplemented
+        for condition_name in target_condition.keys():
+            if not hasattr(self, condition_name) and not allow_inexist:
+                return False
+            if getattr(self, condition_name) != target_condition[condition_name]:
+                return False
+        else:
+            return True
 
 Event.latest = Event()
 
@@ -138,3 +145,13 @@ class MouseScroll(MouseEvent):
 
     steps: int
     horizontal: bool = False
+
+
+# region Delay events
+
+@_dataclass
+class DelayTriggered(Event):
+    type: typing.ClassVar[str] = "delay.triggered"
+
+    delay_time: float
+    current_time: float = _time.time()

@@ -1,6 +1,6 @@
 import typing
 
-from .event import Event, EventHandling
+from .event import event_types.Event, EventHandling
 
 
 class Var(EventHandling):
@@ -29,7 +29,7 @@ class Var(EventHandling):
             except ValueError:
                 pass
             else:
-                self.trigger(Event(self, "change", value=value))
+                self.trigger(event_types.Event(self, "change", value=value))
 
 
 class StringVar(Var):

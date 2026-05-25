@@ -3,7 +3,6 @@ from __future__ import annotations as _
 import collections.abc
 import re
 import threading
-import time
 import typing
 import warnings
 from dataclasses import dataclass
@@ -33,11 +32,11 @@ class EventHandling():
     #     "delay", "repeat", 
     # ]
     # # fmt: on
-    multithread_tasks: list[tuple[EventTask, Event]] = []
+    multithread_tasks: list[tuple[EventTask, event_types.Event]] = []
     WORKING_THREAD: threading.Thread
 
     @staticmethod
-    def _execute_task(task: EventTask | DelayTask, event_obj: Event) -> None:
+    def _execute_task(task: EventTask | DelayTask, event_obj: event_types.Event) -> None:
         """To execute the bound task directly, regardless its props, mainly for internal use."""
         match task.target:
             case _ if callable(task.target):
@@ -69,8 +68,8 @@ class EventHandling():
         This shows subclassing EventHandling to let Widget gain the ability of handling events.
         """
         super().__init__()
-        self.latest_event: Event = Event(None)
-        self.tasks: dict[type[Event], list[EventTask]] = {}
+        self.latest_event: event_types.Event = event_types.Event()
+        self.tasks: dict[type[event_types.Event], list[EventTask]] = {}
 
     def parse_event_type_str(self, event_type_str: str) -> dict:  # NOQA
         """This function parses event type string.
@@ -101,7 +100,7 @@ class EventHandling():
                 params = []
         return {"type": event_type, "params": params}
 
-    def trigger(self, event_obj: Event) -> typing.Self:
+    def trigger(self, event_obj: event_types.Event) -> typing.Self:
         """To trigger a type of event
 
         Args:
@@ -122,16 +121,41 @@ class EventHandling():
         """
         # TODO: This fuck (trigger() method) should be rewritten
         for task in self.tasks[event_obj.__class__]:
-            if task.condition.meets
+            if event_obj.meets(task.condition):
+                task.execute()
         return self
+
+    @typing.overload
+    def bind(
+        self,
+        event_type: type[event_types.Event], 
+        target: typing.Callable | typing.Iterable, 
+        condition: dict = {}, 
+        multithread: bool = False, 
+        _is_internal: bool = False, 
+        return_task: typing.Literal[True] = True
+        ) -> EventTask: ...
+
+    @typing.overload
+    def bind(
+        self,
+        event_type: type[event_types.Event], 
+        target: typing.Callable | typing.Iterable, 
+        condition: dict = {}, 
+        multithread: bool = False, 
+        _is_internal: bool = False, 
+        return_task: typing.Literal[False] = False
+        ) -> typing.Self: ...
 
     def bind(
         self,
-        event_type: str,
-        target: typing.Callable | typing.Iterable,
-        multithread: bool = False,
-        _keep_at_clear: bool = False,
-    ) -> EventTask | bool:
+        event_type: type[event_types.Event], 
+        target: typing.Callable | typing.Iterable, 
+        condition: dict = {}, 
+        multithread: bool = False, 
+        _is_internal: bool = False, 
+        return_task: bool = True
+    ) -> EventTask | typing.Self:
         """To bind a task to the object when a specific type of event is triggered.
 
         Example
@@ -145,71 +169,21 @@ class EventHandling():
 
         :param event_type: The type of event to be bound to
         :param target: A (list of) callable thing, what to do when this task is executed
+        :param condition: Conditions required for the task to run when event is triggered
         :param multithread: If this task should be executed in another thread (False by default)
-        :param _keep_at_clear: If the task should be kept when cleaning the event's binding
-        :return: EventTask that is bound to the task if success, otherwise False
+        :param _is_internal: If the task is added by Charmy and should be kept when clear bind
+        :return: EventTask if `return_task` is True, othwise the EventHandling itself.
         """
-        parsed_event_type = self.parse_event_type_str(event_type)
-        if parsed_event_type["type"] not in self.__class__.EVENT_TYPES:
-            # warnings.warn(f"Event type {event_type} is not present in {self.__class__.__name__}, "
-            #                "so the task cannot be bound as expected.")
-            # return False
-            self.EVENT_TYPES.append(event_type)
-        if event_type not in self.tasks:
+        task = EventTask(target, condition, multithread, _is_internal)
+        if not event_type in self.tasks:
             self.tasks[event_type] = []
-        try:
-            assert isinstance(self, CharmyObject)
-        except AssertionError as e:
-            raise AssertionError("Each EventHandling object must by a CharmyObject.")
-        task_id = f"{self.id}.{event_type}.{len(self.tasks[event_type])}"
-        # e.g. CButton114.focus_gain.514 / CEventHandling114.focus_gain.514
-        match parsed_event_type["type"]:
-            case "delay":
-                raise NotImplementedError("Delay tasks are not implemented yet!")
-                task = DelayTask(  # NOQA
-                    target,  # I will fix this type error later (ignore is ur type check is off)
-                    parsed_event_type["params"][0],
-                    multithread,
-                    _keep_at_clear,
-                    task_id,  # NOQA
-                )
-            case "repeat":
-                raise NotImplementedError("Repeat tasks is not implemented yet!")
-            case _:  # All normal event types
-                task = EventTask(target, multithread, _keep_at_clear, task_id)
         self.tasks[event_type].append(task)
-        return task
-
-    def find_task(self, task_id: str) -> EventTask | bool:
-        """To find an event task using task ID.
-
-        Example
-        -------
-
-        .. code-block:: python
-
-            my_button = Button(...)
-            press_task = my_button.find_task("Button114.mouse_press.514")
-
-        This shows getting the `EventTask` object of task with ID `Button114.mouse_press.514`
-        from bound tasks of `my_button`.
-
-        :return: The EventTask object of the task, or False if not found
-        """
-        try:
-            assert isinstance(self, CharmyObject)
-        except AssertionError as e:
-            raise AssertionError("Each EventHandling object must by a CharmyObject.")
-        task_id_parsed = task_id.split(".")
-        if len(task_id_parsed) == 2:  # If is a shortened ID (without widget indicator)
-            task_id_parsed.insert(0, self.id)  # We assume that this indicates self
-        for task in self.tasks[task_id_parsed[1]]:
-            if task.id == task_id:
-                return task
+        if return_task:
+            return task
         else:
-            return False
+            return self
 
-    def unbind(self, target_task: str | EventTask | DelayTask) -> bool:
+    def unbind(self, target_task: EventTask) -> typing.Self:
         """To unbind the task with specified task ID.
 
         Example
@@ -218,49 +192,44 @@ class EventHandling():
         .. code-block:: python
 
             my_button = Button(...)
-            my_button.unbind("Button114.mouse_press.514")
+            my_task = my_button.bind(Click, lambda: print("Ouch!"))
+            my_button.unbind(my_task)
 
-        This show unbinding the task with ID `Button114.mouse_press.514` from `my_button`.
-
-        .. code-block:: python
-
-            my_button = Button(...)
-            my_button.unbind("Button114.mouse_press.*")
-            my_button.unbind("mouse_release.*")
-
-        This show unbinding all tasks under `mouse_press` and `mouse_release` event from
-        `my_button`.
+        This show unbinding the task bound to `Click` event from `my_button`.
 
         :param target_task: The task ID or `EventTask` to unbind.
         :return: If success
         """
-        match target_task:
-            case str():  # If given an ID string
-                for task_index, task in enumerate(self.tasks[target_task]):
-                    if task.id == target_task:
-                        self.tasks[target_task].pop(task_index)
-                        return True
-                else:
-                    return False
-            case EventTask():
-                for event_type in self.tasks:
-                    if target_task in self.tasks[event_type]:
-                        self.tasks[event_type].remove(target_task)
-                        return True
-                else:
-                    return False
-            case _:
-                warnings.warn(
-                    "Wrong type for unbind()! Must be event ID or task object",
-                    UserWarning,
-                )
-                return False
+        for event_type in self.tasks:
+            if target_task in self.tasks[event_type]:
+                self.tasks[event_type].remove(target_task)
+        return self
+
+    def clear_bind(self, target_type: type[event_types.Event]) -> typing.Self:
+        """To unbind the task with specified task ID.
+
+        Example
+        -------
+
+        .. code-block:: python
+
+            my_button = Button(...)
+            my_task = my_button.bind(Click, lambda: print("Ouch!"))
+            my_button.unbind(Click)
+
+        This show unbinding all tasks bound to `Click` event from `my_button`.
+
+        :param target_task: The task ID or `EventTask` to unbind.
+        :return: If success
+        """
+        self.tasks[target_type] = []
+        return self
 
 
 # region Tasks
 
 @dataclass
-class EventTask:
+class EventTask(CharmyObject):
     """A class to represent event task when an event is triggered.
 
     Each object is to represent a task bound to the event.
@@ -284,24 +253,32 @@ class EventTask:
     :param multithread: If this task should be executed in another thread (False by default)
     :param _internal_task: If the task is internally created and used by Charmy
     """
-    target: typing.Callable
-    condition: Event
+    target: typing.Callable | typing.Iterable[typing.Callable]
+    condition: dict[str, typing.Any]
     multithread: bool = False
     _internal_task: bool = False
 
     task_threads: typing.ClassVar[list[threading.Thread]] = []
 
-    def execute(self, event: Event = Event(None)) -> typing.Any | None:
+    def execute(self, event: event_types.Event = event_types.Event()) -> None:
         """Execute the task.
 
         :return value: Return value of the target if not multitask, otherwise None
         """
+        def execute_list(steps: typing.Iterable[typing.Callable], event: event_types.Event):
+            for step in steps:
+                step(event)
+        if isinstance(self.target, collections.abc.Iterable):
+            steps = self.target
+            target = lambda event: execute_list(steps, event)
+        else:
+            target = self.target
         if self.multithread:
-            task_thread = threading.Thread(target=lambda: self.target(event))
+            task_thread = threading.Thread(target=lambda: target(event))
             self.__class__.task_threads.append(task_thread)
             task_thread.run()
         else:
-            return self.target(event)
+            target(event)
 
 class DelayTask(EventTask):
     # TODO: DelayTask
