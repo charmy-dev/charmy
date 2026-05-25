@@ -61,7 +61,7 @@ class WindowEntity(EventHandling):
         # Set props
         self.size = size
         self.title = title
-        self.icon = pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / "icon.ico"
+        self.icon = pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / "window_icon.png"
         self.background = background
         # Show window
         self.show()
