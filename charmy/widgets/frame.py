@@ -1,8 +1,8 @@
-from .widget import Widget
-from .container import Container
+"""Charmy Frame."""
 
-__all__ = ["Frame"]
+from .widget import Widget as _Widget
+from .container import Container as _Container
 
 
-class Frame(Widget, Container):
+class Frame(_Widget, _Container):
     pass

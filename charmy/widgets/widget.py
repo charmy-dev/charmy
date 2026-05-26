@@ -1,3 +1,5 @@
+"""Charmy widgets base class"""
+
 import typing
 
 from . import window
@@ -5,6 +7,8 @@ from ..object import CharmyObject
 from ..event import EventHandling
 from .container import Container, layout_profiles
 from .. import styles
+
+__all__ = ["Widget"]
 
 
 class Widget(CharmyObject, EventHandling):

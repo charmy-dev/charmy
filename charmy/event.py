@@ -121,7 +121,7 @@ class EventHandling():
         """
         if type(event_obj) in self.tasks:
             for task in self.tasks[type(event_obj)]:
-                if event_obj.meets(task.condition):
+                if event_obj.meets(task.conditions):
                     task.execute(event_obj)
         event_obj.call_chain(self)
         return self
@@ -131,7 +131,7 @@ class EventHandling():
         self,
         event_type: type[event_types.Event], 
         target: typing.Callable | typing.Iterable, 
-        condition: dict = {}, 
+        conditions: dict = {}, 
         multithread: bool = False, 
         _is_internal: bool = False, 
         return_task: typing.Literal[True] = True
@@ -142,7 +142,7 @@ class EventHandling():
         self,
         event_type: type[event_types.Event], 
         target: typing.Callable | typing.Iterable, 
-        condition: dict = {}, 
+        conditions: dict = {}, 
         multithread: bool = False, 
         _is_internal: bool = False, 
         return_task: typing.Literal[False] = False
@@ -152,7 +152,7 @@ class EventHandling():
         self,
         event_type: type[event_types.Event], 
         target: typing.Callable | typing.Iterable, 
-        condition: dict = {}, 
+        conditions: dict = {}, 
         multithread: bool = False, 
         _is_internal: bool = False, 
         return_task: bool = True
@@ -175,7 +175,7 @@ class EventHandling():
         :param _is_internal: If the task is added by Charmy and should be kept when clear bind
         :return: EventTask if `return_task` is True, othwise the EventHandling itself.
         """
-        task = EventTask(target, condition, multithread, _is_internal)
+        task = EventTask(target, conditions, multithread, _is_internal)
         if not event_type in self.tasks:
             self.tasks[event_type] = []
         self.tasks[event_type].append(task)
@@ -183,6 +183,15 @@ class EventHandling():
             return task
         else:
             return self
+
+    def on(self, 
+            func: typing.Callable, 
+            event_type: type[event_types.Event], 
+            conditions: dict = {}, 
+            multithread: bool = False, 
+            _is_internal: bool = False, 
+            ):
+        self.bind(event_type, func, conditions, multithread, _is_internal)
 
     def unbind(self, target_task: EventTask) -> typing.Self:
         """To unbind the task with specified task ID.
@@ -255,7 +264,7 @@ class EventTask(CharmyObject):
     :param _internal_task: If the task is internally created and used by Charmy
     """
     target: typing.Callable | typing.Iterable[typing.Callable]
-    condition: dict[str, typing.Any]
+    conditions: dict[str, typing.Any]
     multithread: bool = False
     _internal_task: bool = False
 

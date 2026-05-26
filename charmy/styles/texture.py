@@ -22,9 +22,11 @@ For full list of TextureLike types, see (NOT WRITTEN YET) section in the documen
 """
 # TODO: Write the fucking document
 
+from __future__ import annotations as _
+
 import typing as _typing
 
-import json
+import json as _json
 
 
 # region Texture base class
@@ -69,7 +71,7 @@ class Texture:
         """
         # Convert raw content to JSON
         if isinstance(json_content, str):
-            json_content = json.loads(json_content)
+            json_content = _json.loads(json_content)
             assert type(json_content) is dict
             # 👆 Must assert the type here, because the fucking json module did not specify the 
             # type of the return value of loads()
