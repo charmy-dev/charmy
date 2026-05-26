@@ -3,15 +3,17 @@ import typing
 from dataclasses import dataclass as _dataclass
 import time as _time
 
+from charmy.event import EventHandling, EventHandling as _EventHandling
+
 from ..object import CharmyObject as _CharmyObject
 
 if typing.TYPE_CHECKING:
-    from ..event import EventHandling
-    from ..styles import shape
-    from ..widgets import window
+    from ..event import EventHandling as _EventHandling
+    from ..styles import shape as _shape
+    from ..widgets import window as _window
 
 
-# region base class
+# region Base class & generic classes
 
 @_dataclass
 class Event(_CharmyObject):
@@ -34,7 +36,21 @@ class Event(_CharmyObject):
         else:
             return True
 
+    def call_chain(self, subject: _EventHandling) -> None:
+        subject.trigger(EventTriggered(subject))
+
 Event.latest = Event()
+
+
+@_dataclass
+class EventTriggered(Event):
+    """Triggered when any other kind of event is triggered."""
+    type: typing.ClassVar[str] = "event_triggered"
+
+    subject: _EventHandling
+
+    def call_chain(self, subject: EventHandling) -> None:
+        pass
 
 
 # region Widget events
@@ -49,7 +65,7 @@ class WidgetEvent(Event):
     """
     type: typing.ClassVar[str] = "widget"
 
-    subject: EventHandling
+    subject: _EventHandling
 
 @_dataclass
 class UpdateEvent(WidgetEvent):
@@ -61,16 +77,16 @@ class UpdateEvent(WidgetEvent):
     """
     type: typing.ClassVar[str] = "widget.update"
 
-    subject: EventHandling | None
-    redraw: bool | shape.ShapeRange = False
+    subject: _EventHandling | None
+    redraw: bool | _shape.ShapeRange = False
 
 @_dataclass
 class DrawEvent(WidgetEvent):
     """Will be generated when a widget or window is redrawn."""
     type: typing.ClassVar[str] = "widget.draw"
 
-    pos: shape.Point = (0, 0)
-    size: shape.Size = (0, 0)
+    pos: _shape.Point = (0, 0)
+    size: _shape.Size = (0, 0)
 
 @_dataclass
 class ConfigureEvent(WidgetEvent):
@@ -79,29 +95,36 @@ class ConfigureEvent(WidgetEvent):
 
     attrs_changed: dict
 
+    def call_chain(self, subject: EventHandling) -> None:
+        super().call_chain(subject)
+        if "pos" in self.attrs_changed.keys():
+            subject.trigger(MoveEvent(subject, self.attrs_changed["pos"]))
+        if "size" in self.attrs_changed.keys():
+            subject.trigger(ResizeEvent(subject, self.attrs_changed["size"]))
+
 @_dataclass
 class ResizeEvent(WidgetEvent):
     """Will be generated when a widget or window is resized."""
     type: typing.ClassVar[str] = "widget.resize"
 
-    new_size: shape.Size
-    old_pos: typing.Optional[shape.Size]
+    new_size: _shape.Size
+    old_size: typing.Optional[_shape.Size] = None
 
 @_dataclass
 class MoveEvent(WidgetEvent):
     """Will be generated when a widget or window is moved."""
     type: typing.ClassVar[str] = "widget.move"
 
-    new_pos: shape.Point
-    old_pos: typing.Optional[shape.Point]
+    new_pos: _shape.Point
+    old_pos: typing.Optional[_shape.Point] = None
 
 @_dataclass
-class FocusGain(Event):
+class FocusGain(WidgetEvent):
     """Will be generated when a widget or window gained focus."""
     type: typing.ClassVar[str] = "widget.focus_gain"
 
 @_dataclass
-class FocusLoss(Event):
+class FocusLoss(WidgetEvent):
     """Will be generated when a widget or window lose focus."""
     type: typing.ClassVar[str] = "widget.focus_loss"
 
@@ -116,8 +139,8 @@ class MouseEvent(Event):
     ------------------------
     `subject` should be the window that detected the mouse event.
     """
-    subject: window.WindowEntity
-    mouse_pos: shape.Point
+    subject: _window.WindowEntity
+    mouse_pos: _shape.Point
 
 @_dataclass
 class MouseMove(MouseEvent):

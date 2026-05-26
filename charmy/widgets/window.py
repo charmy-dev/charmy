@@ -49,6 +49,7 @@ class WindowEntity(EventHandling):
                     )
         self.parent.windows.append(self)
         # Define internal props
+        self._pos: styles.shape.Point
         self._size: styles.shape.Size
         self._title: str
         self._background: styles.texture.Texture | styles.texture.TextureLike
@@ -57,7 +58,7 @@ class WindowEntity(EventHandling):
         self.visible = True
         self._alive = True
         # Initialize the WindowBase
-        self.backend_base: WindowBase = self.parent.backend.WindowBase(self.parent.backend)
+        self.backend_base: WindowBase = self.parent.backend.WindowBase(self.parent.backend, self)
         # Set props
         self.size = size
         self.title = title
@@ -67,7 +68,18 @@ class WindowEntity(EventHandling):
         self.show()
 
     @property
+    def pos(self) -> styles.shape.Point:
+        """Window position on screen."""
+        return self._pos
+
+    @pos.setter
+    def pos(self, new: styles.shape.Point) -> None:
+        self._pos = new
+        self.backend_base.set_pos(new)
+
+    @property
     def size(self) -> styles.shape.Size:
+        """Window size."""
         return self.size
 
     @size.setter

@@ -14,6 +14,9 @@ import warnings
 
 from . import utils as charmy_stuff
 
+if typing.TYPE_CHECKING:
+    from charmy.widgets import window
+
 __all__ = ["Backend", "not_implemented_func"]
 
 
@@ -123,7 +126,8 @@ class WindowSupportState(SupportState):
     """Represents support states of windows held by this backend."""
     set_title               : bool = False
     set_icon                : bool = False
-    resize                  : bool = False
+    set_pos                 : bool = False
+    set_size                : bool = False
     set_scale_mode          : bool = False
     set_background          : bool = False
     translucent             : bool = False
@@ -137,7 +141,7 @@ class WindowBase(WhateverBase):
 
     supports: WindowSupportState = WindowSupportState()
 
-    def __init__(self, backend: Backend) -> None:
+    def __init__(self, backend: Backend, charmy_window: window.WindowEntity) -> None:
         """Initializes the dummy window.
         
         :param backend: The backend that this window uses
@@ -156,6 +160,8 @@ class WindowBase(WhateverBase):
         self.customize_titlebar = False
 
         self.drawing_list: list[charmy_stuff.graphics.DrawnObject] = []
+
+        self.charmy_window: window.WindowEntity = charmy_window
 
         # And no need to perform any action to a dummy window
 
@@ -216,6 +222,11 @@ class WindowBase(WhateverBase):
     def clear_screen(self) -> typing.Self:
         """To clear all content from a window"""
         self.drawing_list = []
+        return self
+
+    def set_pos(self, new: charmy_stuff.styles.shape.Point) -> typing.Self:
+        """Set window size, does nothing on dummy."""
+        not_implemented_func(operation_desc="Setting window position on screen")
         return self
 
     def set_size(self, new: charmy_stuff.styles.shape.Size) -> typing.Self:

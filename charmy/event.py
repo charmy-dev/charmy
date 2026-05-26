@@ -114,17 +114,16 @@ class EventHandling():
                 ...
 
             my_widget = Widget()
-            my_widget.trigger("mouse_press")
+            my_widget.trigger(MousePress(pos=(30, 50), button=0))
 
-        This shows triggering a `mouse_press` event in a `Widget`, which inherited
+        This shows triggering a `mouse.press` event in a `Widget`, which inherited
         `EventHandling` so has the ability to handle events.
         """
-        # TODO: This fuck (trigger() method) should be rewritten
-        if type(event_obj) not in self.tasks:
-            return self
-        for task in self.tasks[type(event_obj)]:
-            if event_obj.meets(task.condition):
-                task.execute()
+        if type(event_obj) in self.tasks:
+            for task in self.tasks[type(event_obj)]:
+                if event_obj.meets(task.condition):
+                    task.execute(event_obj)
+        event_obj.call_chain(self)
         return self
 
     @typing.overload
@@ -262,11 +261,13 @@ class EventTask(CharmyObject):
 
     task_threads: typing.ClassVar[list[threading.Thread]] = []
 
-    def execute(self, event: event_types.Event = event_types.Event()) -> None:
+    def execute(self, event: typing.Optional[event_types.Event] = None) -> None:
         """Execute the task.
 
         :return value: Return value of the target if not multitask, otherwise None
         """
+        if event is None:
+            event = event_types.Event()
         def execute_list(steps: typing.Iterable[typing.Callable], event: event_types.Event):
             for step in steps:
                 step(event)

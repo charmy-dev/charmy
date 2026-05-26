@@ -21,9 +21,12 @@ import math
 import warnings
 import time
 
-from . import template
+from charmy.backend import template
 
 import charmy.backend.utils as charmy_stuff
+
+if typing.TYPE_CHECKING:
+    from charmy.widgets import window
 
 __all__ = ["Backend", "DEBUG_FLAGS"]
 
@@ -76,26 +79,27 @@ class WindowSupportState(template.WindowSupportState):
     """Flags all supported window features."""
     set_title               : bool = True
     set_icon                : bool = True
-    resize                  : bool = True
+    set_pos                 : bool = True
+    set_size                : bool = True
     set_scale_mode          : bool = True
     set_background          : bool = True
     translucent             : bool = True
     backdrop                : type[WindowBackdropSupportState] = WindowBackdropSupportState
     set_state               : bool = True
     fullscreen              : bool = True
-    customize_titlebar      : bool = True
+    customize_titlebar      : bool = False
 
 class WindowBase(template.WindowBase):
     """Window APIs in Genesis backend."""
     supports = WindowSupportState()
     Backend = Backend
 
-    def __init__(self, backend: template.Backend):
+    def __init__(self, backend: template.Backend, charmy_window: window.WindowEntity):
         """Creates a window.
 
         :param backend: The backend that this window uses (can be get from CharmyManager)
         """
-        super().__init__(backend)
+        super().__init__(backend, charmy_window)
 
         self.title: str = "Charmy SDL2 Window"
         self.size: tuple[int, int] = (540, 480)
@@ -138,6 +142,17 @@ class WindowBase(template.WindowBase):
             cairo.FORMAT_ARGB32, self.size[0], self.size[1])
         self.cairo_context = cairo.Context(self.surface)
 
+    def set_pos(self, new: charmy_stuff.styles.shape.Point) -> typing.Self:
+        """Set window position.
+
+        :param new: New window pos
+        """
+        if new == self.pos:
+            return self
+        self.pos = new
+        sdl2.SDL_SetWindowPosition(self.window, new[0], new[1])
+        return self
+
     def set_size(self, new: charmy_stuff.styles.shape.Size, _passive: bool = False) -> typing.Self:
         """Set window size.
 
@@ -176,6 +191,47 @@ class WindowBase(template.WindowBase):
         sdl2.SDL_FreeSurface(surface)
         os.unlink(temp_path)
         return self
+
+    def sdl2_handle_event(self, event: sdl2.SDL_Event) -> None:
+        cme = charmy_stuff.event_types # Alias Charmy events
+        match event.type:
+            case sdl2.SDL_WINDOWEVENT:
+                match event.window.event:
+                    case sdl2.SDL_WINDOWEVENT_RESIZED:
+                        self.charmy_window.trigger(cme.ConfigureEvent(
+                            self.charmy_window, 
+                            {"size": (event.window.data1, event.window.data2)}
+                            ))
+                        # self.charmy_window.trigger(cme.ResizeEvent(
+                        #     self.charmy_window, 
+                        #     (event.window.data1, event.window.data2)
+                        #     ))
+                    case sdl2.SDL_WINDOWEVENT_MOVED:
+                        self.charmy_window.trigger(cme.ConfigureEvent(
+                            self.charmy_window, 
+                            {"pos": (event.window.data1, event.window.data2)}
+                            ))
+                    case sdl2.SDL_WINDOWEVENT_FOCUS_GAINED:
+                        self.charmy_window.trigger(cme.FocusGain(self.charmy_window))
+                    case sdl2.SDL_WINDOWEVENT_FOCUS_LOST:
+                        self.charmy_window.trigger(cme.FocusLoss(self.charmy_window))
+            case sdl2.SDL_MOUSEMOTION:
+                self.charmy_window.trigger(cme.MouseMove(
+                    self.charmy_window, 
+                    (event.motion.x, event.motion.y)
+                    ))
+            case sdl2.SDL_MOUSEBUTTONDOWN:
+                self.charmy_window.trigger(cme.MousePress(
+                    self.charmy_window, 
+                    (event.button.x, event.button.y), 
+                    event.button.button - 1
+                    ))
+            case sdl2.SDL_MOUSEBUTTONUP:
+                self.charmy_window.trigger(cme.MouseRelease(
+                    self.charmy_window, 
+                    (event.button.x, event.button.y), 
+                    event.button.button - 1
+                    ))
 
     def update(self, redraw: bool = True) -> typing.Self:
         """Update the window.
@@ -224,12 +280,12 @@ class WindowBase(template.WindowBase):
                     sys.exit(0)
                     NotImplemented
                 case sdl2.SDL_WINDOWEVENT:
-                    match event.window.event:
-                        case sdl2.SDL_WINDOWEVENT_RESIZED:
-                            w = ctypes.c_int()
-                            h = ctypes.c_int()
-                            sdl2.SDL_GetWindowSize(self.window, w, h)
-                            self.set_size((w.value, h.value), _passive = True)
+                    if event.window.event == sdl2.SDL_WINDOWEVENT_RESIZED:
+                        w = ctypes.c_int()
+                        h = ctypes.c_int()
+                        sdl2.SDL_GetWindowSize(self.window, w, h)
+                        self.set_size((w.value, h.value), _passive = True)
+            self.sdl2_handle_event(event)
         return self
 
 
