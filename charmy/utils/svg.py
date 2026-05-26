@@ -97,7 +97,7 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> _shape.AnyShape | _
                 # Then set pos
                 pen_pos = scale_point(calc_point(sections, command_index, 1, command.islower()))
                 command_index += 3
-            case "L" | "V" | "H": # _shape.LineTo
+            case "L" | "V" | "H": # LineTo
                 dest: _shape.Point
                 match command.upper():
                     case "L": # Any line
