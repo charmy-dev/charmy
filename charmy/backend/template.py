@@ -150,7 +150,8 @@ class WindowBase(WhateverBase):
 
         self.title: str = "Charmy Dummy Window"
         self.icon: bytearray | None = None
-        self.size: tuple[int, int] = (0, 0)
+        self.pos: charmy_stuff.styles.shape.Size = (0, 0)
+        self.size: charmy_stuff.styles.shape.Size = (0, 0)
         self.scale_mode: str = "default_scale"
         self.background: charmy_stuff.styles.texture.Texture | charmy_stuff.styles.texture.TextureLike = \
                         (150, 150, 150)

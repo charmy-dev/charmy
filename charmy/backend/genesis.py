@@ -104,7 +104,7 @@ class WindowBase(template.WindowBase):
         self.title: str = "Charmy SDL2 Window"
         self.size: tuple[int, int] = (540, 480)
 
-        # create window
+        # Create window
         self.window: typing.Any = sdl2.SDL_CreateWindow(
             self.title.encode('utf-8'),
             sdl2.SDL_WINDOWPOS_UNDEFINED,
@@ -112,6 +112,11 @@ class WindowBase(template.WindowBase):
             self.size[0], self.size[1],
             sdl2.SDL_WINDOW_SHOWN | sdl2.SDL_WINDOW_RESIZABLE, 
         )
+
+        # Sync window pos to higher level stuff
+        x, y = ctypes.c_int(), ctypes.c_int()
+        sdl2.SDL_GetWindowPosition(self.window, x, y)
+        self.charmy_window._pos = (x.value, y.value)
 
         if not self.window:
             raise RuntimeError("Can't create window")
