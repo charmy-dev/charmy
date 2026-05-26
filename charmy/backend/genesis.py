@@ -198,6 +198,7 @@ class WindowBase(template.WindowBase):
         return self
 
     def sdl2_handle_event(self, event: sdl2.SDL_Event) -> None:
+        """Handle SDL2 events and trigger upper level Charmy events"""
         cme = charmy_stuff.event_types # Alias Charmy events
         match event.type:
             case sdl2.SDL_WINDOWEVENT:
@@ -237,10 +238,12 @@ class WindowBase(template.WindowBase):
                     (event.button.x, event.button.y), 
                     event.button.button - 1
                     ))
+            case sdl2.SDL_QUIT:
+                self.charmy_window.trigger(NotImplemented)
 
     def update(self, redraw: bool = True) -> typing.Self:
         """Update the window.
-        
+
         :return self: The WindowBase itself
         """
         if redraw:
@@ -280,17 +283,14 @@ class WindowBase(template.WindowBase):
 
         # Handle events
         for event in sdl2.ext.get_events():
+            self.sdl2_handle_event(event)
             match event.type:
-                case sdl2.SDL_QUIT:
-                    sys.exit(0)
-                    NotImplemented
                 case sdl2.SDL_WINDOWEVENT:
                     if event.window.event == sdl2.SDL_WINDOWEVENT_RESIZED:
                         w = ctypes.c_int()
                         h = ctypes.c_int()
                         sdl2.SDL_GetWindowSize(self.window, w, h)
                         self.set_size((w.value, h.value), _passive = True)
-            self.sdl2_handle_event(event)
         return self
 
 

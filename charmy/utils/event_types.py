@@ -129,6 +129,19 @@ class FocusLoss(WidgetEvent):
     type: typing.ClassVar[str] = "widget.focus_loss"
 
 
+# region Window events
+
+@_dataclass
+class WindowEvent(Event):
+    """The type of events that represents mouse actions.
+
+    Notes on Param `subject`
+    ------------------------
+    `subject` should be the window that detected the mouse event.
+    """
+    subject: _window.WindowEntity
+
+
 # region Mouse events
 
 @_dataclass
