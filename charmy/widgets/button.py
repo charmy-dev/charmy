@@ -9,14 +9,14 @@ from .. import styles as _styles
 from .. import graphics as _graphics
 
 if typing.TYPE_CHECKING:
-    from .. import container
+    from .. import container as _container
 
 
 class Button(_Widget):
     """Text buttons in Charmy."""
 
     def __init__(self, 
-                parent: container.Container | None = None, 
+                parent: _container.Container | None = None, 
                 text: str = "Button", 
                 on_click: typing.Callable = lambda: None, 
                 style: dict[str, typing.Any] = {

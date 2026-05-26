@@ -429,7 +429,6 @@ class CubicBezier(LinePath):
 # region Shapes
 
 class CharmyShapeError(Exception): ...
-class CharmySVGIntepreterError(Exception): ...
 
 class ShapeType:
     """Base class of shapes"""

@@ -1,13 +1,15 @@
 from __future__ import annotations as _
 
-from ..styles.shape import *
+from ..styles import shape as _shape
 import re as _re
 
 __all__ = ["shapes_from_svg_path"]
 
 
+class CharmySVGIntepreterError(Exception): ...
+
 @staticmethod
-def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGroup:
+def shapes_from_svg_path(svg_path: str, scale: float = 1) -> _shape.AnyShape | _shape.ShapeGroup:
     """This converts SVG path into sequence of Charmy lines.
 
     I made a fucking complete SVG path intepreter man!!!   —— rgzz666 @ 26/05/16
@@ -34,19 +36,19 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGro
         else:
             return point_x, point_y
 
-    def scale_point(point: tuple[int | float, int | float], scale: float = scale) -> Point:
+    def scale_point(point: tuple[int | float, int | float], scale: float = scale) -> _shape.Point:
         return (
             int(round(point[0] * scale, 0)), int(round(point[1] * scale, 0))
             )
 
     def calc_s_curve(
-            prev_curve: CubicBezier, 
+            prev_curve: _shape.CubicBezier, 
             s_data: list[tuple[int, int]], 
-            ) -> CubicBezier:
+            ) -> _shape.CubicBezier:
         """
-        Calculates and returns a new CubicBezier object for an S/s command.
+        Calculates and returns a new _shape.CubicBezier object for an S/s command.
         
-        :param prev_curve: The preceding CubicBezier object (in absolute coordinates).
+        :param prev_curve: The preceding _shape.CubicBezier object (in absolute coordinates).
         :param s_data: A list of 2 tuples representing the points provided to the S/s command:
                     [(cp2_x, cp2_y), (end_x, end_y)]
                     These can be absolute or relative depending on the `relative` flag.
@@ -57,7 +59,7 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGro
         junc_x, junc_y = prev_curve.points[3]  
         old_cp2_x, old_cp2_y = prev_curve.points[2]
         # 2. Calculate the mirrored first control point (always absolute)
-        # Formula: 2 * Junction - Old_Control_Point
+        # Formula: 2 * Junction - Old_Control__shape.Point
         new_cp1_x = 2 * junc_x - old_cp2_x
         new_cp1_y = 2 * junc_y - old_cp2_y
         new_cp1 = (new_cp1_x, new_cp1_y)
@@ -70,9 +72,9 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGro
         # else:
         abs_cp2 = s_cp2
         abs_end = s_end
-        # 5. Construct and return the new absolute CubicBezier object
+        # 5. Construct and return the new absolute _shape.CubicBezier object
         # Order: [start, control_1, control_2, end]
-        return CubicBezier([
+        return _shape.CubicBezier([
             (junc_x, junc_y), 
             new_cp1, 
             abs_cp2, 
@@ -81,22 +83,22 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGro
 
     sections: list[str] = tokenize_svg_path(svg_path)
     command_index: int = 0
-    pen_pos: Point = (0, 0)
-    lines: list[LinePath] = []
-    shapes: list[AnyShape] = []
+    pen_pos: _shape.Point = (0, 0)
+    lines: list[_shape.LinePath] = []
+    shapes: list[_shape.AnyShape] = []
     while command_index < len(sections):
         command = sections[command_index]
         match command.upper():
             case "M": # MoveTo
                 # End current shape
                 if len(lines) > 0:
-                    shapes.append(AnyShape(lines))
+                    shapes.append(_shape.AnyShape(lines))
                     lines = []
                 # Then set pos
                 pen_pos = scale_point(calc_point(sections, command_index, 1, command.islower()))
                 command_index += 3
-            case "L" | "V" | "H": # LineTo
-                dest: Point
+            case "L" | "V" | "H": # _shape.LineTo
+                dest: _shape.Point
                 match command.upper():
                     case "L": # Any line
                         dest = scale_point(calc_point(
@@ -113,13 +115,13 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGro
                                 (pen_pos[0] if command.isupper() else 0), 
                             pen_pos[1]
                             ))
-                lines.append(Line([pen_pos, dest]))
+                lines.append(_shape.Line([pen_pos, dest]))
                 pen_pos = dest
                 command_index += 3
             case "C" | "S": # Cubic Bezier
                 if command.upper() == "S":
                     # Chained cubic Beziers (chained smooth curves)
-                    if not isinstance(lines[-1], CubicBezier):
+                    if not isinstance(lines[-1], _shape.CubicBezier):
                         raise CharmySVGIntepreterError(
                             "An S command must follow a C command in SVG path."
                             )
@@ -133,7 +135,7 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGro
                     command_index += 5
                 else:
                     # Normal cubic Beziers
-                    lines.append(CubicBezier([
+                    lines.append(_shape.CubicBezier([
                         pen_pos, 
                         scale_point(calc_point(sections, command_index, 1, command.islower())), 
                         scale_point(calc_point(sections, command_index, 3, command.islower())), 
@@ -143,10 +145,10 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGro
                 pen_pos = lines[-1].end_point
             case "Z": # Close path
                 # Close path
-                lines.append(Line([pen_pos, lines[0].start_point]))
+                lines.append(_shape.Line([pen_pos, lines[0].start_point]))
                 # End current shape
                 if len(lines) > 0:
-                    shapes.append(AnyShape(lines))
+                    shapes.append(_shape.AnyShape(lines))
                     lines = []
                 # Then to next command
                 command_index += 1
@@ -156,4 +158,4 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> AnyShape | ShapeGro
     if len(shapes) == 1:
         return shapes[0]
     else:
-        return ShapeGroup(shapes)
+        return _shape.ShapeGroup(shapes)
