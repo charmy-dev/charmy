@@ -8,6 +8,8 @@ from ..event import EventHandling
 from .container import Container, layout_profiles
 from .. import styles
 
+__all__ = ["Widget"]
+
 
 class Widget(CharmyObject, EventHandling):
     """Widget base class."""

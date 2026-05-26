@@ -1,20 +1,18 @@
 """Charmy button."""
 
-from __future__ import annotations
+from __future__ import annotations as _
 
 import typing
 
-from .widget import Widget
-from .. import styles
-from .. import graphics
+from .widget import Widget as _Widget
+from .. import styles as _styles
+from .. import graphics as _graphics
 
 if typing.TYPE_CHECKING:
     from .. import container
 
-__all__ = ["Button"]
 
-
-class Button(Widget):
+class Button(_Widget):
     """Text buttons in Charmy."""
 
     def __init__(self, 
@@ -64,14 +62,14 @@ class Button(Widget):
         self.text: str = text
         self.on_click: typing.Callable = on_click
         self.style: dict[str, typing.Any] = style
-        self.theme: typing.Optional[styles.theme.Theme] = None
+        self.theme: typing.Optional[_styles.theme.Theme] = None
         self.state: str = "normal"
 
         # Drawn objects, used by internal drawing functions
-        self._drawn_background_shape: graphics.DrawnShape = \
-            graphics.DrawnShape(styles.shape.Rect((0, 0), (0, 0)), None)
-        self._drawn_text: graphics.DrawnText = \
-            graphics.DrawnText(self.text, styles.text_style.TextStyle.sys_default, None)
+        self._drawn_background_shape: _graphics.DrawnShape = \
+            _graphics.DrawnShape(_styles.shape.Rect((0, 0), (0, 0)), None)
+        self._drawn_text: _graphics.DrawnText = \
+            _graphics.DrawnText(self.text, _styles.text_style.TextStyle.sys_default, None)
 
         self._update_drawing_objects()
 
@@ -86,22 +84,22 @@ class Button(Widget):
         curr_style = self.curr_state_styles
         # Make background shape
         self._drawn_background_shape.shape = \
-            styles.shape.AnyShape.from_json(curr_style["shape"])
+            _styles.shape.AnyShape.from_json(curr_style["shape"])
         self._drawn_background_shape.texture = \
-            styles.texture.Texture.from_json(curr_style["background"])
+            _styles.texture.Texture.from_json(curr_style["background"])
         self._drawn_background_shape.border_width = \
             curr_style["border_width"]
         self._drawn_background_shape.border_texture = \
-            styles.texture.Texture.from_json(curr_style["border_texture"])
+            _styles.texture.Texture.from_json(curr_style["border_texture"])
         self._drawn_background_shape.offset = \
             self.abs_pos
         # Drawn text
         self._drawn_text.text = \
             self.text
         self._drawn_text.style = \
-            styles.text_style.TextStyle.from_json(curr_style["text_style"])
+            _styles.text_style.TextStyle.from_json(curr_style["text_style"])
         self._drawn_text.texture = \
-            styles.texture.Texture.from_json(curr_style["text_texture"])
+            _styles.texture.Texture.from_json(curr_style["text_texture"])
         self._drawn_text.offset = \
             (self.abs_pos[0] + ((self.width - self._drawn_text.boundary[1][0]) // 2), 
              self.abs_pos[1] + ((self.height - self._drawn_text.boundary[1][1]) // 2))

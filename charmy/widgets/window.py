@@ -6,55 +6,55 @@ import pathlib
 
 import io
 
-from ..event import EventHandling, event_types
-from ..object import CharmyObject
-from .container import Container
-from .. import const
-from ..cmm import CharmyManager
-from .. import styles
-from ..utils import type_checking
+from ..event import EventHandling as _EventHandling, event_types as _event_types
+from ..object import CharmyObject as _CharmyObject
+from .container import Container as _Container
+from .. import const as _const
+from ..cmm import CharmyManager as _CharmyManager
+from .. import styles as _styles
+from ..utils import type_checking as _type_checking
 
 if typing.TYPE_CHECKING:
-    from PIL import Image as PIL_Image
     from ..backend.template import WindowBase
 
-__all__ = ["WindowEntity"]
+
+__all__ = ["WindowEntity", "Window"]
 
 
-class WindowEntity(EventHandling):
+class WindowEntity(_EventHandling):
     """Contains abilities of window entities."""
 
     def __init__(self, 
-                parent: CharmyManager | None = None, 
-                size: styles.shape.Size = (150, 150), 
+                parent: _CharmyManager | None = None, 
+                size: _styles.shape.Size = (150, 150), 
                 title: str = "Charmy Window", 
-                background: styles.texture.Texture | styles.texture.TextureLike = (150, 150, 150), 
+                background: _styles.texture.Texture | _styles.texture.TextureLike = (150, 150, 150), 
                 *args, **kwargs):
         """To create and initialize a window."""
         super().__init__(*args, **kwargs)
         # Store parent manager
         if parent is not None: # Parent manager already specified
-            self.parent: CharmyManager = parent
-        elif len(CharmyManager.instances) == 1: # Only one manager present
-            parent = CharmyManager.instances[0]
+            self.parent: _CharmyManager = parent
+        elif len(_CharmyManager.instances) == 1: # Only one manager present
+            parent = _CharmyManager.instances[0]
             if parent is not None:
-                self.parent: CharmyManager = parent
+                self.parent: _CharmyManager = parent
             else:
-                self.parent: CharmyManager = CharmyManager(const.Configs.default_backend)
+                self.parent: _CharmyManager = _CharmyManager(_const.Configs.default_backend)
         else:
-            if len(CharmyManager.instances) == 0:
+            if len(_CharmyManager.instances) == 0:
                 # If no manager present, create a default
-                self.parent: CharmyManager = CharmyManager(const.Configs.default_backend)
+                self.parent: _CharmyManager = _CharmyManager(_const.Configs.default_backend)
             else:
                 raise RuntimeError(
                     "No manager specified for window, while multiple managers present."
                     )
         self.parent.windows.append(self)
         # Define internal props
-        self._pos: styles.shape.Point
-        self._size: styles.shape.Size
+        self._pos: _styles.shape.Point
+        self._size: _styles.shape.Size
         self._title: str
-        self._background: styles.texture.Texture | styles.texture.TextureLike
+        self._background: _styles.texture.Texture | _styles.texture.TextureLike
         self._icon: bytes
         # Other flags
         self.visible = True
@@ -70,22 +70,22 @@ class WindowEntity(EventHandling):
         self.show()
 
     @property
-    def pos(self) -> styles.shape.Point:
+    def pos(self) -> _styles.shape.Point:
         """Window position on screen."""
         return self._pos
 
     @pos.setter
-    def pos(self, new: styles.shape.Point) -> None:
+    def pos(self, new: _styles.shape.Point) -> None:
         self._pos = new
         self.backend_base.set_pos(new)
 
     @property
-    def size(self) -> styles.shape.Size:
+    def size(self) -> _styles.shape.Size:
         """Window size."""
         return self.size
 
     @size.setter
-    def size(self, new: styles.shape.Size) -> None:
+    def size(self, new: _styles.shape.Size) -> None:
         self._size = new
         self.backend_base.set_size(new)
 
@@ -104,13 +104,13 @@ class WindowEntity(EventHandling):
         self._title = new
 
     @property
-    def background(self) -> styles.texture.Texture | styles.texture.TextureLike:
+    def background(self) -> _styles.texture.Texture | _styles.texture.TextureLike:
         """Window background"""
         return self._background
 
     @background.setter
-    def background(self, new: styles.texture.Texture | styles.texture.TextureLike):
-        self.backend_base.background = styles.texture.ensure_texture(new)
+    def background(self, new: _styles.texture.Texture | _styles.texture.TextureLike):
+        self.backend_base.background = _styles.texture.ensure_texture(new)
         self._background = new
 
     @property
@@ -127,7 +127,7 @@ class WindowEntity(EventHandling):
         return self._icon
 
     @icon.setter
-    def icon(self, new: str | pathlib.Path | bytes | type_checking.PILImageType) -> None:
+    def icon(self, new: str | pathlib.Path | bytes | _type_checking.PILImageType) -> None:
         if isinstance(new, str) or isinstance(new, pathlib.Path):
             # Icon file path
             if isinstance(new, str):
@@ -137,7 +137,7 @@ class WindowEntity(EventHandling):
             icon_f.close()
         else:
             # Icon image raw content
-            if isinstance(new, type_checking.PILImageType):
+            if isinstance(new, _type_checking.PILImageType):
                 buffer = io.BytesIO()
                 new.save(buffer, format="PNG")
                 new = buffer.getvalue()
@@ -162,30 +162,33 @@ class WindowEntity(EventHandling):
         """
         self.backend_base.update()
 
+    def trigger(self, event: _event_types.Event) -> typing.Self:
+        return self
 
-class Window(CharmyObject, WindowEntity, Container, EventHandling):
+
+class Window(_CharmyObject, WindowEntity, _Container, _EventHandling):
     """Windows in Charmy."""
 
     is_root_container: typing.ClassVar[bool] = True
 
     def __init__(self, 
-                parent: CharmyManager | None = None, 
-                size: styles.shape.Size = (540, 360), 
+                parent: _CharmyManager | None = None, 
+                size: _styles.shape.Size = (540, 360), 
                 title: str = "Charmy Window", 
-                background: styles.texture.Texture | styles.texture.TextureLike = (255, 255, 255), 
+                background: _styles.texture.Texture | _styles.texture.TextureLike = (255, 255, 255), 
                 ):
         """To create a window in Charmy."""
-        CharmyObject.__init__(self)
+        _CharmyObject.__init__(self)
         WindowEntity.__init__(self, parent, size, title, background)
-        Container.__init__(self)
-        EventHandling.__init__(self)
+        _Container.__init__(self)
+        _EventHandling.__init__(self)
 
     def update(self, force_redraw: bool = False):
         """Update the window.
 
         :param force_redraw: Redraw the window content regardless presence of changes
         """
-        update_event = event_types.UpdateEvent(self)
+        update_event = _event_types.UpdateEvent(self)
         self.trigger(update_event)
         self.draw_children()
         WindowEntity.update(self, force_redraw)
