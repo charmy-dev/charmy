@@ -1,3 +1,5 @@
+"""Charmy windows."""
+
 import typing
 
 import pathlib

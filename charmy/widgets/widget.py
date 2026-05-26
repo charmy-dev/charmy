@@ -1,3 +1,5 @@
+"""Charmy widgets base class"""
+
 import typing
 
 from . import window

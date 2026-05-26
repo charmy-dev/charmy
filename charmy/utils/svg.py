@@ -1,5 +1,9 @@
+from __future__ import annotations as _
+
 from ..styles.shape import *
 import re as _re
+
+__all__ = ["shapes_from_svg_path"]
 
 
 @staticmethod

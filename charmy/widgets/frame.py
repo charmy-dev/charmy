@@ -1,3 +1,5 @@
+"""Charmy Frame."""
+
 from .widget import Widget
 from .container import Container
 
