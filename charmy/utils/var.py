@@ -1,6 +1,6 @@
 import typing
 
-from .event import event_types, EventHandling
+from ..event import event_types, EventHandling
 
 
 class Var():

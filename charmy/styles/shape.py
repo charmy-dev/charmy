@@ -540,6 +540,16 @@ class AnyShape(ShapeType):
         params.pop("type")
         return cls(**params)
 
+    def __contains__(self, point: Point):
+        """Perform a hit test and test if a point is within shape."""
+        if not (
+            self.boundary[0][0] < point[0] < self.boundary[0][0] + self.boundary[1][0] or \
+            self.boundary[0][1] < point[1] < self.boundary[0][1] + self.boundary[1][1]
+            ):
+            # If not even in shape's bound box, skip the hit test
+            return False
+        # TODO: Implement the hit test for shape
+
 @_dataclass
 class Rect(AnyShape):
     """Represents rectangles in Charmy.
