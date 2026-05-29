@@ -25,5 +25,5 @@ from .event import event_types, EventHandling, EventTask
 from .object import CharmyObject
 # from .frameworks import Frameworks
 from . import styles
-from .utils.var import BooleanVar, FloatVar, IntVar, StringVar, Var
+from .utils.var import Var
 from .widgets import *

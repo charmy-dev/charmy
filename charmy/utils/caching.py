@@ -1,29 +1,13 @@
 """Caching module for caching data that are not frequently changed."""
 
-import typing as _typing
 
-from dataclasses import dataclass as _dataclass
+raise NotImplementedError(
+    "THIS FUCKING CACHING MODULE IS NOT IMPLEMENTED BECAUSE I DON'T HAVE ANY FUCKING IDEA ON THIS. "
+    "IF YOU FIND THE GUI TOO SLOW, THEN FUCK YOUR WALLET TO GET A NEW COMPUTER OR CONTRIBUTE YOUR "
+    "SOLUTION TO THE PROJECT."
+    )
 
-from . import var as _var
 
-
-def custom_cached_property(func, rule_func: _typing.Callable) -> property:
-    """Decorator for cached data with their dirty state defined by a callable.
-
-    Notes on Param `rule_func`
-    --------------------------
-    The value of this should ba a callable, including function or lambda expression etc. The 
-    callable should implement the caching rule for the property. The callable should return `True` 
-    when the property's cache is dirty, and otherwise return `False`.
-
-    :param rule_func: A callable that implements the caching rule
-    """
-
-    @property
-    def wrapper(self):
-        if rule_func():
-            return func(self)
-        else:
-            return NotImplemented
-
-    return wrapper
+# This module is supposed to be used to cache some properties that are frequently used, but not 
+# frequently changed. I designed it to be some kinda decorators lying on top of some properties, 
+# but got no idea to implement.

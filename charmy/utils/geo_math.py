@@ -16,12 +16,12 @@ provide no guarantee for codes this file.
 from __future__ import annotations
 
 import math
-from typing import Tuple, List
+from typing import Tuple, List, Sequence
 
 Point = tuple[int, int]
 
 
-def evaluate_quadratic_bezier(points: Tuple[Point, Point, Point], t: float) -> tuple[float, float]:
+def evaluate_quadratic_bezier(points: Sequence[Point], t: float) -> tuple[float, float]:
     """Evaluate a quadratic Bezier at parameter t (0..1).
 
     Returns (x, y) as floats.
@@ -44,7 +44,7 @@ def _unique_t_values(values: List[float], abs_tolerance: float = 1e-9) -> List[f
     return unique
 
 
-def quadratic_bezier_internal_t_roots(points: Tuple[Point, Point, Point], eps: float = 1e-12) -> List[float]:
+def quadratic_bezier_internal_t_roots(points: Sequence[Point], eps: float = 1e-12) -> List[float]:
     """Return the list of unique t roots (0<t<1) where derivative in x or y is zero.
 
     This mirrors solving (p0 - 2*p1 + p2) * t = (p0 - p1) for each coordinate.
@@ -68,7 +68,7 @@ def quadratic_bezier_internal_t_roots(points: Tuple[Point, Point, Point], eps: f
     return _unique_t_values(candidate_ts, abs_tolerance=1e-9)
 
 
-def evaluate_cubic_bezier(points: Tuple[Point, Point, Point, Point], t: float) -> tuple[float, float]:
+def evaluate_cubic_bezier(points: Sequence[Point], t: float) -> tuple[float, float]:
     """Evaluate a cubic Bezier at parameter t (0..1). Returns (x, y) floats."""
     start_point, control_point_first, control_point_second, end_point = points
     one_minus_t = 1.0 - t
@@ -88,7 +88,7 @@ def evaluate_cubic_bezier(points: Tuple[Point, Point, Point, Point], t: float) -
 
 
 def cubic_bezier_derivative_roots(
-        points: Tuple[Point, Point, Point, Point], eps: float = 1e-12) -> List[float]:
+        points: Sequence[Point], eps: float = 1e-12) -> List[float]:
     """Return t roots (0<t<1) where derivative in x or y is zero.
 
     Solves quadratic 3*a t^2 + 2*b t + c = 0 for each coordinate, where
@@ -218,3 +218,76 @@ def arc_to_cubic_beziers(
         beziers.append([p0, p1, p2, p3])
 
     return beziers
+
+
+def flatten_circle_arc(
+        center: Point,
+        radius: int,
+        start_orient: int,
+        end_orient: int,
+        tolerance: float = 15.0,
+    ) -> List[Point]:
+    """Flatten a circle arc into a polyline approximation.
+
+    The returned list includes the start and end points of the arc.
+    :param tolerance: Maximum allowed angle step between consecutive points, in degrees.
+    """
+    start_rad = gui_deg_to_math_rad(start_orient)
+    end_rad = gui_deg_to_math_rad(end_orient)
+
+    total_delta = end_rad - start_rad
+    if total_delta > 0:
+        total_delta -= 2 * math.pi
+    if total_delta < -2 * math.pi:
+        total_delta = -2 * math.pi
+
+    if math.isclose(total_delta, 0.0, abs_tol=1e-12):
+        return [point_on_circle(center, radius, start_orient), point_on_circle(center, radius, end_orient)]
+
+    segment_count = max(1, int(math.ceil(abs(total_delta) / math.radians(tolerance))))
+    points: List[Point] = []
+    for segment_index in range(segment_count + 1):
+        angle = start_rad + segment_index * (total_delta / segment_count)
+        gui_degree = 90 - math.degrees(angle)
+        points.append(point_on_circle(center, radius, gui_degree))
+    return points
+
+
+def flatten_quadratic_bezier(
+        points: Sequence[Point],
+        tolerance: float = 15.0,
+    ) -> List[Point]:
+    """Flatten a quadratic Bezier curve into a polyline.
+
+    :param tolerance: Approximate maximum angle between adjacent polyline segments, in degrees.
+    """
+    if tolerance <= 0:
+        segments = 1
+    else:
+        segments = max(1, int(math.ceil(180.0 / tolerance)))
+    result: List[Point] = []
+    for i in range(segments + 1):
+        t = i / segments
+        x_f, y_f = evaluate_quadratic_bezier(points, t)
+        result.append((int(round(x_f)), int(round(y_f))))
+    return result
+
+
+def flatten_cubic_bezier(
+        points: Sequence[Point],
+        tolerance: float = 15.0,
+    ) -> List[Point]:
+    """Flatten a cubic Bezier curve into a polyline.
+
+    :param tolerance: Approximate maximum angle between adjacent polyline segments, in degrees.
+    """
+    if tolerance <= 0:
+        segments = 1
+    else:
+        segments = max(1, int(math.ceil(180.0 / tolerance)))
+    result: List[Point] = []
+    for i in range(segments + 1):
+        t = i / segments
+        x_f, y_f = evaluate_cubic_bezier(points, t)
+        result.append((int(round(x_f)), int(round(y_f))))
+    return result

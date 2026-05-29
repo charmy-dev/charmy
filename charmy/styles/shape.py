@@ -33,6 +33,7 @@ import warnings as _warnings
 from dataclasses import dataclass as _dataclass
 from abc import abstractmethod as _abstractmethod
 import json as _json
+import copy as _copy
 
 from ..utils import geo_math as _geo_math
 
@@ -145,6 +146,9 @@ class Line(LinePath):
         else:
             return LinePath.fallback(self, [*_from, self.__class__])
 
+    def to_polyline(self) -> PolyLine:
+        return PolyLine(self.points)
+
     @property
     def start_point(self) -> Point:
         return self.points[0]
@@ -197,6 +201,17 @@ class PolyLine(LinePath):
         else:
             return LinePath.fallback(self, [*_from, self.__class__])
 
+    @staticmethod
+    def join(lines: list[PolyLine | Line]) -> PolyLine:
+        """Join multiple lines / polylines to one single polyline."""
+        result_points = [lines[0].start_point]
+        for line in lines:
+            for index, point in enumerate(line.points):
+                if index == 0:
+                    continue
+                result_points.append(point)
+        return PolyLine(result_points)
+
     @property
     def start_point(self) -> Point:
         return self.points[0]
@@ -216,9 +231,23 @@ class PolyLine(LinePath):
         height = max_y - min_y
         return (min_x, min_y), (width, height)
 
+@_dataclass
+class Curve(LinePath):
+    """Class representing curves, should not be used in rendering.
+
+    Tips
+    ----
+    For self-defined curves, consider using sequence of quadratic Beziers.
+    """
+
+    def draw(self):
+        raise TypeError("Curve class is only used to classification, and cannot be drawn!")
+
+    @_abstractmethod
+    def flatten(self, tolerance: int = 15) -> PolyLine: ...
 
 @_dataclass
-class CircleArc(LinePath):
+class CircleArc(Curve):
     """Represents circle arcs.
 
     Coordinate System
@@ -255,6 +284,13 @@ class CircleArc(LinePath):
             self.center, self.radius, self.start_orient, self.end_orient)
         return [CubicBezier(b) for b in beziers]
 
+    def flatten(self, tolerance: float = 15.0) -> PolyLine:
+        """Flatten the circle arc into a PolyLine approximation."""
+        points = _geo_math.flatten_circle_arc(
+            self.center, self.radius, self.start_orient, self.end_orient,
+            tolerance=tolerance)
+        return PolyLine(points)
+
     @property
     def boundary(self) -> ShapeRange:
         """Rect range of the circle arc.
@@ -278,7 +314,7 @@ class CircleArc(LinePath):
         return (min_x, min_y), (max_x - min_x, max_y - min_y)
 
 @_dataclass
-class EllipseArc(LinePath):
+class EllipseArc(Curve):
     """Represents arcs trimmed from ellipses.
 
     Note that this is NOT IMPLEMENTED and NOT PLANNED currently. 
@@ -305,7 +341,7 @@ class EllipseArc(LinePath):
             self.rotation = self.rotation % 360
 
 @_dataclass
-class QuadraticBezier(LinePath):
+class QuadraticBezier(Curve):
     """Represents quadratic Bezier curves.
 
     :param points: List of the 3 points that determines the curve.
@@ -346,6 +382,11 @@ class QuadraticBezier(LinePath):
         else:
             return LinePath.fallback(self, [*_from, self.__class__])
 
+    def flatten(self, tolerance: float = 15.0) -> PolyLine:
+        """Flatten the quadratic Bezier curve into a PolyLine approximation."""
+        points = _geo_math.flatten_quadratic_bezier(self.points, tolerance)
+        return PolyLine(points)
+
     @property
     def boundary(self) -> ShapeRange:
         """Rectangle boundary of quadratic Bezier.
@@ -372,7 +413,7 @@ class QuadraticBezier(LinePath):
         return (min_x, min_y), (max_x - min_x, max_y - min_y)
 
 @_dataclass
-class CubicBezier(LinePath):
+class CubicBezier(Curve):
     """Represents cubic Bezier curves.
 
     The Points
@@ -399,6 +440,11 @@ class CubicBezier(LinePath):
     @property
     def end_point(self) -> Point:
         return self.points[-1]
+
+    def flatten(self, tolerance: float = 15.0) -> PolyLine:
+        """Flatten the cubic Bezier curve into a PolyLine approximation."""
+        points = _geo_math.flatten_cubic_bezier(self.points, tolerance)
+        return PolyLine(points)
 
     @property
     def boundary(self) -> ShapeRange:
@@ -451,7 +497,7 @@ class AnyShape(ShapeType):
         :param lines: The lines that form the shape
         """
         
-        self.lines: _typing.Sequence[LinePath] = [
+        self.lines: _typing.List[LinePath] = [
             # Append as-is or load from json
             line if isinstance(line, LinePath) else LinePath.from_json(line) \
                 for line in lines
@@ -540,7 +586,17 @@ class AnyShape(ShapeType):
         params.pop("type")
         return cls(**params)
 
-    def __contains__(self, point: Point):
+    def flatten(self, tolerance: int = 15) -> PolyLine:
+        """Convert all curve edges to polyline and merge the shape into a single polyline."""
+        lines: list[Line | PolyLine] = []
+        for index, line in enumerate(lines):
+            if isinstance(line, Curve):
+                lines.append(line.flatten(tolerance))
+            else:
+                lines.append(line)
+        return PolyLine.join(lines)
+
+    def __contains__(self, point: Point) -> bool:
         """Perform a hit test and test if a point is within shape."""
         if not (
             self.boundary[0][0] < point[0] < self.boundary[0][0] + self.boundary[1][0] or \
@@ -549,6 +605,13 @@ class AnyShape(ShapeType):
             # If not even in shape's bound box, skip the hit test
             return False
         # TODO: Implement the hit test for shape
+        intesects: list[Point] = []
+        for line in self.lines:
+            if not line.boundary[0][1] <= point[1] <= line.boundary[0][1] + line.boundary[1][1] or \
+                line.boundary[0][1] + line.boundary[1][1] < point[1]:
+                continue # impossible to intersect with this line, so skip
+            if isinstance(line, Curve):
+                line = line.flatten(30)
 
 @_dataclass
 class Rect(AnyShape):

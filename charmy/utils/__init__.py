@@ -1,7 +1,7 @@
 """Utilities package for Charmy.
 
-Expose geometry/math helpers in `geo_math`.
+Expose some general utils.
 """
-from . import geo_math, type_checking, layout_profiles, svg, event_types
+from . import geo_math, type_checking, layout_profiles, svg, event_types, var
 
-__all__ = ["geo_math", "type_checking", "layout_profiles", "svg", "event_types"]
+# __all__ = ["geo_math", "type_checking", "layout_profiles", "svg", "event_types", "var"]
