@@ -311,8 +311,8 @@ class LineBase(template.LineBase):
 
     @staticmethod
     def draw_line(drawn_line: charmy_stuff.graphics.DrawnLine, 
-                  window: WindowBase, stroke: bool = True, 
-                  noskip: bool = False):
+                  window: WindowBase, stroke: bool = True, noskip: bool = False, 
+                  *args, **kwargs):
         """To draw a line on a specific window.
 
         Args:
@@ -413,7 +413,8 @@ class ShapeBase(template.ShapeBase):
 
     @staticmethod
     def draw_any_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, 
-                       window: WindowBase, noskip: bool = False):
+                       window: WindowBase, stroke: bool = True, noskip: bool = False, 
+                       *args, **kwargs) -> None:
         """Draw shape by lines."""
         if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.AnyShape):
             warnings.warn("draw_any_shape() is only for drawing AnyShape")
@@ -454,7 +455,10 @@ class ShapeBase(template.ShapeBase):
             window.cairo_context.stroke_preserve()
             window.update(redraw=False)
             time.sleep(0.5)
+        if not stroke:
+            return
         if TextureBase.cairo_set_context_texture(window.cairo_context, drawn_shape.texture, noskip):
+            window.cairo_context.set_fill_rule(cairo.FILL_RULE_WINDING)
             window.cairo_context.fill()
         window.cairo_context.stroke()
         if TextureBase.cairo_set_context_texture(
@@ -468,13 +472,33 @@ class ShapeBase(template.ShapeBase):
                 LineBase.draw_line(drawn_line, window)
 
     @staticmethod
-    def draw_shape(shape: charmy_stuff.graphics.DrawnShape, 
-                   window: WindowBase, noskip: bool = False):
-        if isinstance(shape.shape, charmy_stuff.styles.shape.AnyShape):
-            ShapeBase.draw_any_shape(shape, window, noskip)
+    def draw_shape_group(drawn_shape: charmy_stuff.graphics.DrawnShape, 
+                         window: WindowBase, stroke: bool = True, noskip: bool = False, 
+                         *args, **kwargs) -> None:
+        if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
+            raise TypeError("draw_shape_group() is only designed for shape group")
+        for index, subshape in enumerate(drawn_shape.shape.shapes):
+            host = drawn_shape.copy()
+            host.shape = subshape
+            ShapeBase.draw_shape(
+                host, 
+                window, 
+                index == len(drawn_shape.shape.shapes) - 1 and not stroke, 
+                noskip, 
+                *args, **kwargs, 
+                )
+
+    @staticmethod
+    def draw_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, 
+                   window: WindowBase, stroke: bool = True, noskip: bool = False, 
+                   *args, **kwargs) -> None:
+        if isinstance(drawn_shape.shape, charmy_stuff.styles.shape.AnyShape):
+            ShapeBase.draw_any_shape(drawn_shape, window, stroke, noskip, *args, **kwargs)
+        elif isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
+            ShapeBase.draw_shape_group(drawn_shape, window, stroke, noskip, *args, **kwargs)
         else:
             template.not_implemented_func(Backend.friendly_name, 
-                    f"Drawing an shape that is not a subclass of AnyShape")
+                    f"Drawing a shape that is not a subclass of AnyShape")
 
 
 # region Textures

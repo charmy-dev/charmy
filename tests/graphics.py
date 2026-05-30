@@ -16,7 +16,7 @@ test_arc_2 = cm.graphics.DrawnLine(
     cm.styles.shape.CircleArc((200, 100), 50, 320, 50), (100, 100, 255)) .draw(window)
 test_quadratic_bezier = cm.graphics.DrawnLine(cm.styles.shape.QuadraticBezier([
     (100, 150), (250, 250), (-40, 350)
-    ]).flatten(tolerance=50), (100, 255, 100, 100), width=8) .draw(window)
+    ]), (100, 255, 100, 100), width=8) .draw(window)
 
 
 # region Shapes

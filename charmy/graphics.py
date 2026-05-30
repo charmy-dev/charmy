@@ -203,6 +203,16 @@ class DrawnShape(DrawnObject):
             self.offset[1] + self.shape.boundary[0][1] - self.anchor[1]
             ), self.shape.boundary[1]
 
+    def copy(self) -> DrawnShape:
+        return DrawnShape(
+            self.shape, 
+            self.texture, 
+            self.border_width, 
+            self.border_texture, 
+            self.offset, 
+            self.anchor
+            )
+
     def draw(self, 
             window: cm_window.Window, 
             _fallback_from: list[type[styles.shape.LinePath]] = [], 
@@ -213,7 +223,7 @@ class DrawnShape(DrawnObject):
         :param _fallback_from: Internal use only, the fallback path
         """
         backend = window.parent.backend
-        # Remove currently rencdered copy of this object on the current window
+        # Remove currently rendered copy of this object on the current window
         if window not in self._actual_draw_list.keys():
             self._actual_draw_list[window] = []
         for draw_object in self._actual_draw_list[window]:
@@ -230,7 +240,6 @@ class DrawnShape(DrawnObject):
                 # drawn_host.shape = subshape
                 drawn_host.draw(window, _fallback_from)
                 self._actual_draw_list[window].append(drawn_host)
-                print(self._actual_draw_list)
         else:
             backend = window.parent.backend
             if self.shape.type in backend.ShapeBase.supports or \

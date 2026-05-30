@@ -200,10 +200,27 @@ class PolyLine(LinePath):
             return lines
         else:
             return LinePath.fallback(self, [*_from, self.__class__])
+        
+    def to_lines(self) -> list[Line]:
+        """Convert a polyline into list of lines."""
+        result = []
+        for index, point in enumerate(self.points):
+            if index == 0:
+                line_start = point
+                continue
+            line_end = point
+            result.append(Line([line_start, line_end]))
+            line_start = line_end
+        return result
 
     @staticmethod
-    def join(lines: list[PolyLine | Line]) -> PolyLine:
+    def join(lines: list[PolyLine | Line]) -> _typing.Optional[PolyLine]:
         """Join multiple lines / polylines to one single polyline."""
+        if len(lines) == 0:
+            return None
+        elif len(lines) == 1:
+            if isinstance(lines[0], Line):
+                return lines[0].to_polyline()
         result_points = [lines[0].start_point]
         for line in lines:
             for index, point in enumerate(line.points):
@@ -244,7 +261,7 @@ class Curve(LinePath):
         raise TypeError("Curve class is only used to classification, and cannot be drawn!")
 
     @_abstractmethod
-    def flatten(self, tolerance: int = 15) -> PolyLine: ...
+    def flatten(self, tolerance: int | float = 15) -> PolyLine: ...
 
 @_dataclass
 class CircleArc(Curve):
@@ -284,7 +301,7 @@ class CircleArc(Curve):
             self.center, self.radius, self.start_orient, self.end_orient)
         return [CubicBezier(b) for b in beziers]
 
-    def flatten(self, tolerance: float = 15.0) -> PolyLine:
+    def flatten(self, tolerance: int | float = 15) -> PolyLine:
         """Flatten the circle arc into a PolyLine approximation."""
         points = _geo_math.flatten_circle_arc(
             self.center, self.radius, self.start_orient, self.end_orient,
@@ -382,7 +399,7 @@ class QuadraticBezier(Curve):
         else:
             return LinePath.fallback(self, [*_from, self.__class__])
 
-    def flatten(self, tolerance: float = 15.0) -> PolyLine:
+    def flatten(self, tolerance: int | float = 15) -> PolyLine:
         """Flatten the quadratic Bezier curve into a PolyLine approximation."""
         points = _geo_math.flatten_quadratic_bezier(self.points, tolerance)
         return PolyLine(points)
@@ -441,7 +458,7 @@ class CubicBezier(Curve):
     def end_point(self) -> Point:
         return self.points[-1]
 
-    def flatten(self, tolerance: float = 15.0) -> PolyLine:
+    def flatten(self, tolerance: int | float = 15) -> PolyLine:
         """Flatten the cubic Bezier curve into a PolyLine approximation."""
         points = _geo_math.flatten_cubic_bezier(self.points, tolerance)
         return PolyLine(points)
@@ -586,15 +603,18 @@ class AnyShape(ShapeType):
         params.pop("type")
         return cls(**params)
 
-    def flatten(self, tolerance: int = 15) -> PolyLine:
-        """Convert all curve edges to polyline and merge the shape into a single polyline."""
+    def flatten(self, tolerance: int | float = 15) -> AnyShape:
+        """Convert all curve edges to polyline and merge the shape into a single polygon."""
         lines: list[Line | PolyLine] = []
-        for index, line in enumerate(lines):
+        for index, line in enumerate(self.lines):
             if isinstance(line, Curve):
                 lines.append(line.flatten(tolerance))
             else:
-                lines.append(line)
-        return PolyLine.join(lines)
+                lines.append(line) # type: ignore
+        polyline = PolyLine.join(lines)
+        if polyline is None:
+            return AnyShape([])
+        return AnyShape([polyline])
 
     def __contains__(self, point: Point) -> bool:
         """Perform a hit test and test if a point is within shape."""
@@ -605,13 +625,14 @@ class AnyShape(ShapeType):
             # If not even in shape's bound box, skip the hit test
             return False
         # TODO: Implement the hit test for shape
-        intesects: list[Point] = []
-        for line in self.lines:
-            if not line.boundary[0][1] <= point[1] <= line.boundary[0][1] + line.boundary[1][1] or \
-                line.boundary[0][1] + line.boundary[1][1] < point[1]:
-                continue # impossible to intersect with this line, so skip
-            if isinstance(line, Curve):
-                line = line.flatten(30)
+        return True
+        # intesects: list[Point] = []
+        # for line in self.lines:
+        #     if not line.boundary[0][1] <= point[1] <= line.boundary[0][1] + line.boundary[1][1] or \
+        #         line.boundary[0][1] + line.boundary[1][1] < point[1]:
+        #         continue # impossible to intersect with this line, so skip
+        #     if isinstance(line, Curve):
+        #         line = line.flatten(30)
 
 @_dataclass
 class Rect(AnyShape):
@@ -703,6 +724,12 @@ class ShapeGroup(ShapeType):
     def __init__(self, shapes: _typing.Sequence[AnyShape | ShapeGroup]) -> None:
         self._shapes: _typing.Sequence[AnyShape] = []
         self.shapes = shapes
+
+    def flatten(self, tolerance: int | float = 15) -> ShapeGroup:
+        new_shapes = []
+        for shape in self.shapes:
+            new_shapes.append(shape.flatten(tolerance))
+        return ShapeGroup(new_shapes)
 
     @property
     def shapes(self) -> _typing.Sequence[AnyShape]:
