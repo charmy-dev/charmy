@@ -291,7 +291,7 @@ class EventTask(CharmyObject):
         if self.multithread:
             task_thread = threading.Thread(target=lambda: target(event))
             self.__class__.task_threads.append(task_thread)
-            task_thread.run()
+            task_thread.start()
         else:
             target(event)
 
