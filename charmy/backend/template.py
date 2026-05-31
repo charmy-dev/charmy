@@ -245,6 +245,9 @@ class WindowBase(WhateverBase):
         not_implemented_func(operation_desc="Setting window title")
         return self
 
+    def close(self) -> typing.Self:
+        return self
+
 
 # region Line-relating
 

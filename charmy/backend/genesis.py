@@ -204,16 +204,12 @@ class WindowBase(template.WindowBase):
             case sdl2.SDL_WINDOWEVENT:
                 match event.window.event:
                     case sdl2.SDL_WINDOWEVENT_RESIZED:
-                        self.charmy_window.trigger(cme.ConfigureEvent(
+                        self.charmy_window.trigger(cme.WidgetConfigure(
                             self.charmy_window, 
                             {"size": (event.window.data1, event.window.data2)}
                             ))
-                        # self.charmy_window.trigger(cme.ResizeEvent(
-                        #     self.charmy_window, 
-                        #     (event.window.data1, event.window.data2)
-                        #     ))
                     case sdl2.SDL_WINDOWEVENT_MOVED:
-                        self.charmy_window.trigger(cme.ConfigureEvent(
+                        self.charmy_window.trigger(cme.WidgetConfigure(
                             self.charmy_window, 
                             {"pos": (event.window.data1, event.window.data2)}
                             ))
@@ -239,7 +235,10 @@ class WindowBase(template.WindowBase):
                     event.button.button - 1
                     ))
             case sdl2.SDL_QUIT:
-                self.charmy_window.trigger(NotImplemented)
+                self.charmy_window.trigger(cme.WidgetDestroy(
+                    self.charmy_window
+                    ))
+                # TODO: trigger a destroy event on window close
 
     def update(self, redraw: bool = True) -> typing.Self:
         """Update the window.
@@ -292,6 +291,9 @@ class WindowBase(template.WindowBase):
                         sdl2.SDL_GetWindowSize(self.window, w, h)
                         self.set_size((w.value, h.value), _passive = True)
         return self
+
+    def close(self):
+        sdl2.SDL_DestroyWindow(self.window)
 
 
 # region Lines
@@ -483,7 +485,7 @@ class ShapeBase(template.ShapeBase):
             ShapeBase.draw_shape(
                 host, 
                 window, 
-                index == len(drawn_shape.shape.shapes) - 1 and not stroke, 
+                index == len(drawn_shape.shape.shapes) - 1 and stroke, 
                 noskip, 
                 *args, **kwargs, 
                 )

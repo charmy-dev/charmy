@@ -21,7 +21,7 @@ if typing.TYPE_CHECKING:
 __all__ = ["WindowEntity", "Window"]
 
 
-class WindowEntity(_EventHandling):
+class WindowEntity(_CharmyObject, _EventHandling):
     """Contains abilities of window entities."""
 
     def __init__(self, 
@@ -32,6 +32,7 @@ class WindowEntity(_EventHandling):
                 *args, **kwargs):
         """To create and initialize a window."""
         super().__init__(*args, **kwargs)
+        _EventHandling.__init__(self)
         # Store parent manager
         if parent is not None: # Parent manager already specified
             self.parent: _CharmyManager = parent
@@ -66,6 +67,8 @@ class WindowEntity(_EventHandling):
         self.title = title
         self.icon = pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / "window_icon.png"
         self.background = background
+        # Bind on window close
+        self.bind(_event_types.WidgetDestroy, lambda _: self.destroy())
         # Show window
         self.show()
 
@@ -160,13 +163,19 @@ class WindowEntity(_EventHandling):
 
         :param force_redraw: Redraw the window content regardless presence of changes
         """
-        self.backend_base.update()
+        if self._alive:
+            update_event = _event_types.WidgetUpdate(self)
+            self.trigger(update_event)
+            self.backend_base.update()
 
-    def trigger(self, event: _event_types.Event) -> typing.Self:
-        return self
+    def destroy(self):
+        if isinstance(self, _Container):
+            for child in self.children:
+                child.destroy()
+        self.backend_base.close()
+        self._alive = False
 
-
-class Window(_CharmyObject, WindowEntity, _Container, _EventHandling):
+class Window(WindowEntity, _Container):
     """Windows in Charmy."""
 
     is_root_container: typing.ClassVar[bool] = True
@@ -178,17 +187,14 @@ class Window(_CharmyObject, WindowEntity, _Container, _EventHandling):
                 background: _styles.texture.Texture | _styles.texture.TextureLike = (255, 255, 255), 
                 ):
         """To create a window in Charmy."""
-        _CharmyObject.__init__(self)
         WindowEntity.__init__(self, parent, size, title, background)
         _Container.__init__(self)
-        _EventHandling.__init__(self)
 
     def update(self, force_redraw: bool = False):
         """Update the window.
 
         :param force_redraw: Redraw the window content regardless presence of changes
         """
-        update_event = _event_types.UpdateEvent(self)
-        self.trigger(update_event)
-        self.draw_children()
-        WindowEntity.update(self, force_redraw)
+        if self._alive:
+            self.draw_children()
+            WindowEntity.update(self, force_redraw)

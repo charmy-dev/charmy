@@ -59,6 +59,10 @@ class Container:
             child.draw()
         return self
 
+    def _clear_chidren(self):
+        for child in self.children:
+            child.destroy()
+
     @property
     @abstractmethod
     def pos(self) -> shape.Point: ...

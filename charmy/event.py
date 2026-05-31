@@ -46,8 +46,7 @@ class EventHandling():
                     task_step(event_obj)
             case _:
                 raise ValueError(
-                    # TODO: *suzaku* Task target 🤔
-                    "Error type for suzaku Task target! Excepted callable or "
+                    "Error type for Charmy Task target! Excepted callable or "
                     f"iterable but received {type(task.target)}"
                 )
 
@@ -70,6 +69,8 @@ class EventHandling():
         super().__init__()
         self.latest_event: event_types.Event = event_types.Event()
         self.tasks: dict[type[event_types.Event], list[EventTask]] = {}
+
+        self._alive: bool = True
 
     def parse_event_type_str(self, event_type_str: str) -> dict:  # NOQA
         """This function parses event type string.
@@ -119,6 +120,8 @@ class EventHandling():
         This shows triggering a `mouse.press` event in a `Widget`, which inherited
         `EventHandling` so has the ability to handle events.
         """
+        if not self._alive:
+            return self
         if type(event_obj) in self.tasks:
             for task in self.tasks[type(event_obj)]:
                 if event_obj.meets(task.conditions):

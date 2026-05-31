@@ -4,7 +4,7 @@ import typing
 
 from . import window
 from ..object import CharmyObject
-from ..event import EventHandling
+from ..event import EventHandling, event_types
 from .container import Container, layout_profiles
 from .. import styles
 
@@ -43,6 +43,9 @@ class Widget(CharmyObject, EventHandling):
         self.layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
 
         self.state: str = "normal"
+        self._alive: bool = True
+
+        self.bind(event_types.WidgetDestroy, lambda _: self.destroy())
 
     def __post_init__(self):
         """After initialization of widget."""
@@ -134,20 +137,14 @@ class Widget(CharmyObject, EventHandling):
         # self.draw()
         pass
 
-    # def __setattr__(self, name: str, value: typing.Any) -> None:
-    #     """When changing attributes of a widget.
-
-    #     Currently, updates the draw list of the widget after setting new attributes.
-
-    #     :param name: Name of the attribute to set
-    #     :param value: The new value
-    #     """
-    #     return_val = super().__setattr__(name, value)
-    #     if not name.startswith("_"): # Skip internal vars to avoid endless recursion
-    #         # (only do update for props changes)
-    #         if self._initialized: # Skip update for initialization
-    #             self._update_drawing_objects()
-    #     return return_val
+    def __attr__(self, name: str, value: typing.Any) -> None:
+        """Trigger an WidgetConfigure event if some attrs are changed."""
+        super().__setattr__(name, value)
+        if not name.startswith("_"): # Skip internal vars to avoid endless recursion
+            # (only do update for props changes)
+            if self._initialized: # Skip update for initialization
+                # self._update_drawing_objects()
+                self.trigger(event_types.WidgetConfigure(self, {name: value}))
 
     @property
     def curr_state_styles(self) -> dict[str, typing.Any]:
@@ -165,6 +162,9 @@ class Widget(CharmyObject, EventHandling):
 
     def draw(self, *args, **kwargs) -> typing.Self:
         """Draw the widget, does nothing on base class."""
+        if not self._alive:
+            return self
+
         self._update_drawing_objects()
 
         self.draw_components(*args, **kwargs)
@@ -185,3 +185,11 @@ class Widget(CharmyObject, EventHandling):
         """
         self.layout_profile = layout_profiles.PlaceProfile(pos, size)
         return self
+
+    def destroy(self) -> None:
+        """Destroy a widget when no longer needed."""
+        self.trigger(event_types.WidgetDestroy(self))
+        self._alive = False
+        if isinstance(self, Container):
+            # Also destroy children if self is container
+            self._clear_chidren()

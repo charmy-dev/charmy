@@ -102,9 +102,6 @@ class DrawnLine(DrawnObject):
                 window.backend_base.drawing_list.remove(draw_object)
         self._actual_draw_list[window] = []
         # Rendering process
-        for draw_object in self._actual_draw_list:
-            if draw_object in window.backend_base.drawing_list:
-                window.backend_base.drawing_list.remove(draw_object)
         if self.line.type == "line_path_class":
             raise TypeError("styles.shape.LinePath class is a template, cannot be drawn.")
         else:
@@ -231,30 +228,20 @@ class DrawnShape(DrawnObject):
                 window.backend_base.drawing_list.remove(draw_object)
         self._actual_draw_list[window] = []
         # Rendering process
-        if isinstance(self.shape, styles.shape.ShapeGroup):
-            for subshape in self.shape.shapes:
-                drawn_host = DrawnShape(
-                    subshape, self.texture, self.border_width, 
-                    self.border_texture, self.offset, self.anchor
+        backend = window.parent.backend
+        if self.shape.type in backend.ShapeBase.supports or \
+            "any_shape" in backend.ShapeBase.supports:
+            window.backend_base.drawing_list.append(self)
+        if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
+                range_rect = DrawnShape(
+                    styles.shape.Rect(*self.shape.boundary), 
+                    (0, 0, 255, 50), 
+                    1, (0, 0, 255), 
+                    self.offset, 
+                    self.anchor
                     )
-                # drawn_host.shape = subshape
-                drawn_host.draw(window, _fallback_from)
-                self._actual_draw_list[window].append(drawn_host)
-        else:
-            backend = window.parent.backend
-            if self.shape.type in backend.ShapeBase.supports or \
-                "any_shape" in backend.ShapeBase.supports:
-                window.backend_base.drawing_list.append(self)
-            if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
-                    range_rect = DrawnShape(
-                        styles.shape.Rect(*self.shape.boundary), 
-                        (0, 0, 255, 50), 
-                        1, (0, 0, 255), 
-                        self.offset, 
-                        self.anchor
-                        )
-                    window.backend_base.drawing_list.append(range_rect)
-                    self._actual_draw_list[window].append(range_rect)
+                window.backend_base.drawing_list.append(range_rect)
+                self._actual_draw_list[window].append(range_rect)
         return self
 
 

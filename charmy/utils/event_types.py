@@ -70,7 +70,7 @@ class WidgetEvent(Event):
     subject: _EventHandling
 
 @_dataclass
-class UpdateEvent(WidgetEvent):
+class WidgetUpdate(WidgetEvent):
     """Will be generated when a widget or window is updated.
 
     Note on Param `subject`
@@ -83,7 +83,7 @@ class UpdateEvent(WidgetEvent):
     redraw: bool | _shape.ShapeRange = False
 
 @_dataclass
-class DrawEvent(WidgetEvent):
+class WidgetDraw(WidgetEvent):
     """Will be generated when a widget or window is redrawn."""
     type: typing.ClassVar[str] = "widget.draw"
 
@@ -91,7 +91,7 @@ class DrawEvent(WidgetEvent):
     size: _shape.Size = (0, 0)
 
 @_dataclass
-class ConfigureEvent(WidgetEvent):
+class WidgetConfigure(WidgetEvent):
     """Will be generated when a widget or window has its configuration changed."""
     type: typing.ClassVar[str] = "widget.configure"
 
@@ -100,12 +100,12 @@ class ConfigureEvent(WidgetEvent):
     def call_chain(self, subject: EventHandling) -> None:
         super().call_chain(subject)
         if "pos" in self.attrs_changed.keys():
-            subject.trigger(MoveEvent(subject, self.attrs_changed["pos"]))
+            subject.trigger(WidgetMove(subject, self.attrs_changed["pos"]))
         if "size" in self.attrs_changed.keys():
-            subject.trigger(ResizeEvent(subject, self.attrs_changed["size"]))
+            subject.trigger(WidgetResize(subject, self.attrs_changed["size"]))
 
 @_dataclass
-class ResizeEvent(WidgetEvent):
+class WidgetResize(WidgetEvent):
     """Will be generated when a widget or window is resized."""
     type: typing.ClassVar[str] = "widget.resize"
 
@@ -113,7 +113,7 @@ class ResizeEvent(WidgetEvent):
     old_size: typing.Optional[_shape.Size] = None
 
 @_dataclass
-class MoveEvent(WidgetEvent):
+class WidgetMove(WidgetEvent):
     """Will be generated when a widget or window is moved."""
     type: typing.ClassVar[str] = "widget.move"
 
@@ -129,6 +129,11 @@ class FocusGain(WidgetEvent):
 class FocusLoss(WidgetEvent):
     """Will be generated when a widget or window lose focus."""
     type: typing.ClassVar[str] = "widget.focus_loss"
+
+@_dataclass
+class WidgetDestroy(WidgetEvent):
+    """Will be generated when a widget or window is destroyed."""
+    type: typing.ClassVar[str] = "widget.destroy"
 
 
 # region Window events
