@@ -58,6 +58,7 @@ class CharmyManager(_CharmyObject, _EventHandling):
     def destroy(self) -> None:
         """Destroy the manager."""
         self._alive = False
+        self.trigger(_event_types.WidgetDestroy(self))
         del self
         return
 
