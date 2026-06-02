@@ -138,7 +138,7 @@ class DrawnShape(DrawnObject):
     def __init__(self, 
                 shape: styles.shape.ShapeType, 
                 texture: styles.texture.Texture | styles.texture.TextureLike, 
-                border_width: int = 5, 
+                border_width: int = 0, 
                 border_texture: styles.texture.Texture | styles.texture.TextureLike = None, 
                 offset: styles.shape.Point | typing.Literal["auto"] = "auto", 
                 anchor: styles.shape.Point | typing.Literal["auto"] = "auto", 

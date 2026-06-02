@@ -10,6 +10,9 @@ from dataclasses import dataclass
 from .object import CharmyObject
 from .utils import event_types # Expose this as event_types
 
+if typing.TYPE_CHECKING:
+    from .utils import var
+
 __all__ = ["EventHandling", "EventTask", "DelayTask", "event_types"]
 
 
@@ -137,6 +140,7 @@ class EventHandling():
         conditions: dict = {}, 
         multithread: bool = False, 
         _is_internal: bool = False, 
+        task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
         return_task: typing.Literal[True] = True
         ) -> EventTask: ...
 
@@ -148,16 +152,18 @@ class EventHandling():
         conditions: dict = {}, 
         multithread: bool = False, 
         _is_internal: bool = False, 
+        task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
         return_task: typing.Literal[False] = False
         ) -> typing.Self: ...
 
     def bind(
         self,
         event_type: type[event_types.Event], 
-        target: typing.Callable | typing.Iterable, 
-        conditions: dict = {}, 
+        target: typing.Callable | typing.Iterable[typing.Callable], 
+        conditions: typing.Optional[dict] = None, 
         multithread: bool = False, 
         _is_internal: bool = False, 
+        task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
         return_task: bool = True
     ) -> EventTask | typing.Self:
         """To bind a task to the object when a specific type of event is triggered.
@@ -178,23 +184,38 @@ class EventHandling():
         :param _is_internal: If the task is added by Charmy and should be kept when clear bind
         :return: EventTask if `return_task` is True, othwise the EventHandling itself.
         """
+        if conditions is None:
+            conditions = {}
         task = EventTask(target, conditions, multithread, _is_internal)
         if not event_type in self.tasks:
             self.tasks[event_type] = []
         self.tasks[event_type].append(task)
+        if task_obj_receiver is not None:
+            task_obj_receiver.value = task
         if return_task:
             return task
         else:
             return self
 
-    def on(self, 
-            func: typing.Callable, 
+    def on(
+            self, 
             event_type: type[event_types.Event], 
-            conditions: dict = {}, 
+            conditions: typing.Optional[dict[str, typing.Any]] = None, 
             multithread: bool = False, 
             _is_internal: bool = False, 
-            ):
-        self.bind(event_type, func, conditions, multithread, _is_internal)
+            task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
+            ) -> typing.Callable[[typing.Callable], typing.Callable]:
+        """Generate a decorator that binds the event.
+
+        → See `bind()` for parameters description.
+        """
+        if conditions is None:
+            conditions = {}
+        def decorator(func: typing.Callable) -> typing.Callable:
+            """Binds the function to be decorated to the event."""
+            self.bind(event_type, func, conditions, multithread, _is_internal, task_obj_receiver)
+            return func
+        return decorator
 
     def unbind(self, target_task: EventTask) -> typing.Self:
         """To unbind the task with specified task ID.
