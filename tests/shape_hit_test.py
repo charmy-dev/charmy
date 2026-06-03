@@ -7,7 +7,7 @@ cm.graphics.DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY = True
 
 test_shape = cm.graphics.DrawnShape(cm.styles.shape.AnyShape([
     cm.styles.shape.PolyLine([
-        (50, 50), (70, 200), (170, 330), (420, 270), (350, 120), (200, 80)
+        (50, 50), (70, 200), (420, 270), (170, 330), (350, 120), (200, 80)
     ]), 
     cm.styles.shape.CubicBezier([
         (200, 80), (150, 150), (120, 150), (50, 50), 

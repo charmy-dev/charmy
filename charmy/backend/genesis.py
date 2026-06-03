@@ -347,6 +347,8 @@ class LineBase(template.LineBase):
         # Set texture & line width
         if not TextureBase.cairo_set_context_texture(window.cairo_context, texture, noskip):
             return
+        window.cairo_context.set_line_join(cairo.LINE_JOIN_ROUND)
+        window.cairo_context.set_line_cap(cairo.LINE_CAP_ROUND)
         window.cairo_context.set_line_width(line_width)
         painting_pos = tuple([int(v) for v in window.cairo_context.get_current_point()])
         # Draw line
@@ -471,7 +473,8 @@ class ShapeBase(template.ShapeBase):
                 drawn_line = charmy_stuff.graphics.DrawnLine(
                     line, drawn_shape.border_texture, drawn_shape.border_width, 
                     offset=drawn_shape.offset, anchor=drawn_shape.anchor)
-                LineBase.draw_line(drawn_line, window)
+                LineBase.draw_line(drawn_line, window, stroke=False)
+            window.cairo_context.stroke()
 
     @staticmethod
     def draw_shape_group(drawn_shape: charmy_stuff.graphics.DrawnShape, 
@@ -494,6 +497,7 @@ class ShapeBase(template.ShapeBase):
     def draw_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, 
                    window: WindowBase, stroke: bool = True, noskip: bool = False, 
                    *args, **kwargs) -> None:
+        window.cairo_context.set_fill_rule(cairo.FILL_RULE_WINDING)
         if isinstance(drawn_shape.shape, charmy_stuff.styles.shape.AnyShape):
             ShapeBase.draw_any_shape(drawn_shape, window, stroke, noskip, *args, **kwargs)
         elif isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
