@@ -146,6 +146,8 @@ class WindowBase(template.WindowBase):
         self.surface = cairo.ImageSurface(
             cairo.FORMAT_ARGB32, self.size[0], self.size[1])
         self.cairo_context = cairo.Context(self.surface)
+        self.cairo_context.set_line_join(cairo.LINE_JOIN_ROUND)
+        self.cairo_context.set_line_cap(cairo.LINE_CAP_ROUND)
 
     def set_pos(self, new: charmy_stuff.styles.shape.Point) -> typing.Self:
         """Set window position.
@@ -298,6 +300,16 @@ class WindowBase(template.WindowBase):
 
 # region Lines
 
+def _calc_point_actual_pos(
+        line_point: charmy_stuff.styles.shape.Point, 
+        anchor: charmy_stuff.styles.shape.Point, 
+        offset: charmy_stuff.styles.shape.Point, 
+        ) -> charmy_stuff.styles.shape.Point:
+    return (
+        line_point[0] - anchor[0] + offset[0], 
+        line_point[1] - anchor[1] + offset[1]
+        )
+
 class LineSupportState(template.LineSupportState):
     """Flags all supported line types."""
     line                : bool = True
@@ -328,16 +340,6 @@ class LineBase(template.LineBase):
         anchor = drawn_line.anchor
         offset = drawn_line.offset
 
-        def calc_point_actual_pos(
-                line_point: charmy_stuff.styles.shape.Point, 
-                anchor: charmy_stuff.styles.shape.Point, 
-                offset: charmy_stuff.styles.shape.Point, 
-                ) -> charmy_stuff.styles.shape.Point:
-            return (
-                line_point[0] - anchor[0] + offset[0], 
-                line_point[1] - anchor[1] + offset[1]
-                )
-
         # Detect wrong backend
         if window.Backend != Backend:
             raise RuntimeError(
@@ -347,52 +349,52 @@ class LineBase(template.LineBase):
         # Set texture & line width
         if not TextureBase.cairo_set_context_texture(window.cairo_context, texture, noskip):
             return
-        window.cairo_context.set_line_join(cairo.LINE_JOIN_ROUND)
-        window.cairo_context.set_line_cap(cairo.LINE_CAP_ROUND)
+        # window.cairo_context.set_line_join(cairo.LINE_JOIN_ROUND)
+        # window.cairo_context.set_line_cap(cairo.LINE_CAP_ROUND)
         window.cairo_context.set_line_width(line_width)
         painting_pos = tuple([int(v) for v in window.cairo_context.get_current_point()])
         # Draw line
         if isinstance(line, charmy_stuff.styles.shape.Line):
             # Straight line
-            if painting_pos != calc_point_actual_pos(line.points[0], anchor, offset):
+            if painting_pos != _calc_point_actual_pos(line.points[0], anchor, offset):
                 # Avoid unnecessary move_to() when drawing shapes
                 window.cairo_context.move_to(
-                    *calc_point_actual_pos(line.points[0], anchor, offset)
+                    *_calc_point_actual_pos(line.points[0], anchor, offset)
                     )
             window.cairo_context.line_to(
-                *calc_point_actual_pos(line.points[1], anchor, offset)
+                *_calc_point_actual_pos(line.points[1], anchor, offset)
                 )
         elif isinstance(line, charmy_stuff.styles.shape.PolyLine):
             # Polyline
-            if painting_pos != calc_point_actual_pos(line.points[0], anchor, offset):
+            if painting_pos != _calc_point_actual_pos(line.points[0], anchor, offset):
                 # Avoid unnecessary move_to() when drawing shapes
                 window.cairo_context.move_to(
-                    *calc_point_actual_pos(line.points[0], anchor, offset)
+                    *_calc_point_actual_pos(line.points[0], anchor, offset)
                     )
             for index, point in enumerate(line.points):
                 if index == 0:
                     continue
                 window.cairo_context.line_to(
-                    *calc_point_actual_pos(point, anchor, offset)
+                    *_calc_point_actual_pos(point, anchor, offset)
                     )
         elif isinstance(line, charmy_stuff.styles.shape.CircleArc):
             # Circle arc
             start_orient_rad = (line.start_orient - 90) * (math.pi / 180)
             end_orient_rad = (line.end_orient - 90) * (math.pi / 180)
             window.cairo_context.arc(
-                *calc_point_actual_pos(line.center, anchor, offset), 
+                *_calc_point_actual_pos(line.center, anchor, offset), 
                 line.radius, 
                 start_orient_rad, end_orient_rad)
         elif isinstance(line, charmy_stuff.styles.shape.CubicBezier):
-            if painting_pos != calc_point_actual_pos(line.points[0], anchor, offset):
+            if painting_pos != _calc_point_actual_pos(line.points[0], anchor, offset):
                 # Avoid unnecessary move_to() when drawing shapes
                 window.cairo_context.move_to(
-                    *calc_point_actual_pos(line.points[0], anchor, offset)
+                    *_calc_point_actual_pos(line.points[0], anchor, offset)
                     )
             window.cairo_context.curve_to(
-                *calc_point_actual_pos(line.points[1], anchor, offset), 
-                *calc_point_actual_pos(line.points[2], anchor, offset), 
-                *calc_point_actual_pos(line.points[3], anchor, offset), 
+                *_calc_point_actual_pos(line.points[1], anchor, offset), 
+                *_calc_point_actual_pos(line.points[2], anchor, offset), 
+                *_calc_point_actual_pos(line.points[3], anchor, offset), 
                 )
         else:
             template.not_implemented_func(Backend.friendly_name, f"Drawing line type {line.type}")
@@ -420,7 +422,7 @@ class ShapeBase(template.ShapeBase):
                        window: WindowBase, stroke: bool = True, noskip: bool = False, 
                        *args, **kwargs) -> None:
         """Draw shape by lines."""
-        if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.AnyShape):
+        if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.SingleShape):
             warnings.warn("draw_any_shape() is only for drawing AnyShape")
             return
         if DEBUG_FLAGS.WARN_UNCLOSED_SHAPES:
@@ -498,13 +500,13 @@ class ShapeBase(template.ShapeBase):
                    window: WindowBase, stroke: bool = True, noskip: bool = False, 
                    *args, **kwargs) -> None:
         window.cairo_context.set_fill_rule(cairo.FILL_RULE_WINDING)
-        if isinstance(drawn_shape.shape, charmy_stuff.styles.shape.AnyShape):
+        if isinstance(drawn_shape.shape, charmy_stuff.styles.shape.SingleShape):
             ShapeBase.draw_any_shape(drawn_shape, window, stroke, noskip, *args, **kwargs)
         elif isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
             ShapeBase.draw_shape_group(drawn_shape, window, stroke, noskip, *args, **kwargs)
         else:
             template.not_implemented_func(Backend.friendly_name, 
-                    f"Drawing a shape that is not a subclass of AnyShape")
+                    f"Drawing a shape that is neither a subclass of SingleShape nor ShapeGroup")
 
 
 # region Textures

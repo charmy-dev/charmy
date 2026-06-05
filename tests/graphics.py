@@ -1,4 +1,5 @@
 import charmy as cm
+import cProfile
 
 
 window = cm.Window(size=(540, 480))
@@ -11,7 +12,7 @@ test_polyline = cm.graphics.DrawnLine(cm.styles.shape.PolyLine([
     (500, 10), (50, 150), (200, 300), (70, 30)
     ]), (255, 100, 100)) .draw(window)
 test_arc = cm.graphics.DrawnLine(
-    cm.styles.shape.CircleArc((100, 100), 50, 0, 290).flatten(), (100, 100, 255)) .draw(window)
+    cm.styles.shape.CircleArc((100, 100), 50, 0, 290), (100, 100, 255)) .draw(window)
 test_arc_2 = cm.graphics.DrawnLine(
     cm.styles.shape.CircleArc((200, 100), 50, 320, 50), (100, 100, 255)) .draw(window)
 test_quadratic_bezier = cm.graphics.DrawnLine(cm.styles.shape.QuadraticBezier([
@@ -50,4 +51,4 @@ test_text = cm.graphics.DrawnText(
 # endregion
 
 
-cm.mainloop()
+cProfile.run("cm.mainloop()", sort="cumtime")

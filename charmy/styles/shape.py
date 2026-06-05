@@ -33,16 +33,20 @@ import warnings as _warnings
 from dataclasses import dataclass as _dataclass
 from abc import abstractmethod as _abstractmethod
 import json as _json
+import reactive_caching as _reactive_caching
 
 from ..utils import geo_math as _geo_math
 
 
 # region Lines
 
-class LinePath:
+class LinePath(_reactive_caching.CachedClass):
     """Base class of all line paths."""
 
     type: _typing.ClassVar[str] = "line_path_class"
+
+    def __init__(self):
+        super().__init__()
 
     @property
     def start_point(self) -> Point:
@@ -129,6 +133,8 @@ class Line(LinePath):
     points: list[Point]
 
     def __post_init__(self):
+        """Init parent class and validate number of points"""
+        super().__init__()
         if len(self.points) != 2:
             raise ValueError("A line must be defined with and only with 2 points.")
 
@@ -146,6 +152,7 @@ class Line(LinePath):
             return LinePath.fallback(self, [*_from, self.__class__])
 
     def to_polyline(self) -> PolyLine:
+        """Convert line to polyline."""
         return PolyLine(self.points)
 
     @property
@@ -156,7 +163,7 @@ class Line(LinePath):
     def end_point(self) -> Point:
         return self.points[-1]
 
-    @property
+    @_reactive_caching.cached_property(["points"])
     def boundary(self) -> ShapeRange:
         """Rectangle boundary of single-section line."""
         return (
@@ -174,6 +181,8 @@ class PolyLine(LinePath):
     points: list[Point]
 
     def __post_init__(self):
+        """Init parent class and validate number of points"""
+        super().__init__()
         if len(self.points) <= 1:
             raise ValueError("At least 2 points are required to form a (poly)line.")
         # elif len(self.points) == 2:
@@ -225,7 +234,7 @@ class PolyLine(LinePath):
     def end_point(self) -> Point:
         return self.points[-1]
 
-    @property
+    @_reactive_caching.cached_property(["points"])
     def boundary(self) -> ShapeRange:
         """Rectangle boundary of polyline."""
         points_x: list[int] = [point[0] for point in self.points]
@@ -236,7 +245,6 @@ class PolyLine(LinePath):
         height = max_y - min_y
         return (min_x, min_y), (width, height)
 
-@_dataclass
 class Curve(LinePath):
     """Class representing curves, should not be used in rendering.
 
@@ -244,6 +252,9 @@ class Curve(LinePath):
     ----
     For self-defined curves, consider using sequence of quadratic Beziers.
     """
+
+    def __init__(self) -> None:
+        super().__init__()
 
     def draw(self):
         raise TypeError("Curve class is only used to classification, and cannot be drawn!")
@@ -265,11 +276,15 @@ class CircleArc(Curve):
     :param start_orient: Starting orientation in integer degrees
     :param end_orient: Ending orientation in integer degrees
     """
-    center: Point
     type: _typing.ClassVar[str] = "circle_arc"
+    center: Point
     radius: int
     start_orient: int
     end_orient: int
+
+    def __post_init__(self):
+        """Init parent class."""
+        super().__init__()
 
     @property
     def start_point(self) -> Point:
@@ -296,7 +311,7 @@ class CircleArc(Curve):
             tolerance=tolerance)
         return PolyLine(points)
 
-    @property
+    @_reactive_caching.cached_property(["center", "radius", "start_orient", "end_orient"])
     def boundary(self) -> ShapeRange:
         """Rect range of the circle arc.
 
@@ -342,6 +357,7 @@ class EllipseArc(Curve):
 
     def __post_init__(self):
         raise NotImplementedError("Ellipse arc is not fully implemented yet.")
+        super().__init__()
         if not -360 < self.rotation < 360:
             self.rotation = self.rotation % 360
 
@@ -355,6 +371,8 @@ class QuadraticBezier(Curve):
     points: list[Point]
 
     def __post_init__(self):
+        """Init parent class and validate number of points"""
+        super().__init__()
         if len(self.points) != 3:
             raise ValueError("Quadratic Bezier curves must be defined with and only with 3 points!")
 
@@ -392,7 +410,7 @@ class QuadraticBezier(Curve):
         points = _geo_math.flatten_quadratic_bezier(self.points, tolerance)
         return PolyLine(points)
 
-    @property
+    @_reactive_caching.cached_property(["points"])
     def boundary(self) -> ShapeRange:
         """Rectangle boundary of quadratic Bezier.
 
@@ -435,6 +453,8 @@ class CubicBezier(Curve):
     points: list[Point]
 
     def __post_init__(self):
+        """Init parent class and validate number of points"""
+        super().__init__()
         if len(self.points) != 4:
             raise ValueError("Cubic Bezier curves must be defined with and only with 4 points!")
 
@@ -451,7 +471,7 @@ class CubicBezier(Curve):
         points = _geo_math.flatten_cubic_bezier(self.points, tolerance)
         return PolyLine(points)
 
-    @property
+    @_reactive_caching.cached_property(["points"])
     def boundary(self) -> ShapeRange:
         """Rectangle boundary of cubic Bezier using helpers in geo_math.
         
@@ -481,12 +501,12 @@ class CubicBezier(Curve):
 
 class CharmyShapeError(Exception): ...
 
-class ShapeType:
+class ShapeType(_reactive_caching.CachedClass):
     """Base class of shapes"""
     type: _typing.ClassVar[str] = "shape_type"
 
-    @_abstractmethod
-    def __init__(self, *args, **kwargs): ...
+    def __init__(self, *args, **kwargs):
+        super().__init__()
 
     @property
     @_abstractmethod
@@ -495,25 +515,18 @@ class ShapeType:
     @_abstractmethod
     def __contains__(self, point: Point) -> bool: ...
 
-class AnyShape(ShapeType):
+class SingleShape(ShapeType):
     """Base class of all shapes."""
     type: _typing.ClassVar[str] = "any_shape"
 
-    def __init__(self, lines: _typing.Sequence[LinePath | LineJSON]):
-        """To initialize and validate a shape.
-
-        :param lines: The lines that form the shape
-        """
-        
-        self.lines: _typing.List[LinePath] = [
-            # Append as-is or load from json
-            line if isinstance(line, LinePath) else LinePath.from_json(line) \
-                for line in lines
-            ]
-        if not self._validate_lines():
-            _warnings.warn("Specified lines do not form a valid closed shape.")
+    def __init__(self):
+        super().__init__()
 
     @property
+    @_abstractmethod
+    def lines(self) -> list[LinePath]: ...
+
+    @_reactive_caching.cached_property(["lines"])
     def boundary(self) -> ShapeRange:
         """Rect range of a shape."""
         if len(self.lines) == 0:
@@ -545,19 +558,19 @@ class AnyShape(ShapeType):
         return True
 
     @staticmethod
-    def find_class_by_type(type_name: str) -> type[AnyShape] | None:
+    def find_class_by_type(type_name: str) -> type[SingleShape] | None:
         """Find a shape class by shape type, return `None` if not found.
 
         :param type_name: Shape type in string
         """
-        for cls in AnyShape.__subclasses__():
+        for cls in SingleShape.__subclasses__():
             if cls.type == type_name:
                 return cls
         else:
             return None
 
     @staticmethod
-    def from_json(json_content: dict[str, _typing.Any] | str) -> AnyShape:
+    def from_json(json_content: dict[str, _typing.Any] | str) -> SingleShape:
         """Create a shape object from json content.
 
         This function is a static method of AnyShape and its subclasses. It creates and returns a 
@@ -587,7 +600,7 @@ class AnyShape(ShapeType):
             # type of the return value of loads()
         if not isinstance(json_content["type"], str):
             raise TypeError("Invalid shape JSON.")
-        cls = AnyShape.find_class_by_type(json_content["type"])
+        cls = SingleShape.find_class_by_type(json_content["type"])
         if cls is None:
             raise CharmyShapeError(f"Invalid shape type {json_content["type"]}.")
         params = json_content.copy()
@@ -638,8 +651,31 @@ class AnyShape(ShapeType):
                 winding -= 1
         return winding != 0
 
+class AnyShape(SingleShape):
+    """Shapes made up with sequence of lines."""
+
+    def __init__(self, lines: _typing.Sequence[LinePath | LineJSON]):
+        """To initialize and validate a shape.
+
+        :param lines: The lines that form the shape
+        """
+
+        super().__init__()
+
+        self._lines: _typing.List[LinePath] = [
+            # Append as-is or load from json
+            line if isinstance(line, LinePath) else LinePath.from_json(line) \
+                for line in lines
+            ]
+        if not self._validate_lines():
+            _warnings.warn("Specified lines do not form a valid closed shape.")
+
+    @property
+    def lines(self) -> list[LinePath]:
+        return self._lines
+
 @_dataclass
-class Rect(AnyShape):
+class Rect(SingleShape):
     """Represents rectangles in Charmy.
 
     :param position: The position of the rectangle
@@ -650,7 +686,11 @@ class Rect(AnyShape):
     pos: Point
     size: Size
 
-    @property
+    def __post_init__(self):
+        """Init parent class."""
+        super().__init__()
+
+    @_reactive_caching.cached_property(["pos", "size"])
     def lines(self) -> list[LinePath]:
         polyline = PolyLine([
             (self.pos[0], self.pos[1]), 
@@ -661,8 +701,12 @@ class Rect(AnyShape):
             ])
         return [polyline]
 
+    @_reactive_caching.cached_property(["pos", "size"])
+    def boundary(self) -> ShapeRange:
+        return self.pos, self.size
+
 @_dataclass
-class RoundRect(AnyShape):
+class RoundRect(SingleShape):
     """Represents round-corner rectangles in Charmy.
 
     :param position: The position of the round-corner rectangle
@@ -671,11 +715,15 @@ class RoundRect(AnyShape):
     """
     type: _typing.ClassVar[str] = "round_rect"
 
-    position: Point
+    pos: Point
     size: Size
     radius: int | tuple[int, int, int, int]
 
-    @property
+    def __post_init__(self):
+        """Init parent class."""
+        super().__init__()
+
+    @_reactive_caching.cached_property(["position", "size", "radius"])
     def lines(self) -> list[LinePath]:
         radii: tuple[int, int, int, int]
         if isinstance(self.radius, int):
@@ -684,41 +732,45 @@ class RoundRect(AnyShape):
             radii = self.radius
         return [
             Line([
-                (self.position[0] + radii[0], self.position[1]), # top-left
-                (self.position[0] + self.size[0] - radii[1], self.position[1]) # top-right
+                (self.pos[0] + radii[0], self.pos[1]), # top-left
+                (self.pos[0] + self.size[0] - radii[1], self.pos[1]) # top-right
                 ]), 
             CircleArc( # top-right corner
-                (self.position[0] + self.size[0] - radii[1], self.position[1] + radii[1]), 
+                (self.pos[0] + self.size[0] - radii[1], self.pos[1] + radii[1]), 
                 radii[1], 0, 90
                 ), 
             Line([
-                (self.position[0] + self.size[0], self.position[1] + radii[1]), # right-top
-                (self.position[0] + self.size[0], 
-                 self.position[1] + self.size[1] - radii[2]) # right-bottom
+                (self.pos[0] + self.size[0], self.pos[1] + radii[1]), # right-top
+                (self.pos[0] + self.size[0], 
+                 self.pos[1] + self.size[1] - radii[2]) # right-bottom
                 ]), 
             CircleArc( # bottom-right corner
-                (self.position[0] + self.size[0] - radii[2], 
-                 self.position[1] + self.size[1] - radii[2]), 
+                (self.pos[0] + self.size[0] - radii[2], 
+                 self.pos[1] + self.size[1] - radii[2]), 
                  radii[2], 90, 180
                  ), 
             Line([
-                (self.position[0] + self.size[0] - radii[2], 
-                 self.position[1] + self.size[1]), # bottom-right
-                (self.position[0] + radii[3], self.position[1] + self.size[1]) # bottom-left
+                (self.pos[0] + self.size[0] - radii[2], 
+                 self.pos[1] + self.size[1]), # bottom-right
+                (self.pos[0] + radii[3], self.pos[1] + self.size[1]) # bottom-left
                 ]), 
             CircleArc( # bottom-left
-                (self.position[0] + radii[3], self.position[1] + self.size[1] - radii[3]), 
+                (self.pos[0] + radii[3], self.pos[1] + self.size[1] - radii[3]), 
                 radii[3], 180, 270
                 ), 
             Line([
-                (self.position[0], self.position[1] + self.size[1] - radii[3]), # left-bottom
-                (self.position[0], self.position[1] + radii[0]) # left-top
+                (self.pos[0], self.pos[1] + self.size[1] - radii[3]), # left-bottom
+                (self.pos[0], self.pos[1] + radii[0]) # left-top
                 ]), 
             CircleArc(
-                (self.position[0] + radii[0], self.position[1] + radii[0]), 
+                (self.pos[0] + radii[0], self.pos[1] + radii[0]), 
                 radii[0], 270, 360
                 )
             ]
+
+    @_reactive_caching.cached_property(["pos", "size"])
+    def boundary(self) -> ShapeRange:
+        return self.pos, self.size
 
 # region ShapeGroup
 class ShapeGroup(ShapeType):
@@ -726,11 +778,14 @@ class ShapeGroup(ShapeType):
     type: _typing.ClassVar[str] = "shape_group"
 
     def __init__(self, shapes: _typing.Sequence[AnyShape | ShapeGroup]) -> None:
+        """To express a composite shape."""
+        super().__init__()
         self._shapes: _typing.Sequence[AnyShape] = []
         self.shapes = shapes
 
     @property
     def shapes(self) -> _typing.Sequence[AnyShape]:
+        """Shapes that make up this shape group"""
         return self._shapes
 
     @shapes.setter
@@ -743,7 +798,7 @@ class ShapeGroup(ShapeType):
             else:
                 self._shapes.append(shape)
 
-    @property
+    @_reactive_caching.cached_property(["shapes"])
     def boundary(self) -> ShapeRange:
         """Rect range of a group of shape."""
         if len(self.shapes) == 0:
