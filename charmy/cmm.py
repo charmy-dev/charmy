@@ -8,7 +8,7 @@ from .backend import loader as _backend_loader
 # from .const import MANAGER_ID
 # from .event import WorkingThread
 # from .frameworks import Frameworks
-from .object import CharmyObject as _CharmyObject
+from .cm_object import CharmyObject as _CharmyObject
 from .event import EventHandling as _EventHandling, event_types as _event_types
 
 if _typing.TYPE_CHECKING:

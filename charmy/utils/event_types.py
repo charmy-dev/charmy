@@ -7,7 +7,7 @@ import time as _time
 
 from charmy.event import EventHandling, EventHandling as _EventHandling
 
-from ..object import CharmyObject as _CharmyObject
+from ..cm_object import CharmyObject as _CharmyObject
 
 if typing.TYPE_CHECKING:
     from ..event import EventHandling as _EventHandling

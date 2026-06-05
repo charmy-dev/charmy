@@ -7,7 +7,7 @@ import typing
 import warnings
 from dataclasses import dataclass
 
-from .object import CharmyObject
+from .cm_object import CharmyObject
 from .utils import event_types # Expose this as event_types
 
 if typing.TYPE_CHECKING:
@@ -173,7 +173,7 @@ class EventHandling():
         .. code-block:: python
 
             my_button = Button(...).pack()
-            press_down_event = my_button.bind("mouse_press", lambda _: print("Hello world!"))
+            press_down_event = my_button.bind(event_types.Click, lambda _: print("Hello world!"))
 
         This shows binding a hello world to the button when it's press.
 
@@ -218,7 +218,7 @@ class EventHandling():
         return decorator
 
     def unbind(self, target_task: EventTask) -> typing.Self:
-        """To unbind the task with specified task ID.
+        """To unbind a specific task.
 
         Example
         -------
@@ -226,12 +226,12 @@ class EventHandling():
         .. code-block:: python
 
             my_button = Button(...)
-            my_task = my_button.bind(Click, lambda: print("Ouch!"))
+            my_task = my_button.bind(event_types.Click, lambda: print("Ouch!"))
             my_button.unbind(my_task)
 
         This show unbinding the task bound to `Click` event from `my_button`.
 
-        :param target_task: The task ID or `EventTask` to unbind.
+        :param target_task: The `EventTask` to unbind.
         :return: If success
         """
         for event_type in self.tasks:
@@ -240,7 +240,7 @@ class EventHandling():
         return self
 
     def clear_bind(self, target_type: type[event_types.Event]) -> typing.Self:
-        """To unbind the task with specified task ID.
+        """To unbind the tasks bound to a specific type of events.
 
         Example
         -------
@@ -248,12 +248,12 @@ class EventHandling():
         .. code-block:: python
 
             my_button = Button(...)
-            my_task = my_button.bind(Click, lambda: print("Ouch!"))
-            my_button.unbind(Click)
+            my_task = my_button.bind(event_types.Click, lambda: print("Ouch!"))
+            my_button.clear_bind(event_types.Click)
 
         This show unbinding all tasks bound to `Click` event from `my_button`.
 
-        :param target_task: The task ID or `EventTask` to unbind.
+        :param target_type: The event type to clear bind.
         :return: If success
         """
         self.tasks[target_type] = []

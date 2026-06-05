@@ -7,7 +7,7 @@ import pathlib
 import io
 
 from ..event import EventHandling as _EventHandling, event_types as _event_types
-from ..object import CharmyObject as _CharmyObject
+from ..cm_object import CharmyObject as _CharmyObject
 from .container import Container as _Container
 from .. import const as _const
 from ..cmm import CharmyManager as _CharmyManager

@@ -2,16 +2,17 @@
 
 from __future__ import annotations as _
 
-import typing
+import typing as _typing
 
-from abc import abstractmethod
-import copy
+from abc import abstractmethod as _abstractmethod
+import copy as _copy
 
-from . import styles
-from . import object as cm_object
+from . import styles as _styles
+from . import cm_object as _cm_object
 
-if typing.TYPE_CHECKING:
-    from .widgets import window as cm_window
+
+if _typing.TYPE_CHECKING:
+    from .widgets import window as _window
 
 
 class DEBUG_FLAGS:
@@ -19,18 +20,21 @@ class DEBUG_FLAGS:
 
 
 # region DrawnObject base class
-class DrawnObject(cm_object.CharmyObject):
+class DrawnObject(_cm_object.CharmyObject):
     """Base class of drawn objects in Charmy."""
 
     def __init__(self):
-        self._actual_draw_list: dict[cm_window.Window, list[DrawnObject]] = {}
+        self._actual_draw_list: dict[_window.Window, list[DrawnObject]] = {}
 
-    @abstractmethod
-    def draw(self, window: cm_window.Window, *args, **kwargs) -> typing.Self: ...
+    @_abstractmethod
+    def draw(self, window: _window.Window, *args, **kwargs) -> _typing.Self: ...
 
     @property
-    @abstractmethod
-    def boundary(self) -> styles.shape.ShapeRange: ...
+    @_abstractmethod
+    def boundary(self) -> _styles.shape.ShapeRange: ...
+
+    @_abstractmethod
+    def __contains__(self, point: _styles.shape.Point) -> bool: ...
 
 # region Line
 
@@ -38,11 +42,11 @@ class DrawnLine(DrawnObject):
     """A class used to represent lines drawn to GUI or canvas."""
 
     def __init__(self, 
-                line: styles.shape.LinePath, 
-                texture: styles.texture.Texture | styles.texture.TextureLike, 
+                line: _styles.shape.LinePath, 
+                texture: _styles.texture.Texture | _styles.texture.TextureLike, 
                 width: int = 5, 
-                offset: styles.shape.Point | typing.Literal["auto"] = "auto", 
-                anchor: styles.shape.Point | typing.Literal["auto"] = "auto", 
+                offset: _styles.shape.Point | _typing.Literal["auto"] = "auto", 
+                anchor: _styles.shape.Point | _typing.Literal["auto"] = "auto", 
                 ):
         """Used to express lines drawn on GUI or canvas.
 
@@ -54,39 +58,39 @@ class DrawnLine(DrawnObject):
         """
         super().__init__()
 
-        self.line: styles.shape.LinePath = line
-        self._texture: styles.texture.Texture = styles.texture.ensure_texture(texture)
+        self.line: _styles.shape.LinePath = line
+        self._texture: _styles.texture.Texture = _styles.texture.ensure_texture(texture)
         self.width: int = width
         if offset == "auto":
             offset = self.line.boundary[0]
-        self.offset: styles.shape.Point = offset
+        self.offset: _styles.shape.Point = offset
         if anchor == "auto":
             anchor = self.line.boundary[0]
-        self.anchor: styles.shape.Point = anchor
+        self.anchor: _styles.shape.Point = anchor
 
     @property
-    def texture(self) -> styles.texture.Texture:
+    def texture(self) -> _styles.texture.Texture:
         """Texture of the drawn line."""
         return self._texture
 
     @texture.setter
-    def texture(self, new_texture: styles.texture.Texture | styles.texture.TextureLike) -> None:
-        if isinstance(new_texture, styles.texture.Texture):
+    def texture(self, new_texture: _styles.texture.Texture | _styles.texture.TextureLike) -> None:
+        if isinstance(new_texture, _styles.texture.Texture):
             self._texture = new_texture
         else:
             # Convert into texture
-            self._texture = styles.texture.ensure_texture(new_texture)
+            self._texture = _styles.texture.ensure_texture(new_texture)
 
     @property
-    def boundary(self) -> styles.shape.ShapeRange:
+    def boundary(self) -> _styles.shape.ShapeRange:
         """Rect boundary of the drawn line"""
         return (
             self.offset[0] + self.line.boundary[0][0] - self.anchor[0], 
             self.offset[1] + self.line.boundary[0][1] - self.anchor[1]
             ), self.line.boundary[1]
 
-    def draw(self, window: cm_window.Window, 
-             _fallback_from: list[type[styles.shape.LinePath]] = []) -> typing.Self:
+    def draw(self, window: _window.Window, 
+             _fallback_from: list[type[_styles.shape.LinePath]] = []) -> _typing.Self:
         """Draw the line.
 
         :param window: The window to draw line to
@@ -113,13 +117,13 @@ class DrawnLine(DrawnObject):
                 # If not supported, enters the fallback process
                 _fallback_from.append(self.line.__class__)
                 for fallback_line in self.line.fallback(_from = _fallback_from):
-                    drawn_host = copy.copy(self)
+                    drawn_host = _copy.copy(self)
                     drawn_host.line = fallback_line
                     drawn_host.draw(window, _fallback_from)
                     self._actual_draw_list[window].append(drawn_host)
             if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 range_rect = DrawnShape(
-                    styles.shape.Rect(*self.line.boundary), 
+                    _styles.shape.Rect(*self.line.boundary), 
                     (0, 0, 255, 10), 
                     1, (0, 0, 255), 
                     self.offset, 
@@ -129,6 +133,9 @@ class DrawnLine(DrawnObject):
                 self._actual_draw_list[window].append(range_rect)
         return self
 
+    def __contains__(self, point: _styles.shape.Point) -> bool:
+        return False
+
 
 # region Shape
 
@@ -136,12 +143,12 @@ class DrawnShape(DrawnObject):
     """A Class used to represent shapes drawn to GUI or canvas."""
 
     def __init__(self, 
-                shape: styles.shape.ShapeType, 
-                texture: styles.texture.Texture | styles.texture.TextureLike, 
+                shape: _styles.shape.ShapeType, 
+                texture: _styles.texture.Texture | _styles.texture.TextureLike, 
                 border_width: int = 0, 
-                border_texture: styles.texture.Texture | styles.texture.TextureLike = None, 
-                offset: styles.shape.Point | typing.Literal["auto"] = "auto", 
-                anchor: styles.shape.Point | typing.Literal["auto"] = "auto", 
+                border_texture: _styles.texture.Texture | _styles.texture.TextureLike = None, 
+                offset: _styles.shape.Point | _typing.Literal["auto"] = "auto", 
+                anchor: _styles.shape.Point | _typing.Literal["auto"] = "auto", 
                 ):
         """Used to express shapes drawn on GUI or canvas.
 
@@ -154,46 +161,46 @@ class DrawnShape(DrawnObject):
         """
         super().__init__()
 
-        self.shape: styles.shape.ShapeType = shape
-        self._texture: styles.texture.Texture = styles.texture.ensure_texture(texture)
+        self.shape: _styles.shape.ShapeType = shape
+        self._texture: _styles.texture.Texture = _styles.texture.ensure_texture(texture)
         self.border_width: int = border_width
-        self._border_texture: styles.texture.Texture = styles.texture.ensure_texture(border_texture)
+        self._border_texture: _styles.texture.Texture = _styles.texture.ensure_texture(border_texture)
         if offset == "auto":
             offset = self.shape.boundary[0]
-        self.offset: styles.shape.Point = offset
+        self.offset: _styles.shape.Point = offset
         if anchor == "auto":
             anchor = self.shape.boundary[0]
-        self.anchor: styles.shape.Point = anchor
+        self.anchor: _styles.shape.Point = anchor
 
     @property
-    def texture(self) -> styles.texture.Texture:
+    def texture(self) -> _styles.texture.Texture:
         """Texture of the drawn shape."""
         return self._texture
 
     @texture.setter
-    def texture(self, new_texture: styles.texture.Texture | styles.texture.TextureLike) -> None:
-        if isinstance(new_texture, styles.texture.Texture):
+    def texture(self, new_texture: _styles.texture.Texture | _styles.texture.TextureLike) -> None:
+        if isinstance(new_texture, _styles.texture.Texture):
             self._texture = new_texture
         else:
             # Convert into texture
-            self._texture = styles.texture.ensure_texture(new_texture)
+            self._texture = _styles.texture.ensure_texture(new_texture)
 
     @property
-    def border_texture(self) -> styles.texture.Texture:
+    def border_texture(self) -> _styles.texture.Texture:
         """Texture used on the border of the drawn shape."""
         return self._border_texture
 
     @border_texture.setter
     def border_texture(self, 
-                       new_texture: styles.texture.Texture | styles.texture.TextureLike) -> None:
-        if isinstance(new_texture, styles.texture.Texture):
+                       new_texture: _styles.texture.Texture | _styles.texture.TextureLike) -> None:
+        if isinstance(new_texture, _styles.texture.Texture):
             self._border_texture = new_texture
         else:
             # Convert into texture
-            self._border_texture = styles.texture.ensure_texture(new_texture)
+            self._border_texture = _styles.texture.ensure_texture(new_texture)
 
     @property
-    def boundary(self) -> styles.shape.ShapeRange:
+    def boundary(self) -> _styles.shape.ShapeRange:
         """Rect boundary of the drawn shape."""
         return (
             self.offset[0] + self.shape.boundary[0][0] - self.anchor[0], 
@@ -211,9 +218,9 @@ class DrawnShape(DrawnObject):
             )
 
     def draw(self, 
-            window: cm_window.Window, 
-            _fallback_from: list[type[styles.shape.LinePath]] = [], 
-            ) -> typing.Self:
+            window: _window.Window, 
+            _fallback_from: list[type[_styles.shape.LinePath]] = [], 
+            ) -> _typing.Self:
         """Draw the shape using backend.
 
         :param window: The window to draw shape to
@@ -234,7 +241,7 @@ class DrawnShape(DrawnObject):
             window.backend_base.drawing_list.append(self)
         if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 range_rect = DrawnShape(
-                    styles.shape.Rect(*self.shape.boundary), 
+                    _styles.shape.Rect(*self.shape.boundary), 
                     (0, 0, 255, 50), 
                     1, (0, 0, 255), 
                     self.offset, 
@@ -243,6 +250,9 @@ class DrawnShape(DrawnObject):
                 window.backend_base.drawing_list.append(range_rect)
                 self._actual_draw_list[window].append(range_rect)
         return self
+
+    def __contains__(self, point: _styles.shape.Point) -> bool:
+        return point in self.shape
 
 
 # region Text
@@ -257,10 +267,10 @@ class DrawnText(DrawnObject):
 
     def __init__(self, 
                 text: str, 
-                style: styles.text_style.TextStyle, 
-                texture: styles.texture.Texture | styles.texture.TextureLike, 
-                offset: styles.shape.Point | typing.Literal["auto"] = "auto", 
-                anchor: styles.shape.Point | typing.Literal["auto"] = "auto", 
+                style: _styles.text_style.TextStyle, 
+                texture: _styles.texture.Texture | _styles.texture.TextureLike, 
+                offset: _styles.shape.Point | _typing.Literal["auto"] = "auto", 
+                anchor: _styles.shape.Point | _typing.Literal["auto"] = "auto", 
                 ):
         """Used to express text drawn on GUI or canvas.
 
@@ -273,37 +283,37 @@ class DrawnText(DrawnObject):
         super().__init__()
 
         self.text: str = text
-        self.style: styles.text_style.TextStyle = style
-        self._texture: styles.texture.Texture = styles.texture.ensure_texture(texture)
+        self.style: _styles.text_style.TextStyle = style
+        self._texture: _styles.texture.Texture = _styles.texture.ensure_texture(texture)
         if offset == "auto":
             offset = (0, 0)
-        self.offset: styles.shape.Point = offset
+        self.offset: _styles.shape.Point = offset
         if anchor == "auto":
             anchor = (0, 0)
-        self.anchor: styles.shape.Point = anchor
+        self.anchor: _styles.shape.Point = anchor
 
-        self._backend_reported_boundary: styles.shape.ShapeRange = (0, 0), (0, 0)
+        self._backend_reported_boundary: _styles.shape.ShapeRange = (0, 0), (0, 0)
 
     @property
-    def texture(self) -> styles.texture.Texture:
+    def texture(self) -> _styles.texture.Texture:
         """Texture of the drawn text."""
         return self._texture
 
     @texture.setter
-    def texture(self, new_texture: styles.texture.Texture | styles.texture.TextureLike) -> None:
-        if isinstance(new_texture, styles.texture.Texture):
+    def texture(self, new_texture: _styles.texture.Texture | _styles.texture.TextureLike) -> None:
+        if isinstance(new_texture, _styles.texture.Texture):
             self._texture = new_texture
         else:
             # Convert into texture
-            self._texture = styles.texture.ensure_texture(new_texture)
+            self._texture = _styles.texture.ensure_texture(new_texture)
 
     @property
-    def boundary(self) -> styles.shape.ShapeRange:
+    def boundary(self) -> _styles.shape.ShapeRange:
         """Rect boundary of the drawn text."""
         # TODO: Implement getting text boundary via text-shape conversion
         return self._backend_reported_boundary
 
-    def draw(self, window: cm_window.Window):
+    def draw(self, window: _window.Window):
         """Draw the text.
 
         :param window: The window to draw text to
@@ -327,7 +337,7 @@ class DrawnText(DrawnObject):
                     backend.TextBase.supports.any_fontweight, 
                     ]:
                 ## Make a copy of current style
-                rendered_style = copy.deepcopy(self.style)
+                rendered_style = _copy.deepcopy(self.style)
                 ## Custom underline and strikethrough
                 if not backend.TextBase.supports.custom_underline:
                     rendered_style.underlined = True
@@ -341,7 +351,7 @@ class DrawnText(DrawnObject):
                     closest = min(available_weights, key=lambda w: abs(w - self.style.weight))
                     rendered_style.weight = closest
                 ## Make new render object
-                rendered_text = copy.deepcopy(self)
+                rendered_text = _copy.deepcopy(self)
                 rendered_text.style = rendered_style
             else:
                 rendered_text = self
@@ -349,7 +359,7 @@ class DrawnText(DrawnObject):
             self._actual_draw_list[window].append(self)
             if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 range_rect = DrawnShape(
-                    styles.shape.Rect(*self.boundary), 
+                    _styles.shape.Rect(*self.boundary), 
                     (0, 0, 255, 50), 
                     1, (0, 0, 255), 
                     # self.offset, 
@@ -361,3 +371,6 @@ class DrawnText(DrawnObject):
             #### Render as shape
             # TODO: Implement text → shape fallback
             raise NotImplementedError("Currently cannot render text as shape!")
+
+    def __contains__(self, point: _styles.shape.Point) -> bool:
+        return point in _styles.shape.Rect(*self.boundary)

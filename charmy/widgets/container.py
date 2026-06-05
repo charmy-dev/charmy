@@ -5,9 +5,10 @@ from __future__ import annotations as _
 import typing
 
 from abc import abstractmethod
+import reactive_caching
 
 from ..utils import layout_profiles # Expose them as (...).container.layout_profiles
-from ..styles import shape
+from ..styles import shape, texture
 
 if typing.TYPE_CHECKING:
     from . import widget
@@ -15,7 +16,7 @@ if typing.TYPE_CHECKING:
 __all__ = ["Container", "layout_profiles"]
 
 
-class Container:
+class Container(reactive_caching.CachedClass):
     """Container represents a widget's ability to contain and arrange other widgets inside.
 
     The `Container` class contains the ability of managing widgets within the container, and should 
@@ -35,6 +36,20 @@ class Container:
 
         self.children: list[widget.Widget] = []
 
+        self.background: texture.Texture | texture.TextureLike = None
+
+    @reactive_caching.cached_property(["children", "background"])
+    def layers(self) -> \
+        tuple[texture.Texture | texture.TextureLike, list[widget.Widget], list[widget.Widget]]:
+        place_list = []
+        managed_list = []
+        for child in self.children:
+            if isinstance(child.layout_profile, layout_profiles.ManagedLayoutProfile):
+                managed_list.append(child)
+            else:
+                place_list.append(child)
+        return (self.background, managed_list, place_list)
+
     # region Context
 
     def __enter__(self) -> typing.Self:
@@ -46,6 +61,8 @@ class Container:
         """Exit the context."""
         Container._with_stack.pop()
         return False # Does not handle exceptions
+
+    # endregion
 
     def add_child(self, child: widget.Widget) -> typing.Self:
         """Add a child object."""
@@ -67,4 +84,24 @@ class Container:
     @abstractmethod
     def pos(self) -> shape.Point: ...
 
-    # endregion
+    def __contains__(self, widget: widget.Widget) -> bool:
+        return widget in self.children
+    
+    def get_mouse_hover(self, pos: shape.Point) -> typing.List[widget.Widget]:
+        layers: tuple[texture.Texture | texture.TextureLike, list[widget.Widget], list[widget.Widget]] = self.layers
+        placed_children = layers[2]
+        managed_children = layers[1]
+        for layer in placed_children, managed_children:
+            for child in layer:
+                if pos in child:
+                    if isinstance(child, Container):
+                        result = self.get_mouse_hover(pos)
+                    else:
+                        result = []
+                    result.append(child)
+                    return result
+        else:
+            if isinstance(texture.ensure_texture(self.background), texture.Transparent):
+                return []
+            else:
+                return self

@@ -66,40 +66,34 @@ class Button(_Widget):
         self.state: str = "normal"
 
         # Drawn objects, used by internal drawing functions
-        self._drawn_background_shape: _graphics.DrawnShape = \
-            _graphics.DrawnShape(_styles.shape.Rect((0, 0), (0, 0)), None)
-        self._drawn_text: _graphics.DrawnText = \
-            _graphics.DrawnText(self.text, _styles.text_style.TextStyle.sys_default, None)
+        self._components: tuple[_graphics.DrawnShape, _graphics.DrawnText] = (
+            _graphics.DrawnShape(_styles.shape.Rect((0, 0), (0, 0)), None), 
+            _graphics.DrawnText(self.text, _styles.text_style.TextStyle.sys_default, None), 
+            )
 
         self._update_drawing_objects()
-
-    def draw_components(self, *args, **kwargs) -> typing.Self:
-        """Draw the button."""
-        self._drawn_background_shape.draw(self.root_container)
-        self._drawn_text.draw(self.root_container)
-        return self
 
     def _update_drawing_objects(self):
         """Update draw list of a button, for internal use only."""
         curr_style = self.curr_state_styles
         # Make background shape
-        self._drawn_background_shape.shape = \
+        self._components[0].shape = \
             _styles.shape.AnyShape.from_json(curr_style["shape"])
-        self._drawn_background_shape.texture = \
+        self._components[0].texture = \
             _styles.texture.Texture.from_json(curr_style["background"])
-        self._drawn_background_shape.border_width = \
+        self._components[0].border_width = \
             curr_style["border_width"]
-        self._drawn_background_shape.border_texture = \
+        self._components[0].border_texture = \
             _styles.texture.Texture.from_json(curr_style["border_texture"])
-        self._drawn_background_shape.offset = \
+        self._components[0].offset = \
             self.abs_pos
         # Drawn text
-        self._drawn_text.text = \
+        self._components[1].text = \
             self.text
-        self._drawn_text.style = \
+        self._components[1].style = \
             _styles.text_style.TextStyle.from_json(curr_style["text_style"])
-        self._drawn_text.texture = \
+        self._components[1].texture = \
             _styles.texture.Texture.from_json(curr_style["text_texture"])
-        self._drawn_text.offset = \
-            (self.abs_pos[0] + ((self.width - self._drawn_text.boundary[1][0]) // 2), 
-             self.abs_pos[1] + ((self.height - self._drawn_text.boundary[1][1]) // 2))
+        self._components[1].offset = \
+            (self.abs_pos[0] + ((self.width - self._components[1].boundary[1][0]) // 2), 
+             self.abs_pos[1] + ((self.height - self._components[1].boundary[1][1]) // 2))

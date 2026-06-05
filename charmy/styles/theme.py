@@ -5,7 +5,7 @@ import pathlib
 import typing
 import warnings
 
-from ..object import CharmyObject
+from ..cm_object import CharmyObject
 
 __all__ = ["Theme"]
 

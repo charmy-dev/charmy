@@ -22,7 +22,7 @@ from . import backend
 
 from . import graphics
 from .event import event_types, EventHandling, EventTask
-from .object import CharmyObject
+from .cm_object import CharmyObject
 # from .frameworks import Frameworks
 from . import styles
 from .utils.var import Var

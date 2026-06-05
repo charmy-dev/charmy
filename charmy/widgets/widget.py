@@ -2,16 +2,19 @@
 
 import typing
 
+import reactive_caching
+
 from . import window
-from ..object import CharmyObject
+from ..cm_object import CharmyObject
 from ..event import EventHandling, event_types
 from .container import Container, layout_profiles
+from .. import graphics
 from .. import styles
 
 __all__ = ["Widget"]
 
 
-class Widget(CharmyObject, EventHandling):
+class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     """Widget base class."""
 
     def __init__(self, parent: Container | None = None, style: dict = {":default": {"size": (0, 0)}}):
@@ -32,6 +35,7 @@ class Widget(CharmyObject, EventHandling):
         self._initialized: bool = False
 
         super().__init__()
+        EventHandling.__init__(self)
 
         self.parent: Container = parent
         self.parent.add_child(self)
@@ -44,6 +48,8 @@ class Widget(CharmyObject, EventHandling):
 
         self.state: str = "normal"
         self._alive: bool = True
+
+        self._components: typing.Tuple[graphics.DrawnObject, ...] = ()
 
         self.bind(event_types.WidgetDestroy, lambda _: self.destroy())
 
@@ -85,9 +91,9 @@ class Widget(CharmyObject, EventHandling):
     @property
     def size(self) -> styles.shape.Size:
         """Size of the widget"""
-        if self.layout_profile.final_size is not None:
+        if self.layout_profile.size is not None:
             # If specified by layout
-            return self.layout_profile.final_size
+            return self.layout_profile.size
         else:
             # If not, get from style
             # curr_style = self.curr_state_styles
@@ -165,9 +171,8 @@ class Widget(CharmyObject, EventHandling):
         if not self._alive:
             return self
 
-        self._update_drawing_objects()
-
-        self.draw_components(*args, **kwargs)
+        for component in self._components:
+            component.draw(self.root_container)
 
         if isinstance(self, Container):
             self.draw_children()
@@ -193,3 +198,10 @@ class Widget(CharmyObject, EventHandling):
         if isinstance(self, Container):
             # Also destroy children if self is container
             self._clear_chidren()
+
+    def __contains__(self, point: styles.shape.Point) -> bool:
+        for component in self._components:
+            if point in component:
+                return True
+        else:
+            return False
