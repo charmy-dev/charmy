@@ -8,6 +8,7 @@ from abc import abstractmethod
 import reactive_caching
 
 from ..utils import layout_profiles # Expose them as (...).container.layout_profiles
+from ..utils import type_checking
 from ..styles import shape, texture
 
 if typing.TYPE_CHECKING:
@@ -36,7 +37,7 @@ class Container(reactive_caching.CachedClass):
 
         self.children: list[widget.Widget] = []
 
-        self.background: texture.Texture | texture.TextureLike = None
+        self.background: texture.Texture | texture.TextureLike
 
     @reactive_caching.cached_property(["children", "background"])
     def layers(self) -> \
@@ -110,7 +111,8 @@ class Container(reactive_caching.CachedClass):
                     else:
                         return [child]
         else:
-            if isinstance(texture.ensure_texture(self.background), texture.Transparent):
+            if isinstance(texture.ensure_texture(self.background), texture.Transparent) and \
+                not isinstance(self, type_checking.WindowLike):
                 return []
             else:
                 return [self]

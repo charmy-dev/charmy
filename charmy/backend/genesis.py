@@ -13,7 +13,6 @@ import typing
 # import sdl2
 import sdl2.ext
 import cairo
-import sys
 import os
 import tempfile
 import ctypes
@@ -237,10 +236,7 @@ class WindowBase(template.WindowBase):
                     event.button.button - 1
                     ))
             case sdl2.SDL_QUIT:
-                self.charmy_window.trigger(cme.WidgetDestroy(
-                    self.charmy_window
-                    ))
-                # TODO: trigger a destroy event on window close
+                self.charmy_window.destroy()
 
     def update(self, redraw: bool = True) -> typing.Self:
         """Update the window.

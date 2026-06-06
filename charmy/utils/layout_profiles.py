@@ -10,17 +10,20 @@ if typing.TYPE_CHECKING:
 
 
 class LayoutProfile:
+    """Base class of all layout profiles."""
     type: typing.ClassVar[str] = "nolayout"
 
     def __init__(self):
-        self.pos: _shape.Point = (0, 0)
-        self.size: _shape.Size = (0, 0)
+        self.pos: _shape.Point
+        self.size: _shape.Size
 
 @_dataclass
 class PlaceProfile(LayoutProfile):
+    """Place profile, to directly specify the position and size of the widget."""
     type: typing.ClassVar[str] = "place"
+
     pos: _shape.Point
-    size: typing.Optional[_shape.Size] # = None
+    size: typing.Optional[_shape.Size] = None
 
 @_dataclass
 class ManagedLayoutProfile(LayoutProfile):

@@ -163,7 +163,7 @@ class MouseEvent(Event):
     mouse_pos: _shape.Point
 
     def call_chain(self, subject: EventHandling) -> None:
-        if isinstance(subject, _type_checking._ContainerLike):
+        if isinstance(subject, _type_checking.ContainerLike):
             hovering = subject.get_mouse_hover(self.mouse_pos)
             hovering.pop(0) # Ignore subject
             for item in hovering:

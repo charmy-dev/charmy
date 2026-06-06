@@ -32,8 +32,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             else:
                 parent = Container._with_stack[-1]
 
-        self._initialized: bool = False
-
         super().__init__()
         EventHandling.__init__(self)
 
@@ -50,13 +48,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self._alive: bool = True
 
         self._components: typing.Tuple[graphics.DrawnObject, ...] = ()
-
-        self.bind(event_types.WidgetDestroy, lambda _: self.destroy())
-
-    def __post_init__(self):
-        """After initialization of widget."""
-        self._initialized = True
-        self._update_drawing_objects()
 
     @property
     def pos(self) -> styles.shape.Point:
@@ -91,21 +82,23 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     @property
     def size(self) -> styles.shape.Size:
         """Size of the widget"""
-        if self.layout_profile.size is not None:
-            # If specified by layout
-            return self.layout_profile.size
-        else:
-            # If not, get from style
+        if type(self.layout_profile) is layout_profiles.LayoutProfile:
+            # If no layout profile specified
+            return (0, 0)
+        if self.layout_profile.size is None:
+            # If size not given, get from style
             # curr_style = self.curr_state_styles
             target_style_state = self.state if self.state in self.style else "default"
             if not "size" in self.style[f":{target_style_state}"]:
                 if "size" in self.style[f":default"]:
                     target_style_state = "default" # Fallback to default style
                 else:
-                    return (0, 0) # Unspecified in style
-            return styles.style.fill_vars(
+                    size = (0, 0) # Unspecified in style
+            size = styles.style.fill_vars(
                 self.style[f":{target_style_state}"]["size"]
                 )
+        else:
+            return self.layout_profile.size
 
     @property
     def width(self) -> int:
@@ -143,15 +136,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         # self.draw()
         pass
 
-    def __attr__(self, name: str, value: typing.Any) -> None:
-        """Trigger an WidgetConfigure event if some attrs are changed."""
-        super().__setattr__(name, value)
-        if not name.startswith("_"): # Skip internal vars to avoid endless recursion
-            # (only do update for props changes)
-            if self._initialized: # Skip update for initialization
-                # self._update_drawing_objects()
-                self.trigger(event_types.WidgetConfigure(self, {name: value}))
-
     @property
     def curr_state_styles(self) -> dict[str, typing.Any]:
         style_vars = (
@@ -163,11 +147,9 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         curr_style = styles.style.fill_vars(self.style[style_state], *style_vars)
         return curr_style
 
-    def draw_components(self, *args, **kwargs) -> typing.Self:
-        return self
-
     def draw(self, *args, **kwargs) -> typing.Self:
         """Draw the widget, does nothing on base class."""
+        self._update_drawing_objects() # TODO: Components caching
         if not self._alive:
             return self
 
@@ -188,7 +170,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         :param pos: The position to place the widget
         :param size: The size of this widget
         """
-        self.layout_profile = layout_profiles.PlaceProfile(pos, size)
+        self.layout_profile = layout_profiles.PlaceProfile(pos, size) # type: ignore
         return self
 
     def destroy(self) -> None:
