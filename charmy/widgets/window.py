@@ -83,6 +83,10 @@ class WindowEntity(_CharmyObject, _EventHandling):
         self.backend_base.set_pos(new)
 
     @property
+    def abs_pos(self) -> _styles.shape.Point:
+        return(0, 0)
+
+    @property
     def size(self) -> _styles.shape.Size:
         """Window size."""
         return self.size

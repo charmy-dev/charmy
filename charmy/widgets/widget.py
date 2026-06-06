@@ -34,6 +34,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         super().__init__()
         EventHandling.__init__(self)
+        reactive_caching.CachedClass.__init__(self)
 
         self.parent: Container = parent
         self.parent.add_child(self)
@@ -73,19 +74,22 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     def abs_pos(self) -> styles.shape.Point:
         """Absolute position of the widget in its root container."""
         if not isinstance(self.parent, window.WindowEntity):
-            parent_pos = self.parent.pos
+            parent_pos = self.parent.abs_pos
             self_pos = self.pos
             return (parent_pos[0] + self_pos[0], parent_pos[1] + self_pos[1])
         else:
             return self.pos
 
-    @property
+    @reactive_caching.cached_property(["layout_profile", "style"])
     def size(self) -> styles.shape.Size:
         """Size of the widget"""
+        layout_specified: typing.Optional[styles.shape.Point]
         if type(self.layout_profile) is layout_profiles.LayoutProfile:
             # If no layout profile specified
-            return (0, 0)
-        if self.layout_profile.size is None:
+            layout_specified = None
+        else:
+            layout_specified = self.layout_profile.size
+        if layout_specified is None:
             # If size not given, get from style
             # curr_style = self.curr_state_styles
             target_style_state = self.state if self.state in self.style else "default"
@@ -93,12 +97,19 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 if "size" in self.style[f":default"]:
                     target_style_state = "default" # Fallback to default style
                 else:
-                    size = (0, 0) # Unspecified in style
-            size = styles.style.fill_vars(
+                    return (0, 0) # Unspecified in style
+            style_specified = styles.style.fill_vars(
                 self.style[f":{target_style_state}"]["size"]
                 )
+            if type(style_specified) is not tuple:
+                return (0, 0)
+            if len(style_specified) != 2:
+                return (0, 0)
+            if type(style_specified[0]) is not int or type(style_specified[1]) is not int:
+                return (0, 0)
+            return style_specified
         else:
-            return self.layout_profile.size
+            return layout_specified
 
     @property
     def width(self) -> int:
@@ -181,7 +192,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             # Also destroy children if self is container
             self._clear_chidren()
 
-    def __contains__(self, point: styles.shape.Point) -> bool:
+    def __contains__(self, pos: styles.shape.Point) -> bool:
+        point = (pos[0] - self.x, pos[1] - self.y)
         for component in self._components:
             if point in component:
                 return True

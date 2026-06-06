@@ -57,6 +57,10 @@ class Container(reactive_caching.CachedClass):
 
     @property
     @abstractmethod
+    def abs_pos(self) -> shape.Point: ...
+
+    @property
+    @abstractmethod
     def size(self) -> shape.Size: ...
 
     # region Context
@@ -92,17 +96,18 @@ class Container(reactive_caching.CachedClass):
     def __contains__(self, target: widget.Widget) -> bool:
         return target in self.children
     
-    def get_mouse_hover(self, pos: shape.Point) -> typing.List[Container | widget.Widget]:
+    def get_mouse_hover(self, abs_pos: shape.Point) -> typing.List[Container | widget.Widget]:
         layers: \
             tuple[texture.Texture | texture.TextureLike, 
                   list[widget.Widget], list[widget.Widget]] = self.layers
+        pos = (abs_pos[0] - self.abs_pos[0], abs_pos[0] - self.abs_pos[1])
         placed_children = layers[2]
         managed_children = layers[1]
-        for layer in placed_children, managed_children:
+        for layer in (placed_children, managed_children):
             for child in layer:
                 if pos in child:
                     if isinstance(child, Container):
-                        result = self.get_mouse_hover(pos)
+                        result = child.get_mouse_hover(pos)
                         if len(result) == 0:
                             # Not hovering on anything, not even background
                             continue # Check hovering of widgets below
@@ -113,6 +118,7 @@ class Container(reactive_caching.CachedClass):
         else:
             if isinstance(texture.ensure_texture(self.background), texture.Transparent) and \
                 not isinstance(self, type_checking.WindowLike):
+                # Self is not a window and self has transparent back
                 return []
             else:
                 return [self]
