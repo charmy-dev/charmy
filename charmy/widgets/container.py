@@ -50,6 +50,14 @@ class Container(reactive_caching.CachedClass):
                 place_list.append(child)
         return (self.background, managed_list, place_list)
 
+    @property
+    @abstractmethod
+    def pos(self) -> shape.Point: ...
+
+    @property
+    @abstractmethod
+    def size(self) -> shape.Size: ...
+
     # region Context
 
     def __enter__(self) -> typing.Self:
@@ -80,15 +88,13 @@ class Container(reactive_caching.CachedClass):
         for child in self.children:
             child.destroy()
 
-    @property
-    @abstractmethod
-    def pos(self) -> shape.Point: ...
-
-    def __contains__(self, widget: widget.Widget) -> bool:
-        return widget in self.children
+    def __contains__(self, target: widget.Widget) -> bool:
+        return target in self.children
     
-    def get_mouse_hover(self, pos: shape.Point) -> typing.List[widget.Widget]:
-        layers: tuple[texture.Texture | texture.TextureLike, list[widget.Widget], list[widget.Widget]] = self.layers
+    def get_mouse_hover(self, pos: shape.Point) -> typing.List[Container | widget.Widget]:
+        layers: \
+            tuple[texture.Texture | texture.TextureLike, 
+                  list[widget.Widget], list[widget.Widget]] = self.layers
         placed_children = layers[2]
         managed_children = layers[1]
         for layer in placed_children, managed_children:
@@ -96,12 +102,15 @@ class Container(reactive_caching.CachedClass):
                 if pos in child:
                     if isinstance(child, Container):
                         result = self.get_mouse_hover(pos)
+                        if len(result) == 0:
+                            # Not hovering on anything, not even background
+                            continue # Check hovering of widgets below
+                        result.insert(0, self)
+                        return result
                     else:
-                        result = []
-                    result.append(child)
-                    return result
+                        return [child]
         else:
             if isinstance(texture.ensure_texture(self.background), texture.Transparent):
                 return []
             else:
-                return self
+                return [self]
