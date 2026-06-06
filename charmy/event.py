@@ -16,7 +16,7 @@ if typing.TYPE_CHECKING:
 __all__ = ["EventHandling", "EventTask", "DelayTask", "event_types"]
 
 
-class EventHandling():
+class EventHandling:
 
     # # fmt: off
     # EVENT_TYPES: list[str] = [
@@ -69,7 +69,7 @@ class EventHandling():
 
         This shows subclassing EventHandling to let Widget gain the ability of handling events.
         """
-        super().__init__()
+        # super().__init__()
         self.latest_event: event_types.Event = event_types.Event()
         self.tasks: dict[type[event_types.Event], list[EventTask]] = {}
 

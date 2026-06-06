@@ -7,4 +7,10 @@ window.title = "Button test"
 button = cm.Button(window, text="Hit me")
 button.place((10, 10))
 
+
+@button.on(cm.event_types.MousePress)
+def print_press(event: cm.event_types.MousePress):
+    print(f"Mouse pressed with {event.button=}")
+
+
 cm.mainloop()

@@ -9,27 +9,18 @@ if typing.TYPE_CHECKING:
     from ..styles import shape as _shape
 
 
-@_dataclass
 class LayoutProfile:
     type: typing.ClassVar[str] = "nolayout"
 
-    @property
-    def final_size(self) -> typing.Optional[_shape.Size]:
-        return None
-
-    @property
-    @_abstractmethod
-    def size(self) -> _shape.Size: ...
+    def __init__(self):
+        self.pos: _shape.Point = (0, 0)
+        self.size: _shape.Size = (0, 0)
 
 @_dataclass
 class PlaceProfile(LayoutProfile):
     type: typing.ClassVar[str] = "place"
     pos: _shape.Point
     size: typing.Optional[_shape.Size] # = None
-
-    @property
-    def final_size(self) -> typing.Optional[_shape.Size]:
-        return self.size
 
 @_dataclass
 class ManagedLayoutProfile(LayoutProfile):

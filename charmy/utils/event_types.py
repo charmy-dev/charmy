@@ -1,15 +1,15 @@
 from __future__ import annotations as _
 
-import typing
+import typing as _typing
 
 from dataclasses import dataclass as _dataclass
 import time as _time
 
-from charmy.event import EventHandling, EventHandling as _EventHandling
-
+from ..event import EventHandling, EventHandling as _EventHandling
 from ..cm_object import CharmyObject as _CharmyObject
+from . import type_checking as _type_checking
 
-if typing.TYPE_CHECKING:
+if _typing.TYPE_CHECKING:
     from ..event import EventHandling as _EventHandling
     from ..styles import shape as _shape
     from ..widgets import window as _window
@@ -20,10 +20,10 @@ if typing.TYPE_CHECKING:
 @_dataclass
 class Event(_CharmyObject):
     """Used to represent an event. Can be regarded as a placeholder if directly used."""
-    type: typing.ClassVar[str] = "noevent"
+    type: _typing.ClassVar[str] = "noevent"
 
     def __init_subclass__(cls):
-        cls.latest: typing.Self
+        cls.latest: _typing.Self
 
     def meets(self, target_condition: dict, allow_inexist: bool = False) -> bool:
         """Check if current event meets the target condition.
@@ -47,7 +47,7 @@ Event.latest = Event()
 @_dataclass
 class EventTriggered(Event):
     """Triggered when any other kind of event is triggered."""
-    type: typing.ClassVar[str] = "event_triggered"
+    type: _typing.ClassVar[str] = "event_triggered"
 
     subject: _EventHandling
 
@@ -65,7 +65,7 @@ class WidgetEvent(Event):
     ------------------------
     `subject` should be the widget that is triggered the event.
     """
-    type: typing.ClassVar[str] = "widget"
+    type: _typing.ClassVar[str] = "widget"
 
     subject: _EventHandling
 
@@ -77,7 +77,7 @@ class WidgetUpdate(WidgetEvent):
     -----------------------
     When `subject` is set to none, it means Charmy's global update routine is triggered.
     """
-    type: typing.ClassVar[str] = "widget.update"
+    type: _typing.ClassVar[str] = "widget.update"
 
     subject: _EventHandling | None
     redraw: bool | _shape.ShapeRange = False
@@ -85,7 +85,7 @@ class WidgetUpdate(WidgetEvent):
 @_dataclass
 class WidgetDraw(WidgetEvent):
     """Will be generated when a widget or window is redrawn."""
-    type: typing.ClassVar[str] = "widget.draw"
+    type: _typing.ClassVar[str] = "widget.draw"
 
     pos: _shape.Point = (0, 0)
     size: _shape.Size = (0, 0)
@@ -93,7 +93,7 @@ class WidgetDraw(WidgetEvent):
 @_dataclass
 class WidgetConfigure(WidgetEvent):
     """Will be generated when a widget or window has its configuration changed."""
-    type: typing.ClassVar[str] = "widget.configure"
+    type: _typing.ClassVar[str] = "widget.configure"
 
     attrs_changed: dict
 
@@ -107,33 +107,33 @@ class WidgetConfigure(WidgetEvent):
 @_dataclass
 class WidgetResize(WidgetEvent):
     """Will be generated when a widget or window is resized."""
-    type: typing.ClassVar[str] = "widget.resize"
+    type: _typing.ClassVar[str] = "widget.resize"
 
     new_size: _shape.Size
-    old_size: typing.Optional[_shape.Size] = None
+    old_size: _typing.Optional[_shape.Size] = None
 
 @_dataclass
 class WidgetMove(WidgetEvent):
     """Will be generated when a widget or window is moved."""
-    type: typing.ClassVar[str] = "widget.move"
+    type: _typing.ClassVar[str] = "widget.move"
 
     new_pos: _shape.Point
-    old_pos: typing.Optional[_shape.Point] = None
+    old_pos: _typing.Optional[_shape.Point] = None
 
 @_dataclass
 class FocusGain(WidgetEvent):
     """Will be generated when a widget or window gained focus."""
-    type: typing.ClassVar[str] = "widget.focus_gain"
+    type: _typing.ClassVar[str] = "widget.focus_gain"
 
 @_dataclass
 class FocusLoss(WidgetEvent):
     """Will be generated when a widget or window lose focus."""
-    type: typing.ClassVar[str] = "widget.focus_loss"
+    type: _typing.ClassVar[str] = "widget.focus_loss"
 
 @_dataclass
 class WidgetDestroy(WidgetEvent):
     """Will be generated when a widget or window is destroyed."""
-    type: typing.ClassVar[str] = "widget.destroy"
+    type: _typing.ClassVar[str] = "widget.destroy"
 
 
 # region Window events
@@ -162,29 +162,37 @@ class MouseEvent(Event):
     subject: _window.WindowEntity
     mouse_pos: _shape.Point
 
+    def call_chain(self, subject: EventHandling) -> None:
+        if isinstance(subject, _type_checking._ContainerLike):
+            hovering = subject.get_mouse_hover(self.mouse_pos)
+            hovering.pop(0) # Ignore subject
+            for item in hovering:
+                if isinstance(item, EventHandling):
+                    item.trigger(self)
+
 @_dataclass
 class MouseMove(MouseEvent):
     """Will be generated when mouse movement is detected."""
-    type: typing.ClassVar[str] = "mouse.move"
+    type: _typing.ClassVar[str] = "mouse.move"
 
 @_dataclass
 class MousePress(MouseEvent):
     """Will be generated when a mouse button is pressed."""
-    type: typing.ClassVar[str] = "mouse.press"
+    type: _typing.ClassVar[str] = "mouse.press"
 
     button: int
 
 @_dataclass
 class MouseRelease(MouseEvent):
     """Will be generated when a mouse button is released."""
-    type: typing.ClassVar[str] = "mouse.release"
+    type: _typing.ClassVar[str] = "mouse.release"
 
     button: int
 
 @_dataclass
 class MouseScroll(MouseEvent):
     """Will be generated when a mouse button is released."""
-    type: typing.ClassVar[str] = "mouse.scroll"
+    type: _typing.ClassVar[str] = "mouse.scroll"
 
     steps: int
     horizontal: bool = False
@@ -194,7 +202,7 @@ class MouseScroll(MouseEvent):
 
 @_dataclass
 class DelayTriggered(Event):
-    type: typing.ClassVar[str] = "delay.triggered"
+    type: _typing.ClassVar[str] = "delay.triggered"
 
     delay_time: float
     current_time: float = _time.time()
