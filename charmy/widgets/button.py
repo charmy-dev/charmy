@@ -2,14 +2,14 @@
 
 from __future__ import annotations as _
 
-import typing
+import typing as _typing
 
 from .. import event_types as _event_types
 from .. import graphics as _graphics
 from .. import styles as _styles
 from .widget import Widget as _Widget
 
-if typing.TYPE_CHECKING:
+if _typing.TYPE_CHECKING:
     from .. import container as _container
 
 
@@ -20,8 +20,8 @@ class Button(_Widget):
         self,
         parent: _container.Container | None = None,
         text: str = "Button",
-        on_click: typing.Callable = lambda: None,
-        style: dict[str, typing.Any] = None,
+        on_click: _typing.Callable = lambda: None,
+        style: _typing.Optional[dict[str, _typing.Any]] = None,
         *args,
         **kwargs,
     ):
@@ -35,7 +35,7 @@ class Button(_Widget):
         :param **kwargs: → See `Widget.__init__(...)`
         """
 
-        if not style:
+        if style is None:
             style = {
                 # Default button style (bootstrap)
                 # These styles JSON might be moved to somewhere else in future...
@@ -65,9 +65,9 @@ class Button(_Widget):
 
         super().__init__(parent, style)
         self.text: str = text
-        self.on_click: typing.Callable = on_click
-        self.style: dict[str, typing.Any] = style
-        self.theme: typing.Optional[_styles.theme.Theme] = None
+        self.on_click: _typing.Callable = on_click
+        self.style: dict[str, _typing.Any] = style
+        self.theme: _typing.Optional[_styles.theme.Theme] = None
         self.state: str = "normal"
 
         # Drawn objects, used by internal drawing functions
