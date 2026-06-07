@@ -1,9 +1,9 @@
-"""Template backend, identified as `no backend` in Charmy runtime.
+"""Template backend, identified as `nobackend` in Charmy runtime.
 
 This is a template of all backends, providing basic fallback for functions that might be used but
 not implemented by actual backends. This template backend shall not be used in actual development.
 
-This backend is identified as `no backend` in Charmy, and will throw an error when trying to create
+This backend is identified as `nobackend` in Charmy, and will throw an error when trying to create
 window with it.
 """
 
