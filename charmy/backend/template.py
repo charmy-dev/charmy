@@ -1,9 +1,9 @@
-"""Template backend, identified as `nobackend` in Charmy runtime.
+"""Template backend, identified as `no backend` in Charmy runtime.
 
 This is a template of all backends, providing basic fallback for functions that might be used but
 not implemented by actual backends. This template backend shall not be used in actual development.
 
-This backend is identified as `nobackend` in Charmy, and will throw an error when trying to create
+This backend is identified as `no backend` in Charmy, and will throw an error when trying to create
 window with it.
 """
 
@@ -27,7 +27,7 @@ __all__ = ["Backend", "not_implemented_func"]
 
 
 def not_implemented_func(
-    backend_name: str = "currently used", operation_desc: str = "This operation", **kwargs
+    backend_name: str = "currently used", operation_desc: str = "This operation", **kwargs  # NOQA
 ) -> bool:
     """To throw a warning to tell that a specific function is not implemented by the backend.
 
@@ -201,7 +201,7 @@ class WindowBase(WhateverBase):
         return self
 
     def update(self, redraw: bool = True) -> typing.Self:
-        """Updates the window, although not supported in nobackend and will throw an error"""
+        """Updates the window, although not supported in no backend and will throw an error"""
         raise NotImplementedError(
             f"{self.Backend.friendly_name} is not a valid backend to make Charmy work. "
             "You must install another backend that supports your system GUI.\n"
@@ -232,22 +232,22 @@ class WindowBase(WhateverBase):
         self.drawing_list = []
         return self
 
-    def set_pos(self, new: charmy_stuff.styles.shape.Point) -> typing.Self:
+    def set_pos(self, new: charmy_stuff.styles.shape.Point) -> typing.Self:  # NOQA
         """Set window size, does nothing on dummy."""
         not_implemented_func(operation_desc="Setting window position on screen")
         return self
 
-    def set_size(self, new: charmy_stuff.styles.shape.Size) -> typing.Self:
+    def set_size(self, new: charmy_stuff.styles.shape.Size) -> typing.Self:  # NOQA
         """Set window size, does nothing on dummy."""
         not_implemented_func(operation_desc="Setting window size")
         return self
 
-    def set_title(self, new: str) -> typing.Self:
+    def set_title(self, new: str) -> typing.Self:  # NOQA
         """Set title to window, does nothing on dummy."""
         not_implemented_func(operation_desc="Setting window title")
         return self
 
-    def set_icon(self, new: bytes) -> typing.Self:
+    def set_icon(self, new: bytes) -> typing.Self:  # NOQA
         """Set title to window, does nothing on dummy."""
         not_implemented_func(operation_desc="Setting window title")
         return self
@@ -280,7 +280,9 @@ class LineBase(WhateverBase):
         raise RuntimeError("LineBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_line(line: charmy_stuff.graphics.DrawnLine, window: WindowBase, *args, **kwargs):
+    def draw_line(
+        line: charmy_stuff.graphics.DrawnLine, window: WindowBase, *args, **kwargs
+    ):  # NOQA
         """To draw a line on a specific GUI or canvas.
 
         Args:
@@ -314,7 +316,9 @@ class ShapeBase:
         raise RuntimeError("ShapeBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_shape(shape: charmy_stuff.graphics.DrawnShape, window: WindowBase, *args, **kwargs):
+    def draw_shape(
+        shape: charmy_stuff.graphics.DrawnShape, window: WindowBase, *args, **kwargs
+    ):  # NOQA
         """To draw a shape on a specific GUI or canvas.
 
         :param shape: The shape to be drawn
@@ -372,12 +376,14 @@ class TextBase:
         raise RuntimeError("TextBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_text(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase, *args, **kwargs):
+    def draw_text(
+        drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase, *args, **kwargs
+    ):  # NOQA
         """To draw a line or paragraph of text on a specific GUI or canvas."""
         not_implemented_func(operation_desc="Drawing text")
 
     @staticmethod
-    def get_text_bound(drawn_text: charmy_stuff.graphics.DrawnText, *args, **kwargs):
+    def get_text_bound(drawn_text: charmy_stuff.graphics.DrawnText, *args, **kwargs):  # NOQA
         """To get the text's boundary when it is rendered by a specific backend."""
         not_implemented_func(operation_desc="Getting text boundary.")
 

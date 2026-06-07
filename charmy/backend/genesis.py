@@ -103,7 +103,7 @@ class WindowBase(template.WindowBase):
     def __init__(self, backend: template.Backend, charmy_window: window.WindowEntity):
         """Creates a window.
 
-        :param backend: The backend that this window uses (can be get from CharmyManager)
+        :param backend: The backend that this window uses (can be gotten from CharmyManager)
         """
         super().__init__(backend, charmy_window)
 
@@ -704,7 +704,8 @@ class TextBase(template.TextBase):
 
     @staticmethod
     def get_text_bound(
-        drawn_text: charmy_stuff.graphics.DrawnText, ctx: typing.Optional[cairo.Context] = None
+        drawn_text: charmy_stuff.graphics.DrawnText,
+        ctx: typing.Optional[cairo.Context] | None = None,
     ):
         ## Calc text size
         if ctx is None:
@@ -714,7 +715,7 @@ class TextBase(template.TextBase):
             make_ctx = True
         else:
             make_ctx = False
-        extents = ctx.text_extents(drawn_text.text)
+        extents = ctx.text_extents(drawn_text.text)  # NOQA
         text_size = (int(round(extents.width, 0)), int(round(extents.height, 0)))
         if make_ctx:
             # If made context before, destroy it immediately
