@@ -5,18 +5,19 @@ circle-point computations, arc-to-bezier conversion, and angle coverage tests.
 
 !! THIS IS A VIBED MODULE !!
 ----------------------------
-This module was mostly vibed by GitHub Copilot, ChatGPT, and Google Gemini. 
-It includes geometric knowledge that the core devs (in 2026) have not learned 
+This module was mostly vibed by GitHub Copilot, ChatGPT, and Google Gemini.
+It includes geometric knowledge that the core devs (in 2026) have not learned
 yet.
 
-This module is impossible to be completed by three secondary school students 
-without the help from third-party, and here, in this era, we chose AI. We 
+This module is impossible to be completed by three secondary school students
+without the help from third-party, and here, in this era, we chose AI. We
 provide no guarantee for codes this file.
 """
+
 from __future__ import annotations
 
 import math
-from typing import Tuple, List, Sequence
+from typing import List, Sequence, Tuple
 
 Point = tuple[int, int]
 
@@ -28,10 +29,16 @@ def evaluate_quadratic_bezier(points: Sequence[Point], t: float) -> tuple[float,
     """
     start_point, control_point, end_point = points
     one_minus_t = 1.0 - t
-    x = one_minus_t * one_minus_t * start_point[0] + \
-        2 * one_minus_t * t * control_point[0] + t * t * end_point[0]
-    y = one_minus_t * one_minus_t * start_point[1] + \
-        2 * one_minus_t * t * control_point[1] + t * t * end_point[1]
+    x = (
+        one_minus_t * one_minus_t * start_point[0]
+        + 2 * one_minus_t * t * control_point[0]
+        + t * t * end_point[0]
+    )
+    y = (
+        one_minus_t * one_minus_t * start_point[1]
+        + 2 * one_minus_t * t * control_point[1]
+        + t * t * end_point[1]
+    )
     return x, y
 
 
@@ -53,15 +60,11 @@ def quadratic_bezier_internal_t_roots(points: Sequence[Point], eps: float = 1e-1
     candidate_ts: List[float] = []
     for coord_index in (0, 1):
         denom_coord = (
-            start_point[coord_index]
-            - 2 * control_point[coord_index]
-            + end_point[coord_index]
+            start_point[coord_index] - 2 * control_point[coord_index] + end_point[coord_index]
         )
         if math.isclose(denom_coord, 0.0, abs_tol=eps):
             continue
-        t_candidate = (
-            (start_point[coord_index] - control_point[coord_index]) / denom_coord
-        )
+        t_candidate = (start_point[coord_index] - control_point[coord_index]) / denom_coord
         if 0.0 < t_candidate < 1.0:
             candidate_ts.append(t_candidate)
 
@@ -87,8 +90,7 @@ def evaluate_cubic_bezier(points: Sequence[Point], t: float) -> tuple[float, flo
     return x, y
 
 
-def cubic_bezier_derivative_roots(
-        points: Sequence[Point], eps: float = 1e-12) -> List[float]:
+def cubic_bezier_derivative_roots(points: Sequence[Point], eps: float = 1e-12) -> List[float]:
     """Return t roots (0<t<1) where derivative in x or y is zero.
 
     Solves quadratic 3*a t^2 + 2*b t + c = 0 for each coordinate, where
@@ -111,9 +113,7 @@ def cubic_bezier_derivative_roots(
             - 3 * coord_control_second
             + coord_end_value
         )
-        coeff_b = 3 * (
-            coord_start_value - 2 * coord_control_first + coord_control_second
-        )
+        coeff_b = 3 * (coord_start_value - 2 * coord_control_first + coord_control_second)
         coeff_c = 3 * (coord_control_first - coord_start_value)
         return coeff_a, coeff_b, coeff_c
 
@@ -155,6 +155,7 @@ def gui_deg_to_math_rad(gui_deg: float) -> float:
     """
     return math.radians(90 - gui_deg)
 
+
 def point_on_circle(center: Point, radius: int, gui_deg: float) -> Point:
     """Return the integer point on circle at GUI orientation degrees.
 
@@ -165,6 +166,7 @@ def point_on_circle(center: Point, radius: int, gui_deg: float) -> Point:
     x = center[0] + int(round(radius * math.cos(theta)))
     y = center[1] + int(round(radius * math.sin(theta)))
     return (x, y)
+
 
 def is_angle_covered(target: float, start: float, end: float) -> bool:
     """Check whether target angle (degrees) lies within [start, end] in GUI CW system.
@@ -179,8 +181,10 @@ def is_angle_covered(target: float, start: float, end: float) -> bool:
     else:
         return target_norm >= start_norm or target_norm <= end_norm
 
+
 def arc_to_cubic_beziers(
-        center: Point, radius: int, start_orient: int, end_orient: int) -> List[List[Point]]:
+    center: Point, radius: int, start_orient: int, end_orient: int
+) -> List[List[Point]]:
     """Convert a circle arc (in GUI degrees) to a list of cubic Bezier point lists.
 
     Returns a list where each item is [p0, p1, p2, p3] with integer points.
@@ -198,7 +202,7 @@ def arc_to_cubic_beziers(
 
     segments = max(1, int(math.ceil(abs(total_delta) / (math.pi / 2))))
     segment_delta = total_delta / segments
-    alpha = (4/3) * math.tan(segment_delta / 4)
+    alpha = (4 / 3) * math.tan(segment_delta / 4)
 
     beziers: List[List[Point]] = []
     for i in range(segments):
@@ -210,10 +214,14 @@ def arc_to_cubic_beziers(
         p0 = (int(round(cx + radius * cos0)), int(round(cy - radius * sin0)))
         p3 = (int(round(cx + radius * cos1)), int(round(cy - radius * sin1)))
 
-        p1 = (int(round(p0[0] + (alpha * radius * -sin0))),
-              int(round(p0[1] - (alpha * radius * cos0))))
-        p2 = (int(round(p3[0] - (alpha * radius * -sin1))),
-              int(round(p3[1] + (alpha * radius * cos1))))
+        p1 = (
+            int(round(p0[0] + (alpha * radius * -sin0))),
+            int(round(p0[1] - (alpha * radius * cos0))),
+        )
+        p2 = (
+            int(round(p3[0] - (alpha * radius * -sin1))),
+            int(round(p3[1] + (alpha * radius * cos1))),
+        )
 
         beziers.append([p0, p1, p2, p3])
 
@@ -221,12 +229,12 @@ def arc_to_cubic_beziers(
 
 
 def flatten_circle_arc(
-        center: Point,
-        radius: int,
-        start_orient: int,
-        end_orient: int,
-        tolerance: float = 15.0,
-    ) -> List[Point]:
+    center: Point,
+    radius: int,
+    start_orient: int,
+    end_orient: int,
+    tolerance: float = 15.0,
+) -> List[Point]:
     """Flatten a circle arc into a polyline approximation.
 
     The returned list includes the start and end points of the arc.
@@ -242,7 +250,10 @@ def flatten_circle_arc(
         total_delta = -2 * math.pi
 
     if math.isclose(total_delta, 0.0, abs_tol=1e-12):
-        return [point_on_circle(center, radius, start_orient), point_on_circle(center, radius, end_orient)]
+        return [
+            point_on_circle(center, radius, start_orient),
+            point_on_circle(center, radius, end_orient),
+        ]
 
     segment_count = max(1, int(math.ceil(abs(total_delta) / math.radians(tolerance))))
     points: List[Point] = []
@@ -254,9 +265,9 @@ def flatten_circle_arc(
 
 
 def flatten_quadratic_bezier(
-        points: Sequence[Point],
-        tolerance: float = 15.0,
-    ) -> List[Point]:
+    points: Sequence[Point],
+    tolerance: float = 15.0,
+) -> List[Point]:
     """Flatten a quadratic Bezier curve into a polyline.
 
     :param tolerance: Approximate maximum angle between adjacent polyline segments, in degrees.
@@ -274,9 +285,9 @@ def flatten_quadratic_bezier(
 
 
 def flatten_cubic_bezier(
-        points: Sequence[Point],
-        tolerance: float = 15.0,
-    ) -> List[Point]:
+    points: Sequence[Point],
+    tolerance: float = 15.0,
+) -> List[Point]:
     """Flatten a cubic Bezier curve into a polyline.
 
     :param tolerance: Approximate maximum angle between adjacent polyline segments, in degrees.

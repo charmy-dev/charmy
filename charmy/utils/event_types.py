@@ -1,26 +1,28 @@
 from __future__ import annotations as _
 
-import typing as _typing
-
-from dataclasses import dataclass as _dataclass
 import time as _time
+import typing as _typing
+from dataclasses import dataclass as _dataclass
 
-from ..event import EventHandling as _EventHandling
 from ..cm_object import CharmyObject as _CharmyObject
+from ..event import EventHandling as _EventHandling
 from . import type_checking as _type_checking
 
 if _typing.TYPE_CHECKING:
     from ..event import EventHandling as _EventHandling
     from ..styles import shape as _shape
-    from ..widgets import widget as _widget, container as _container
+    from ..widgets import container as _container
+    from ..widgets import widget as _widget
     from ..widgets import window as _window
 
 
 # region Base class & generic classes
 
+
 @_dataclass
 class Event(_CharmyObject):
     """Used to represent an event. Can be regarded as a placeholder if directly used."""
+
     type: _typing.ClassVar[str] = "noevent"
 
     def __init_subclass__(cls):
@@ -42,12 +44,14 @@ class Event(_CharmyObject):
     def call_chain(self, subject: _EventHandling) -> None:
         subject.trigger(EventTriggered(subject))
 
+
 Event.latest = Event()
 
 
 @_dataclass
 class EventTriggered(Event):
     """Triggered when any other kind of event is triggered."""
+
     type: _typing.ClassVar[str] = "event_triggered"
 
     subject: _EventHandling
@@ -58,6 +62,7 @@ class EventTriggered(Event):
 
 # region Widget events
 
+
 @_dataclass
 class WidgetEvent(Event):
     """The type of events that represents widget events.
@@ -66,9 +71,11 @@ class WidgetEvent(Event):
     ------------------------
     `subject` should be the widget that is triggered the event.
     """
+
     type: _typing.ClassVar[str] = "widget"
 
     subject: _EventHandling
+
 
 @_dataclass
 class WidgetUpdate(WidgetEvent):
@@ -78,22 +85,27 @@ class WidgetUpdate(WidgetEvent):
     -----------------------
     When `subject` is set to none, it means Charmy's global update routine is triggered.
     """
+
     type: _typing.ClassVar[str] = "widget.update"
 
     subject: _EventHandling | None
     redraw: bool | _shape.ShapeRange = False
 
+
 @_dataclass
 class WidgetDraw(WidgetEvent):
     """Will be generated when a widget or window is redrawn."""
+
     type: _typing.ClassVar[str] = "widget.draw"
 
     pos: _shape.Point = (0, 0)
     size: _shape.Size = (0, 0)
 
+
 @_dataclass
 class WidgetConfigure(WidgetEvent):
     """Will be generated when a widget or window has its configuration changed."""
+
     type: _typing.ClassVar[str] = "widget.configure"
 
     attrs_changed: dict
@@ -105,39 +117,50 @@ class WidgetConfigure(WidgetEvent):
         if "size" in self.attrs_changed.keys():
             subject.trigger(WidgetResize(subject, self.attrs_changed["size"]))
 
+
 @_dataclass
 class WidgetResize(WidgetEvent):
     """Will be generated when a widget or window is resized."""
+
     type: _typing.ClassVar[str] = "widget.resize"
 
     new_size: _shape.Size
     old_size: _typing.Optional[_shape.Size] = None
 
+
 @_dataclass
 class WidgetMove(WidgetEvent):
     """Will be generated when a widget or window is moved."""
+
     type: _typing.ClassVar[str] = "widget.move"
 
     new_pos: _shape.Point
     old_pos: _typing.Optional[_shape.Point] = None
 
+
 @_dataclass
 class FocusGain(WidgetEvent):
     """Will be generated when a widget or window gained focus."""
+
     type: _typing.ClassVar[str] = "widget.focus_gain"
+
 
 @_dataclass
 class FocusLoss(WidgetEvent):
     """Will be generated when a widget or window lose focus."""
+
     type: _typing.ClassVar[str] = "widget.focus_loss"
+
 
 @_dataclass
 class WidgetDestroy(WidgetEvent):
     """Will be generated when a widget or window is destroyed."""
+
     type: _typing.ClassVar[str] = "widget.destroy"
 
 
 # region Window events
+
 
 @_dataclass
 class WindowEvent(Event):
@@ -147,12 +170,14 @@ class WindowEvent(Event):
     ------------------------
     `subject` should be the window where the events happened.
     """
+
     subject: _window.WindowEntity
 
 
 # region Mouse events
 if _typing.TYPE_CHECKING:
     _HoveringList: _typing.TypeAlias = _typing.List[_widget.Widget | _container.Container]
+
 
 @_dataclass
 class MouseRawEvent(Event):
@@ -162,6 +187,7 @@ class MouseRawEvent(Event):
     ------------------------
     `subject` should be the window that detected the mouse event.
     """
+
     type: _typing.ClassVar[str] = "mouse"
     hovering: _typing.ClassVar[_HoveringList] = []
     subject: _window.WindowEntity
@@ -172,42 +198,52 @@ class MouseRawEvent(Event):
             last_hovering = MouseRawEvent.hovering.copy()
             hovering = subject.get_mouse_hover(self.mouse_pos)
             MouseRawEvent.hovering = hovering.copy()
-            hovering.pop(0) # Ignore subject
+            hovering.pop(0)  # Ignore subject
             for item in hovering:
                 if isinstance(item, _EventHandling):
                     item.trigger(self)
             MouseInteract.check_call(self, last_hovering)
 
+
 @_dataclass
 class MouseMove(MouseRawEvent):
     """Will be generated when mouse movement is detected."""
+
     type: _typing.ClassVar[str] = "mouse.move"
+
 
 @_dataclass
 class MousePress(MouseRawEvent):
     """Will be generated when a mouse button is pressed."""
+
     type: _typing.ClassVar[str] = "mouse.press"
 
     button: int
 
+
 @_dataclass
 class MouseRelease(MouseRawEvent):
     """Will be generated when a mouse button is released."""
+
     type: _typing.ClassVar[str] = "mouse.release"
 
     button: int
 
+
 @_dataclass
 class MouseScroll(MouseRawEvent):
     """Will be generated when a mouse button is released."""
+
     type: _typing.ClassVar[str] = "mouse.scroll"
 
     steps: int
     horizontal: bool = False
 
+
 @_dataclass
 class MouseInteract(Event):
     """Will be generated when the mouse interacts with an EventHandling."""
+
     type: _typing.ClassVar[str] = "mouse_interact"
     subject: _EventHandling
     recent_raw_event: MouseRawEvent
@@ -223,17 +259,23 @@ class MouseInteract(Event):
                 if isinstance(item, _EventHandling):
                     item.trigger(MouseLeave(item, mouse_event))
 
+
 @_dataclass
 class MouseEnter(MouseInteract):
     """Will be generated when the mouse enters an EventHandling."""
+
     type: _typing.ClassVar[str] = "mouse_interact.enter"
+
 
 @_dataclass
 class MouseLeave(MouseInteract):
     """Will be generated when the mouse enters an EventHandling."""
+
     type: _typing.ClassVar[str] = "mouse_interact.leave"
 
+
 # region Delay events
+
 
 @_dataclass
 class DelayTriggered(Event):

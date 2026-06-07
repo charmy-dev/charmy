@@ -1,7 +1,7 @@
 from __future__ import annotations as _
-import typing
 
 import importlib.metadata
+import typing
 
 if typing.TYPE_CHECKING:
     from .template import Backend
@@ -9,8 +9,8 @@ if typing.TYPE_CHECKING:
 
 def list_backends_ep() -> list[importlib.metadata.EntryPoint]:
     """Lists all available backends extentions entry point."""
-    return [entry_point for entry_point in \
-            importlib.metadata.entry_points(group="charmy.backends")]
+    return [entry_point for entry_point in importlib.metadata.entry_points(group="charmy.backends")]
+
 
 def load_backend(name: str) -> type[Backend]:
     if name == "auto":
@@ -18,11 +18,12 @@ def load_backend(name: str) -> type[Backend]:
         name = "genesis"
     if name == "genesis":
         from . import genesis
+
         return genesis.Backend
     else:
         raise NotImplementedError(
             f"Other backends (including {name}) not supported yet in early dev."
-            )
+        )
 
 
 if __name__ == "__main__":

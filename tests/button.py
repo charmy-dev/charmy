@@ -1,6 +1,6 @@
-import charmy as cm
 import cProfile
 
+import charmy as cm
 
 window = cm.Window(size=(300, 160))
 window.title = "Button test"

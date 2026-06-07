@@ -12,6 +12,7 @@ __all__ = ["Theme"]
 
 # TODO: Come on, rewrite this shit, I believe you can do it, I'm speaking to myself...
 
+
 class Theme(CharmyObject):
     """Theme class for CWindow and CWidgets.
 

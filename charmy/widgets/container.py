@@ -3,13 +3,13 @@
 from __future__ import annotations as _
 
 import typing
-
 from abc import abstractmethod
+
 import reactive_caching
 
-from ..utils import layout_profiles # Expose them as (...).container.layout_profiles
-from ..utils import type_checking
 from ..styles import shape, texture
+from ..utils import layout_profiles  # Expose them as (...).container.layout_profiles
+from ..utils import type_checking
 
 if typing.TYPE_CHECKING:
     from . import widget
@@ -20,17 +20,17 @@ __all__ = ["Container", "layout_profiles"]
 class Container(reactive_caching.CachedClass):
     """Container represents a widget's ability to contain and arrange other widgets inside.
 
-    The `Container` class contains the ability of managing widgets within the container, and should 
-    be inherited by all types of containers including windows, frames, etc., but not supposed to be 
+    The `Container` class contains the ability of managing widgets within the container, and should
+    be inherited by all types of containers including windows, frames, etc., but not supposed to be
     instantiated directly.
     """
 
-    _with_stack: typing.ClassVar[list[Container]] = [] # Used to store embedding stack in with as
+    _with_stack: typing.ClassVar[list[Container]] = []  # Used to store embedding stack in with as
 
     def __init__(self, *args, **kwargs):
         """Initialize a container base class.
 
-        The container base class is not supposed to be instantiated directly, make sure you are 
+        The container base class is not supposed to be instantiated directly, make sure you are
         executing this method during subclassing.
         """
         super().__init__(*args, **kwargs)
@@ -40,8 +40,9 @@ class Container(reactive_caching.CachedClass):
         self.background: texture.Texture | texture.TextureLike
 
     @reactive_caching.cached_property(["children", "background"])
-    def layers(self) -> \
-        tuple[texture.Texture | texture.TextureLike, list[widget.Widget], list[widget.Widget]]:
+    def layers(
+        self,
+    ) -> tuple[texture.Texture | texture.TextureLike, list[widget.Widget], list[widget.Widget]]:
         place_list = []
         managed_list = []
         for child in self.children:
@@ -73,7 +74,7 @@ class Container(reactive_caching.CachedClass):
     def __exit__(self, exc_type, exc_val, exc_tb) -> typing.Literal[False]:
         """Exit the context."""
         Container._with_stack.pop()
-        return False # Does not handle exceptions
+        return False  # Does not handle exceptions
 
     # endregion
 
@@ -95,11 +96,11 @@ class Container(reactive_caching.CachedClass):
 
     def __contains__(self, target: widget.Widget) -> bool:
         return target in self.children
-    
+
     def get_mouse_hover(self, abs_pos: shape.Point) -> typing.List[Container | widget.Widget]:
-        layers: \
-            tuple[texture.Texture | texture.TextureLike, 
-                  list[widget.Widget], list[widget.Widget]] = self.layers
+        layers: tuple[
+            texture.Texture | texture.TextureLike, list[widget.Widget], list[widget.Widget]
+        ] = self.layers
         pos = (abs_pos[0] - self.abs_pos[0], abs_pos[1] - self.abs_pos[1])
         placed_children = layers[2]
         managed_children = layers[1]
@@ -111,14 +112,15 @@ class Container(reactive_caching.CachedClass):
                         result = child.get_mouse_hover(pos)
                         if len(result) == 0:
                             # Not hovering on anything, not even background
-                            continue # Check if hovering of widgets below
+                            continue  # Check if hovering of widgets below
                     else:
                         result = [child]
                     result.insert(0, self)
                     return result
         else:
-            if isinstance(texture.ensure_texture(self.background), texture.Transparent) and \
-                not isinstance(self, type_checking.WindowLike):
+            if isinstance(
+                texture.ensure_texture(self.background), texture.Transparent
+            ) and not isinstance(self, type_checking.WindowLike):
                 # Self is not a window and self has transparent back
                 return []
             else:

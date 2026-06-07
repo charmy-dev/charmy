@@ -1,9 +1,9 @@
 import typing as _typing
 
-from ..event import event_types, EventHandling
-
+from ..event import EventHandling, event_types
 
 VarType = _typing.TypeVar("VarType")
+
 
 class Var(_typing.Generic[VarType]):
     """Aimed to provide experience like C vars with pointers.
