@@ -10,6 +10,7 @@ window with it.
 from __future__ import annotations as _
 
 import typing
+
 import warnings
 
 from . import utils as charmy_stuff
@@ -21,14 +22,15 @@ __all__ = ["Backend", "not_implemented_func"]
 
 
 # ChatGPT says that my framework is good.   —— rgzz666 @2026/04/15
+# NEVER USE ANY FORMATTING TOOL ON THIS     —— rgzz666 @2026/06/07
 
 
 # region Placeholder function
 
-
 def not_implemented_func(
-    backend_name: str = "currently used", operation_desc: str = "This operation", **kwargs  # NOQA
-) -> bool:
+    backend_name: str = "currently used", 
+    operation_desc: str = "This operation", 
+    **kwargs) -> bool:
     """To throw a warning to tell that a specific function is not implemented by the backend.
 
     The parameters only affects the warning message.
@@ -42,14 +44,13 @@ def not_implemented_func(
 
 # region Backend class
 
-
 class Backend:
     """This is a template of Backend, does not have any actual function."""
 
-    name: str = "nobackend"
-    friendly_name: str = "No available backend"
-    version: str = "0.0.0"
-    author: list[str] = ["Charmy dev team"]
+    name: str =             "nobackend"
+    friendly_name: str =    "No available backend"
+    version: str =          "0.0.0"
+    author: list[str] =     ["Charmy dev team"]
 
     WindowBase: type[WindowBase]
     LineBase: type[LineBase]
@@ -67,7 +68,6 @@ class Backend:
 
 # region Base classes
 
-
 class WhateverBase:
     """Base class of all... WhateverBase classes?"""
 
@@ -81,7 +81,6 @@ class WhateverBase:
                 "Wrong backend instance specified for WindowBase. "
                 f"Should be [{self.Backend.friendly_name}] but got [{backend.friendly_name}]. "
             )
-
 
 class SupportState:
     """To flag which features this backend supports."""
@@ -97,7 +96,6 @@ class SupportState:
 
 # region Window-relating
 
-
 class WindowBackdropSupportState(SupportState):
     """Represents support states of backdrop effects of windows held by this backend.
 
@@ -108,16 +106,15 @@ class WindowBackdropSupportState(SupportState):
     - Charmy may use a virtual background layer for some texture-type backdrop effects if they
       are not supported by the backend. [PLANNED]
     """
-
-    color: bool = False
-    gradient: bool = False
-    image: bool = False
+    color                   : bool = False
+    gradient                : bool = False
+    image                   : bool = False
     # any_texture             : bool = False
-    transparent: bool = False
-    alpha: bool = False
-    blur: bool = False
-    transformation: bool = False
-    any_filter: bool = False
+    transparent             : bool = False
+    alpha                   : bool = False
+    blur                    : bool = False
+    transformation          : bool = False
+    any_filter              : bool = False
     # Notes:
     # - any_texture may be used in the future and maybe not, so I just commented it here.
     #   Actually I cannot think of any other kinds of textures, but, who knows?
@@ -126,26 +123,22 @@ class WindowBackdropSupportState(SupportState):
     # - Charmy may use a virtual background layer for some texture-type backdrop effects if they
     #   are not supported by the backend
 
-
 class WindowSupportState(SupportState):
     """Represents support states of windows held by this backend."""
-
-    set_title: bool = False
-    set_icon: bool = False
-    set_pos: bool = False
-    set_size: bool = False
-    set_scale_mode: bool = False
-    set_background: bool = False
-    translucent: bool = False
-    backdrop: WindowBackdropSupportState = WindowBackdropSupportState()
-    set_state: bool = False
-    fullscreen: bool = False
-    customize_titlebar: bool = False
-
+    set_title           : bool = False
+    set_icon            : bool = False
+    set_pos             : bool = False
+    set_size            : bool = False
+    set_scale_mode      : bool = False
+    set_background      : bool = False
+    translucent         : bool = False
+    backdrop            : WindowBackdropSupportState = WindowBackdropSupportState()
+    set_state           : bool = False
+    fullscreen          : bool = False
+    customize_titlebar  : bool = False
 
 class WindowBase(WhateverBase):
     """Base of the windows, abstracts window-level operations from the base UI lib."""
-
     supports: WindowSupportState = WindowSupportState()
 
     def __init__(self, backend: Backend, charmy_window: window.WindowEntity) -> None:
@@ -160,9 +153,9 @@ class WindowBase(WhateverBase):
         self.pos: charmy_stuff.styles.shape.Size = (0, 0)
         self.size: charmy_stuff.styles.shape.Size = (0, 0)
         self.scale_mode: str = "default_scale"
-        self.background: (
-            charmy_stuff.styles.texture.Texture | charmy_stuff.styles.texture.TextureLike
-        ) = (150, 150, 150)
+        self.background: \
+            charmy_stuff.styles.texture.Texture | charmy_stuff.styles.texture.TextureLike = \
+            (150, 150, 150)
         self.alpha: float = 1
         self.state: str = "normal"
         self.fullscreen: bool = False
@@ -258,10 +251,8 @@ class WindowBase(WhateverBase):
 
 # region Line-relating
 
-
 class LineSupportState(SupportState):
     """Flags support state of line types of this backend."""
-
     line: bool = False
     polyline: bool = False
     circle_arc: bool = False
@@ -272,7 +263,6 @@ class LineSupportState(SupportState):
 
 class LineBase(WhateverBase):
     """Set of lines-relating APIs"""
-
     supports: LineSupportState = LineSupportState()
 
     def __init__(self, *args, **kwargs):
@@ -294,21 +284,17 @@ class LineBase(WhateverBase):
 
 # region Shape-relating
 
-
 class ShapeSupportState(SupportState):
     """Flags support state of shape types of this backend."""
+    any_shape       : bool = False
+    rect            : bool = False
+    round_rect      : bool = False
+    polygon         : bool = False
+    oval            : bool = False
+    sector          : bool = False
 
-    any_shape: bool = False
-    rect: bool = False
-    round_rect: bool = False
-    polygon: bool = False
-    oval: bool = False
-    sector: bool = False
-
-
-class ShapeBase:
+class ShapeBase(WhateverBase):
     """Set of shape-relating APIs"""
-
     supports: ShapeSupportState = ShapeSupportState()
 
     def __init__(self, *args, **kwargs):
@@ -329,17 +315,15 @@ class ShapeBase:
 
 # region Texture-relating
 
-
 class TextureSupportState(SupportState):
     """Flags support state of texture types of this backend."""
 
-    color: bool = False
-    linear_gradient: bool = False
-    radial_gradient: bool = False
-    filter: bool = False
-    image: bool = False
-    func_shader: bool = False
-
+    color               : bool = False
+    linear_gradient     : bool = False
+    radial_gradient     : bool = False
+    filter              : bool = False
+    image               : bool = False
+    func_shader         : bool = False
 
 class TextureBase:
     """Set of texture-relating APIs"""
@@ -353,22 +337,19 @@ class TextureBase:
 
 # region Text-relating
 
-
 class TextSupportState(SupportState):
     """Flags support state of text features of this backend."""
-
-    direct_render: bool = False
-    stock_filter: bool = False
-    custom_strikethrough: bool = False
-    custom_underline: bool = False
-    any_fontweight: bool = False
-    fontweight: list[int] = []
-    prefer_conversion: bool = False
+    direct_render           : bool = False
+    stock_filter            : bool = False
+    custom_strikethrough    : bool = False
+    custom_underline        : bool = False
+    any_fontweight          : bool = False
+    fontweight              : list[int] = []
+    prefer_conversion       : bool = False
 
 
 class TextBase:
     """Set of text-relating APIs."""
-
     supports: TextSupportState = TextSupportState()
 
     def __init__(self):

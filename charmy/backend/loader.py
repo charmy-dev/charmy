@@ -1,7 +1,8 @@
 from __future__ import annotations as _
 
-import importlib.metadata
 import typing
+
+import importlib.metadata
 
 if typing.TYPE_CHECKING:
     from .template import Backend
