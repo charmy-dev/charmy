@@ -23,9 +23,6 @@ class Event(_CharmyObject):
     """Used to represent an event. Can be regarded as a placeholder if directly used."""
     type: _typing.ClassVar[str] = "noevent"
 
-    def __init_subclass__(cls):
-        cls.latest: _typing.Self
-
     def meets(self, target_condition: dict, allow_inexist: bool = False) -> bool:
         """Check if current event meets the target condition.
 
@@ -41,8 +38,6 @@ class Event(_CharmyObject):
 
     def call_chain(self, subject: _EventHandling) -> None:
         subject.trigger(EventTriggered(subject))
-
-Event.latest = Event()
 
 
 @_dataclass
