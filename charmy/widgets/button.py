@@ -6,6 +6,7 @@ import typing
 
 from .widget import Widget as _Widget
 from .. import styles as _styles
+from .. import event_types as _event_types
 from .. import graphics as _graphics
 
 if typing.TYPE_CHECKING:
@@ -72,6 +73,11 @@ class Button(_Widget):
             )
 
         self._update_drawing_objects()
+
+        self.bind(
+            _event_types.MouseRelease, 
+            lambda _: self.on_click(), {"button": 0}, _is_internal=True
+            )
 
     def _update_drawing_objects(self):
         """Update draw list of a button, for internal use only."""

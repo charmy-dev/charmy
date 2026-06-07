@@ -100,21 +100,22 @@ class Container(reactive_caching.CachedClass):
         layers: \
             tuple[texture.Texture | texture.TextureLike, 
                   list[widget.Widget], list[widget.Widget]] = self.layers
-        pos = (abs_pos[0] - self.abs_pos[0], abs_pos[0] - self.abs_pos[1])
+        pos = (abs_pos[0] - self.abs_pos[0], abs_pos[1] - self.abs_pos[1])
         placed_children = layers[2]
         managed_children = layers[1]
-        for layer in (placed_children, managed_children):
+        for layer in (reversed(placed_children), reversed(managed_children)):
             for child in layer:
+                result: typing.List[Container | widget.Widget] = []
                 if pos in child:
                     if isinstance(child, Container):
                         result = child.get_mouse_hover(pos)
                         if len(result) == 0:
                             # Not hovering on anything, not even background
-                            continue # Check hovering of widgets below
-                        result.insert(0, self)
-                        return result
+                            continue # Check if hovering of widgets below
                     else:
-                        return [child]
+                        result = [child]
+                    result.insert(0, self)
+                    return result
         else:
             if isinstance(texture.ensure_texture(self.background), texture.Transparent) and \
                 not isinstance(self, type_checking.WindowLike):

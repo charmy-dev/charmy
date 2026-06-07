@@ -4,7 +4,7 @@ import charmy as cm
 window = cm.Window(size=(300, 160))
 window.title = "Button test"
 
-button = cm.Button(window, text="Hit me")
+button = cm.Button(window, text="Hit me", on_click=lambda: print("Button clicked!"))
 button.place((10, 10))
 
 
