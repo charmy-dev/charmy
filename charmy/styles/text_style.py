@@ -7,6 +7,7 @@ from __future__ import annotations as _
 
 import typing as _typing
 
+
 if _typing.TYPE_CHECKING:
     from .. import graphics as cm_draw
     from ..backend import template as cm_backend
@@ -38,34 +39,31 @@ work-4.8#remarks).
     Black / Heavy               `BLACK`        900    
     Extra Black / Ultra Black   `EXTRABLACK`   950    
     """
+    THIN        : int = 100
+    EXTRALIGHT  : int = 200
+    LIGHT       : int = 300
+    REGULAR     : int = 400
+    MEDIUM      : int = 500
+    SEMIBOLD    : int = 600
+    BOLD        : int = 700
+    EXTRABOLD   : int = 800
+    BLACK       : int = 900
+    EXTRABLACK  : int = 950
 
-    THIN: int = 100
-    EXTRALIGHT: int = 200
-    LIGHT: int = 300
-    REGULAR: int = 400
-    MEDIUM: int = 500
-    SEMIBOLD: int = 600
-    BOLD: int = 700
-    EXTRABOLD: int = 800
-    BLACK: int = 900
-    EXTRABLACK: int = 950
-
-
-class TextStyle:
+class TextStyle():
     """Represents text styles in Charmy."""
 
     sys_fonts: _typing.ClassVar[list[str]] = ["Arial"]
     sys_default: _typing.ClassVar[_typing.Self]
 
-    def __init__(
-        self,
-        font: _typing.Optional[str] = None,
-        size: _typing.Optional[int] | float = None,
-        weight: int = WEIGHT.REGULAR,
-        italic: bool = False,
-        underlined: bool | cm_draw.DrawnLine = False,
-        strikethrough: bool | cm_draw.DrawnLine = False,
-    ):
+    def __init__(self, 
+                font: _typing.Optional[str] = None, 
+                size: _typing.Optional[int] | float = None, 
+                weight: int = WEIGHT.REGULAR, 
+                italic: bool = False, 
+                underlined: bool | cm_draw.DrawnLine = False, 
+                strikethrough: bool | cm_draw.DrawnLine = False, 
+                ):
         """To express a font style in Charmy.
 
         :param font: The name of the font to use, default is system font (reported by backend)
@@ -108,8 +106,9 @@ eights?view=netframework-4.8#remarks) to learn more about the values. Presets ar
         if backend is not None:
             # If backend specified, then get size from backend
             from .. import graphics
-
-            return backend.TextBase.get_text_bound(graphics.DrawnText(text, self, (0, 0, 0)))
+            return backend.TextBase.get_text_bound(graphics.DrawnText(
+                text, self, (0, 0, 0)
+                ))
         else:
             pass
 

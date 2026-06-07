@@ -1,28 +1,28 @@
 # The Genesis Backend
 # 2026 by rgzz666 & XiangQinXi & CodeCrafter
 
-# This is a backend for early development only!
+# This is a backend for early development only! 
 # It is also used as an example of developing a Charmy backend.
 
 # Under dev
 
 from __future__ import annotations as _
 
-import ctypes
-import math
-import os
-import tempfile
-import time
 import typing
-import warnings
-
-import cairo
 
 # import sdl2
 import sdl2.ext
+import cairo
+import os
+import tempfile
+import ctypes
+import math
+import warnings
+import time
+
+from charmy.backend import template
 
 import charmy.backend.utils as charmy_stuff
-from charmy.backend import template
 
 if typing.TYPE_CHECKING:
     from charmy.widgets import window
@@ -31,22 +31,21 @@ __all__ = ["Backend", "DEBUG_FLAGS"]
 
 
 class DEBUG_FLAGS:
-    DRAW_CAIRO_STOCK_TEXT_BOUND: bool = False
-    FORCE_CLOSE_SHAPE: bool = False
-    OBSERVE_SHAPE_DRAWING: bool = False
-    WARN_UNCLOSED_SHAPES: bool = False
+    DRAW_CAIRO_STOCK_TEXT_BOUND : bool = False
+    FORCE_CLOSE_SHAPE           : bool = False
+    OBSERVE_SHAPE_DRAWING       : bool = False
+    WARN_UNCLOSED_SHAPES        : bool = False
 
 
 # region Backend class
 
-
 class Backend(template.Backend):
     """The Genesis backend."""
 
-    name: typing.ClassVar[str] = "genesis"
-    friendly_name: typing.ClassVar[str] = "Genesis (early development)"
-    version: typing.ClassVar[str] = "0.1.0"
-    author: typing.ClassVar[list[str]] = ["rgzz666", "XiangQinXi", "CodeCrafter"]
+    name: typing.ClassVar[str] =            "genesis"
+    friendly_name: typing.ClassVar[str] =   "Genesis (early development)"
+    version: typing.ClassVar[str] =         "0.1.0"
+    author: typing.ClassVar[list[str]] =    ["rgzz666", "XiangQinXi", "CodeCrafter"]
 
     WindowBase: type[WindowBase]
     LineBase: type[LineBase]
@@ -56,7 +55,7 @@ class Backend(template.Backend):
     def __init__(self):
         """APIs are aliased here."""
         super().__init__()
-
+    
     def backend_init(self, **kwargs) -> None:
         # sdl2.ext.init()
         return
@@ -64,46 +63,40 @@ class Backend(template.Backend):
 
 # region Window
 
-
 class WindowBackdropSupportState(template.WindowBackdropSupportState):
     """Represents support states of backdrop effects of windows held by this backend."""
-
-    color: bool = True
-    gradient: bool = True
-    image: bool = False
-    transparent: bool = False
-    alpha: bool = False
-    blur: bool = False
-    transformation: bool = False
-    any_filter: bool = False
-
+    color                   : bool = True
+    gradient                : bool = True
+    image                   : bool = False
+    transparent             : bool = False
+    alpha                   : bool = False
+    blur                    : bool = False
+    transformation          : bool = False
+    any_filter              : bool = False
 
 class WindowSupportState(template.WindowSupportState):
     """Flags all supported window features."""
-
-    set_title: bool = True
-    set_icon: bool = True
-    set_pos: bool = True
-    set_size: bool = True
-    set_scale_mode: bool = True
-    set_background: bool = True
-    translucent: bool = True
-    backdrop: type[WindowBackdropSupportState] = WindowBackdropSupportState
-    set_state: bool = True
-    fullscreen: bool = True
-    customize_titlebar: bool = False
-
+    set_title               : bool = True
+    set_icon                : bool = True
+    set_pos                 : bool = True
+    set_size                : bool = True
+    set_scale_mode          : bool = True
+    set_background          : bool = True
+    translucent             : bool = True
+    backdrop                : type[WindowBackdropSupportState] = WindowBackdropSupportState
+    set_state               : bool = True
+    fullscreen              : bool = True
+    customize_titlebar      : bool = False
 
 class WindowBase(template.WindowBase):
     """Window APIs in Genesis backend."""
-
     supports = WindowSupportState()
     Backend = Backend
 
     def __init__(self, backend: template.Backend, charmy_window: window.WindowEntity):
         """Creates a window.
 
-        :param backend: The backend that this window uses (can be gotten from CharmyManager)
+        :param backend: The backend that this window uses (can be get from CharmyManager)
         """
         super().__init__(backend, charmy_window)
 
@@ -112,12 +105,11 @@ class WindowBase(template.WindowBase):
 
         # Create window
         self.window: typing.Any = sdl2.SDL_CreateWindow(
-            self.title.encode("utf-8"),
+            self.title.encode('utf-8'),
             sdl2.SDL_WINDOWPOS_UNDEFINED,
             sdl2.SDL_WINDOWPOS_UNDEFINED,
-            self.size[0],
-            self.size[1],
-            sdl2.SDL_WINDOW_SHOWN | sdl2.SDL_WINDOW_RESIZABLE,
+            self.size[0], self.size[1],
+            sdl2.SDL_WINDOW_SHOWN | sdl2.SDL_WINDOW_RESIZABLE, 
         )
 
         # Sync window pos to higher level stuff
@@ -133,8 +125,7 @@ class WindowBase(template.WindowBase):
 
         # Initialize Cairo canvas
         self.surface: cairo.ImageSurface = cairo.ImageSurface(
-            cairo.FORMAT_ARGB32, self.size[0], self.size[1]
-        )
+            cairo.FORMAT_ARGB32, self.size[0], self.size[1])
         self.cairo_context: cairo.Context = cairo.Context(self.surface)
         self.cairo_context.set_line_join(cairo.LINE_JOIN_ROUND)
         self.cairo_context.set_line_cap(cairo.LINE_CAP_ROUND)
@@ -151,7 +142,8 @@ class WindowBase(template.WindowBase):
 
     def cairo_reinit_surface(self):
         """Re-init Cairo surface and canvas, only avail in Genesis backend."""
-        self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, self.size[0], self.size[1])
+        self.surface = cairo.ImageSurface(
+            cairo.FORMAT_ARGB32, self.size[0], self.size[1])
         self.cairo_context = cairo.Context(self.surface)
         self.cairo_context.set_line_join(cairo.LINE_JOIN_ROUND)
         self.cairo_context.set_line_cap(cairo.LINE_CAP_ROUND)
@@ -208,48 +200,41 @@ class WindowBase(template.WindowBase):
 
     def sdl2_handle_event(self, event: sdl2.SDL_Event) -> None:
         """Handle SDL2 events and trigger upper level Charmy events"""
-        cme = charmy_stuff.event_types  # Alias Charmy events
+        cme = charmy_stuff.event_types # Alias Charmy events
         match event.type:
             case sdl2.SDL_WINDOWEVENT:
                 match event.window.event:
                     case sdl2.SDL_WINDOWEVENT_RESIZED:
-                        self.charmy_window.trigger(
-                            cme.WidgetConfigure(
-                                self.charmy_window,
-                                {"size": (event.window.data1, event.window.data2)},
-                            )
-                        )
+                        self.charmy_window.trigger(cme.WidgetConfigure(
+                            self.charmy_window, 
+                            {"size": (event.window.data1, event.window.data2)}
+                            ))
                     case sdl2.SDL_WINDOWEVENT_MOVED:
-                        self.charmy_window.trigger(
-                            cme.WidgetConfigure(
-                                self.charmy_window,
-                                {"pos": (event.window.data1, event.window.data2)},
-                            )
-                        )
+                        self.charmy_window.trigger(cme.WidgetConfigure(
+                            self.charmy_window, 
+                            {"pos": (event.window.data1, event.window.data2)}
+                            ))
                     case sdl2.SDL_WINDOWEVENT_FOCUS_GAINED:
                         self.charmy_window.trigger(cme.FocusGain(self.charmy_window))
                     case sdl2.SDL_WINDOWEVENT_FOCUS_LOST:
                         self.charmy_window.trigger(cme.FocusLoss(self.charmy_window))
             case sdl2.SDL_MOUSEMOTION:
-                self.charmy_window.trigger(
-                    cme.MouseMove(self.charmy_window, (event.motion.x, event.motion.y))
-                )
+                self.charmy_window.trigger(cme.MouseMove(
+                    self.charmy_window, 
+                    (event.motion.x, event.motion.y)
+                    ))
             case sdl2.SDL_MOUSEBUTTONDOWN:
-                self.charmy_window.trigger(
-                    cme.MousePress(
-                        self.charmy_window,
-                        (event.button.x, event.button.y),
-                        event.button.button - 1,
-                    )
-                )
+                self.charmy_window.trigger(cme.MousePress(
+                    self.charmy_window, 
+                    (event.button.x, event.button.y), 
+                    event.button.button - 1
+                    ))
             case sdl2.SDL_MOUSEBUTTONUP:
-                self.charmy_window.trigger(
-                    cme.MouseRelease(
-                        self.charmy_window,
-                        (event.button.x, event.button.y),
-                        event.button.button - 1,
-                    )
-                )
+                self.charmy_window.trigger(cme.MouseRelease(
+                    self.charmy_window, 
+                    (event.button.x, event.button.y), 
+                    event.button.button - 1
+                    ))
             case sdl2.SDL_QUIT:
                 self.charmy_window.destroy()
 
@@ -260,6 +245,7 @@ class WindowBase(template.WindowBase):
         """
         if redraw:
             self.draw_frame(self.drawing_list)
+
 
         if self.surface.get_width() == self.size[0] and self.surface.get_height() == self.size[1]:
             # Following Vibed with Deepseek
@@ -280,7 +266,8 @@ class WindowBase(template.WindowBase):
             data_size = pitch * self.size[1]
             # Convert memoryview to ctypes data
             cairo_ptr = ctypes.cast(
-                (ctypes.c_char * data_size).from_buffer(cairo_data), ctypes.c_void_p
+                (ctypes.c_char * data_size).from_buffer(cairo_data),
+                ctypes.c_void_p
             )
 
             # Copy data
@@ -300,7 +287,7 @@ class WindowBase(template.WindowBase):
                         w = ctypes.c_int()
                         h = ctypes.c_int()
                         sdl2.SDL_GetWindowSize(self.window, w, h)
-                        self.set_size((w.value, h.value), _passive=True)
+                        self.set_size((w.value, h.value), _passive = True)
         return self
 
     def close(self):
@@ -309,40 +296,33 @@ class WindowBase(template.WindowBase):
 
 # region Lines
 
-
 def _calc_point_actual_pos(
-    line_point: charmy_stuff.styles.shape.Point,
-    anchor: charmy_stuff.styles.shape.Point,
-    offset: charmy_stuff.styles.shape.Point,
-) -> charmy_stuff.styles.shape.Point:
-    return (line_point[0] - anchor[0] + offset[0], line_point[1] - anchor[1] + offset[1])
-
+        line_point: charmy_stuff.styles.shape.Point, 
+        anchor: charmy_stuff.styles.shape.Point, 
+        offset: charmy_stuff.styles.shape.Point, 
+        ) -> charmy_stuff.styles.shape.Point:
+    return (
+        line_point[0] - anchor[0] + offset[0], 
+        line_point[1] - anchor[1] + offset[1]
+        )
 
 class LineSupportState(template.LineSupportState):
     """Flags all supported line types."""
-
-    line: bool = True
-    polyline: bool = True
-    circle_arc: bool = True
-    ellipse_arc: bool = False
-    quadratic_bezier: bool = False
-    cubic_bezier: bool = True
-
+    line                : bool = True
+    polyline            : bool = True
+    circle_arc          : bool = True
+    ellipse_arc         : bool = False
+    quadratic_bezier    : bool = False
+    cubic_bezier        : bool = True
 
 class LineBase(template.LineBase):
     """Line-related APIs in Genesis backend."""
-
     supports: LineSupportState = LineSupportState()
 
     @staticmethod
-    def draw_line(
-        drawn_line: charmy_stuff.graphics.DrawnLine,
-        window: WindowBase,
-        stroke: bool = True,
-        noskip: bool = False,
-        *args,
-        **kwargs,
-    ):
+    def draw_line(drawn_line: charmy_stuff.graphics.DrawnLine, 
+                  window: WindowBase, stroke: bool = True, noskip: bool = False, 
+                  *args, **kwargs):
         """To draw a line on a specific window.
 
         Args:
@@ -361,7 +341,7 @@ class LineBase(template.LineBase):
             raise RuntimeError(
                 "Wrong backend for draw_line()! Asked to draw on a window held by "
                 f"{window.Backend.friendly_name} but I serve backend {Backend.friendly_name}!"
-            )
+                )
         # Set texture & line width
         if not TextureBase.cairo_set_context_texture(window.cairo_context, texture, noskip):
             return
@@ -376,40 +356,42 @@ class LineBase(template.LineBase):
                 # Avoid unnecessary move_to() when drawing shapes
                 window.cairo_context.move_to(
                     *_calc_point_actual_pos(line.points[0], anchor, offset)
+                    )
+            window.cairo_context.line_to(
+                *_calc_point_actual_pos(line.points[1], anchor, offset)
                 )
-            window.cairo_context.line_to(*_calc_point_actual_pos(line.points[1], anchor, offset))
         elif isinstance(line, charmy_stuff.styles.shape.PolyLine):
             # Polyline
             if painting_pos != _calc_point_actual_pos(line.points[0], anchor, offset):
                 # Avoid unnecessary move_to() when drawing shapes
                 window.cairo_context.move_to(
                     *_calc_point_actual_pos(line.points[0], anchor, offset)
-                )
+                    )
             for index, point in enumerate(line.points):
                 if index == 0:
                     continue
-                window.cairo_context.line_to(*_calc_point_actual_pos(point, anchor, offset))
+                window.cairo_context.line_to(
+                    *_calc_point_actual_pos(point, anchor, offset)
+                    )
         elif isinstance(line, charmy_stuff.styles.shape.CircleArc):
             # Circle arc
             start_orient_rad = (line.start_orient - 90) * (math.pi / 180)
             end_orient_rad = (line.end_orient - 90) * (math.pi / 180)
             window.cairo_context.arc(
-                *_calc_point_actual_pos(line.center, anchor, offset),
-                line.radius,
-                start_orient_rad,
-                end_orient_rad,
-            )
+                *_calc_point_actual_pos(line.center, anchor, offset), 
+                line.radius, 
+                start_orient_rad, end_orient_rad)
         elif isinstance(line, charmy_stuff.styles.shape.CubicBezier):
             if painting_pos != _calc_point_actual_pos(line.points[0], anchor, offset):
                 # Avoid unnecessary move_to() when drawing shapes
                 window.cairo_context.move_to(
                     *_calc_point_actual_pos(line.points[0], anchor, offset)
-                )
+                    )
             window.cairo_context.curve_to(
-                *_calc_point_actual_pos(line.points[1], anchor, offset),
-                *_calc_point_actual_pos(line.points[2], anchor, offset),
-                *_calc_point_actual_pos(line.points[3], anchor, offset),
-            )
+                *_calc_point_actual_pos(line.points[1], anchor, offset), 
+                *_calc_point_actual_pos(line.points[2], anchor, offset), 
+                *_calc_point_actual_pos(line.points[3], anchor, offset), 
+                )
         else:
             template.not_implemented_func(Backend.friendly_name, f"Drawing line type {line.type}")
         if stroke:
@@ -418,32 +400,23 @@ class LineBase(template.LineBase):
 
 # region Shapes
 
-
 class ShapeSupportState(template.ShapeSupportState):
     """Flags support state of shape types of this backend."""
-
-    any_shape: bool = True
-    rect: bool = False
-    round_rect: bool = False
-    polygon: bool = False
-    oval: bool = False
-    sector: bool = False
-
+    any_shape       : bool = True
+    rect            : bool = False
+    round_rect      : bool = False
+    polygon         : bool = False
+    oval            : bool = False
+    sector          : bool = False
 
 class ShapeBase(template.ShapeBase):
     """Shape-related APIs in Genesis backend."""
-
     supports: ShapeSupportState = ShapeSupportState()
 
     @staticmethod
-    def draw_any_shape(
-        drawn_shape: charmy_stuff.graphics.DrawnShape,
-        window: WindowBase,
-        stroke: bool = True,
-        noskip: bool = False,
-        *args,
-        **kwargs,
-    ) -> None:
+    def draw_any_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, 
+                       window: WindowBase, stroke: bool = True, noskip: bool = False, 
+                       *args, **kwargs) -> None:
         """Draw shape by lines."""
         if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.SingleShape):
             warnings.warn("draw_any_shape() is only for drawing AnyShape")
@@ -456,16 +429,16 @@ class ShapeBase(template.ShapeBase):
             if DEBUG_FLAGS.FORCE_CLOSE_SHAPE:
                 # Dirty fix of closing shape: connect the path manually after drawing each line
                 window.cairo_context.line_to(
-                    line.start_point[0] + drawn_shape.offset[0] - drawn_shape.anchor[0],
-                    line.start_point[1] + drawn_shape.offset[1] - drawn_shape.anchor[1],
+                    line.start_point[0] + drawn_shape.offset[0] - drawn_shape.anchor[0], 
+                    line.start_point[1] + drawn_shape.offset[1] - drawn_shape.anchor[1], 
                 )
             drawn_line = charmy_stuff.graphics.DrawnLine(
-                line,
-                (255, 0, 0, 255 if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING else 0),
-                1,
-                offset=drawn_shape.offset,
-                anchor=drawn_shape.anchor,
-            )
+                line, 
+                (255, 0, 0, 255 if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING else 0), 
+                1, 
+                offset=drawn_shape.offset, 
+                anchor=drawn_shape.anchor, 
+                )
             # drawn_line.anchor = drawn_shape.shape.boundary[0]
             LineBase.draw_line(drawn_line, window, stroke=False, noskip=True)
             if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING:
@@ -477,7 +450,7 @@ class ShapeBase(template.ShapeBase):
                     print(
                         f"Shape not closed: {last_line_end} -> {line.start_point}"
                         f" | {DEBUG_FLAGS.FORCE_CLOSE_SHAPE=}"
-                    )
+                        )
                 last_line_end = line.end_point
         window.cairo_context.close_path()
         if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING:
@@ -490,96 +463,75 @@ class ShapeBase(template.ShapeBase):
             window.cairo_context.set_fill_rule(cairo.FILL_RULE_WINDING)
             window.cairo_context.fill()
         window.cairo_context.stroke()
-        if (
-            TextureBase.cairo_set_context_texture(
-                window.cairo_context, drawn_shape.border_texture, noskip
-            )
-            and drawn_shape.border_width != 0
-        ):
+        if TextureBase.cairo_set_context_texture(
+            window.cairo_context, drawn_shape.border_texture, noskip) \
+            and drawn_shape.border_width != 0:
             # If still need visible border, then draw again
             for line in drawn_shape.shape.lines:
                 drawn_line = charmy_stuff.graphics.DrawnLine(
-                    line,
-                    drawn_shape.border_texture,
-                    drawn_shape.border_width,
-                    offset=drawn_shape.offset,
-                    anchor=drawn_shape.anchor,
-                )
+                    line, drawn_shape.border_texture, drawn_shape.border_width, 
+                    offset=drawn_shape.offset, anchor=drawn_shape.anchor)
                 LineBase.draw_line(drawn_line, window, stroke=False)
             window.cairo_context.stroke()
 
     @staticmethod
-    def draw_shape_group(
-        drawn_shape: charmy_stuff.graphics.DrawnShape,
-        window: WindowBase,
-        stroke: bool = True,
-        noskip: bool = False,
-        *args,
-        **kwargs,
-    ) -> None:
+    def draw_shape_group(drawn_shape: charmy_stuff.graphics.DrawnShape, 
+                         window: WindowBase, stroke: bool = True, noskip: bool = False, 
+                         *args, **kwargs) -> None:
         if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
             raise TypeError("draw_shape_group() is only designed for shape group")
         for index, subshape in enumerate(drawn_shape.shape.shapes):
             host = drawn_shape.copy()
             host.shape = subshape
             ShapeBase.draw_shape(
-                host,
-                window,
-                index == len(drawn_shape.shape.shapes) - 1 and stroke,
-                noskip,
-                *args,
-                **kwargs,
-            )
+                host, 
+                window, 
+                index == len(drawn_shape.shape.shapes) - 1 and stroke, 
+                noskip, 
+                *args, **kwargs, 
+                )
 
     @staticmethod
-    def draw_shape(
-        drawn_shape: charmy_stuff.graphics.DrawnShape,
-        window: WindowBase,
-        stroke: bool = True,
-        noskip: bool = False,
-        *args,
-        **kwargs,
-    ) -> None:
+    def draw_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, 
+                   window: WindowBase, stroke: bool = True, noskip: bool = False, 
+                   *args, **kwargs) -> None:
         window.cairo_context.set_fill_rule(cairo.FILL_RULE_WINDING)
         if isinstance(drawn_shape.shape, charmy_stuff.styles.shape.SingleShape):
             ShapeBase.draw_any_shape(drawn_shape, window, stroke, noskip, *args, **kwargs)
         elif isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
             ShapeBase.draw_shape_group(drawn_shape, window, stroke, noskip, *args, **kwargs)
         else:
-            template.not_implemented_func(
-                Backend.friendly_name,
-                f"Drawing a shape that is neither a subclass of SingleShape nor ShapeGroup",
-            )
+            template.not_implemented_func(Backend.friendly_name, 
+                    f"Drawing a shape that is neither a subclass of SingleShape nor ShapeGroup")
 
 
 # region Textures
 
-
 class TextureSupportState(template.TextureSupportState):
-    color: bool = False
-    linear_gradient: bool = False
-    radial_gradient: bool = False
-    filter: bool = False
-    image: bool = False
-    func_shader: bool = False
-
+    color           : bool = False
+    linear_gradient : bool = False
+    radial_gradient : bool = False
+    filter          : bool = False
+    image           : bool = False
+    func_shader     : bool = False
 
 class TextureBase(template.TextureBase):
     """Texture-related APIs in Genesis backend."""
 
     @staticmethod
-    def cairo_set_context_texture(
-        context: cairo.Context, texture: charmy_stuff.styles.texture.Texture, noskip: bool = False
-    ) -> bool:
-        """Set texture of a Cairo context, and returns if following drawing still needs to be done.
-
+    def cairo_set_context_texture(context: cairo.Context, 
+                                  texture: charmy_stuff.styles.texture.Texture, 
+                                  noskip: bool = False
+                                  ) -> bool:
+        """Set texture of a Cairo context, and returns if following drawing still needs to be done. 
+        
         function only available in Genesis backend.
 
         :param context: The Cairo context to set texture
         :param texture: The texture to set
         :return bool: If the object needs to be drawn
         """
-        cmtx = charmy_stuff.styles.texture  # CMTX = abbr. CharMy TeXture
+        cmtx = charmy_stuff.styles.texture # CMTX = abbr. CharMy TeXture
         if isinstance(texture, cmtx.Transparent):
             context.set_source_rgba(0, 0, 0, 0)
             return noskip
@@ -588,29 +540,26 @@ class TextureBase(template.TextureBase):
         else:
             template.not_implemented_func(
                 Backend.friendly_name, f"Drawing texture type {texture.__class__.__name__}"
-            )
+                )
         return True
 
 
 class TextSupportState(template.TextSupportState):
     """Flags support state of text features of this backend."""
-
-    direct_render: bool = True
-    stock_filter: bool = False
-    custom_strikethrough: bool = True
-    custom_underline: bool = True
-    any_fontweight: bool = False
-    fontweights: list[int] = [
-        charmy_stuff.styles.text_style.WEIGHT.REGULAR,
-        charmy_stuff.styles.text_style.WEIGHT.BOLD,
-    ]
-    prefer_conversion: bool = True
-
+    direct_render           : bool = True
+    stock_filter            : bool = False
+    custom_strikethrough    : bool = True
+    custom_underline        : bool = True
+    any_fontweight          : bool = False
+    fontweights             : list[int] = [
+                                charmy_stuff.styles.text_style.WEIGHT.REGULAR, 
+                                charmy_stuff.styles.text_style.WEIGHT.BOLD, 
+                                ]
+    prefer_conversion       : bool = True
 
 # region Texts
 class TextBase(template.TextBase):
     """Text-related APIs in Genesis backend."""
-
     supports: TextSupportState = TextSupportState()
 
     @staticmethod
@@ -619,15 +568,14 @@ class TextBase(template.TextBase):
         ## Set Cairo font
         TextBase.cairo_set_font(drawn_text, window)
         # Text size
-        text_size = TextBase.get_text_bound(drawn_text, window.cairo_context)[1]
+        text_size = TextBase.get_text_bound(drawn_text, window.cairo_context) [1]
         drawn_text._backend_reported_boundary = (drawn_text.offset, text_size)
         if DEBUG_FLAGS.DRAW_CAIRO_STOCK_TEXT_BOUND:
             text_bound = charmy_stuff.graphics.DrawnShape(
-                charmy_stuff.styles.shape.Rect(drawn_text.offset, text_size),
-                (255, 0, 0, 50),
-                2,
-                (255, 0, 0),
-            )
+                charmy_stuff.styles.shape.Rect(drawn_text.offset, text_size), 
+                (255, 0, 0, 50), 
+                2, (255, 0, 0)
+                )
             window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, text_bound)
         ## Draw text itself
         window.cairo_context.move_to(drawn_text.offset[0], drawn_text.offset[1] + text_size[1])
@@ -639,22 +587,12 @@ class TextBase(template.TextBase):
             # Underline
             underline: charmy_stuff.graphics.DrawnLine
             if isinstance(drawn_text.style.underlined, bool):
-                underline = charmy_stuff.graphics.DrawnLine(
-                    charmy_stuff.styles.shape.Line(
-                        [
-                            (
-                                drawn_text.offset[0] - 2,
-                                drawn_text.offset[1] + text_size[1] + offset,
-                            ),
-                            (
-                                drawn_text.offset[0] + text_size[0] + 2,
-                                drawn_text.offset[1] + text_size[1] + offset,
-                            ),
-                        ]
-                    ),
-                    drawn_text.texture,
-                    max(1, int(drawn_text.style.size) // 15),
-                )
+                underline = charmy_stuff.graphics.DrawnLine(charmy_stuff.styles.shape.Line([
+                    (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] + offset), 
+                    (drawn_text.offset[0] + text_size[0] + 2, 
+                     drawn_text.offset[1] + text_size[1] + offset)
+                    ]), 
+                    drawn_text.texture, max(1, int(drawn_text.style.size) // 15))
             else:
                 underline = drawn_text.style.underlined
             # Insert the underline right after the text
@@ -663,22 +601,12 @@ class TextBase(template.TextBase):
             # Strikethrough
             strikethrough: charmy_stuff.graphics.DrawnLine
             if isinstance(drawn_text.style.strikethrough, bool):
-                strikethrough = charmy_stuff.graphics.DrawnLine(
-                    charmy_stuff.styles.shape.Line(
-                        [
-                            (
-                                drawn_text.offset[0] - 2,
-                                drawn_text.offset[1] + text_size[1] // 2 + offset,
-                            ),
-                            (
-                                drawn_text.offset[0] + text_size[0] + 2,
-                                drawn_text.offset[1] + text_size[1] // 2 + offset,
-                            ),
-                        ]
-                    ),
-                    drawn_text.texture,
-                    max(1, int(drawn_text.style.size) // 15),
-                )
+                strikethrough = charmy_stuff.graphics.DrawnLine(charmy_stuff.styles.shape.Line([
+                    (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] // 2 + offset), 
+                    (drawn_text.offset[0] + text_size[0] + 2, 
+                     drawn_text.offset[1] + text_size[1]//2 + offset)
+                    ]), 
+                    drawn_text.texture, max(1, int(drawn_text.style.size) // 15))
             else:
                 strikethrough = drawn_text.style.strikethrough
             # Insert the underline right after the text
@@ -692,37 +620,32 @@ class TextBase(template.TextBase):
             # Set text texture and skip drawing if not necessary to draw
             return
         window.cairo_context.select_font_face(
-            drawn_text.style.font,
-            cairo.FontSlant.NORMAL if not drawn_text.style.italic else cairo.FontSlant.ITALIC,
-            (
-                cairo.FontWeight.BOLD
-                if drawn_text.style.weight >= charmy_stuff.styles.text_style.WEIGHT.BOLD
-                else cairo.FontWeight.NORMAL
-            ),
-        )
+            drawn_text.style.font, 
+            cairo.FontSlant.NORMAL if not drawn_text.style.italic else cairo.FontSlant.ITALIC, 
+            cairo.FontWeight.BOLD if drawn_text.style.weight >= \
+                charmy_stuff.styles.text_style.WEIGHT.BOLD else cairo.FontWeight.NORMAL
+            )
         window.cairo_context.set_font_size(drawn_text.style.size)
 
     @staticmethod
-    def get_text_bound(
-        drawn_text: charmy_stuff.graphics.DrawnText,
-        ctx: typing.Optional[cairo.Context] | None = None,
-    ):
+    def get_text_bound(drawn_text: charmy_stuff.graphics.DrawnText, 
+                      ctx: typing.Optional[cairo.Context] = None):
         ## Calc text size
         if ctx is None:
             # If not given a context, then make one
-            surface: cairo.ImageSurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 10, 10)
+            surface: cairo.ImageSurface = cairo.ImageSurface(
+            cairo.FORMAT_ARGB32, 10, 10)
             ctx = cairo.Context(surface)
             make_ctx = True
         else:
             make_ctx = False
-        extents = ctx.text_extents(drawn_text.text)  # NOQA
+        extents = ctx.text_extents(drawn_text.text)
         text_size = (int(round(extents.width, 0)), int(round(extents.height, 0)))
         if make_ctx:
             # If made context before, destroy it immediately
             del surface
             del ctx
         return drawn_text.offset, text_size
-
 
 # region: Alias WhateverBase classes
 

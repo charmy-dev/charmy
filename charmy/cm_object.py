@@ -1,13 +1,14 @@
 """
 Basic object class.
 """
-
 from __future__ import annotations as _
 
 import typing
+
 import weakref
 
 from .const import ID
+
 
 # class InstanceCounterMeta(type):
 #     """
@@ -34,20 +35,18 @@ class CharmyInstanceDestroyedError(Exception): ...
 
 _InstanceType = typing.TypeVar("_InstanceType", bound="CharmyObject")
 
-
 class _InstancesList(typing.Generic[_InstanceType]):
     """Instances list of each CharmyObject subclass, with customized abilities."""
 
     def __init__(self):
         """To create a list that stores instances of CharmyObject or its subclasses.
 
-        This is mainly for internal use, but you are welcomed to find any other usage of this.
+        This is mainly for internal use, but you are welcomed to find any other usage of this. 
         Remember to tell me your idea via GitHub discussions of this project (if available).
         """
         self.instances: list[weakref.ReferenceType[_InstanceType]] = []
-        self.instances_by_id: weakref.WeakValueDictionary[str, _InstanceType] = (
+        self.instances_by_id: weakref.WeakValueDictionary[str, _InstanceType] = \
             weakref.WeakValueDictionary()
-        )
 
     def append(self, item: _InstanceType) -> typing.Self:
         """Add an object to this list.
@@ -82,7 +81,7 @@ class _InstancesList(typing.Generic[_InstanceType]):
         """Iterate this list."""
         return iter(self.instances)
 
-    def __contains__(self, item: str | CharmyObject) -> bool:
+    def __contains__(self, item: str| CharmyObject) -> bool:
         """Check if a specific object available.
 
         :param item: Either the object itself or its ID
@@ -96,11 +95,9 @@ class _InstancesList(typing.Generic[_InstanceType]):
         """Get the length of this list."""
         return len(self.instances)
 
-
 # endregion
 
 # region CharmyObject
-
 
 class CharmyObject:
     """CharmyObject is this project's basic class.
@@ -133,7 +130,7 @@ class CharmyObject:
         if id_ == ID.AUTO:
             id_prefix = self.class_name
             id_ = id_prefix + str(self.instance_count)
-        if any(id_ in cls_instances for cls_instances in CharmyObject.objects_sorted.values()):
+        if  any(id_ in cls_instances for cls_instances in CharmyObject.objects_sorted.values()):
             raise KeyError(id_)
         if id_ != ID.NONE:
             self.id: typing.Final[str] = id_  # Do not change after initialization
@@ -174,6 +171,7 @@ class CharmyObject:
             return default
 
     find = get_obj
+
 
     # endregion
 

@@ -1,3 +1,4 @@
-from . import loader, template
+from . import loader
+from . import template
 
-loader.load_backend("genesis")  # Currently only loads Geneis backend
+loader.load_backend("genesis") # Currently only loads Geneis backend

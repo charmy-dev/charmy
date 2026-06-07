@@ -4,11 +4,12 @@ import typing
 
 import reactive_caching
 
-from .. import graphics, styles
+from . import window
 from ..cm_object import CharmyObject
 from ..event import EventHandling, event_types
-from . import window
 from .container import Container, layout_profiles
+from .. import graphics
+from .. import styles
 
 __all__ = ["Widget"]
 
@@ -16,21 +17,20 @@ __all__ = ["Widget"]
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     """Widget base class."""
 
-    def __init__(self, parent: Container | None = None, style: dict | None = None):
+    def __init__(self, parent: Container | None = None, style: dict = {":default": {"size": (0, 0)}}):
         """To initialize a widget.
 
         :param parent: Parent of the widget, or None in `with` context
         :param style: Style of the widget
         """
 
-        if style is None:
-            style = {":default": {"size": (0, 0)}}
-
         if parent is None:
             if len(Container._with_stack) == 0:
-                raise TypeError("Param parent can only be None within a with Container() context.")
+                raise TypeError(
+                    "Param parent can only be None within a with Container() context."
+                    )
             else:
-                parent: Container = Container.with_stack[-1]
+                parent = Container._with_stack[-1]
 
         super().__init__()
         EventHandling.__init__(self)
@@ -95,10 +95,12 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             target_style_state = self.state if self.state in self.style else "default"
             if not "size" in self.style[f":{target_style_state}"]:
                 if "size" in self.style[f":default"]:
-                    target_style_state = "default"  # Fallback to default style
+                    target_style_state = "default" # Fallback to default style
                 else:
-                    return (0, 0)  # Unspecified in style
-            style_specified = styles.style.fill_vars(self.style[f":{target_style_state}"]["size"])
+                    return (0, 0) # Unspecified in style
+            style_specified = styles.style.fill_vars(
+                self.style[f":{target_style_state}"]["size"]
+                )
             if type(style_specified) is not tuple:
                 return (0, 0)
             if len(style_specified) != 2:
@@ -147,14 +149,18 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     @property
     def curr_state_styles(self) -> dict[str, typing.Any]:
-        style_vars = (self.theme, self.root_container, self)
-        style_state = ":" + (self.state if self.state in self.style.keys() else "default")
+        style_vars = (
+            self.theme, 
+            self.root_container, 
+            self
+            )
+        style_state = ':' + (self.state if self.state in self.style.keys() else "default")
         curr_style = styles.style.fill_vars(self.style[style_state], *style_vars)
         return curr_style
 
     def draw(self, *args, **kwargs) -> typing.Self:
         """Draw the widget, does nothing on base class."""
-        self._update_drawing_objects()  # TODO: Components caching
+        self._update_drawing_objects() # TODO: Components caching
         if not self._alive:
             return self
 
@@ -162,21 +168,20 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             component.draw(self.root_container)
 
         if isinstance(self, Container):
-            self.draw_children()  # NOQA
+            self.draw_children()
 
         return self
 
-    def place(
-        self,
-        pos: styles.shape.Point,
-        size: typing.Optional[styles.shape.Size] = None,
-    ) -> typing.Self:
+    def place(self, 
+            pos: styles.shape.Point, 
+            size: typing.Optional[styles.shape.Size] = None, 
+            ) -> typing.Self:
         """Add the widget to parent, using place layout.
 
         :param pos: The position to place the widget
         :param size: The size of this widget
         """
-        self.layout_profile = layout_profiles.PlaceProfile(pos, size)  # type: ignore
+        self.layout_profile = layout_profiles.PlaceProfile(pos, size) # type: ignore
         return self
 
     def destroy(self) -> None:

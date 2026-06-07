@@ -8,7 +8,7 @@ import warnings
 from dataclasses import dataclass
 
 from .cm_object import CharmyObject
-from .utils import event_types  # Expose this as event_types
+from .utils import event_types # Expose this as event_types
 
 if typing.TYPE_CHECKING:
     from .utils import var
@@ -21,18 +21,18 @@ class EventHandling:
     # # fmt: off
     # EVENT_TYPES: list[str] = [
     #     # Window size & pos
-    #     "resize", "move",
+    #     "resize", "move", 
     #     # Widget internal changes
     #     "configure", "update", "draw",
     #     # Mouse events
-    #     "mouse_move", "mouse_enter", "mouse_leave", "mouse_press", "mouse_release", "click",
+    #     "mouse_move", "mouse_enter", "mouse_leave", "mouse_press", "mouse_release", "click", 
     #     "double_click",
     #     # Focus events
-    #     "focus_gain", "focus_loss",
+    #     "focus_gain", "focus_loss", 
     #     # Key events
-    #     "key_press", "key_release", "key_repeat", "char",
+    #     "key_press", "key_release", "key_repeat", "char", 
     #     # Special events
-    #     "delay", "repeat",
+    #     "delay", "repeat", 
     # ]
     # # fmt: on
     multithread_tasks: list[tuple[EventTask, event_types.Event]] = []
@@ -80,13 +80,13 @@ class EventHandling:
 
         Type String Format
         ------------------
-        Either in `{Event type}` or `{Event type}[{Param 1}, {Param 2}]`. Example: `MousePressed`
+        Either in `{Event type}` or `{Event type}[{Param 1}, {Param 2}]`. Example: `MousePressed` 
         or `MousePressed[0]`
 
         Return Value & Deprecation
         --------------------------
-        The return value is a `dict` containing the type and params expressed in string. This kind
-        of return value might be unused in the new events system designed for Charmy. Therefore,
+        The return value is a `dict` containing the type and params expressed in string. This kind 
+        of return value might be unused in the new events system designed for Charmy. Therefore, 
         this function might be removed in the future.
 
         :param event_type_str: The event type string to be parsed
@@ -135,36 +135,36 @@ class EventHandling:
     @typing.overload
     def bind(
         self,
-        event_type: type[event_types.Event],
-        target: typing.Callable | typing.Iterable,
-        conditions: dict = {},
-        multithread: bool = False,
-        _is_internal: bool = False,
-        task_obj_receiver: typing.Optional[var.Var[EventTask]] = None,
-        return_task: typing.Literal[True] = True,
-    ) -> EventTask: ...
+        event_type: type[event_types.Event], 
+        target: typing.Callable | typing.Iterable, 
+        conditions: dict = {}, 
+        multithread: bool = False, 
+        _is_internal: bool = False, 
+        task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
+        return_task: typing.Literal[True] = True
+        ) -> EventTask: ...
 
     @typing.overload
     def bind(
         self,
-        event_type: type[event_types.Event],
-        target: typing.Callable | typing.Iterable,
-        conditions: dict = {},
-        multithread: bool = False,
-        _is_internal: bool = False,
-        task_obj_receiver: typing.Optional[var.Var[EventTask]] = None,
-        return_task: typing.Literal[False] = False,
-    ) -> typing.Self: ...
+        event_type: type[event_types.Event], 
+        target: typing.Callable | typing.Iterable, 
+        conditions: dict = {}, 
+        multithread: bool = False, 
+        _is_internal: bool = False, 
+        task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
+        return_task: typing.Literal[False] = False
+        ) -> typing.Self: ...
 
     def bind(
         self,
-        event_type: type[event_types.Event],
-        target: typing.Callable | typing.Iterable[typing.Callable],
-        conditions: typing.Optional[dict] = None,
-        multithread: bool = False,
-        _is_internal: bool = False,
-        task_obj_receiver: typing.Optional[var.Var[EventTask]] = None,
-        return_task: bool = True,
+        event_type: type[event_types.Event], 
+        target: typing.Callable | typing.Iterable[typing.Callable], 
+        conditions: typing.Optional[dict] = None, 
+        multithread: bool = False, 
+        _is_internal: bool = False, 
+        task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
+        return_task: bool = True
     ) -> EventTask | typing.Self:
         """To bind a task to the object when a specific type of event is triggered.
 
@@ -198,25 +198,23 @@ class EventHandling:
             return self
 
     def on(
-        self,
-        event_type: type[event_types.Event],
-        conditions: typing.Optional[dict[str, typing.Any]] = None,
-        multithread: bool = False,
-        _is_internal: bool = False,
-        task_obj_receiver: typing.Optional[var.Var[EventTask]] = None,
-    ) -> typing.Callable[[typing.Callable], typing.Callable]:
+            self, 
+            event_type: type[event_types.Event], 
+            conditions: typing.Optional[dict[str, typing.Any]] = None, 
+            multithread: bool = False, 
+            _is_internal: bool = False, 
+            task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
+            ) -> typing.Callable[[typing.Callable], typing.Callable]:
         """Generate a decorator that binds the event.
 
         → See `bind()` for parameters description.
         """
         if conditions is None:
             conditions = {}
-
         def decorator(func: typing.Callable) -> typing.Callable:
             """Binds the function to be decorated to the event."""
             self.bind(event_type, func, conditions, multithread, _is_internal, task_obj_receiver)
             return func
-
         return decorator
 
     def unbind(self, target_task: EventTask) -> typing.Self:
@@ -264,7 +262,6 @@ class EventHandling:
 
 # region Tasks
 
-
 @dataclass
 class EventTask(CharmyObject):
     """A class to represent event task when an event is triggered.
@@ -290,7 +287,6 @@ class EventTask(CharmyObject):
     :param multithread: If this task should be executed in another thread (False by default)
     :param _internal_task: If the task is internally created and used by Charmy
     """
-
     target: typing.Callable | typing.Iterable[typing.Callable]
     conditions: dict[str, typing.Any]
     multithread: bool = False
@@ -305,11 +301,9 @@ class EventTask(CharmyObject):
         """
         if event is None:
             event = event_types.Event()
-
         def execute_list(steps: typing.Iterable[typing.Callable], event: event_types.Event):
             for step in steps:
                 step(event)
-
         if isinstance(self.target, collections.abc.Iterable):
             steps = self.target
             target = lambda event: execute_list(steps, event)
@@ -321,7 +315,6 @@ class EventTask(CharmyObject):
             task_thread.start()
         else:
             target(event)
-
 
 class DelayTask(EventTask):
     # TODO: DelayTask
