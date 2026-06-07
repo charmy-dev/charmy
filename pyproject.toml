@@ -13,7 +13,7 @@ dependencies = [
     "json5", "reactive-caching", 
     "pysdl2", "pysdl2-dll", "pycairo", # Required by Genesis backend
 ]
-license = "Apache 2.0"
+license = "AGPLv3"
 
 [tool.poetry.extras]
 docs = [
