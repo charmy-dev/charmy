@@ -24,6 +24,7 @@ class DrawnObject(_cm_object.CharmyObject):
     """Base class of drawn objects in Charmy."""
 
     def __init__(self):
+        super().__init__()
         self._actual_draw_list: dict[_window.Window, list[DrawnObject]] = {}
 
     @_abstractmethod
@@ -89,16 +90,22 @@ class DrawnLine(DrawnObject):
             self.offset[1] + self.line.boundary[0][1] - self.anchor[1]
             ), self.line.boundary[1]
 
-    def draw(self, window: _window.Window, 
-             _fallback_from: list[type[_styles.shape.LinePath]] = []) -> _typing.Self:
+    def draw(self, window: _window.Window,
+             _fallback_from: list[type[_styles.shape.LinePath]] = None) -> _typing.Self:
         """Draw the line.
 
         :param window: The window to draw line to
         :param _fallback_from: Internal use only, the fallback path
         """
+
+        if not _fallback_from:
+            _fallback_from = []
+        else:
+            _fallback_from = _fallback_from.copy()
+
         backend = window.parent.backend
         # 👆 Alias to avoid path to backend properties getting too long. 😅
-        # Remove currently rencdered copy of this object on the current window
+        # Remove currently rendered copy of this object on the current window
         if window not in self._actual_draw_list.keys():
             self._actual_draw_list[window] = []
         for draw_object in self._actual_draw_list[window]:
@@ -262,7 +269,7 @@ class DrawnText(DrawnObject):
 
     Notes For Getting Boundary
     --------------------------
-    Text relies on backend to render in most cases, so its boundary should be get from backend.
+    Text relies on backend to render in most cases, so its boundary should be gotten from backend.
     """
 
     def __init__(self, 
@@ -319,7 +326,7 @@ class DrawnText(DrawnObject):
         :param window: The window to draw text to
         """
         backend = window.parent.backend
-        # Remove currently rencdered copy of this object on the current window
+        # Remove currently rendered copy of this object on the current window
         if window not in self._actual_draw_list.keys():
             self._actual_draw_list[window] = []
         for draw_object in self._actual_draw_list[window]:
@@ -343,7 +350,7 @@ class DrawnText(DrawnObject):
                     rendered_style.underlined = True
                 if not backend.TextBase.supports.custom_strikethrough:
                     rendered_style.strikethrough = True
-                ## Fontweight
+                ## Font weight
                 # Set font weight to closest supported one
                 # This part vibed with GitHub Copilot using model GPT-5 mini
                 available_weights = backend.TextBase.supports.fontweight
