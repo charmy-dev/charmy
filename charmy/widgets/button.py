@@ -2,15 +2,58 @@
 
 from __future__ import annotations as _
 
-import typing
+import typing as _typing
+
+import reactive_caching
 
 from .widget import Widget as _Widget
 from .. import styles as _styles
 from .. import event_types as _event_types
 from .. import graphics as _graphics
 
-if typing.TYPE_CHECKING:
+if _typing.TYPE_CHECKING:
     from .. import container as _container
+
+
+button_default_style: dict[str, _typing.Any] = {
+    # Default button style (bootstrap)
+    # These styles JSON might be moved to somewhere else in future...
+    ":default": { # Default state
+        "size": (72, 28), 
+        "shape": {
+            "type": "rect", 
+            "pos": (0, 0), 
+            "size": "$[widget.size]", 
+            }, 
+        "background": {
+            "type": "color", 
+            "color": (200, 200, 200), 
+            }, 
+        "border_width": 2, 
+        "border_texture": {
+            "type": "color", 
+            "color": (20, 20, 20), 
+            }, 
+        "text_style": {
+            "font": None, 
+            "size": None, 
+            }, 
+        "text_texture": {
+            "type": "color", 
+            "color": (0, 0, 0), 
+            }, 
+        }, 
+    ":hover": { # Hovering
+        "background": {
+            "type": "color", 
+            "color": (0, 0, 0)
+            }, 
+        "text_texture": {
+            "type": "color", 
+            "color": (255, 255, 255), 
+            }, 
+        }, 
+    }
 
 
 class Button(_Widget):
@@ -19,36 +62,8 @@ class Button(_Widget):
     def __init__(self, 
                 parent: _container.Container | None = None, 
                 text: str = "Button", 
-                on_click: typing.Callable = lambda: None, 
-                style: dict[str, typing.Any] = {
-                    # Default button style (bootstrap)
-                    # These styles JSON might be moved to somewhere else in future...
-                    ":default": { # Default state
-                        "size": (72, 28), 
-                        "shape": {
-                            "type": "rect", 
-                            "pos": (0, 0), 
-                            "size": "$[widget.size]", 
-                            }, 
-                        "background": {
-                            "type": "color", 
-                            "color": (200, 200, 200), 
-                            }, 
-                        "border_width": 2, 
-                        "border_texture": {
-                            "type": "color", 
-                            "color": (20, 20, 20)
-                            }, 
-                        "text_style": {
-                            "font": None, 
-                            "size": None, 
-                            }, 
-                        "text_texture": {
-                            "type": "color", 
-                            "color": (0, 0, 0), 
-                            }, 
-                        }, 
-                    }, 
+                on_click: _typing.Callable = lambda: None, 
+                style: _typing.Optional[dict[str, _typing.Any]] = None, 
                 *args, **kwargs):
         """Text buttons in Charmy.
 
@@ -59,11 +74,13 @@ class Button(_Widget):
         :param *args: → See `Widget.__init__(...)`
         :param **kwargs: → See `Widget.__init__(...)`
         """
+        if style is None:
+            style = button_default_style
         super().__init__(parent, style)
         self.text: str = text
-        self.on_click: typing.Callable = on_click
-        self.style: dict[str, typing.Any] = style
-        self.theme: typing.Optional[_styles.theme.Theme] = None
+        self.on_click: _typing.Callable = on_click
+        self.style: dict[str, _typing.Any] = style.copy()
+        self.theme: _typing.Optional[_styles.theme.Theme] = None
         self.state: str = "normal"
 
         # Drawn objects, used by internal drawing functions
@@ -72,16 +89,28 @@ class Button(_Widget):
             _graphics.DrawnText(self.text, _styles.text_style.TextStyle.sys_default, None), 
             )
 
-        self._update_drawing_objects()
-
+        # Internal event binds
         self.bind(
             _event_types.MouseClick, 
             lambda _: self.on_click(), {"button": 0}, _is_internal=True
             )
+        self.bind(
+            _event_types.MouseEnter, 
+            lambda _: self.config(state="hover"), _is_internal=True
+            )
+        self.bind(
+            _event_types.MouseLeave, 
+            lambda _: self.config(state="normal"), _is_internal=True
+            )
 
-    def _update_drawing_objects(self):
-        """Update draw list of a button, for internal use only."""
-        curr_style = self.curr_state_styles
+    @reactive_caching.cached_property(["state", "style", "text"])
+    def components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
+        """Components (drawn objects) that make up the button."""
+        state=self.state
+        self.state="default"
+        curr_style = self.curr_state_styles.copy()
+        self.state=state
+        curr_style.update(self.curr_state_styles)
         # Make background shape
         self._components[0].shape = \
             _styles.shape.AnyShape.from_json(curr_style["shape"])
@@ -103,3 +132,4 @@ class Button(_Widget):
         self._components[1].offset = \
             (self.abs_pos[0] + ((self.width - self._components[1].boundary[1][0]) // 2), 
              self.abs_pos[1] + ((self.height - self._components[1].boundary[1][1]) // 2))
+        return self._components

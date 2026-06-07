@@ -441,6 +441,7 @@ class ShapeBase(template.ShapeBase):
                 )
             # drawn_line.anchor = drawn_shape.shape.boundary[0]
             LineBase.draw_line(drawn_line, window, stroke=False, noskip=True)
+            del drawn_line
             if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING:
                 window.cairo_context.stroke_preserve()
                 window.update(redraw=False)
@@ -472,6 +473,7 @@ class ShapeBase(template.ShapeBase):
                     line, drawn_shape.border_texture, drawn_shape.border_width, 
                     offset=drawn_shape.offset, anchor=drawn_shape.anchor)
                 LineBase.draw_line(drawn_line, window, stroke=False)
+                del drawn_line
             window.cairo_context.stroke()
 
     @staticmethod

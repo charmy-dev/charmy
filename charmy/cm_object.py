@@ -144,6 +144,7 @@ class CharmyObject:
 
     def __init_subclass__(cls):
         """To initialize a CharmyObject subclass."""
+        super().__init_subclass__()
         cls.instances = _InstancesList()
 
     # region: Properties
@@ -172,48 +173,6 @@ class CharmyObject:
 
     find = get_obj
 
-
-    # endregion
-
-    # ? @XiangQinxi I told u to forget these fucking mechanisms?
-    #
-    # # region: Shared attributes set / get
-
-    # def cset(self, name: str, value: typing.Any):
-    #     """Set shared attributes in CharmyObject.
-
-    #     Args:
-    #         name: Name of the attribute to set
-    #         value: Value to set
-    #     """
-    #     self.attributes[name] = value
-
-    # def cget(self, name: str, default: typing.Any = None) -> typing.Any:
-    #     """Get shared attributes in CharmyObject.
-
-    #     Args:
-    #         name: Name of the attribute to get
-    #         default: Default value to return if attribute not found
-
-    #     Returns:
-    #         Value of the attribute
-
-    #     """
-    #     if name in self.attributes:
-    #         return self.attributes[name]
-    #     return default
-
-    # def cconfig(self, **kwargs):
-    #     """Batch set values of multiple shared attributes in CharmyObject by giving params.
-
-    #     Args:
-    #          **kwargs: Any configs to add
-    #     """
-    #     for name in kwargs.keys():
-    #         self.cset(name, kwargs[name])
-
-    # # endregion
-
     def set(self, name: str, value: typing.Any):
         """Set attributes in CharmyObject.
 
@@ -221,7 +180,7 @@ class CharmyObject:
             name: Name of the attribute to set
             value: Value to set
         """
-        self.__dict__[name] = value
+        setattr(self, name, value)
 
     def get(self, name: str, default: typing.Any = None) -> typing.Any:
         """Get attributes in CharmyObject.
@@ -245,7 +204,7 @@ class CharmyObject:
              **kwargs: Any configs to add
         """
         for name in kwargs.keys():
-            self.set(name, kwargs[name])
+            setattr(self, name, kwargs[name])
 
     # region: __str__
 

@@ -46,9 +46,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
 
         self.state: str = "normal"
+        self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
         self._alive: bool = True
-
-        self._components: typing.Tuple[graphics.DrawnObject, ...] = ()
 
     @property
     def pos(self) -> styles.shape.Point:
@@ -138,14 +137,13 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # … then the widget is not inside in a root container
                 raise RuntimeError(f"Nowhere to put {self.id} as it is not in a valid window!")
 
-    def _update_drawing_objects(self):
-        """Update a widget's draw list, for internal use only.
+    @reactive_caching.cached_property("-exposed-")
+    def components(self) -> typing.Tuple[graphics.DrawnObject, ...]:
+        """Components (drawn objects) that make up the button.
 
-        For widget base, this clears the draw list.
+        For widget base class, it does not have any component.
         """
-        # self.trigger(NotImplemented) # TODO: Trigger style change event
-        # self.draw()
-        pass
+        return ()
 
     @property
     def curr_state_styles(self) -> dict[str, typing.Any]:
@@ -154,17 +152,19 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             self.root_container, 
             self
             )
-        style_state = ':' + (self.state if self.state in self.style.keys() else "default")
+        style_state = f":{self.state}"
+        if style_state not in self.style:
+            style_state = ":default"
+        # print(style_state)
         curr_style = styles.style.fill_vars(self.style[style_state], *style_vars)
         return curr_style
 
     def draw(self, *args, **kwargs) -> typing.Self:
         """Draw the widget, does nothing on base class."""
-        self._update_drawing_objects() # TODO: Components caching
         if not self._alive:
             return self
 
-        for component in self._components:
+        for component in self.components:
             component.draw(self.root_container)
 
         if isinstance(self, Container):
@@ -194,7 +194,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     def __contains__(self, pos: styles.shape.Point) -> bool:
         point = (pos[0] - self.x, pos[1] - self.y)
-        for component in self._components:
+        for component in self.components:
             if point in component:
                 return True
         else:
