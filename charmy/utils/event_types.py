@@ -5,13 +5,14 @@ import typing as _typing
 from dataclasses import dataclass as _dataclass
 import time as _time
 
-from ..event import EventHandling, EventHandling as _EventHandling
+from ..event import EventHandling as _EventHandling
 from ..cm_object import CharmyObject as _CharmyObject
 from . import type_checking as _type_checking
 
 if _typing.TYPE_CHECKING:
     from ..event import EventHandling as _EventHandling
     from ..styles import shape as _shape
+    from ..widgets import widget as _widget, container as _container
     from ..widgets import window as _window
 
 
@@ -51,7 +52,7 @@ class EventTriggered(Event):
 
     subject: _EventHandling
 
-    def call_chain(self, subject: EventHandling) -> None:
+    def call_chain(self, _: _EventHandling) -> None:
         pass
 
 
@@ -97,7 +98,7 @@ class WidgetConfigure(WidgetEvent):
 
     attrs_changed: dict
 
-    def call_chain(self, subject: EventHandling) -> None:
+    def call_chain(self, subject: _EventHandling) -> None:
         super().call_chain(subject)
         if "pos" in self.attrs_changed.keys():
             subject.trigger(WidgetMove(subject, self.attrs_changed["pos"]))
@@ -150,6 +151,8 @@ class WindowEvent(Event):
 
 
 # region Mouse events
+if _typing.TYPE_CHECKING:
+    _HoveringList: _typing.TypeAlias = _typing.List[_widget.Widget | _container.Container]
 
 @_dataclass
 class MouseEvent(Event):
@@ -159,16 +162,21 @@ class MouseEvent(Event):
     ------------------------
     `subject` should be the window that detected the mouse event.
     """
+    type: _typing.ClassVar[str] = "mouse"
+    hovering: _typing.ClassVar[_HoveringList] = []
     subject: _window.WindowEntity
     mouse_pos: _shape.Point
 
-    def call_chain(self, subject: EventHandling) -> None:
+    def call_chain(self, subject: _EventHandling) -> None:
         if isinstance(subject, _type_checking.ContainerLike):
+            last_hovering = MouseEvent.hovering.copy()
             hovering = subject.get_mouse_hover(self.mouse_pos)
+            MouseEvent.hovering = hovering.copy()
             hovering.pop(0) # Ignore subject
             for item in hovering:
-                if isinstance(item, EventHandling):
+                if isinstance(item, _EventHandling):
                     item.trigger(self)
+            MouseInteract.check_call(self, last_hovering)
 
 @_dataclass
 class MouseMove(MouseEvent):
@@ -197,6 +205,35 @@ class MouseScroll(MouseEvent):
     steps: int
     horizontal: bool = False
 
+@_dataclass
+class MouseInteract(MouseEvent):
+    """Will be generated when the mouse interacts with an EventHandling."""
+    type: _typing.ClassVar[str] = "mouse_interact"
+    subject: _EventHandling
+
+    def call_chain(self, _: _EventHandling):
+        return None
+
+    @staticmethod
+    def check_call(mouse_event: MouseEvent, last_hovering: _HoveringList):
+        for item in mouse_event.hovering:
+            if item not in last_hovering:
+                if isinstance(item, _EventHandling):
+                    item.trigger(MouseEnter(item, mouse_event.mouse_pos))
+        for item in last_hovering:
+            if item not in MouseEvent.hovering:
+                if isinstance(item, _EventHandling):
+                    item.trigger(MouseLeave(item, mouse_event.mouse_pos))
+
+@_dataclass
+class MouseEnter(MouseInteract):
+    """Will be generated when the mouse enters an EventHandling."""
+    type: _typing.ClassVar[str] = "mouse_interact.enter"
+
+@_dataclass
+class MouseLeave(MouseInteract):
+    """Will be generated when the mouse enters an EventHandling."""
+    type: _typing.ClassVar[str] = "mouse_interact.leave"
 
 # region Delay events
 
