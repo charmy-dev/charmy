@@ -16,6 +16,7 @@ from ..utils import type_checking as _type_checking
 
 if typing.TYPE_CHECKING:
     from ..backend.template import WindowBase
+    from .widget import Widget as _Widget
 
 
 __all__ = ["WindowEntity", "Window"]
@@ -67,8 +68,10 @@ class WindowEntity(_CharmyObject, _EventHandling):
         self.title = title
         self.icon = pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / "window_icon.png"
         self.background = background
+        # Hovering
+        self._mouse_hovering_on: list[_Container | _Widget] = []
         # Bind on window close
-        self.bind(_event_types.WidgetDestroy, lambda _: self.destroy())
+        self.bind(_event_types.WidgetDestroy, lambda _: self.destroy(), _is_internal=True)
         # Show window
         self.show()
 

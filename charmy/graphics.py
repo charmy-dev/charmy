@@ -90,8 +90,10 @@ class DrawnLine(DrawnObject):
             self.offset[1] + self.line.boundary[0][1] - self.anchor[1]
             ), self.line.boundary[1]
 
-    def draw(self, window: _window.Window,
-             _fallback_from: list[type[_styles.shape.LinePath]] = None) -> _typing.Self:
+    def draw(self, 
+            window: _window.Window,
+            _fallback_from: _typing.Optional[list[type[_styles.shape.LinePath]]] = None
+            ) -> _typing.Self:
         """Draw the line.
 
         :param window: The window to draw line to
@@ -100,8 +102,6 @@ class DrawnLine(DrawnObject):
 
         if not _fallback_from:
             _fallback_from = []
-        else:
-            _fallback_from = _fallback_from.copy()
 
         backend = window.parent.backend
         # 👆 Alias to avoid path to backend properties getting too long. 😅
@@ -320,7 +320,7 @@ class DrawnText(DrawnObject):
         # TODO: Implement getting text boundary via text-shape conversion
         return self._backend_reported_boundary
 
-    def draw(self, window: _window.Window):
+    def draw(self, window: _window.Window) -> _typing.Self:
         """Draw the text.
 
         :param window: The window to draw text to
@@ -374,6 +374,7 @@ class DrawnText(DrawnObject):
                     )
                 window.backend_base.drawing_list.append(range_rect)
                 self._actual_draw_list[window].append(range_rect)
+            return self
         else:
             #### Render as shape
             # TODO: Implement text → shape fallback

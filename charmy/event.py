@@ -73,6 +73,9 @@ class EventHandling:
         self.latest_event: event_types.Event = event_types.Event()
         self.tasks: dict[type[event_types.Event], list[EventTask]] = {}
 
+        self._mouse_hovering: bool = False
+        self._mouse_pressed_buttons: list[int] = []
+
         self._alive: bool = True
 
     def parse_event_type_str(self, event_type_str: str) -> dict:  # NOQA

@@ -75,7 +75,7 @@ class Button(_Widget):
         self._update_drawing_objects()
 
         self.bind(
-            _event_types.MouseRelease, 
+            _event_types.MouseClick, 
             lambda _: self.on_click(), {"button": 0}, _is_internal=True
             )
 
