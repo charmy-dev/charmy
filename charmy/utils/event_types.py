@@ -155,7 +155,7 @@ if _typing.TYPE_CHECKING:
     _HoveringList: _typing.TypeAlias = _typing.List[_widget.Widget | _container.Container]
 
 @_dataclass
-class MouseEvent(Event):
+class MouseRawEvent(Event):
     """The type of events that represents mouse actions.
 
     Notes on Param `subject`
@@ -169,9 +169,9 @@ class MouseEvent(Event):
 
     def call_chain(self, subject: _EventHandling) -> None:
         if isinstance(subject, _type_checking.ContainerLike):
-            last_hovering = MouseEvent.hovering.copy()
+            last_hovering = MouseRawEvent.hovering.copy()
             hovering = subject.get_mouse_hover(self.mouse_pos)
-            MouseEvent.hovering = hovering.copy()
+            MouseRawEvent.hovering = hovering.copy()
             hovering.pop(0) # Ignore subject
             for item in hovering:
                 if isinstance(item, _EventHandling):
@@ -179,26 +179,26 @@ class MouseEvent(Event):
             MouseInteract.check_call(self, last_hovering)
 
 @_dataclass
-class MouseMove(MouseEvent):
+class MouseMove(MouseRawEvent):
     """Will be generated when mouse movement is detected."""
     type: _typing.ClassVar[str] = "mouse.move"
 
 @_dataclass
-class MousePress(MouseEvent):
+class MousePress(MouseRawEvent):
     """Will be generated when a mouse button is pressed."""
     type: _typing.ClassVar[str] = "mouse.press"
 
     button: int
 
 @_dataclass
-class MouseRelease(MouseEvent):
+class MouseRelease(MouseRawEvent):
     """Will be generated when a mouse button is released."""
     type: _typing.ClassVar[str] = "mouse.release"
 
     button: int
 
 @_dataclass
-class MouseScroll(MouseEvent):
+class MouseScroll(MouseRawEvent):
     """Will be generated when a mouse button is released."""
     type: _typing.ClassVar[str] = "mouse.scroll"
 
@@ -206,24 +206,22 @@ class MouseScroll(MouseEvent):
     horizontal: bool = False
 
 @_dataclass
-class MouseInteract(MouseEvent):
+class MouseInteract(Event):
     """Will be generated when the mouse interacts with an EventHandling."""
     type: _typing.ClassVar[str] = "mouse_interact"
     subject: _EventHandling
-
-    def call_chain(self, _: _EventHandling):
-        return None
+    recent_raw_event: MouseRawEvent
 
     @staticmethod
-    def check_call(mouse_event: MouseEvent, last_hovering: _HoveringList):
+    def check_call(mouse_event: MouseRawEvent, last_hovering: _HoveringList):
         for item in mouse_event.hovering:
             if item not in last_hovering:
                 if isinstance(item, _EventHandling):
-                    item.trigger(MouseEnter(item, mouse_event.mouse_pos))
+                    item.trigger(MouseEnter(item, mouse_event))
         for item in last_hovering:
-            if item not in MouseEvent.hovering:
+            if item not in MouseRawEvent.hovering:
                 if isinstance(item, _EventHandling):
-                    item.trigger(MouseLeave(item, mouse_event.mouse_pos))
+                    item.trigger(MouseLeave(item, mouse_event))
 
 @_dataclass
 class MouseEnter(MouseInteract):

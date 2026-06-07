@@ -1,4 +1,5 @@
 import charmy as cm
+import cProfile
 
 
 window = cm.Window(size=(300, 160))
@@ -13,4 +14,4 @@ def print_press(event: cm.event_types.MouseEnter):
     print(f"Mouse entered")
 
 
-cm.mainloop()
+cProfile.run("cm.mainloop()", sort="cumtime")
