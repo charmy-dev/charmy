@@ -96,7 +96,7 @@ class WindowBase(template.WindowBase):
     def __init__(self, backend: template.Backend, charmy_window: window.WindowEntity):
         """Creates a window.
 
-        :param backend: The backend that this window uses (can be get from CharmyManager)
+        :param backend: The backend that this window uses (can be got from CharmyManager)
         """
         super().__init__(backend, charmy_window)
 

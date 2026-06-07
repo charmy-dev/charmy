@@ -8,7 +8,7 @@ if typing.TYPE_CHECKING:
 
 
 def list_backends_ep() -> list[importlib.metadata.EntryPoint]:
-    """Lists all available backends extentions entry point."""
+    """Lists all available backends extensions entry point."""
     return [entry_point for entry_point in \
             importlib.metadata.entry_points(group="charmy.backends")]
 
