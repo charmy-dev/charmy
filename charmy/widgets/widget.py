@@ -32,7 +32,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             if len(Container._with_stack) == 0:
                 raise TypeError("Param parent can only be None within a with Container() context.")
             else:
-                parent: Container = Container.with_stack[-1]
+                parent = Container._with_stack[-1]
 
         super().__init__()
         EventHandling.__init__(self)

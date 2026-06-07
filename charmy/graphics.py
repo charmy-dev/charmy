@@ -92,7 +92,7 @@ class DrawnLine(DrawnObject):
         ), self.line.boundary[1]
 
     def draw(
-        self, window: _window.Window, _fallback_from: list[type[_styles.shape.LinePath]] = None
+        self, window: _window.Window, _fallback_from: _typing.Optional[list[type[_styles.shape.LinePath]]] = None
     ) -> _typing.Self:
         """Draw the line.
 
@@ -102,8 +102,6 @@ class DrawnLine(DrawnObject):
 
         if not _fallback_from:
             _fallback_from = []
-        else:
-            _fallback_from = _fallback_from.copy()
 
         backend = window.parent.backend
         # 👆 Alias to avoid path to backend properties getting too long. 😅
