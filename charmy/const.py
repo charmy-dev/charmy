@@ -1,22 +1,20 @@
 """Charmy constants."""
-
 from __future__ import annotations as _
 
-import dataclasses
 import typing
-from enum import Enum
-
+import dataclasses
 # import sys
 from os import environ
+from enum import Enum
 
 if typing.TYPE_CHECKING:
     from . import cmm
 
 
+
 @dataclasses.dataclass
 class Configs:
-    default_backend: str = environ.get("CHARMY_BACKEND", "auto")
-
+    default_backend: str         = environ.get("CHARMY_BACKEND", "auto")
 
 class MOUSE_KEYS:
     """Consts of mouse keys.
@@ -25,11 +23,9 @@ class MOUSE_KEYS:
     - MIDDLE: 1
     - RIGHT: 2
     """
-
-    LEFT: int = 0
-    MIDDLE: int = 1
-    RIGHT: int = 2
-
+    LEFT    : int = 0
+    MIDDLE  : int = 1
+    RIGHT   : int = 2
 
 class ID(Enum):
     """ID is an enum to store object ID.

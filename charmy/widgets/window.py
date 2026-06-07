@@ -1,17 +1,18 @@
 """Charmy windows."""
 
-import io
-import pathlib
 import typing
 
-from .. import const as _const
-from .. import styles as _styles
+import pathlib
+
+import io
+
+from ..event import EventHandling as _EventHandling, event_types as _event_types
 from ..cm_object import CharmyObject as _CharmyObject
-from ..cmm import CharmyManager as _CharmyManager
-from ..event import EventHandling as _EventHandling
-from ..event import event_types as _event_types
-from ..utils import type_checking as _type_checking
 from .container import Container as _Container
+from .. import const as _const
+from ..cmm import CharmyManager as _CharmyManager
+from .. import styles as _styles
+from ..utils import type_checking as _type_checking
 
 if typing.TYPE_CHECKING:
     from ..backend.template import WindowBase
@@ -23,22 +24,19 @@ __all__ = ["WindowEntity", "Window"]
 class WindowEntity(_CharmyObject, _EventHandling):
     """Contains abilities of window entities."""
 
-    def __init__(
-        self,
-        parent: _CharmyManager | None = None,
-        size: _styles.shape.Size = (150, 150),
-        title: str = "Charmy Window",
-        background: _styles.texture.Texture | _styles.texture.TextureLike = (150, 150, 150),
-        *args,
-        **kwargs,
-    ):
+    def __init__(self, 
+                parent: _CharmyManager | None = None, 
+                size: _styles.shape.Size = (150, 150), 
+                title: str = "Charmy Window", 
+                background: _styles.texture.Texture | _styles.texture.TextureLike = (150, 150, 150), 
+                *args, **kwargs):
         """To create and initialize a window."""
         super().__init__(*args, **kwargs)
         _EventHandling.__init__(self)
         # Store parent manager
-        if parent is not None:  # Parent manager already specified
+        if parent is not None: # Parent manager already specified
             self.parent: _CharmyManager = parent
-        elif len(_CharmyManager.instances) == 1:  # Only one manager present
+        elif len(_CharmyManager.instances) == 1: # Only one manager present
             parent = _CharmyManager.instances[0]
             if parent is not None:
                 self.parent: _CharmyManager = parent
@@ -51,7 +49,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
             else:
                 raise RuntimeError(
                     "No manager specified for window, while multiple managers present."
-                )
+                    )
         self.parent.windows.append(self)
         # Define internal props
         self._pos: _styles.shape.Point
@@ -86,7 +84,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
 
     @property
     def abs_pos(self) -> _styles.shape.Point:
-        return 0, 0
+        return(0, 0)
 
     @property
     def size(self) -> _styles.shape.Size:
@@ -102,7 +100,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
     def title(self) -> str:
         """Window title.
 
-        Type string, internally stored as string. Getting value of this property will return
+        Type string, internally stored as string. Getting value of this property will return 
         current window title, while setting value will immediately change window's title.
         """
         return self._title
@@ -126,11 +124,11 @@ class WindowEntity(_CharmyObject, _EventHandling):
     def icon(self) -> bytes:
         """Window title.
 
-        Type string, `pathlib.Path`, bytes or `Image.Image` from PIL, internally stored as bytes.
-        Getting value of this property will return current window icon, while setting value will
+        Type string, `pathlib.Path`, bytes or `Image.Image` from PIL, internally stored as bytes. 
+        Getting value of this property will return current window icon, while setting value will 
         immediately change window's title.
 
-        When setting value, values of type string or `Path` express a path to the icon file, while
+        When setting value, values of type string or `Path` express a path to the icon file, while 
         those of type bytes or `Image` express icon image content
         """
         return self._icon
@@ -157,13 +155,13 @@ class WindowEntity(_CharmyObject, _EventHandling):
 
     def show(self) -> typing.Self:
         """Show the window.
-
+        
         Returns:
             self: The window itself
         """
         self.backend_base.show()
         return self
-
+    
     def update(self, force_redraw: bool = False):
         """Update the window.
 
@@ -181,19 +179,17 @@ class WindowEntity(_CharmyObject, _EventHandling):
         self.backend_base.close()
         self._alive = False
 
-
 class Window(WindowEntity, _Container):
     """Windows in Charmy."""
 
     is_root_container: typing.ClassVar[bool] = True
 
-    def __init__(
-        self,
-        parent: _CharmyManager | None = None,
-        size: _styles.shape.Size = (540, 360),
-        title: str = "Charmy Window",
-        background: _styles.texture.Texture | _styles.texture.TextureLike = (255, 255, 255),
-    ):
+    def __init__(self, 
+                parent: _CharmyManager | None = None, 
+                size: _styles.shape.Size = (540, 360), 
+                title: str = "Charmy Window", 
+                background: _styles.texture.Texture | _styles.texture.TextureLike = (255, 255, 255), 
+                ):
         """To create a window in Charmy."""
         WindowEntity.__init__(self, parent, size, title, background)
         _Container.__init__(self)

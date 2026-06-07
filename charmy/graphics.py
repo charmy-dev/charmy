@@ -2,12 +2,14 @@
 
 from __future__ import annotations as _
 
-import copy as _copy
 import typing as _typing
-from abc import abstractmethod as _abstractmethod
 
-from . import cm_object as _cm_object
+from abc import abstractmethod as _abstractmethod
+import copy as _copy
+
 from . import styles as _styles
+from . import cm_object as _cm_object
+
 
 if _typing.TYPE_CHECKING:
     from .widgets import window as _window
@@ -92,7 +94,7 @@ class DrawnLine(DrawnObject):
         ), self.line.boundary[1]
 
     def draw(
-        self, window: _window.Window, _fallback_from: _typing.Optional[list[type[_styles.shape.LinePath]]] = None
+        self, window: _window.Window, _fallback_from: list[type[_styles.shape.LinePath]] = None
     ) -> _typing.Self:
         """Draw the line.
 
@@ -102,6 +104,8 @@ class DrawnLine(DrawnObject):
 
         if not _fallback_from:
             _fallback_from = []
+        else:
+            _fallback_from = _fallback_from.copy()
 
         backend = window.parent.backend
         # 👆 Alias to avoid path to backend properties getting too long. 😅
@@ -151,15 +155,14 @@ class DrawnLine(DrawnObject):
 class DrawnShape(DrawnObject):
     """A Class used to represent shapes drawn to GUI or canvas."""
 
-    def __init__(
-        self,
-        shape: _styles.shape.ShapeType,
-        texture: _styles.texture.Texture | _styles.texture.TextureLike,
-        border_width: int = 0,
-        border_texture: _styles.texture.Texture | _styles.texture.TextureLike = None,
-        offset: _styles.shape.Point | _typing.Literal["auto"] = "auto",
-        anchor: _styles.shape.Point | _typing.Literal["auto"] = "auto",
-    ):
+    def __init__(self,
+                shape: _styles.shape.ShapeType,
+                texture: _styles.texture.Texture | _styles.texture.TextureLike,
+                border_width: int = 0,
+                border_texture: _styles.texture.Texture | _styles.texture.TextureLike = None,
+                offset: _styles.shape.Point | _typing.Literal["auto"] = "auto",
+                anchor: _styles.shape.Point | _typing.Literal["auto"] = "auto",
+                ):
         """Used to express shapes drawn on GUI or canvas.
 
         :param shape: The shape (to be drawn)
@@ -230,11 +233,10 @@ class DrawnShape(DrawnObject):
             self.anchor,
         )
 
-    def draw(
-        self,
-        window: _window.Window,
-        _fallback_from: list[type[_styles.shape.LinePath]] = [],
-    ) -> _typing.Self:
+    def draw(self,
+            window: _window.Window,
+            _fallback_from: list[type[_styles.shape.LinePath]] = [],
+            ) -> _typing.Self:
         """Draw the shape using backend.
 
         :param window: The window to draw shape to
@@ -283,14 +285,13 @@ class DrawnText(DrawnObject):
     Text relies on backend to render in most cases, so its boundary should be gotten from backend.
     """
 
-    def __init__(
-        self,
-        text: str,
-        style: _styles.text_style.TextStyle,
-        texture: _styles.texture.Texture | _styles.texture.TextureLike,
-        offset: _styles.shape.Point | _typing.Literal["auto"] = "auto",
-        anchor: _styles.shape.Point | _typing.Literal["auto"] = "auto",
-    ):
+    def __init__(self,
+                text: str,
+                style: _styles.text_style.TextStyle,
+                texture: _styles.texture.Texture | _styles.texture.TextureLike,
+                offset: _styles.shape.Point | _typing.Literal["auto"] = "auto",
+                anchor: _styles.shape.Point | _typing.Literal["auto"] = "auto",
+                ):
         """Used to express text drawn on GUI or canvas.
 
         :param text: The text content, in Python string
