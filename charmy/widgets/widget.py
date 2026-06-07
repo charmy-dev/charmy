@@ -16,9 +16,7 @@ __all__ = ["Widget"]
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     """Widget base class."""
 
-    def __init__(
-        self, parent: Container | None = None, style: dict | None = None
-    ):
+    def __init__(self, parent: Container | None = None, style: dict | None = None):
         """To initialize a widget.
 
         :param parent: Parent of the widget, or None in `with` context
