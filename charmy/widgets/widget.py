@@ -17,7 +17,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     """Widget base class."""
 
     def __init__(
-        self, parent: Container | None = None, style: dict = {":default": {"size": (0, 0)}}
+        self, parent: Container | None = None, style: dict | None = None
     ):
         """To initialize a widget.
 
@@ -25,11 +25,14 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         :param style: Style of the widget
         """
 
+        if style is None:
+            style = {":default": {"size": (0, 0)}}
+
         if parent is None:
             if len(Container._with_stack) == 0:
                 raise TypeError("Param parent can only be None within a with Container() context.")
             else:
-                parent = Container._with_stack[-1]
+                parent: Container = Container.with_stack[-1]
 
         super().__init__()
         EventHandling.__init__(self)
@@ -161,7 +164,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             component.draw(self.root_container)
 
         if isinstance(self, Container):
-            self.draw_children()
+            self.draw_children()  # NOQA
 
         return self
 

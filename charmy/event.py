@@ -179,7 +179,7 @@ class EventHandling:
 
         :param event_type: The type of event to be bound to
         :param target: A (list of) callable thing, what to do when this task is executed
-        :param condition: Conditions required for the task to run when event is triggered
+        :param conditions: Conditions required for the task to run when event is triggered
         :param multithread: If this task should be executed in another thread (False by default)
         :param _is_internal: If the task is added by Charmy and should be kept when clear bind
         :return: EventTask if `return_task` is True, othwise the EventHandling itself.

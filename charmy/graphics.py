@@ -322,6 +322,11 @@ class DrawnText(DrawnObject):
 
     @texture.setter
     def texture(self, new_texture: _styles.texture.Texture | _styles.texture.TextureLike) -> None:
+        """
+
+        :param new_texture:
+        :return:
+        """
         if isinstance(new_texture, _styles.texture.Texture):
             self._texture = new_texture
         else:
@@ -395,4 +400,5 @@ class DrawnText(DrawnObject):
             raise NotImplementedError("Currently cannot render text as shape!")
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
+        """Check if a point is inside the text."""
         return point in _styles.shape.Rect(*self.boundary)

@@ -125,3 +125,7 @@ class Container(reactive_caching.CachedClass):
                 return []
             else:
                 return [self]
+
+    @property
+    def with_stack(self):
+        return self._with_stack
