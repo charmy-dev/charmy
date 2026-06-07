@@ -35,3 +35,5 @@ In all, your first application should look like this:
 Then, you can get a window.
 
 .. image:: first_app_preview.png
+
+

@@ -162,3 +162,5 @@ cython_debug/
 # Yes come on just ignore this fucking annoying .idea folder!! I hate that!!!!
 
 .DS_Store
+
+docs/sy/
