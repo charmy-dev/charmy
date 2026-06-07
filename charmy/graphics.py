@@ -321,11 +321,6 @@ class DrawnText(DrawnObject):
 
     @texture.setter
     def texture(self, new_texture: _styles.texture.Texture | _styles.texture.TextureLike) -> None:
-        """
-
-        :param new_texture:
-        :return:
-        """
         if isinstance(new_texture, _styles.texture.Texture):
             self._texture = new_texture
         else:
