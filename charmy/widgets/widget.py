@@ -47,7 +47,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         self.state: str = "normal"
         self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
-        self._draw_dirty: bool = True
         self._alive: bool = True
 
     @property
@@ -182,7 +181,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         :param pos: The position to place the widget
         :param size: The size of this widget
         """
-        self.layout_profile = layout_profiles.PlaceProfile(pos, size) # type: ignore
+        self.layout_profile = layout_profiles.PlaceProfile(pos, size)
         return self
 
     def destroy(self) -> None:
@@ -203,4 +202,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     def _on_cache_dirty(self, prop_name: str) -> None:
         if prop_name == "components":
-            self._draw_dirty = True
+            for component in self.components:
+                component = typing.cast(graphics.DrawnObject, component)
+                component._need_redraw = True

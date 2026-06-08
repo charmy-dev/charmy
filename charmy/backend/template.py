@@ -160,8 +160,6 @@ class WindowBase(WhateverBase):
         self.fullscreen: bool = False
         self.customize_titlebar = False
 
-        self.drawing_list: list[charmy_stuff.graphics.DrawnObject] = []
-
         self.charmy_window: window.WindowEntity = charmy_window
 
         # And no need to perform any action to a dummy window
@@ -222,7 +220,7 @@ class WindowBase(WhateverBase):
 
     def clear_screen(self) -> typing.Self:
         """To clear all content from a window"""
-        self.drawing_list = []
+        self.charmy_window._drawing_list = []
         return self
 
     def set_pos(self, new: charmy_stuff.styles.shape.Point) -> typing.Self:

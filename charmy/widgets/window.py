@@ -15,8 +15,9 @@ from .. import styles as _styles
 from ..utils import type_checking as _type_checking
 
 if typing.TYPE_CHECKING:
-    from ..backend.template import WindowBase
+    from ..backend.template import WindowBase as _WindowBase
     from .widget import Widget as _Widget
+    from ..graphics import DrawnObject as _DrawnObject
 
 
 __all__ = ["WindowEntity", "Window"]
@@ -62,14 +63,15 @@ class WindowEntity(_CharmyObject, _EventHandling):
         self.visible = True
         self._alive = True
         # Initialize the WindowBase
-        self.backend_base: WindowBase = self.parent.backend.WindowBase(self.parent.backend, self)
+        self.backend_base: _WindowBase = self.parent.backend.WindowBase(self.parent.backend, self)
         # Set props
         self.size = size
         self.title = title
         self.icon = pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / "window_icon.png"
         self.background = background
-        # Hovering
+        # Other internal attrs
         self._mouse_hovering_on: list[_Container | _Widget] = []
+        self._drawing_list: typing.List[_DrawnObject] = []
         # Bind on window close
         self.bind(_event_types.WidgetDestroy, lambda _: self.destroy(), _is_internal=True)
         # Show window
@@ -132,7 +134,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
         immediately change window's title.
 
         When setting value, values of type string or `Path` express a path to the icon file, while 
-        those of type bytes or `Image` express icon image content
+        those of type bytes or `Image` express icon image content.
         """
         return self._icon
 
@@ -176,9 +178,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
             self.backend_base.update()
 
     def destroy(self):
-        if isinstance(self, _Container):
-            for child in self.children:
-                child.destroy()
+        """Close the window and mark it as inactive."""
         self.backend_base.close()
         self._alive = False
 
@@ -202,6 +202,9 @@ class Window(WindowEntity, _Container):
 
         :param force_redraw: Redraw the window content regardless presence of changes
         """
-        if self._alive:
-            self.draw_children()
-            WindowEntity.update(self, force_redraw)
+        _Container.draw_children(self)
+        WindowEntity.update(self, force_redraw)
+
+    def destroy(self):
+        """Destroy the window and its children."""
+        super().destroy()

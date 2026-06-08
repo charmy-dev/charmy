@@ -26,6 +26,7 @@ class DrawnObject(_cm_object.CharmyObject):
     def __init__(self):
         super().__init__()
         self._actual_draw_list: dict[_window.Window, list[DrawnObject]] = {}
+        self._need_redraw: bool = True
 
     @_abstractmethod
     def draw(self, window: _window.Window, *args, **kwargs) -> _typing.Self: ...
@@ -109,8 +110,8 @@ class DrawnLine(DrawnObject):
         if window not in self._actual_draw_list.keys():
             self._actual_draw_list[window] = []
         for draw_object in self._actual_draw_list[window]:
-            if draw_object in window.backend_base.drawing_list:
-                window.backend_base.drawing_list.remove(draw_object)
+            if draw_object in window.backend_base.charmy_window._drawing_list:
+                window.backend_base.charmy_window._drawing_list.remove(draw_object)
         self._actual_draw_list[window] = []
         # Rendering process
         if self.line.type == "line_path_class":
@@ -118,7 +119,7 @@ class DrawnLine(DrawnObject):
         else:
             if self.line.type in backend.LineBase.supports:
                 # If supported by the windows' backend.
-                window.backend_base.drawing_list.append(self)
+                window.backend_base.charmy_window._drawing_list.append(self)
                 self._actual_draw_list[window].append(self)
             else:
                 # If not supported, enters the fallback process
@@ -136,7 +137,7 @@ class DrawnLine(DrawnObject):
                     self.offset, 
                     self.anchor, 
                     )
-                window.backend_base.drawing_list.append(range_rect)
+                window.backend_base.charmy_window._drawing_list.append(range_rect)
                 self._actual_draw_list[window].append(range_rect)
         return self
 
@@ -238,14 +239,14 @@ class DrawnShape(DrawnObject):
         if window not in self._actual_draw_list.keys():
             self._actual_draw_list[window] = []
         for draw_object in self._actual_draw_list[window]:
-            if draw_object in window.backend_base.drawing_list:
-                window.backend_base.drawing_list.remove(draw_object)
+            if draw_object in window.backend_base.charmy_window._drawing_list:
+                window.backend_base.charmy_window._drawing_list.remove(draw_object)
         self._actual_draw_list[window] = []
         # Rendering process
         backend = window.parent.backend
         if self.shape.type in backend.ShapeBase.supports or \
             "any_shape" in backend.ShapeBase.supports:
-            window.backend_base.drawing_list.append(self)
+            window.backend_base.charmy_window._drawing_list.append(self)
         if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 range_rect = DrawnShape(
                     _styles.shape.Rect(*self.shape.boundary), 
@@ -254,7 +255,7 @@ class DrawnShape(DrawnObject):
                     self.offset, 
                     self.anchor
                     )
-                window.backend_base.drawing_list.append(range_rect)
+                window.backend_base.charmy_window._drawing_list.append(range_rect)
                 self._actual_draw_list[window].append(range_rect)
         return self
 
@@ -330,8 +331,8 @@ class DrawnText(DrawnObject):
         if window not in self._actual_draw_list.keys():
             self._actual_draw_list[window] = []
         for draw_object in self._actual_draw_list[window]:
-            if draw_object in window.backend_base.drawing_list:
-                window.backend_base.drawing_list.remove(draw_object)
+            if draw_object in window.backend_base.charmy_window._drawing_list:
+                window.backend_base.charmy_window._drawing_list.remove(draw_object)
         self._actual_draw_list[window] = []
         # Rendering process
         if backend.TextBase.supports.direct_render:
@@ -362,7 +363,7 @@ class DrawnText(DrawnObject):
                 rendered_text.style = rendered_style
             else:
                 rendered_text = self
-            window.backend_base.drawing_list.append(rendered_text)
+            window.backend_base.charmy_window._drawing_list.append(rendered_text)
             self._actual_draw_list[window].append(self)
             if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 range_rect = DrawnShape(
@@ -372,7 +373,7 @@ class DrawnText(DrawnObject):
                     # self.offset, 
                     # self.anchor, 
                     )
-                window.backend_base.drawing_list.append(range_rect)
+                window.backend_base.charmy_window._drawing_list.append(range_rect)
                 self._actual_draw_list[window].append(range_rect)
             return self
         else:

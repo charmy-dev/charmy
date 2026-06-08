@@ -244,7 +244,7 @@ class WindowBase(template.WindowBase):
         :return self: The WindowBase itself
         """
         # if redraw:
-        #     self.draw_frame(self.drawing_list)
+        #     self.draw_frame(self.charmy_window._drawing_list)
 
         if self.surface.get_width() == self.size[0] and self.surface.get_height() == self.size[1]:
             # Following Vibed with Deepseek & GitHub Copilot (model GPT-5 mini)
@@ -620,7 +620,9 @@ class TextBase(template.TextBase):
                 (255, 0, 0, 50), 
                 2, (255, 0, 0)
                 )
-            window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, text_bound)
+            window.charmy_window._drawing_list.insert(
+                window.charmy_window._drawing_list.index(drawn_text) + 1, text_bound
+                )
         ## Draw text itself
         window.cairo_context.move_to(drawn_text.offset[0], drawn_text.offset[1] + text_size[1])
         # 👆 Cairo use bottom-left as anchor, while Charmy uses top-left, so needs conversion on y
@@ -640,7 +642,9 @@ class TextBase(template.TextBase):
             else:
                 underline = drawn_text.style.underlined
             # Insert the underline right after the text
-            window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, underline)
+            window.charmy_window._drawing_list.insert(
+                window.charmy_window._drawing_list.index(drawn_text) + 1, underline
+                )
         if drawn_text.style.strikethrough != False:
             # Strikethrough
             strikethrough: charmy_stuff.graphics.DrawnLine
@@ -654,7 +658,9 @@ class TextBase(template.TextBase):
             else:
                 strikethrough = drawn_text.style.strikethrough
             # Insert the underline right after the text
-            window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, strikethrough)
+            window.charmy_window._drawing_list.insert(
+                window.charmy_window._drawing_list.index(drawn_text) + 1, strikethrough
+                )
 
     @staticmethod
     def cairo_set_font(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase):
