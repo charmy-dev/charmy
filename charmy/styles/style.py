@@ -12,6 +12,14 @@ class DEBUG_FLAGS:
     FILL_VARS_DEBUG_OUTPUT: bool = False
 
 
+class StateStyle:
+    pass
+
+
+class StyleSheet:
+    pass
+
+
 StyleType: _typing.TypeAlias = dict[str, _typing.Any]
 
 

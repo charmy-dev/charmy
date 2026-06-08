@@ -238,17 +238,16 @@ class WindowBase(template.WindowBase):
             case sdl2.SDL_QUIT:
                 self.charmy_window.destroy()
 
-    def update(self, redraw: bool = True) -> typing.Self:
+    def update(self, redraw: bool | charmy_stuff.styles.shape.ShapeRange = True) -> typing.Self:
         """Update the window.
 
         :return self: The WindowBase itself
         """
-        if redraw:
-            self.draw_frame(self.drawing_list)
-
+        # if redraw:
+        #     self.draw_frame(self.drawing_list)
 
         if self.surface.get_width() == self.size[0] and self.surface.get_height() == self.size[1]:
-            # Following Vibed with Deepseek
+            # Following Vibed with Deepseek & GitHub Copilot (model GPT-5 mini)
 
             # Get Cairo data（memoryview）
             cairo_data = self.surface.get_data()
@@ -260,18 +259,61 @@ class WindowBase(template.WindowBase):
 
             # Get pixels pointer
             pixels_ptr = self._window_surface.contents.pixels
+            # SDL surface 'pixels' may be an int or a c_void_p; normalize to integer base address
+            base_pixels = pixels_ptr.value if hasattr(pixels_ptr, "value") else pixels_ptr
             # Improvement: Get lower level pointer directly to avoid tobytes() copy
             # Calc data size
             pitch = self._window_surface.contents.pitch
-            data_size = pitch * self.size[1]
-            # Convert memoryview to ctypes data
-            cairo_ptr = ctypes.cast(
-                (ctypes.c_char * data_size).from_buffer(cairo_data),
-                ctypes.c_void_p
-            )
+            window_data_size = pitch * self.size[1]
 
-            # Copy data
-            ctypes.memmove(pixels_ptr, cairo_ptr, data_size)
+            # Prepare Cairo stride/size
+            cairo_stride = self.surface.get_stride()
+            cairo_data_size = cairo_stride * self.size[1]
+            # Create a ctypes array view of cairo data for address arithmetic
+            cairo_arr = (ctypes.c_char * cairo_data_size).from_buffer(cairo_data)
+            cairo_base_addr = ctypes.addressof(cairo_arr)
+
+            bytes_per_pixel = 4
+
+            # If redraw is a region ((x,y),(w,h)), copy only that region row-by-row.
+            # Consider any non-bool value as a region specification.
+            is_region = not isinstance(redraw, bool)
+
+            if is_region:
+                # Extract and clamp region
+                sx, sy = int(redraw[0][0]), int(redraw[0][1])
+                rw, rh = int(redraw[1][0]), int(redraw[1][1])
+                if sx < 0:
+                    rw += sx
+                    sx = 0
+                if sy < 0:
+                    rh += sy
+                    sy = 0
+                if sx >= self.size[0] or sy >= self.size[1] or rw <= 0 or rh <= 0:
+                    # Nothing to copy
+                    pass
+                else:
+                    # Clamp width/height to remaining area
+                    rw = max(0, min(rw, self.size[0] - sx))
+                    rh = max(0, min(rh, self.size[1] - sy))
+                    row_bytes = rw * bytes_per_pixel
+                    # Copy each row individually using stride/pitch
+                    for row in range(rh):
+                        src_offset = (sy + row) * cairo_stride + sx * bytes_per_pixel
+                        dst_offset = (sy + row) * pitch + sx * bytes_per_pixel
+                        src_addr = ctypes.c_void_p(cairo_base_addr + src_offset)
+                        dst_addr = ctypes.c_void_p(base_pixels + dst_offset)
+                        ctypes.memmove(dst_addr, src_addr, row_bytes)
+            else:
+                # Full-surface copy (existing behavior)
+                # Convert memoryview to ctypes data
+                cairo_ptr = ctypes.cast(
+                    (ctypes.c_char * window_data_size).from_buffer(cairo_data),
+                    ctypes.c_void_p
+                )
+                # Copy data
+                ctypes.memmove(ctypes.c_void_p(base_pixels), cairo_ptr, window_data_size)
+
             # Unlock surface
             sdl2.SDL_UnlockSurface(self._window_surface)
 

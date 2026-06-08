@@ -193,7 +193,7 @@ class WindowBase(WhateverBase):
             )
         return self
 
-    def update(self, redraw: bool = True) -> typing.Self:
+    def update(self, redraw: bool | charmy_stuff.styles.shape.ShapeRange = True) -> typing.Self:
         """Updates the window, although not supported in nobackend and will throw an error"""
         raise NotImplementedError(
             f"{self.Backend.friendly_name} is not a valid backend to make Charmy work. "

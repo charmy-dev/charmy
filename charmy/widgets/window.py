@@ -38,7 +38,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
         if parent is not None: # Parent manager already specified
             self.parent: _CharmyManager = parent
         elif len(_CharmyManager.instances) == 1: # Only one manager present
-            parent = _CharmyManager.instances[0]
+            parent = _CharmyManager.instances["CharmyManager0"]
             if parent is not None:
                 self.parent: _CharmyManager = parent
             else:
