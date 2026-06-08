@@ -49,6 +49,13 @@ class _InstancesList(typing.Generic[_InstanceType]):
         self.instances_by_id: weakref.WeakValueDictionary[str, _InstanceType] = \
             weakref.WeakValueDictionary()
 
+    def gc(self):
+        """Garbage collection for _InstancesList, clear destroyed weakrefs."""
+        for ref in self.instances:
+            if ref() is None:
+                self.instances.remove(ref)
+                del ref
+
     def append(self, item: _InstanceType) -> typing.Self:
         """Add an object to this list.
 
@@ -56,6 +63,7 @@ class _InstancesList(typing.Generic[_InstanceType]):
         """
         self.instances.append(weakref.ref(item))
         self.instances_by_id[item.id] = item
+        self.gc()
         return self
 
     def __getitem__(self, item: int | str) -> _InstanceType:
