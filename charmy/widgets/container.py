@@ -85,7 +85,10 @@ class Container(reactive_caching.CachedClass):
 
     def draw_children(self) -> typing.Self:
         """Draw the container and its children."""
+        redraw_regions: list[shape.ShapeRange] = []
         for child in self.children:
+            if child._draw_dirty:
+                redraw_regions.append(child.boundary) # TODO: Implement widget bbox
             child.draw()
         return self
 
