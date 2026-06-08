@@ -103,7 +103,8 @@ class Button(_Widget):
             lambda _: self.config(state="normal"), _is_internal=True
             )
 
-    @reactive_caching.cached_property(["state", "style", "text"])
+    @reactive_caching.cached_property("-exposed-")
+    # BUG of reactive_caching: cannot listen change in properties
     def components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
         """Components (drawn objects) that make up the button."""
         state=self.state
