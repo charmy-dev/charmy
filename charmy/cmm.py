@@ -72,7 +72,7 @@ def mainloop(interval: float = .01) -> None:
     while not none_alive:
         none_alive = True
         for manager_ref in CharmyManager.instances:
-            manager = manager_ref()
+            manager = manager_ref
             if manager is not None:
                 if manager._alive:
                     none_alive = False
@@ -84,6 +84,6 @@ def mainloop(interval: float = .01) -> None:
 def quit():  # NOQA
     """Quit Charmy."""
     for manager_ref in CharmyManager.instances:
-        manager = manager_ref()
+        manager = manager_ref
         if manager != None:
             manager.destroy()

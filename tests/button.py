@@ -1,5 +1,5 @@
-PERFORMANCE_STATS: bool = False
-MEM_STATS: bool = True
+PERFORMANCE_STATS: bool = True
+MEM_STATS: bool = False
 
 
 import charmy as cm
@@ -17,14 +17,15 @@ button = cm.Button(window, text="Hit me", on_click=lambda: print("Button clicked
 button.place((10, 10))
 
 
-@button.on(cm.event_types.MouseClick)
-def print_mem(event: cm.event_types.MouseClick):
-    snapshot = tracemalloc.take_snapshot()
+if MEM_STATS:
+    @button.on(cm.event_types.MouseClick)
+    def print_mem(event: cm.event_types.MouseClick):
+        snapshot = tracemalloc.take_snapshot()
 
-    for stat in snapshot.statistics("lineno")[:20]:
-        print(stat)
-    
-    print("\n=========================\n")
+        for stat in snapshot.statistics("lineno")[:20]:
+            print(stat)
+        
+        print("\n=========================\n")
 
 
 if PERFORMANCE_STATS:
