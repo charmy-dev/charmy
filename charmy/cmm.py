@@ -8,7 +8,7 @@ from .backend import loader as _backend_loader
 # from .const import MANAGER_ID
 # from .event import WorkingThread
 # from .frameworks import Frameworks
-from .cm_object import CharmyObject as _CharmyObject
+from .cm_object import CharmyObject as _CharmyObject, CharmyRegisteredObject as _CharmyRegisteredObject
 from .event import EventHandling as _EventHandling, event_types as _event_types
 
 if _typing.TYPE_CHECKING:
@@ -16,7 +16,7 @@ if _typing.TYPE_CHECKING:
     from . import window
 
 
-class CharmyManager(_CharmyObject, _EventHandling):
+class CharmyManager(_CharmyRegisteredObject, _EventHandling):
     """Charmy windows manager. Used to manage windows created with one backend."""
 
     def __init__(self, backend: str | Backend, **kwargs):
@@ -24,7 +24,7 @@ class CharmyManager(_CharmyObject, _EventHandling):
 
         :param backend: The backend this manager uses
         """
-        _CharmyObject.__init__(self, **kwargs)
+        super().__init__(**kwargs)
         _EventHandling.__init__(self)
 
         if isinstance(backend, str):

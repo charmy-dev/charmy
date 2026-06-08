@@ -1,4 +1,4 @@
-PERFORMANCE_STATS: bool = True
+PERFORMANCE_STATS: bool = False
 MEM_STATS: bool = False
 
 
