@@ -44,6 +44,7 @@ class _InstancesList(typing.Generic[_InstanceType]):
         This is mainly for internal use, but you are welcomed to find any other usage of this. 
         Remember to tell me your idea via GitHub discussions of this project (if available).
         """
+        super().__init_subclass__()
         self.instances: list[weakref.ReferenceType[_InstanceType]] = []
         self.instances_by_id: weakref.WeakValueDictionary[str, _InstanceType] = \
             weakref.WeakValueDictionary()
@@ -105,47 +106,42 @@ class CharmyObject:
     CharmyObject provides abilities of cumulating ID and set attributes.
     """
 
-    # objects: typing.Dict[str, CharmyObject] = {}  # find by ID {1: OBJ1, 2: OBJ2}
-    objects_sorted: typing.ClassVar[typing.Dict[str, dict[str, CharmyObject]]] = (
-        {}
-    )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
+    # Find by class {Button: _InstancesList(), Rect: _InstancesList(), ...}
+    objects_sorted: typing.ClassVar[typing.Dict[type[CharmyObject], _InstancesList]] = {}
 
+    # Instances list
     instances: typing.ClassVar[_InstancesList[typing.Self]]
 
-    def __init__(self, id_: ID | str = ID.AUTO):
+    def __init__(self, id_: typing.Optional[str] = None):
         """CharmyObject is this project's basic class.
 
         CharmyObject provides abilities of cumulating ID and set attributes.
 
         Args:
-            id_ (ID | str): Optional, ID for the object
+            id_ (str): Optional, ID for the object
 
         """
 
-        # self._attributes -> {key: value, key2: ["@custom", value, set_func, get_func]}
-        # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
-
-        self._custom: typing.Dict[str, typing.Any] = {}  # Private custom attributes
-
-        if id_ == ID.AUTO:
+        if id_ is None:
             id_prefix = self.class_name
             id_ = id_prefix + str(self.instance_count)
         if  any(id_ in cls_instances for cls_instances in CharmyObject.objects_sorted.values()):
             raise KeyError(id_)
-        if id_ != ID.NONE:
-            self.id: typing.Final[str] = id_  # Do not change after initialization
 
-            if self.class_name not in self.objects_sorted:
-                self.objects_sorted[self.class_name] = {self.id: self}
-            else:
-                self.objects_sorted[self.class_name][self.id] = self
+        self.id: typing.Final[str] = id_  # Do not change after initialization
 
-            self.__class__.instances.append(self)
+        # if self.class_name not in self.objects_sorted:
+        #     self.objects_sorted[self.class_name] = {self.id: self}
+        # else:
+        #     self.objects_sorted[self.class_name][self.id] = self
+
+        self.__class__.instances.append(self)
 
     def __init_subclass__(cls):
         """To initialize a CharmyObject subclass."""
         super().__init_subclass__()
         cls.instances = _InstancesList()
+        cls.objects_sorted[cls] = cls.instances
 
     # region: Properties
 
@@ -166,7 +162,7 @@ class CharmyObject:
     def get_obj(self, target_id: str, default=None) -> typing.Any | None:
         """Get registered object by id. (If not found, return default)"""
         for cls_instances in CharmyObject.objects_sorted.values():
-            if target_id in cls_instances.keys():
+            if target_id in cls_instances:
                 return cls_instances[target_id]
         else:
             return default
