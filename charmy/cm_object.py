@@ -44,9 +44,17 @@ class _InstancesList(typing.Generic[_InstanceType]):
         This is mainly for internal use, but you are welcomed to find any other usage of this. 
         Remember to tell me your idea via GitHub discussions of this project (if available).
         """
+        super().__init_subclass__()
         self.instances: list[weakref.ReferenceType[_InstanceType]] = []
         self.instances_by_id: weakref.WeakValueDictionary[str, _InstanceType] = \
             weakref.WeakValueDictionary()
+
+    def gc(self):
+        """Garbage collection for _InstancesList, clear destroyed weakrefs."""
+        for ref in self.instances:
+            if ref() is None:
+                self.instances.remove(ref)
+                del ref
 
     def append(self, item: _InstanceType) -> typing.Self:
         """Add an object to this list.
@@ -55,6 +63,7 @@ class _InstancesList(typing.Generic[_InstanceType]):
         """
         self.instances.append(weakref.ref(item))
         self.instances_by_id[item.id] = item
+        self.gc()
         return self
 
     def __getitem__(self, item: int | str) -> _InstanceType:
@@ -105,46 +114,42 @@ class CharmyObject:
     CharmyObject provides abilities of cumulating ID and set attributes.
     """
 
-    # objects: typing.Dict[str, CharmyObject] = {}  # find by ID {1: OBJ1, 2: OBJ2}
-    objects_sorted: typing.ClassVar[typing.Dict[str, dict[str, CharmyObject]]] = (
-        {}
-    )  # find by class name {OBJ1: {1: OBJECT1, 2: OBJECT2}}
+    # Find by class {Button: _InstancesList(), Rect: _InstancesList(), ...}
+    objects_sorted: typing.ClassVar[typing.Dict[type[CharmyObject], _InstancesList]] = {}
 
+    # Instances list
     instances: typing.ClassVar[_InstancesList[typing.Self]]
 
-    def __init__(self, id_: ID | str = ID.AUTO):
+    def __init__(self, id_: typing.Optional[str] = None):
         """CharmyObject is this project's basic class.
 
         CharmyObject provides abilities of cumulating ID and set attributes.
 
         Args:
-            id_ (ID | str): Optional, ID for the object
+            id_ (str): Optional, ID for the object
 
         """
 
-        # self._attributes -> {key: value, key2: ["@custom", value, set_func, get_func]}
-        # self._attributes[key] -> ["@custom", value, set_func, get_func] | value
-
-        self._custom: typing.Dict[str, typing.Any] = {}  # Private custom attributes
-
-        if id_ == ID.AUTO:
+        if id_ is None:
             id_prefix = self.class_name
             id_ = id_prefix + str(self.instance_count)
         if  any(id_ in cls_instances for cls_instances in CharmyObject.objects_sorted.values()):
             raise KeyError(id_)
-        if id_ != ID.NONE:
-            self.id: typing.Final[str] = id_  # Do not change after initialization
 
-            if self.class_name not in self.objects_sorted:
-                self.objects_sorted[self.class_name] = {self.id: self}
-            else:
-                self.objects_sorted[self.class_name][self.id] = self
+        self.id: typing.Final[str] = id_  # Do not change after initialization
 
-            self.__class__.instances.append(self)
+        # if self.class_name not in self.objects_sorted:
+        #     self.objects_sorted[self.class_name] = {self.id: self}
+        # else:
+        #     self.objects_sorted[self.class_name][self.id] = self
+
+        self.__class__.instances.append(self)
 
     def __init_subclass__(cls):
         """To initialize a CharmyObject subclass."""
+        super().__init_subclass__()
         cls.instances = _InstancesList()
+        cls.objects_sorted[cls] = cls.instances
 
     # region: Properties
 
@@ -165,54 +170,12 @@ class CharmyObject:
     def get_obj(self, target_id: str, default=None) -> typing.Any | None:
         """Get registered object by id. (If not found, return default)"""
         for cls_instances in CharmyObject.objects_sorted.values():
-            if target_id in cls_instances.keys():
+            if target_id in cls_instances:
                 return cls_instances[target_id]
         else:
             return default
 
     find = get_obj
-
-
-    # endregion
-
-    # ? @XiangQinxi I told u to forget these fucking mechanisms?
-    #
-    # # region: Shared attributes set / get
-
-    # def cset(self, name: str, value: typing.Any):
-    #     """Set shared attributes in CharmyObject.
-
-    #     Args:
-    #         name: Name of the attribute to set
-    #         value: Value to set
-    #     """
-    #     self.attributes[name] = value
-
-    # def cget(self, name: str, default: typing.Any = None) -> typing.Any:
-    #     """Get shared attributes in CharmyObject.
-
-    #     Args:
-    #         name: Name of the attribute to get
-    #         default: Default value to return if attribute not found
-
-    #     Returns:
-    #         Value of the attribute
-
-    #     """
-    #     if name in self.attributes:
-    #         return self.attributes[name]
-    #     return default
-
-    # def cconfig(self, **kwargs):
-    #     """Batch set values of multiple shared attributes in CharmyObject by giving params.
-
-    #     Args:
-    #          **kwargs: Any configs to add
-    #     """
-    #     for name in kwargs.keys():
-    #         self.cset(name, kwargs[name])
-
-    # # endregion
 
     def set(self, name: str, value: typing.Any):
         """Set attributes in CharmyObject.
@@ -221,7 +184,7 @@ class CharmyObject:
             name: Name of the attribute to set
             value: Value to set
         """
-        self.__dict__[name] = value
+        setattr(self, name, value)
 
     def get(self, name: str, default: typing.Any = None) -> typing.Any:
         """Get attributes in CharmyObject.
@@ -245,7 +208,7 @@ class CharmyObject:
              **kwargs: Any configs to add
         """
         for name in kwargs.keys():
-            self.set(name, kwargs[name])
+            setattr(self, name, kwargs[name])
 
     # region: __str__
 

@@ -22,3 +22,4 @@ class ContainerLike(_typing.Protocol):
 @_typing.runtime_checkable
 class WindowLike(_typing.Protocol):
     backend_base: _WindowBase
+    _hovering_on: _typing.List[_container.Container | _widget.Widget]
