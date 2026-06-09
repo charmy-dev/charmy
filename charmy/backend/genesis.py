@@ -243,10 +243,8 @@ class WindowBase(template.WindowBase):
 
         :return self: The WindowBase itself
         """
-        # if redraw:
-        #     self.draw_frame(self.charmy_window._drawing_list)
-
-        if self.surface.get_width() == self.size[0] and self.surface.get_height() == self.size[1]:
+        if redraw != False and \
+            self.surface.get_width() == self.size[0] and self.surface.get_height() == self.size[1]:
             # Following Vibed with Deepseek & GitHub Copilot (model GPT-5 mini)
 
             # Get Cairo data（memoryview）

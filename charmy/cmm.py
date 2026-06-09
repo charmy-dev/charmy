@@ -2,7 +2,7 @@ from __future__ import annotations as _
 
 import typing as _typing
 
-import time
+import time as _time
 
 from .backend import loader as _backend_loader
 # from .const import MANAGER_ID
@@ -10,10 +10,14 @@ from .backend import loader as _backend_loader
 # from .frameworks import Frameworks
 from .cm_object import CharmyObject as _CharmyObject, CharmyRegisteredObject as _CharmyRegisteredObject
 from .event import EventHandling as _EventHandling, event_types as _event_types
+from .const import DEBUG_FLAGS as _DEBUG_FLAGS
 
 if _typing.TYPE_CHECKING:
     from .backend.template import Backend
     from . import window
+
+
+__all__ = ["CharmyManager", "mainloop", "quit"]
 
 
 class CharmyManager(_CharmyRegisteredObject, _EventHandling):
@@ -69,6 +73,11 @@ def mainloop(interval: float = .01) -> None:
     :param interval: Time to wait between each loop, in integer seconds
     """
     none_alive = False
+    if _DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME != False:
+        if _DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME == True:
+            interval = 0.5
+        else:
+            interval = _DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME
     while not none_alive:
         none_alive = True
         for manager_ref in CharmyManager.instances:
@@ -78,7 +87,7 @@ def mainloop(interval: float = .01) -> None:
                     none_alive = False
                     manager.update()
         if interval > 0:
-            time.sleep(interval)
+            _time.sleep(interval)
 
 
 def quit():  # NOQA

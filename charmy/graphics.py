@@ -9,14 +9,11 @@ import copy as _copy
 
 from . import styles as _styles
 from . import cm_object as _cm_object
+from .const import DEBUG_FLAGS as _DEBUG_FLAGS
 
 
 if _typing.TYPE_CHECKING:
     from .widgets import window as _window
-
-
-class DEBUG_FLAGS:
-    DRAW_OBJECTS_BOUNDARY: bool = False
 
 
 # region DrawnObject base class
@@ -26,7 +23,7 @@ class DrawnObject(_cm_object.CharmyObject):
     def __init__(self):
         super().__init__()
         self._actual_draw_list: dict[_window.Window, list[DrawnObject]] = {}
-        self._need_redraw: bool = False
+        self._need_redraw: bool = True
 
     @_abstractmethod
     def draw(self, window: _window.Window, *args, **kwargs) -> _typing.Self: ...
@@ -129,7 +126,7 @@ class DrawnLine(DrawnObject):
                     drawn_host.line = fallback_line
                     drawn_host.draw(window, _fallback_from)
                     self._actual_draw_list[window].append(drawn_host)
-            if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
+            if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 range_rect = DrawnShape(
                     _styles.shape.Rect(*self.line.boundary), 
                     (0, 0, 255, 10), 
@@ -247,7 +244,7 @@ class DrawnShape(DrawnObject):
         if self.shape.type in backend.ShapeBase.supports or \
             "any_shape" in backend.ShapeBase.supports:
             window.backend_base.charmy_window._drawing_list.append(self)
-        if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
+        if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 range_rect = DrawnShape(
                     _styles.shape.Rect(*self.shape.boundary), 
                     (0, 0, 255, 50), 
@@ -365,7 +362,7 @@ class DrawnText(DrawnObject):
                 rendered_text = self
             window.backend_base.charmy_window._drawing_list.append(rendered_text)
             self._actual_draw_list[window].append(self)
-            if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
+            if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 range_rect = DrawnShape(
                     _styles.shape.Rect(*self.boundary), 
                     (0, 0, 255, 50), 
@@ -373,8 +370,9 @@ class DrawnText(DrawnObject):
                     # self.offset, 
                     # self.anchor, 
                     )
-                window.backend_base.charmy_window._drawing_list.append(range_rect)
-                self._actual_draw_list[window].append(range_rect)
+                window.parent.backend.ShapeBase.draw_shape(range_rect, window.backend_base)
+                # window.backend_base.charmy_window._drawing_list.append(range_rect)
+                # self._actual_draw_list[window].append(range_rect)
             return self
         else:
             #### Render as shape

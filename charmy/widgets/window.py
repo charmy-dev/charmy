@@ -13,6 +13,7 @@ from ..cmm import CharmyManager as _CharmyManager
 from .. import styles as _styles
 from ..utils import type_checking as _type_checking
 from .. import graphics as _graphics
+from ..const import DEBUG_FLAGS as _DEBUG_FLAGS
 
 if _typing.TYPE_CHECKING:
     from ..backend.template import WindowBase as _WindowBase
@@ -71,7 +72,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
         # Other internal attrs
         self._mouse_hovering_on: list[_Container | _Widget] = []
         self._drawing_list: _typing.List[_graphics.DrawnObject] = []
-        self._redraw_regions: list[_styles.shape.ShapeRange] = []
+        self._redraw_regions: list[_styles.shape.ShapeRange] = [((0, 0), self.size)]
         # Bind on window close
         self.bind(_event_types.WidgetDestroy, lambda _: self.destroy(), _is_internal=True)
         # Show window
@@ -94,7 +95,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
     @property
     def size(self) -> _styles.shape.Size:
         """Window size."""
-        return self.size
+        return self._size
 
     @size.setter
     def size(self, new: _styles.shape.Size) -> None:
@@ -189,20 +190,27 @@ class WindowEntity(_CharmyObject, _EventHandling):
 
     def _find_need_redraw(self) -> _typing.List[_graphics.DrawnObject]:
         """Find all components that need to be redrawn in current frame."""
-        redraw_regions: list[_styles.shape.ShapeRange] = []
         for drawn_obj in self._drawing_list:
             if drawn_obj._need_redraw:
-                redraw_regions.append(drawn_obj.boundary)
+                region = drawn_obj.boundary
+                if not region in self._redraw_regions:
+                    # Repeat check
+                    self._redraw_regions.append(region)
+                    drawn_obj._need_redraw = False
         result: _typing.List[_graphics.DrawnObject] = []
         for drawn_obj in self._drawing_list:
             boundary = drawn_obj.boundary
-            for region in redraw_regions:
-                if \
-                (boundary[0][0] + boundary[1][0] > region[0][0] and \
-                    boundary[0][0] < region[0][0] + region[1][0]) or \
-                (boundary[0][1] + boundary[1][1] > region[0][1] and \
-                    boundary[0][1] < region[0][1] + region[1][1]):
-                    result.append(drawn_obj)
+            for region in self._redraw_regions:
+                 # Check overlap on both axes (x AND y) to determine intersection
+                x1, y1 = boundary[0]
+                w1, h1 = boundary[1]
+                x2, y2 = region[0]
+                w2, h2 = region[1]
+                x_overlap = (x1 < x2 + w2) and (x1 + w1 > x2)
+                y_overlap = (y1 < y2 + h2) and (y1 + h1 > y2)
+                if x_overlap and y_overlap:
+                    if drawn_obj not in result:
+                        result.append(drawn_obj)
         return result
 
     def update(self, force_redraw: bool = False):
@@ -210,19 +218,38 @@ class WindowEntity(_CharmyObject, _EventHandling):
 
         :param force_redraw: Redraw the window content regardless presence of changes
         """
-        if self._alive:
-            update_event = _event_types.WidgetUpdate(self)
-            self.trigger(update_event)
-            if force_redraw:
-                redraw_list = self._drawing_list.copy()
-            else:
-                redraw_list = self._find_need_redraw()
-            self.draw_frame(redraw_list)
-            if force_redraw:
-                self.backend_base.update(True)
-            else:
-                for redraw_region in self._redraw_regions:
-                    self.backend_base.update(redraw_region)
+        # Handle params
+        if not self._alive:
+            return # Skip if window inactive
+        if ((0, 0), self.size) in self._redraw_regions:
+            force_redraw = True # When whole window needs redraw, it is force redraw then
+        # Trigger event
+        self.trigger(_event_types.WidgetUpdate(self))
+        if force_redraw:
+            redraw_list = self._drawing_list.copy()
+        else:
+            redraw_list = self._find_need_redraw()
+        self.draw_frame(redraw_list)
+        # print([str(obj) for obj in redraw_list])
+        # Debug: Mark redraws
+        if _DEBUG_FLAGS.MARK_REDRAWS:
+            for region in self._redraw_regions:
+                self.parent.backend.ShapeBase.draw_shape(
+                    _graphics.DrawnShape(
+                        _styles.shape.Rect(*region), (255, 0, 100, 50)
+                        ), 
+                    self.backend_base
+                    )
+        # Update window
+        if force_redraw:
+            self.backend_base.update(True)
+        else:
+            for redraw_region in self._redraw_regions:
+                self.backend_base.update(redraw_region)
+            if len(self._redraw_regions) == 0:
+                # If no region to redraw, still update window for events or so
+                self.backend_base.update(False)
+        self._redraw_regions: list[_styles.shape.ShapeRange] = []
 
     def destroy(self):
         """Close the window and mark it as inactive."""
