@@ -1,5 +1,6 @@
-PERFORMANCE_STATS: bool = False
+PERFORMANCE_STATS: bool = True
 MEM_STATS: bool = False
+TEST_WIDGET_MOVE: bool = True
 
 
 import charmy as cm
@@ -26,6 +27,12 @@ if MEM_STATS:
             print(stat)
         
         print("\n=========================\n")
+
+if TEST_WIDGET_MOVE:
+    @button.on(cm.event_types.MouseClick)
+    def print_mem(event: cm.event_types.MouseClick):
+        old = button.layout_profile.pos
+        button.layout_profile.pos = old[0] + 10, old[1] + 10
 
 
 if PERFORMANCE_STATS:

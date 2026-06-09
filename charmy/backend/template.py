@@ -184,6 +184,7 @@ class WindowBase(WhateverBase):
         # not_implemented_func(operation_desc="Drawing window background")
         self.Backend.ShapeBase.draw_shape(
             charmy_stuff.graphics.DrawnShape(
+                self.charmy_window, 
                 charmy_stuff.styles.shape.Rect((0, 0), self.size), 
                 self.background
                 ), 
@@ -248,7 +249,7 @@ class LineBase(WhateverBase):
         raise RuntimeError("LineBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_line(line: charmy_stuff.graphics.DrawnLine, window: WindowBase, *args, **kwargs):
+    def draw_line(line: charmy_stuff.graphics.DrawnLine, *args, **kwargs):
         """To draw a line on a specific GUI or canvas.
 
         Args:
@@ -279,7 +280,7 @@ class ShapeBase():
         raise RuntimeError("ShapeBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_shape(shape: charmy_stuff.graphics.DrawnShape, window: WindowBase, *args, **kwargs):
+    def draw_shape(shape: charmy_stuff.graphics.DrawnShape, *args, **kwargs):
         """To draw a shape on a specific GUI or canvas.
 
         :param shape: The shape to be drawn
@@ -330,7 +331,7 @@ class TextBase():
         raise RuntimeError("TextBase is used to hold APIs, but not supposed to be instantiated.")
 
     @staticmethod
-    def draw_text(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase, *args, **kwargs):
+    def draw_text(drawn_text: charmy_stuff.graphics.DrawnText, *args, **kwargs):
         """To draw a line or paragraph of text on a specific GUI or canvas."""
         not_implemented_func(operation_desc="Drawing text")
 

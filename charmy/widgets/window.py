@@ -236,6 +236,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
             for region in self._redraw_regions:
                 self.parent.backend.ShapeBase.draw_shape(
                     _graphics.DrawnShape(
+                        self, 
                         _styles.shape.Rect(*region), (255, 0, 100, 50)
                         ), 
                     self.backend_base

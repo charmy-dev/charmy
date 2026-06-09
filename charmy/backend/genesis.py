@@ -25,7 +25,7 @@ from charmy.backend import template
 import charmy.backend.utils as charmy_stuff
 
 if typing.TYPE_CHECKING:
-    from charmy.widgets import window
+    from charmy.widgets import window as _window
 
 __all__ = ["Backend", "DEBUG_FLAGS"]
 
@@ -93,7 +93,7 @@ class WindowBase(template.WindowBase):
     supports = WindowSupportState()
     Backend = Backend
 
-    def __init__(self, backend: template.Backend, charmy_window: window.WindowEntity):
+    def __init__(self, backend: template.Backend, charmy_window: _window.WindowEntity):
         """Creates a window.
 
         :param backend: The backend that this window uses (can be get from CharmyManager)
@@ -454,12 +454,18 @@ class ShapeBase(template.ShapeBase):
     supports: ShapeSupportState = ShapeSupportState()
 
     @staticmethod
-    def draw_any_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, 
-                       window: WindowBase, stroke: bool = True, noskip: bool = False, 
-                       *args, **kwargs) -> None:
+    def draw_any_shape(
+            drawn_shape: charmy_stuff.graphics.DrawnShape, 
+            stroke: bool = True, 
+            noskip: bool = False, 
+            *args, **kwargs) -> None:
         """Draw shape by lines."""
+        window = drawn_shape.window.backend_base
         if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.SingleShape):
             warnings.warn("draw_any_shape() is only for drawing AnyShape")
+            return
+        if not isinstance(window, WindowBase):
+            warnings.warn(f"Wrong backend for shape {drawn_shape.id}.")
             return
         if DEBUG_FLAGS.WARN_UNCLOSED_SHAPES:
             last_line_end = drawn_shape.shape.lines[-1].end_point
@@ -473,6 +479,7 @@ class ShapeBase(template.ShapeBase):
                     line.start_point[1] + drawn_shape.offset[1] - drawn_shape.anchor[1], 
                 )
             drawn_line = charmy_stuff.graphics.DrawnLine(
+                window.charmy_window, 
                 line, 
                 (255, 0, 0, 255 if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING else 0), 
                 1, 
@@ -510,18 +517,24 @@ class ShapeBase(template.ShapeBase):
             # If still need visible border, then draw again
             for line in drawn_shape.shape.lines:
                 drawn_line = charmy_stuff.graphics.DrawnLine(
-                    line, drawn_shape.border_texture, drawn_shape.border_width, 
+                    window.charmy_window, line, drawn_shape.border_texture, drawn_shape.border_width, 
                     offset=drawn_shape.offset, anchor=drawn_shape.anchor)
                 LineBase.draw_line(drawn_line, window, stroke=False)
-                del drawn_line
             window.cairo_context.stroke()
 
     @staticmethod
-    def draw_shape_group(drawn_shape: charmy_stuff.graphics.DrawnShape, 
-                         window: WindowBase, stroke: bool = True, noskip: bool = False, 
-                         *args, **kwargs) -> None:
+    def draw_shape_group(
+            drawn_shape: charmy_stuff.graphics.DrawnShape, 
+            stroke: bool = True, 
+            noskip: bool = False, 
+            *args, **kwargs) -> None:
+        """Draw shape group."""
+        window = drawn_shape.window.backend_base
         if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
             raise TypeError("draw_shape_group() is only designed for shape group")
+        if not isinstance(window, WindowBase):
+            warnings.warn(f"Wrong backend for shape {drawn_shape.id}.")
+            return
         for index, subshape in enumerate(drawn_shape.shape.shapes):
             host = drawn_shape.copy()
             host.shape = subshape
@@ -539,9 +552,9 @@ class ShapeBase(template.ShapeBase):
                    *args, **kwargs) -> None:
         window.cairo_context.set_fill_rule(cairo.FILL_RULE_WINDING)
         if isinstance(drawn_shape.shape, charmy_stuff.styles.shape.SingleShape):
-            ShapeBase.draw_any_shape(drawn_shape, window, stroke, noskip, *args, **kwargs)
+            ShapeBase.draw_any_shape(drawn_shape, stroke, noskip, *args, **kwargs)
         elif isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
-            ShapeBase.draw_shape_group(drawn_shape, window, stroke, noskip, *args, **kwargs)
+            ShapeBase.draw_shape_group(drawn_shape, stroke, noskip, *args, **kwargs)
         else:
             template.not_implemented_func(Backend.friendly_name, 
                     f"Drawing a shape that is neither a subclass of SingleShape nor ShapeGroup")
@@ -605,8 +618,12 @@ class TextBase(template.TextBase):
     supports: TextSupportState = TextSupportState()
 
     @staticmethod
-    def draw_text(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase):
+    def draw_text(drawn_text: charmy_stuff.graphics.DrawnText):
         """To draw text on GUI or canvas."""
+        window = drawn_text.window.backend_base
+        if not isinstance(window, WindowBase):
+            warnings.warn(f"Wrong backend for shape {drawn_text.id}.")
+            return
         ## Set Cairo font
         TextBase.cairo_set_font(drawn_text, window)
         # Text size
@@ -614,6 +631,7 @@ class TextBase(template.TextBase):
         drawn_text._backend_reported_boundary = (drawn_text.offset, text_size)
         if DEBUG_FLAGS.DRAW_CAIRO_STOCK_TEXT_BOUND:
             text_bound = charmy_stuff.graphics.DrawnShape(
+                drawn_text.window, 
                 charmy_stuff.styles.shape.Rect(drawn_text.offset, text_size), 
                 (255, 0, 0, 50), 
                 2, (255, 0, 0)
@@ -631,10 +649,12 @@ class TextBase(template.TextBase):
             # Underline
             underline: charmy_stuff.graphics.DrawnLine
             if isinstance(drawn_text.style.underlined, bool):
-                underline = charmy_stuff.graphics.DrawnLine(charmy_stuff.styles.shape.Line([
-                    (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] + offset), 
-                    (drawn_text.offset[0] + text_size[0] + 2, 
-                     drawn_text.offset[1] + text_size[1] + offset)
+                underline = charmy_stuff.graphics.DrawnLine(
+                    drawn_text.window, 
+                    charmy_stuff.styles.shape.Line([
+                        (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] + offset), 
+                        (drawn_text.offset[0] + text_size[0] + 2, 
+                        drawn_text.offset[1] + text_size[1] + offset)
                     ]), 
                     drawn_text.texture, max(1, int(drawn_text.style.size) // 15))
             else:
@@ -647,10 +667,12 @@ class TextBase(template.TextBase):
             # Strikethrough
             strikethrough: charmy_stuff.graphics.DrawnLine
             if isinstance(drawn_text.style.strikethrough, bool):
-                strikethrough = charmy_stuff.graphics.DrawnLine(charmy_stuff.styles.shape.Line([
-                    (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] // 2 + offset), 
-                    (drawn_text.offset[0] + text_size[0] + 2, 
-                     drawn_text.offset[1] + text_size[1]//2 + offset)
+                strikethrough = charmy_stuff.graphics.DrawnLine(
+                    drawn_text.window, 
+                    charmy_stuff.styles.shape.Line([
+                        (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] // 2 + offset), 
+                        (drawn_text.offset[0] + text_size[0] + 2, 
+                        drawn_text.offset[1] + text_size[1]//2 + offset)
                     ]), 
                     drawn_text.texture, max(1, int(drawn_text.style.size) // 15))
             else:
