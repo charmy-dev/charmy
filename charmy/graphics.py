@@ -26,7 +26,7 @@ class DrawnObject(_cm_object.CharmyObject):
     def __init__(self):
         super().__init__()
         self._actual_draw_list: dict[_window.Window, list[DrawnObject]] = {}
-        self._need_redraw: bool = True
+        self._need_redraw: bool = False
 
     @_abstractmethod
     def draw(self, window: _window.Window, *args, **kwargs) -> _typing.Self: ...

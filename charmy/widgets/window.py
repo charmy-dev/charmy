@@ -1,10 +1,9 @@
 """Charmy windows."""
 
-import typing
+import typing as _typing
 
-import pathlib
-
-import io
+import pathlib as _pathlib
+import io as _io
 
 from ..event import EventHandling as _EventHandling, event_types as _event_types
 from ..cm_object import CharmyObject as _CharmyObject
@@ -13,11 +12,11 @@ from .. import const as _const
 from ..cmm import CharmyManager as _CharmyManager
 from .. import styles as _styles
 from ..utils import type_checking as _type_checking
+from .. import graphics as _graphics
 
-if typing.TYPE_CHECKING:
+if _typing.TYPE_CHECKING:
     from ..backend.template import WindowBase as _WindowBase
     from .widget import Widget as _Widget
-    from ..graphics import DrawnObject as _DrawnObject
 
 
 __all__ = ["WindowEntity", "Window"]
@@ -67,11 +66,12 @@ class WindowEntity(_CharmyObject, _EventHandling):
         # Set props
         self.size = size
         self.title = title
-        self.icon = pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / "window_icon.png"
+        self.icon = _pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / "window_icon.png"
         self.background = background
         # Other internal attrs
         self._mouse_hovering_on: list[_Container | _Widget] = []
-        self._drawing_list: typing.List[_DrawnObject] = []
+        self._drawing_list: _typing.List[_graphics.DrawnObject] = []
+        self._redraw_regions: list[_styles.shape.ShapeRange] = []
         # Bind on window close
         self.bind(_event_types.WidgetDestroy, lambda _: self.destroy(), _is_internal=True)
         # Show window
@@ -139,18 +139,18 @@ class WindowEntity(_CharmyObject, _EventHandling):
         return self._icon
 
     @icon.setter
-    def icon(self, new: str | pathlib.Path | bytes | _type_checking.PILImageType) -> None:
-        if isinstance(new, str) or isinstance(new, pathlib.Path):
+    def icon(self, new: str | _pathlib.Path | bytes | _type_checking.PILImageType) -> None:
+        if isinstance(new, str) or isinstance(new, _pathlib.Path):
             # Icon file path
             if isinstance(new, str):
-                new = pathlib.Path(new)
+                new = _pathlib.Path(new)
             icon_f = open(new, mode="rb")
             self._icon = icon_f.read()
             icon_f.close()
         else:
             # Icon image raw content
             if isinstance(new, _type_checking.PILImageType):
-                buffer = io.BytesIO()
+                buffer = _io.BytesIO()
                 new.save(buffer, format="PNG")
                 new = buffer.getvalue()
                 buffer.close()
@@ -158,7 +158,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
         # Call backend set icon
         self.backend_base.set_icon(self._icon)
 
-    def show(self) -> typing.Self:
+    def show(self) -> _typing.Self:
         """Show the window.
         
         Returns:
@@ -166,7 +166,45 @@ class WindowEntity(_CharmyObject, _EventHandling):
         """
         self.backend_base.show()
         return self
-    
+
+    def draw_frame(self, drawing_list: list[_graphics.DrawnObject]) -> _typing.Self:
+        """Draw a frame for the window.
+        
+        :param drawing_list: The list of the objects to draw
+        """
+        backend = self.parent.backend # Alias to avoid the path to backend getting too long
+        self.backend_base.draw_background()
+        for drawn_obj in drawing_list:
+            if isinstance(drawn_obj, _graphics.DrawnLine):
+                backend.LineBase.draw_line(drawn_obj, self.backend_base)
+            elif isinstance(drawn_obj, _graphics.DrawnShape):
+                backend.ShapeBase.draw_shape(drawn_obj, self.backend_base)
+            elif isinstance(drawn_obj, _graphics.DrawnText):
+                backend.TextBase.draw_text(drawn_obj, self.backend_base)
+            else:
+                raise RuntimeError(
+                    f"Unsupported of drawn object type: {drawn_obj.__class__.__name__}"
+                    )
+        return self
+
+    def _find_need_redraw(self) -> _typing.List[_graphics.DrawnObject]:
+        """Find all components that need to be redrawn in current frame."""
+        redraw_regions: list[_styles.shape.ShapeRange] = []
+        for drawn_obj in self._drawing_list:
+            if drawn_obj._need_redraw:
+                redraw_regions.append(drawn_obj.boundary)
+        result: _typing.List[_graphics.DrawnObject] = []
+        for drawn_obj in self._drawing_list:
+            boundary = drawn_obj.boundary
+            for region in redraw_regions:
+                if \
+                (boundary[0][0] + boundary[1][0] > region[0][0] and \
+                    boundary[0][0] < region[0][0] + region[1][0]) or \
+                (boundary[0][1] + boundary[1][1] > region[0][1] and \
+                    boundary[0][1] < region[0][1] + region[1][1]):
+                    result.append(drawn_obj)
+        return result
+
     def update(self, force_redraw: bool = False):
         """Update the window.
 
@@ -175,7 +213,16 @@ class WindowEntity(_CharmyObject, _EventHandling):
         if self._alive:
             update_event = _event_types.WidgetUpdate(self)
             self.trigger(update_event)
-            self.backend_base.update()
+            if force_redraw:
+                redraw_list = self._drawing_list.copy()
+            else:
+                redraw_list = self._find_need_redraw()
+            self.draw_frame(redraw_list)
+            if force_redraw:
+                self.backend_base.update(True)
+            else:
+                for redraw_region in self._redraw_regions:
+                    self.backend_base.update(redraw_region)
 
     def destroy(self):
         """Close the window and mark it as inactive."""
@@ -185,7 +232,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
 class Window(WindowEntity, _Container):
     """Windows in Charmy."""
 
-    is_root_container: typing.ClassVar[bool] = True
+    is_root_container: _typing.ClassVar[bool] = True
 
     def __init__(self, 
                 parent: _CharmyManager | None = None, 

@@ -198,26 +198,6 @@ class WindowBase(WhateverBase):
             "You must install another backend that supports your system GUI.\n"
         )
 
-    def draw_frame(self, drawing_list: list[charmy_stuff.graphics.DrawnObject]) -> typing.Self:
-        """Draw a frame for the window.
-        
-        :param drawing_list: The list of the objects to draw
-        """
-        self.draw_background()
-        for drawing_obj in drawing_list:
-            if isinstance(drawing_obj, charmy_stuff.graphics.DrawnLine):
-                self.Backend.LineBase.draw_line(drawing_obj, self)
-            elif isinstance(drawing_obj, charmy_stuff.graphics.DrawnShape):
-                self.Backend.ShapeBase.draw_shape(drawing_obj, self)
-            elif isinstance(drawing_obj, charmy_stuff.graphics.DrawnText):
-                self.Backend.TextBase.draw_text(drawing_obj, self)
-            else:
-                not_implemented_func(
-                    f"most backends (including current {self.Backend.friendly_name})", 
-                    f"Drawing object type {drawing_obj.__class__.__name__}"
-                    )
-        return self
-
     def clear_screen(self) -> typing.Self:
         """To clear all content from a window"""
         self.charmy_window._drawing_list = []
