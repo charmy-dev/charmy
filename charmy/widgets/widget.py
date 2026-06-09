@@ -200,8 +200,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         else:
             return False
 
-    def _on_cache_dirty(self, prop_name: str) -> None:
-        if prop_name == "components":
-            for component in self.components:
-                component = typing.cast(graphics.DrawnObject, component)
-                component._need_redraw = True
+    # def _on_cache_dirty(self, prop_name: str) -> None:
+    #     if prop_name == "components":
+    #         for component in self.components:
+    #             component = typing.cast(graphics.DrawnObject, component)
+    #             component._need_redraw = True

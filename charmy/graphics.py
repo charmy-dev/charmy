@@ -21,9 +21,12 @@ class DrawnObject(_cm_object.CharmyObject):
     """Base class of drawn objects in Charmy."""
 
     def __init__(self):
+        self._booting: bool = True
         super().__init__()
         self._actual_draw_list: dict[_window.Window, list[DrawnObject]] = {}
+        self._attrs: list[str] = []
         self._need_redraw: bool = True
+        self._booting = False
 
     @_abstractmethod
     def draw(self, window: _window.Window, *args, **kwargs) -> _typing.Self: ...
@@ -34,6 +37,19 @@ class DrawnObject(_cm_object.CharmyObject):
 
     @_abstractmethod
     def __contains__(self, point: _styles.shape.Point) -> bool: ...
+
+    def __setattr__(self, name: str, value: _typing.Any) -> None:
+        """Set attr and mark self need redraw."""
+        # Set attr
+        super().__setattr__(name, value)
+        # Pass internal, and pass when object initializing
+        if name.startswith("_"):
+            return
+        if self._booting:
+            return
+        # If is an watched attr of self, mark self need redraw
+        if name in self._attrs:
+            self._need_redraw = True
 
 # region Line
 
@@ -56,6 +72,7 @@ class DrawnLine(DrawnObject):
         :param anchor: Point of anchor on the original line
         """
         super().__init__()
+        self._attrs = ["line", "texture", "width", "offset", "anchor"]
 
         self.line: _styles.shape.LinePath = line
         self._texture: _styles.texture.Texture = _styles.texture.ensure_texture(texture)
@@ -165,6 +182,7 @@ class DrawnShape(DrawnObject):
         :param anchor: Point of anchor on the original shape
         """
         super().__init__()
+        self._attrs = ["shape", "texture", "border_width", "border_texture", "offset", "anchor"]
 
         self.shape: _styles.shape.ShapeType = shape
         self._texture: _styles.texture.Texture = _styles.texture.ensure_texture(texture)
@@ -286,6 +304,7 @@ class DrawnText(DrawnObject):
         :param anchor: Point of anchor on the text
         """
         super().__init__()
+        self._attrs = ["text", "style", "texture", "offset", "anchor"]
 
         self.text: str = text
         self.style: _styles.text_style.TextStyle = style
