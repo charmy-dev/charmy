@@ -165,10 +165,11 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             return self
 
         for component in self.components:
-            component.draw(self.root_container)
+            component = typing.cast(graphics.DrawnObject, component)
+            component.draw()
 
         if isinstance(self, Container):
-            self.draw_children()
+            Container.draw_children(self)
 
         return self
 

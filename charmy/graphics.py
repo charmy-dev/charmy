@@ -38,13 +38,14 @@ class DrawnObject(_cm_object.CharmyObject):
         super().__init__()
         self._attrs: list[str] = []
         self._need_redraw: bool = True
+        self._drawn: bool = False
         self._booting = False
         self.window: _window.WindowEntity = window
         self.offset: _styles.shape.Point
         self.anchor: _styles.shape.Point
 
     @_abstractmethod
-    def draw(self, window: _window.Window, *args, **kwargs) -> _typing.Self: ...
+    def draw(self, *args, **kwargs) -> _typing.Self: ...
 
     @property
     @_abstractmethod
@@ -55,17 +56,20 @@ class DrawnObject(_cm_object.CharmyObject):
 
     def __setattr__(self, name: str, value: _typing.Any) -> None:
         """Set attr and mark self need redraw."""
-        old_boundary = self.boundary
-        # Set attr
-        super().__setattr__(name, value)
         # Pass internal, and pass when object initializing
         if name.startswith("_"):
-            return
+            return super().__setattr__(name, value)
         if self._booting:
-            return
-        # If is an watched attr of self, mark self need redraw
-        if name in self._attrs:
-            self._need_redraw = True
+            return super().__setattr__(name, value)
+        # If is an watched attr of self, add self bbox to redraw list
+        # If position changed, add both old and new bbox
+        if self._drawn:
+            old_boundary = self.boundary
+        super().__setattr__(name, value)
+        if name in self._attrs and self._drawn:
+            self.window._redraw_regions.append(self.boundary)
+            if self.boundary != old_boundary:
+                self.window._redraw_regions.append(old_boundary)
 
 # region Line
 
@@ -157,6 +161,7 @@ class DrawnLine(DrawnObject):
                     drawn_host.draw(_fallback_from)
             if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 _draw_bbox(self)
+        self._drawn = True
         return self
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
@@ -265,6 +270,7 @@ class DrawnShape(DrawnObject):
             self.window.backend_base.charmy_window._drawing_list.append(self)
         if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
             _draw_bbox(self)
+        self._drawn = True
         return self
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
@@ -372,11 +378,12 @@ class DrawnText(DrawnObject):
             self.window.backend_base.charmy_window._drawing_list.append(rendered_text)
             if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 _draw_bbox(self)
-            return self
         else:
             #### Render as shape
             # TODO: Implement text → shape fallback
             raise NotImplementedError("Currently cannot render text as shape!")
+        self._drawn = True
+        return self
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
         return point in _styles.shape.Rect(*self.boundary)

@@ -320,7 +320,6 @@ class WindowBase(template.WindowBase):
 
         # Handle events
         for event in sdl2.ext.get_events():
-            self.sdl2_handle_event(event)
             match event.type:
                 case sdl2.SDL_WINDOWEVENT:
                     if event.window.event == sdl2.SDL_WINDOWEVENT_RESIZED:
@@ -328,6 +327,7 @@ class WindowBase(template.WindowBase):
                         h = ctypes.c_int()
                         sdl2.SDL_GetWindowSize(self.window, w, h)
                         self.set_size((w.value, h.value), _passive = True)
+            self.sdl2_handle_event(event)
         return self
 
     def close(self):
@@ -361,7 +361,7 @@ class LineBase(template.LineBase):
 
     @staticmethod
     def draw_line(drawn_line: charmy_stuff.graphics.DrawnLine, 
-                  window: WindowBase, stroke: bool = True, noskip: bool = False, 
+                  stroke: bool = True, noskip: bool = False, 
                   *args, **kwargs):
         """To draw a line on a specific window.
 
@@ -371,13 +371,14 @@ class LineBase(template.LineBase):
         """
         # Unpack the DrawnLine
         line = drawn_line.line
+        window = drawn_line.window.backend_base
         texture = drawn_line.texture
         line_width = drawn_line.width
         anchor = drawn_line.anchor
         offset = drawn_line.offset
 
         # Detect wrong backend
-        if window.Backend != Backend:
+        if not isinstance(window, WindowBase):
             raise RuntimeError(
                 "Wrong backend for draw_line()! Asked to draw on a window held by "
                 f"{window.Backend.friendly_name} but I serve backend {Backend.friendly_name}!"
@@ -487,7 +488,7 @@ class ShapeBase(template.ShapeBase):
                 anchor=drawn_shape.anchor, 
                 )
             # drawn_line.anchor = drawn_shape.shape.boundary[0]
-            LineBase.draw_line(drawn_line, window, stroke=False, noskip=True)
+            LineBase.draw_line(drawn_line, stroke=False, noskip=True)
             del drawn_line
             if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING:
                 window.cairo_context.stroke_preserve()
@@ -519,7 +520,7 @@ class ShapeBase(template.ShapeBase):
                 drawn_line = charmy_stuff.graphics.DrawnLine(
                     window.charmy_window, line, drawn_shape.border_texture, drawn_shape.border_width, 
                     offset=drawn_shape.offset, anchor=drawn_shape.anchor)
-                LineBase.draw_line(drawn_line, window, stroke=False)
+                LineBase.draw_line(drawn_line, stroke=False)
             window.cairo_context.stroke()
 
     @staticmethod
@@ -540,16 +541,21 @@ class ShapeBase(template.ShapeBase):
             host.shape = subshape
             ShapeBase.draw_shape(
                 host, 
-                window, 
                 index == len(drawn_shape.shape.shapes) - 1 and stroke, 
                 noskip, 
                 *args, **kwargs, 
                 )
 
     @staticmethod
-    def draw_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, 
-                   window: WindowBase, stroke: bool = True, noskip: bool = False, 
-                   *args, **kwargs) -> None:
+    def draw_shape(
+            drawn_shape: charmy_stuff.graphics.DrawnShape, 
+            stroke: bool = True, 
+            noskip: bool = False, 
+            *args, **kwargs) -> None:
+        window = drawn_shape.window.backend_base
+        if not isinstance(window, WindowBase):
+            warnings.warn(f"Wrong backend for shape {drawn_shape.id}.")
+            return
         window.cairo_context.set_fill_rule(cairo.FILL_RULE_WINDING)
         if isinstance(drawn_shape.shape, charmy_stuff.styles.shape.SingleShape):
             ShapeBase.draw_any_shape(drawn_shape, stroke, noskip, *args, **kwargs)
@@ -660,9 +666,10 @@ class TextBase(template.TextBase):
             else:
                 underline = drawn_text.style.underlined
             # Insert the underline right after the text
-            window.charmy_window._drawing_list.insert(
-                window.charmy_window._drawing_list.index(drawn_text) + 1, underline
-                )
+            LineBase.draw_line(underline)
+            # window.charmy_window._drawing_list.insert(
+            #     window.charmy_window._drawing_list.index(drawn_text) + 1, underline
+            #     )
         if drawn_text.style.strikethrough != False:
             # Strikethrough
             strikethrough: charmy_stuff.graphics.DrawnLine
@@ -678,9 +685,10 @@ class TextBase(template.TextBase):
             else:
                 strikethrough = drawn_text.style.strikethrough
             # Insert the underline right after the text
-            window.charmy_window._drawing_list.insert(
-                window.charmy_window._drawing_list.index(drawn_text) + 1, strikethrough
-                )
+            LineBase.draw_line(strikethrough)
+            # window.charmy_window._drawing_list.insert(
+            #     window.charmy_window._drawing_list.index(drawn_text) + 1, strikethrough
+            #     )
 
     @staticmethod
     def cairo_set_font(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase):

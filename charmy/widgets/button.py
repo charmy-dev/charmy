@@ -85,8 +85,16 @@ class Button(_Widget):
 
         # Drawn objects, used by internal drawing functions
         self._components: tuple[_graphics.DrawnShape, _graphics.DrawnText] = (
-            _graphics.DrawnShape(_styles.shape.Rect((0, 0), (0, 0)), None), 
-            _graphics.DrawnText(self.text, _styles.text_style.TextStyle.sys_default, None), 
+            _graphics.DrawnShape(
+                self.root_container, 
+                _styles.shape.Rect((0, 0), (0, 0)), 
+                None
+                ), 
+            _graphics.DrawnText(
+                self.root_container, 
+                self.text, _styles.text_style.TextStyle.sys_default, 
+                None
+                ), 
             )
 
         # Internal event binds

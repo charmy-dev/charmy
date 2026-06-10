@@ -73,7 +73,8 @@ class WindowEntity(_CharmyObject, _EventHandling):
         self._mouse_hovering_on: list[_Container | _Widget] = []
         self._drawing_list: _typing.List[_graphics.DrawnObject] = []
         self._redraw_regions: list[_styles.shape.ShapeRange] = [((0, 0), self.size)]
-        # Bind on window close
+        # Bind on window events
+        self.bind(_event_types.WidgetResize, lambda _: self.update(True), _is_internal=True)
         self.bind(_event_types.WidgetDestroy, lambda _: self.destroy(), _is_internal=True)
         # Show window
         self.show()
@@ -177,11 +178,11 @@ class WindowEntity(_CharmyObject, _EventHandling):
         self.backend_base.draw_background()
         for drawn_obj in drawing_list:
             if isinstance(drawn_obj, _graphics.DrawnLine):
-                backend.LineBase.draw_line(drawn_obj, self.backend_base)
+                backend.LineBase.draw_line(drawn_obj)
             elif isinstance(drawn_obj, _graphics.DrawnShape):
-                backend.ShapeBase.draw_shape(drawn_obj, self.backend_base)
+                backend.ShapeBase.draw_shape(drawn_obj)
             elif isinstance(drawn_obj, _graphics.DrawnText):
-                backend.TextBase.draw_text(drawn_obj, self.backend_base)
+                backend.TextBase.draw_text(drawn_obj)
             else:
                 raise RuntimeError(
                     f"Unsupported of drawn object type: {drawn_obj.__class__.__name__}"
@@ -190,13 +191,13 @@ class WindowEntity(_CharmyObject, _EventHandling):
 
     def _find_need_redraw(self) -> _typing.List[_graphics.DrawnObject]:
         """Find all components that need to be redrawn in current frame."""
-        for drawn_obj in self._drawing_list:
-            if drawn_obj._need_redraw:
-                region = drawn_obj.boundary
-                if not region in self._redraw_regions:
-                    # Repeat check
-                    self._redraw_regions.append(region)
-                    drawn_obj._need_redraw = False
+        # for drawn_obj in self._drawing_list:
+        #     if drawn_obj._need_redraw:
+        #         region = drawn_obj.boundary
+        #         if not region in self._redraw_regions:
+        #             # Repeat check
+        #             self._redraw_regions.append(region)
+        #             drawn_obj._need_redraw = False
         result: _typing.List[_graphics.DrawnObject] = []
         for drawn_obj in self._drawing_list:
             boundary = drawn_obj.boundary
