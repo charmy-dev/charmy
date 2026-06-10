@@ -31,7 +31,7 @@ __all__ = ["Backend", "DEBUG_FLAGS"]
 
 
 class DEBUG_FLAGS:
-    DRAW_CAIRO_STOCK_TEXT_BOUND : bool = False
+    DRAW_CAIRO_STOCK_TEXT_BOUND : bool = True
     FORCE_CLOSE_SHAPE           : bool = False
     OBSERVE_SHAPE_DRAWING       : bool = False
     WARN_UNCLOSED_SHAPES        : bool = False
@@ -641,10 +641,10 @@ class TextBase(template.TextBase):
                 charmy_stuff.styles.shape.Rect(drawn_text.offset, text_size), 
                 (255, 0, 0, 50), 
                 2, (255, 0, 0)
-                )
-            window.charmy_window._drawing_list.insert(
-                window.charmy_window._drawing_list.index(drawn_text) + 1, text_bound
-                )
+                ) .draw()
+            # window.charmy_window._drawing_list.insert(
+            #     window.charmy_window._drawing_list.index(drawn_text) + 1, text_bound
+            #     )
         ## Draw text itself
         window.cairo_context.move_to(drawn_text.offset[0], drawn_text.offset[1] + text_size[1])
         # 👆 Cairo use bottom-left as anchor, while Charmy uses top-left, so needs conversion on y
@@ -666,7 +666,8 @@ class TextBase(template.TextBase):
             else:
                 underline = drawn_text.style.underlined
             # Insert the underline right after the text
-            LineBase.draw_line(underline)
+            underline.draw()
+            # LineBase.draw_line(underline)
             # window.charmy_window._drawing_list.insert(
             #     window.charmy_window._drawing_list.index(drawn_text) + 1, underline
             #     )
@@ -685,7 +686,8 @@ class TextBase(template.TextBase):
             else:
                 strikethrough = drawn_text.style.strikethrough
             # Insert the underline right after the text
-            LineBase.draw_line(strikethrough)
+            strikethrough.draw()
+            # LineBase.draw_line(strikethrough)
             # window.charmy_window._drawing_list.insert(
             #     window.charmy_window._drawing_list.index(drawn_text) + 1, strikethrough
             #     )

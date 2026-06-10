@@ -1,5 +1,9 @@
+PERFORMANCE_STATS: bool = False
+
 import charmy as cm
-import cProfile
+
+if PERFORMANCE_STATS:
+    import cProfile
 
 
 window = cm.Window(size=(540, 480))
@@ -52,4 +56,7 @@ test_text = cm.graphics.DrawnText(
 # endregion
 
 
-cProfile.run("cm.mainloop()", sort="cumtime")
+if PERFORMANCE_STATS:
+    cProfile.run("cm.mainloop()", sort="cumtime")
+else:
+    cm.mainloop()

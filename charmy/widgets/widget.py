@@ -197,6 +197,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         point = (pos[0] - self.x, pos[1] - self.y)
         for component in self.components:
             if point in component:
+                # print(f"Point {point} in {self.id}-{component.id}")
                 return True
         else:
             return False

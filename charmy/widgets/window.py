@@ -251,7 +251,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
             if len(self._redraw_regions) == 0:
                 # If no region to redraw, still update window for events or so
                 self.backend_base.update(False)
-        self._redraw_regions: list[_styles.shape.ShapeRange] = []
+        self._redraw_regions = []
 
     def destroy(self):
         """Close the window and mark it as inactive."""
