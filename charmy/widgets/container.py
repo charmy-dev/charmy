@@ -85,8 +85,13 @@ class Container(reactive_caching.CachedClass):
 
     def draw_children(self) -> typing.Self:
         """Draw the container and its children."""
-        for child in self.children:
-            child.draw()
+        _, managed_layer, place_layer = self.layers
+        if typing.TYPE_CHECKING:
+            managed_layer = typing.cast(list[widget.Widget], managed_layer)
+            place_layer = typing.cast(list[widget.Widget], place_layer)
+        for layer in place_layer, managed_layer:
+            for child in reversed(layer):
+                child.draw()
         return self
 
     def _clear_chidren(self):

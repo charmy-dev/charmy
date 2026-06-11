@@ -16,9 +16,10 @@ APPLE_SVG = \
 apple_shape = cm.styles.shape.from_svg_path(APPLE_SVG, scale=10)
 
 apple_logo = cm.graphics.DrawnShape(
+    window, 
     apple_shape, 
     (0, 0, 0)
-    ) .draw(window)
+    ) .draw()
 
 
 AT_SVG = \
@@ -46,13 +47,15 @@ if isinstance(at_shape, cm.styles.shape.ShapeGroup):
         print("=== NEXT SHAPE ===")
 
 at_logo = cm.graphics.DrawnShape(
+    window, 
     at_shape, 
     (0, 0, 0), 
     offset=(250, 20)
-    ) .draw(window)
+    ) .draw()
 
 # Disclaimer
 cm.graphics.DrawnText(
+    window, 
     "DISCLAIMER", 
     cm.styles.text_style.TextStyle(
         font="Consolas", 
@@ -62,8 +65,9 @@ cm.graphics.DrawnText(
         ), 
     (0, 0, 0), 
     (50, 250), 
-    ) .draw(window)
+    ) .draw()
 cm.graphics.DrawnText(
+    window, 
     "The Apple logo is is an Apple Inc. property.", 
     cm.styles.text_style.TextStyle(
         font="Consolas", 
@@ -71,6 +75,6 @@ cm.graphics.DrawnText(
         ), 
     (0, 0, 0), 
     (50, 280), 
-    ) .draw(window)
+    ) .draw()
 
 cm.mainloop(interval=0.011111)

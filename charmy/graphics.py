@@ -22,8 +22,9 @@ def _draw_bbox(obj: DrawnObject):
         _styles.shape.Rect(*obj.boundary), 
         (0, 0, 255, 20), 
         1, (0, 0, 255), 
-        obj.offset, 
-        obj.anchor, 
+        (0, 0), (0, 0)
+        # obj.offset, 
+        # obj.anchor, 
         )
     # obj.window.parent.backend.ShapeBase.draw_shape(range_rect)
     _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY = False # Temporarily disable to avoid infinite loop
@@ -321,7 +322,7 @@ class DrawnText(DrawnObject):
             anchor = (0, 0)
         self.anchor: _styles.shape.Point = anchor
 
-        self._backend_reported_boundary: _styles.shape.ShapeRange = (0, 0), (0, 0)
+        self._backend_reported_size: _styles.shape.Size = (0, 0)
 
     @property
     def texture(self) -> _styles.texture.Texture:
@@ -340,7 +341,9 @@ class DrawnText(DrawnObject):
     def boundary(self) -> _styles.shape.ShapeRange:
         """Rect boundary of the drawn text."""
         # TODO: Implement getting text boundary via text-shape conversion
-        return self._backend_reported_boundary
+        pos = self.offset[0] - self.anchor[0], self.offset[1] - self.anchor[1]
+        size = self._backend_reported_size
+        return pos, size
 
     def draw(self) -> _typing.Self:
         """Draw the text.
@@ -391,4 +394,4 @@ class DrawnText(DrawnObject):
         return self
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
-        return point in _styles.shape.Rect(*self.boundary)
+        return point in _styles.shape.Rect((0, 0), self.boundary[1])

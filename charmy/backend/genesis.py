@@ -634,7 +634,7 @@ class TextBase(template.TextBase):
         TextBase.cairo_set_font(drawn_text, window)
         # Text size
         text_size = TextBase.get_text_bound(drawn_text, window.cairo_context) [1]
-        drawn_text._backend_reported_boundary = (drawn_text.offset, text_size)
+        drawn_text._backend_reported_size = text_size
         if DEBUG_FLAGS.DRAW_CAIRO_STOCK_TEXT_BOUND:
             text_bound = charmy_stuff.graphics.DrawnShape(
                 drawn_text.window, 
