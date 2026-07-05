@@ -2,6 +2,7 @@
 
 import typing
 
+import dataclasses
 import reactive_caching
 
 from . import window
@@ -12,6 +13,10 @@ from .. import graphics
 from .. import styles
 
 __all__ = ["Widget"]
+
+@dataclasses.dataclass
+class WidgetStateConfig:
+    size: styles.shape.Size = (0, 0)
 
 
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
