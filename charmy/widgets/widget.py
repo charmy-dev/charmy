@@ -12,18 +12,50 @@ from .container import Container, layout_profiles
 from .. import graphics
 from .. import styles
 
-__all__ = ["Widget"]
+__all__ = ["Widget", "WidgetProfile"]
 
 @dataclasses.dataclass
-class WidgetStateConfig:
-    size: styles.shape.Size = (0, 0)
+class WidgetProfile:
+    """Class to store configs of a specific widget under a specific state.
+
+    Each `WidgetProfile` represents a profile for `Widget`. Further, `ButtonProfile` for 
+    `Button`, `TextProfile` for `Text`, and so on. An instance of `WidgetProfile` or its subclasses 
+    comes with default values for such type of widget. These default values will be affected by 
+    themes.
+    """
+    # TODO: Support themes in WidgetProfiles
+    size: typing.Optional[styles.shape.Size] = None
+
+    @classmethod
+    def default(cls) -> typing.Self:
+        instance = cls(
+            size=(0, 0)
+            )
+        return instance
 
 
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
-    """Widget base class."""
+    """Widget base class.
+    """
 
-    def __init__(self, parent: Container | None = None, style: dict = {":default": {"size": (0, 0)}}):
+    def __init__(self, 
+        parent: Container | None = None, 
+        profiles: typing.Optional[dict[str, WidgetProfile]] = None
+        ) -> None:
         """To initialize a widget.
+
+        Profiles
+        --------
+        Profiles are used to specify the appearance of a specific widget, including its shape, 
+        color, text(s) or element(s) inside… Each widget's profiles are stored in attribute 
+        `profiles`, in form of `{"state name": WidgetProfile()}`.
+
+        Each widget comes with default profiles config, which can be changed by specifying 
+        `profiles` when initializing them. Contents specified in `profiles` arg will override 
+        defaults (Note: minimum overriding unit is a `WidgetProfile` instance specified for a 
+        specific state).
+
+        The `default` state's profile is a fallback profile.
 
         :param parent: Parent of the widget, or None in `with` context
         :param style: Style of the widget
@@ -44,8 +76,10 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.parent: Container = parent
         self.parent.add_child(self)
 
-        self.style: dict = style
-        self.theme: typing.Optional[styles.theme.Theme] = None
+        self.profiles: dict[str, WidgetProfile] = {"default": WidgetProfile()}
+        if profiles is not None:
+            self.profiles.update(profiles)
+        self.theme: typing.Optional[styles.theme.Theme] = None # TODO: Support theme
 
         self.is_visible: bool = False
         self.layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
