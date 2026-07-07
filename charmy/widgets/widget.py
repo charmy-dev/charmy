@@ -25,18 +25,26 @@ class WidgetProfile:
     """
     # TODO: Support themes in WidgetProfiles
     size: typing.Optional[styles.shape.Size] = None
+    fallback_state: str = "default"
+    # _fallback_target: typing.Self | None | typing.Literal["widget_specify"] = "widget_specify"
 
     @classmethod
     def default(cls) -> typing.Self:
+        """To generate a profile with full default values for this widget."""
         instance = cls(
             size=(0, 0)
             )
         return instance
 
+    def __contains__(self, item: str) -> bool:
+        """To see whether an specific item is contained and specified in this profile."""
+        if not hasattr(self, item):
+            return False
+        return getattr(self, item) is not None
+
 
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
-    """Widget base class.
-    """
+    """Widget base class."""
 
     def __init__(self, 
         parent: Container | None = None, 
@@ -58,7 +66,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         The `default` state's profile is a fallback profile.
 
         :param parent: Parent of the widget, or None in `with` context
-        :param style: Style of the widget
+        :param profiles: Profiles config of the widget
         """
 
         if parent is None:
@@ -76,7 +84,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.parent: Container = parent
         self.parent.add_child(self)
 
-        self.profiles: dict[str, WidgetProfile] = {"default": WidgetProfile()}
+        self.profiles: dict[str, WidgetProfile] = {"default": WidgetProfile().default()}
         if profiles is not None:
             self.profiles.update(profiles)
         self.theme: typing.Optional[styles.theme.Theme] = None # TODO: Support theme
@@ -87,6 +95,22 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.state: str = "normal"
         self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
         self._alive: bool = True
+
+    def _negotiate_profile_state(self, target_state: str, target_item: str):
+        """Negotiate and deduce a valid profile state when getting a value from a profile.
+
+        In other words, this is the fallback routine when getting a value from a profile.
+        """
+        if target_state not in self.profiles:
+            return "default" # Fallback to default state derectly if state not exists
+        if target_item not in target_state:
+            # If target item remains not specified (with value None) in target state's profile
+            return self._negotiate_profile_state(
+                self.profiles[target_state].fallback_state, target_item
+                ) # Return negotiated fallback state
+            # BUG: Cannot correctly handle inter-fallback profiles. Current code is expected to 
+            #      give a max recursion error in such case, but it should give default state.
+        return target_state
 
     @property
     def pos(self) -> styles.shape.Point:
@@ -120,7 +144,10 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     @reactive_caching.cached_property(["layout_profile", "style"])
     def size(self) -> styles.shape.Size:
-        """Size of the widget"""
+        """Size of the widget.
+
+        Firts try to deduce from layout profile, then get from config if not specified.
+        """
         layout_specified: typing.Optional[styles.shape.Point]
         if type(self.layout_profile) is layout_profiles.LayoutProfile:
             # If no layout profile specified
@@ -130,22 +157,15 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         if layout_specified is None:
             # If size not given, get from style
             # curr_style = self.curr_state_styles
-            target_style_state = self.state if self.state in self.style else "default"
-            if not "size" in self.style[f":{target_style_state}"]:
-                if "size" in self.style[f":default"]:
-                    target_style_state = "default" # Fallback to default style
-                else:
-                    return (0, 0) # Unspecified in style
-            style_specified = styles.style.fill_vars(
-                self.style[f":{target_style_state}"]["size"]
-                )
-            if type(style_specified) is not tuple:
+            target_profile_state = self._negotiate_profile_state(self.state, "size")
+            profile_specified = self.profiles[target_profile_state].size
+            if type(profile_specified) is not tuple:
                 return (0, 0)
-            if len(style_specified) != 2:
+            if len(profile_specified) != 2:
                 return (0, 0)
-            if type(style_specified[0]) is not int or type(style_specified[1]) is not int:
+            if type(profile_specified[0]) is not int or type(profile_specified[1]) is not int:
                 return (0, 0)
-            return style_specified
+            return profile_specified
         else:
             return layout_specified
 
@@ -183,20 +203,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         For widget base class, it does not have any component.
         """
         return ()
-
-    @property
-    def curr_state_styles(self) -> dict[str, typing.Any]:
-        style_vars = (
-            self.theme, 
-            self.root_container, 
-            self
-            )
-        style_state = f":{self.state}"
-        if style_state not in self.style:
-            style_state = ":default"
-        # print(style_state)
-        curr_style = styles.style.fill_vars(self.style[style_state], *style_vars)
-        return curr_style
 
     def draw(self, *args, **kwargs) -> typing.Self:
         """Draw the widget, does nothing on base class."""
