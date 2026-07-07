@@ -64,6 +64,8 @@ class WidgetProfile:
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     """Widget base class."""
 
+    ProfileType: typing.TypeAlias = WidgetProfile
+
     def __init__(self, 
         parent: Container | None = None, 
         profiles: typing.Optional[dict[str, WidgetProfile]] = None
@@ -102,7 +104,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.parent: Container = parent
         self.parent.add_child(self)
 
-        self.profiles: dict[str, WidgetProfile] = {"default": WidgetProfile().default()}
+        self._profiles: dict[str, WidgetProfile] = {"default": WidgetProfile().default()}
         if profiles is not None:
             self.profiles.update(profiles)
         self.theme: typing.Optional[styles.theme.Theme] = None # TODO: Support theme
@@ -113,6 +115,12 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.state: str = "normal"
         self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
         self._alive: bool = True
+
+    @property
+    def profiles(self) -> dict[str, WidgetProfile]:
+        """Profiles config of current widget"""
+        # TODO: Support type hint for other profile classes
+        return self._profiles
 
     def _negotiate_profile_state(self, target_state: str, target_item: str):
         """Negotiate and deduce a valid profile state when getting a value from a profile.
@@ -132,7 +140,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     @property
     def pos(self) -> styles.shape.Point:
-        """Position of the widget"""
+        """Position of the widget."""
         match self.layout_profile:
             case layout_profiles.PlaceProfile():
                 return self.layout_profile.pos
@@ -164,7 +172,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     def size(self) -> styles.shape.Size:
         """Size of the widget.
 
-        Firts try to deduce from layout profile, then get from config if not specified.
+        First try to deduce from layout profile, then get from config if not specified.
         """
         layout_specified: typing.Optional[styles.shape.Point]
         if type(self.layout_profile) is layout_profiles.LayoutProfile:
@@ -214,8 +222,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # … then the widget is not inside in a root container
                 raise RuntimeError(f"Nowhere to put {self.id} as it is not in a valid window!")
 
-    def _regenerate_components(self) -> typing.Tuple[graphics.DrawnObject, ...]:
-        """Components (drawn objects) that make up the button.
+    def _refresh_components(self) -> typing.Tuple[graphics.DrawnObject, ...]:
+        """Refresh configs of components (drawn objects) that make up the widget.
 
         For widget base class, it does not have any component.
         """
