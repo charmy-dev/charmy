@@ -28,6 +28,9 @@ class WidgetProfile:
     fallback_state: str = "default"
     # _fallback_target: typing.Self | None | typing.Literal["widget_specify"] = "widget_specify"
 
+    def __post_init__(self):
+        self._initialized: bool = True
+
     @classmethod
     def default(cls) -> typing.Self:
         """To generate a profile with full default values for this widget."""
@@ -41,6 +44,21 @@ class WidgetProfile:
         if not hasattr(self, item):
             return False
         return getattr(self, item) is not None
+
+    @staticmethod
+    def on_value_change(item_name: str):
+        """Routine to run when value of profile changed.
+
+        This is a placeholder function that does nothing, override it from outside!
+
+        :param item_name: Name of the item that has been changed.
+        """
+        return None
+
+    def __setattr__(self, name: str, value: typing.Any) -> None:
+        """To set attribute and run bound routine."""
+        super().__setattr__(name, value)
+        self.on_value_change(name)
 
 
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
@@ -196,8 +214,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # … then the widget is not inside in a root container
                 raise RuntimeError(f"Nowhere to put {self.id} as it is not in a valid window!")
 
-    @reactive_caching.cached_property("-exposed-")
-    def components(self) -> typing.Tuple[graphics.DrawnObject, ...]:
+    def _regenerate_components(self) -> typing.Tuple[graphics.DrawnObject, ...]:
         """Components (drawn objects) that make up the button.
 
         For widget base class, it does not have any component.
@@ -209,7 +226,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         if not self._alive:
             return self
 
-        for component in self.components:
+        for component in self._components:
             component = typing.cast(graphics.DrawnObject, component)
             component.draw()
 
@@ -240,7 +257,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     def __contains__(self, pos: styles.shape.Point) -> bool:
         point = (pos[0] - self.x, pos[1] - self.y)
-        for component in self.components:
+        for component in self._components:
             if point in component:
                 # print(f"Point {point} in {self.id}-{component.id}")
                 return True
