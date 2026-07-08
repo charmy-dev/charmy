@@ -94,5 +94,5 @@ def quit():  # NOQA
     """Quit Charmy."""
     for manager_ref in CharmyManager.instances:
         manager = manager_ref
-        if manager != None:
+        if manager is not None:
             manager.destroy()

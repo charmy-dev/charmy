@@ -146,7 +146,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 return self.layout_profile.pos
             case _:
                 return (0, 0)
-        return (0, 0)
 
     @property
     def x(self) -> int:

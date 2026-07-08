@@ -94,7 +94,7 @@ class Container(reactive_caching.CachedClass):
                 child.draw()
         return self
 
-    def _clear_chidren(self):
+    def _clear_children(self):
         for child in self.children:
             child.destroy()
 
