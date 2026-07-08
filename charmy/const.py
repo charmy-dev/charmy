@@ -11,6 +11,12 @@ if typing.TYPE_CHECKING:
     from . import cmm
 
 
+class DEBUG_FLAGS:
+    """Debug options, for testing only, no guarantee under production."""
+    DRAW_OBJECTS_BOUNDARY: bool = False
+    WAIT_AFTER_EACH_FRAME: bool | float = False
+    MARK_REDRAWS: bool = False # BUG: redraw markings will be kept until next redraw
+
 
 @dataclasses.dataclass
 class Configs:

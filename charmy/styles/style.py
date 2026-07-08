@@ -12,6 +12,14 @@ class DEBUG_FLAGS:
     FILL_VARS_DEBUG_OUTPUT: bool = False
 
 
+class StateStyle:
+    pass
+
+
+class StyleSheet:
+    pass
+
+
 StyleType: _typing.TypeAlias = dict[str, _typing.Any]
 
 
@@ -38,6 +46,7 @@ def fill_vars(style_value: _typing.Any,
             if DEBUG_FLAGS.FILL_VARS_DEBUG_OUTPUT:
                 print(f"{requested_vars[0]} -> {eval(requested_vars[0][2:-1])}")
             return eval(requested_vars[0][2:-1])
+            # TODO: Refactor styles system and avoid unsafe eval() like this
         else:
             result = style_value
             for var in requested_vars:

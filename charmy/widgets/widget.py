@@ -2,6 +2,7 @@
 
 import typing
 
+import dataclasses
 import reactive_caching
 
 from . import window
@@ -11,17 +12,81 @@ from .container import Container, layout_profiles
 from .. import graphics
 from .. import styles
 
-__all__ = ["Widget"]
+__all__ = ["Widget", "WidgetProfile"]
+
+@dataclasses.dataclass
+class WidgetProfile:
+    """Class to store configs of a specific widget under a specific state.
+
+    Each `WidgetProfile` represents a profile for `Widget`. Further, `ButtonProfile` for 
+    `Button`, `TextProfile` for `Text`, and so on. An instance of `WidgetProfile` or its subclasses 
+    comes with default values for such type of widget. These default values will be affected by 
+    themes.
+    """
+    # TODO: Support themes in WidgetProfiles
+    size: typing.Optional[styles.shape.Size] = None
+    fallback_state: str = "default"
+    # _fallback_target: typing.Self | None | typing.Literal["widget_specify"] = "widget_specify"
+
+    def __post_init__(self):
+        self._initialized: bool = True
+
+    @classmethod
+    def default(cls) -> typing.Self:
+        """To generate a profile with full default values for this widget."""
+        instance = cls(
+            size=(0, 0)
+            )
+        return instance
+
+    def __contains__(self, item: str) -> bool:
+        """To see whether an specific item is contained and specified in this profile."""
+        if not hasattr(self, item):
+            return False
+        return getattr(self, item) is not None
+
+    @staticmethod
+    def on_value_change(item_name: str):
+        """Routine to run when value of profile changed.
+
+        This is a placeholder function that does nothing, override it from outside!
+
+        :param item_name: Name of the item that has been changed.
+        """
+        return None
+
+    def __setattr__(self, name: str, value: typing.Any) -> None:
+        """To set attribute and run bound routine."""
+        super().__setattr__(name, value)
+        self.on_value_change(name)
 
 
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     """Widget base class."""
 
-    def __init__(self, parent: Container | None = None, style: dict = {":default": {"size": (0, 0)}}):
+    ProfileType: typing.TypeAlias = WidgetProfile
+
+    def __init__(self, 
+        parent: Container | None = None, 
+        profiles: typing.Optional[dict[str, WidgetProfile]] = None
+        ) -> None:
         """To initialize a widget.
 
+        Profiles
+        --------
+        Profiles are used to specify the appearance of a specific widget, including its shape, 
+        color, text(s) or element(s) inside… Each widget's profiles are stored in attribute 
+        `profiles`, in form of `{"state name": WidgetProfile()}`.
+
+        Each widget comes with default profiles config, which can be changed by specifying 
+        `profiles` when initializing them. Contents specified in `profiles` arg will override 
+        defaults (Note: minimum overriding unit is a `WidgetProfile` instance specified for a 
+        specific state).
+
+        The `default` state's profile is a fallback profile.
+
         :param parent: Parent of the widget, or None in `with` context
-        :param style: Style of the widget
+        :param profiles: Profiles config of the widget
         """
 
         if parent is None:
@@ -39,8 +104,10 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.parent: Container = parent
         self.parent.add_child(self)
 
-        self.style: dict = style
-        self.theme: typing.Optional[styles.theme.Theme] = None
+        self._profiles: dict[str, WidgetProfile] = {"default": WidgetProfile().default()}
+        if profiles is not None:
+            self.profiles.update(profiles)
+        self.theme: typing.Optional[styles.theme.Theme] = None # TODO: Support theme
 
         self.is_visible: bool = False
         self.layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
@@ -50,8 +117,30 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self._alive: bool = True
 
     @property
+    def profiles(self) -> dict[str, WidgetProfile]:
+        """Profiles config of current widget"""
+        # TODO: Support type hint for other profile classes
+        return self._profiles
+
+    def _negotiate_profile_state(self, target_state: str, target_item: str):
+        """Negotiate and deduce a valid profile state when getting a value from a profile.
+
+        In other words, this is the fallback routine when getting a value from a profile.
+        """
+        if target_state not in self.profiles:
+            return "default" # Fallback to default state derectly if state not exists
+        if target_item not in target_state:
+            # If target item remains not specified (with value None) in target state's profile
+            return self._negotiate_profile_state(
+                self.profiles[target_state].fallback_state, target_item
+                ) # Return negotiated fallback state
+            # BUG: Cannot correctly handle inter-fallback profiles. Current code is expected to 
+            #      give a max recursion error in such case, but it should give default state.
+        return target_state
+
+    @property
     def pos(self) -> styles.shape.Point:
-        """Position of the widget"""
+        """Position of the widget."""
         match self.layout_profile:
             case layout_profiles.PlaceProfile():
                 return self.layout_profile.pos
@@ -81,7 +170,10 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     @reactive_caching.cached_property(["layout_profile", "style"])
     def size(self) -> styles.shape.Size:
-        """Size of the widget"""
+        """Size of the widget.
+
+        First try to deduce from layout profile, then get from config if not specified.
+        """
         layout_specified: typing.Optional[styles.shape.Point]
         if type(self.layout_profile) is layout_profiles.LayoutProfile:
             # If no layout profile specified
@@ -91,22 +183,15 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         if layout_specified is None:
             # If size not given, get from style
             # curr_style = self.curr_state_styles
-            target_style_state = self.state if self.state in self.style else "default"
-            if not "size" in self.style[f":{target_style_state}"]:
-                if "size" in self.style[f":default"]:
-                    target_style_state = "default" # Fallback to default style
-                else:
-                    return (0, 0) # Unspecified in style
-            style_specified = styles.style.fill_vars(
-                self.style[f":{target_style_state}"]["size"]
-                )
-            if type(style_specified) is not tuple:
+            target_profile_state = self._negotiate_profile_state(self.state, "size")
+            profile_specified = self.profiles[target_profile_state].size
+            if type(profile_specified) is not tuple:
                 return (0, 0)
-            if len(style_specified) != 2:
+            if len(profile_specified) != 2:
                 return (0, 0)
-            if type(style_specified[0]) is not int or type(style_specified[1]) is not int:
+            if type(profile_specified[0]) is not int or type(profile_specified[1]) is not int:
                 return (0, 0)
-            return style_specified
+            return profile_specified
         else:
             return layout_specified
 
@@ -137,38 +222,24 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # … then the widget is not inside in a root container
                 raise RuntimeError(f"Nowhere to put {self.id} as it is not in a valid window!")
 
-    @reactive_caching.cached_property("-exposed-")
-    def components(self) -> typing.Tuple[graphics.DrawnObject, ...]:
-        """Components (drawn objects) that make up the button.
+    def _refresh_components(self) -> typing.Tuple[graphics.DrawnObject, ...]:
+        """Refresh configs of components (drawn objects) that make up the widget.
 
         For widget base class, it does not have any component.
         """
         return ()
-
-    @property
-    def curr_state_styles(self) -> dict[str, typing.Any]:
-        style_vars = (
-            self.theme, 
-            self.root_container, 
-            self
-            )
-        style_state = f":{self.state}"
-        if style_state not in self.style:
-            style_state = ":default"
-        # print(style_state)
-        curr_style = styles.style.fill_vars(self.style[style_state], *style_vars)
-        return curr_style
 
     def draw(self, *args, **kwargs) -> typing.Self:
         """Draw the widget, does nothing on base class."""
         if not self._alive:
             return self
 
-        for component in self.components:
-            component.draw(self.root_container)
+        for component in self._components:
+            component = typing.cast(graphics.DrawnObject, component)
+            component.draw()
 
         if isinstance(self, Container):
-            self.draw_children()
+            Container.draw_children(self)
 
         return self
 
@@ -181,7 +252,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         :param pos: The position to place the widget
         :param size: The size of this widget
         """
-        self.layout_profile = layout_profiles.PlaceProfile(pos, size) # type: ignore
+        self.layout_profile = layout_profiles.PlaceProfile(pos, size)
         return self
 
     def destroy(self) -> None:
@@ -194,8 +265,15 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     def __contains__(self, pos: styles.shape.Point) -> bool:
         point = (pos[0] - self.x, pos[1] - self.y)
-        for component in self.components:
+        for component in self._components:
             if point in component:
+                # print(f"Point {point} in {self.id}-{component.id}")
                 return True
         else:
             return False
+
+    # def _on_cache_dirty(self, prop_name: str) -> None:
+    #     if prop_name == "components":
+    #         for component in self.components:
+    #             component = typing.cast(graphics.DrawnObject, component)
+    #             component._need_redraw = True

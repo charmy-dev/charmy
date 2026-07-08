@@ -25,13 +25,13 @@ from charmy.backend import template
 import charmy.backend.utils as charmy_stuff
 
 if typing.TYPE_CHECKING:
-    from charmy.widgets import window
+    from charmy.widgets import window as _window
 
 __all__ = ["Backend", "DEBUG_FLAGS"]
 
 
 class DEBUG_FLAGS:
-    DRAW_CAIRO_STOCK_TEXT_BOUND : bool = False
+    DRAW_CAIRO_STOCK_TEXT_BOUND : bool = True
     FORCE_CLOSE_SHAPE           : bool = False
     OBSERVE_SHAPE_DRAWING       : bool = False
     WARN_UNCLOSED_SHAPES        : bool = False
@@ -93,7 +93,7 @@ class WindowBase(template.WindowBase):
     supports = WindowSupportState()
     Backend = Backend
 
-    def __init__(self, backend: template.Backend, charmy_window: window.WindowEntity):
+    def __init__(self, backend: template.Backend, charmy_window: _window.WindowEntity):
         """Creates a window.
 
         :param backend: The backend that this window uses (can be get from CharmyManager)
@@ -238,17 +238,14 @@ class WindowBase(template.WindowBase):
             case sdl2.SDL_QUIT:
                 self.charmy_window.destroy()
 
-    def update(self, redraw: bool = True) -> typing.Self:
+    def update(self, redraw: bool | charmy_stuff.styles.shape.ShapeRange = True) -> typing.Self:
         """Update the window.
 
         :return self: The WindowBase itself
         """
-        if redraw:
-            self.draw_frame(self.drawing_list)
-
-
-        if self.surface.get_width() == self.size[0] and self.surface.get_height() == self.size[1]:
-            # Following Vibed with Deepseek
+        if redraw != False and \
+            self.surface.get_width() == self.size[0] and self.surface.get_height() == self.size[1]:
+            # Following Vibed with Deepseek & GitHub Copilot (model GPT-5 mini)
 
             # Get Cairo data（memoryview）
             cairo_data = self.surface.get_data()
@@ -260,18 +257,61 @@ class WindowBase(template.WindowBase):
 
             # Get pixels pointer
             pixels_ptr = self._window_surface.contents.pixels
+            # SDL surface 'pixels' may be an int or a c_void_p; normalize to integer base address
+            base_pixels = pixels_ptr.value if hasattr(pixels_ptr, "value") else pixels_ptr
             # Improvement: Get lower level pointer directly to avoid tobytes() copy
             # Calc data size
             pitch = self._window_surface.contents.pitch
-            data_size = pitch * self.size[1]
-            # Convert memoryview to ctypes data
-            cairo_ptr = ctypes.cast(
-                (ctypes.c_char * data_size).from_buffer(cairo_data),
-                ctypes.c_void_p
-            )
+            window_data_size = pitch * self.size[1]
 
-            # Copy data
-            ctypes.memmove(pixels_ptr, cairo_ptr, data_size)
+            # Prepare Cairo stride/size
+            cairo_stride = self.surface.get_stride()
+            cairo_data_size = cairo_stride * self.size[1]
+            # Create a ctypes array view of cairo data for address arithmetic
+            cairo_arr = (ctypes.c_char * cairo_data_size).from_buffer(cairo_data)
+            cairo_base_addr = ctypes.addressof(cairo_arr)
+
+            bytes_per_pixel = 4
+
+            # If redraw is a region ((x,y),(w,h)), copy only that region row-by-row.
+            # Consider any non-bool value as a region specification.
+            is_region = not isinstance(redraw, bool)
+
+            if is_region:
+                # Extract and clamp region
+                sx, sy = int(redraw[0][0]), int(redraw[0][1])
+                rw, rh = int(redraw[1][0]), int(redraw[1][1])
+                if sx < 0:
+                    rw += sx
+                    sx = 0
+                if sy < 0:
+                    rh += sy
+                    sy = 0
+                if sx >= self.size[0] or sy >= self.size[1] or rw <= 0 or rh <= 0:
+                    # Nothing to copy
+                    pass
+                else:
+                    # Clamp width/height to remaining area
+                    rw = max(0, min(rw, self.size[0] - sx))
+                    rh = max(0, min(rh, self.size[1] - sy))
+                    row_bytes = rw * bytes_per_pixel
+                    # Copy each row individually using stride/pitch
+                    for row in range(rh):
+                        src_offset = (sy + row) * cairo_stride + sx * bytes_per_pixel
+                        dst_offset = (sy + row) * pitch + sx * bytes_per_pixel
+                        src_addr = ctypes.c_void_p(cairo_base_addr + src_offset)
+                        dst_addr = ctypes.c_void_p(base_pixels + dst_offset)
+                        ctypes.memmove(dst_addr, src_addr, row_bytes)
+            else:
+                # Full-surface copy (existing behavior)
+                # Convert memoryview to ctypes data
+                cairo_ptr = ctypes.cast(
+                    (ctypes.c_char * window_data_size).from_buffer(cairo_data),
+                    ctypes.c_void_p
+                )
+                # Copy data
+                ctypes.memmove(ctypes.c_void_p(base_pixels), cairo_ptr, window_data_size)
+
             # Unlock surface
             sdl2.SDL_UnlockSurface(self._window_surface)
 
@@ -280,7 +320,6 @@ class WindowBase(template.WindowBase):
 
         # Handle events
         for event in sdl2.ext.get_events():
-            self.sdl2_handle_event(event)
             match event.type:
                 case sdl2.SDL_WINDOWEVENT:
                     if event.window.event == sdl2.SDL_WINDOWEVENT_RESIZED:
@@ -288,6 +327,7 @@ class WindowBase(template.WindowBase):
                         h = ctypes.c_int()
                         sdl2.SDL_GetWindowSize(self.window, w, h)
                         self.set_size((w.value, h.value), _passive = True)
+            self.sdl2_handle_event(event)
         return self
 
     def close(self):
@@ -321,7 +361,7 @@ class LineBase(template.LineBase):
 
     @staticmethod
     def draw_line(drawn_line: charmy_stuff.graphics.DrawnLine, 
-                  window: WindowBase, stroke: bool = True, noskip: bool = False, 
+                  stroke: bool = True, noskip: bool = False, 
                   *args, **kwargs):
         """To draw a line on a specific window.
 
@@ -331,13 +371,14 @@ class LineBase(template.LineBase):
         """
         # Unpack the DrawnLine
         line = drawn_line.line
+        window = drawn_line.window.backend_base
         texture = drawn_line.texture
         line_width = drawn_line.width
         anchor = drawn_line.anchor
         offset = drawn_line.offset
 
         # Detect wrong backend
-        if window.Backend != Backend:
+        if not isinstance(window, WindowBase):
             raise RuntimeError(
                 "Wrong backend for draw_line()! Asked to draw on a window held by "
                 f"{window.Backend.friendly_name} but I serve backend {Backend.friendly_name}!"
@@ -414,12 +455,18 @@ class ShapeBase(template.ShapeBase):
     supports: ShapeSupportState = ShapeSupportState()
 
     @staticmethod
-    def draw_any_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, 
-                       window: WindowBase, stroke: bool = True, noskip: bool = False, 
-                       *args, **kwargs) -> None:
+    def draw_any_shape(
+            drawn_shape: charmy_stuff.graphics.DrawnShape, 
+            stroke: bool = True, 
+            noskip: bool = False, 
+            *args, **kwargs) -> None:
         """Draw shape by lines."""
+        window = drawn_shape.window.backend_base
         if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.SingleShape):
             warnings.warn("draw_any_shape() is only for drawing AnyShape")
+            return
+        if not isinstance(window, WindowBase):
+            warnings.warn(f"Wrong backend for shape {drawn_shape.id}.")
             return
         if DEBUG_FLAGS.WARN_UNCLOSED_SHAPES:
             last_line_end = drawn_shape.shape.lines[-1].end_point
@@ -433,6 +480,7 @@ class ShapeBase(template.ShapeBase):
                     line.start_point[1] + drawn_shape.offset[1] - drawn_shape.anchor[1], 
                 )
             drawn_line = charmy_stuff.graphics.DrawnLine(
+                window.charmy_window, 
                 line, 
                 (255, 0, 0, 255 if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING else 0), 
                 1, 
@@ -440,7 +488,7 @@ class ShapeBase(template.ShapeBase):
                 anchor=drawn_shape.anchor, 
                 )
             # drawn_line.anchor = drawn_shape.shape.boundary[0]
-            LineBase.draw_line(drawn_line, window, stroke=False, noskip=True)
+            LineBase.draw_line(drawn_line, stroke=False, noskip=True)
             del drawn_line
             if DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING:
                 window.cairo_context.stroke_preserve()
@@ -470,38 +518,49 @@ class ShapeBase(template.ShapeBase):
             # If still need visible border, then draw again
             for line in drawn_shape.shape.lines:
                 drawn_line = charmy_stuff.graphics.DrawnLine(
-                    line, drawn_shape.border_texture, drawn_shape.border_width, 
+                    window.charmy_window, line, drawn_shape.border_texture, drawn_shape.border_width, 
                     offset=drawn_shape.offset, anchor=drawn_shape.anchor)
-                LineBase.draw_line(drawn_line, window, stroke=False)
-                del drawn_line
+                LineBase.draw_line(drawn_line, stroke=False)
             window.cairo_context.stroke()
 
     @staticmethod
-    def draw_shape_group(drawn_shape: charmy_stuff.graphics.DrawnShape, 
-                         window: WindowBase, stroke: bool = True, noskip: bool = False, 
-                         *args, **kwargs) -> None:
+    def draw_shape_group(
+            drawn_shape: charmy_stuff.graphics.DrawnShape, 
+            stroke: bool = True, 
+            noskip: bool = False, 
+            *args, **kwargs) -> None:
+        """Draw shape group."""
+        window = drawn_shape.window.backend_base
         if not isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
             raise TypeError("draw_shape_group() is only designed for shape group")
+        if not isinstance(window, WindowBase):
+            warnings.warn(f"Wrong backend for shape {drawn_shape.id}.")
+            return
         for index, subshape in enumerate(drawn_shape.shape.shapes):
             host = drawn_shape.copy()
             host.shape = subshape
             ShapeBase.draw_shape(
                 host, 
-                window, 
                 index == len(drawn_shape.shape.shapes) - 1 and stroke, 
                 noskip, 
                 *args, **kwargs, 
                 )
 
     @staticmethod
-    def draw_shape(drawn_shape: charmy_stuff.graphics.DrawnShape, 
-                   window: WindowBase, stroke: bool = True, noskip: bool = False, 
-                   *args, **kwargs) -> None:
+    def draw_shape(
+            drawn_shape: charmy_stuff.graphics.DrawnShape, 
+            stroke: bool = True, 
+            noskip: bool = False, 
+            *args, **kwargs) -> None:
+        window = drawn_shape.window.backend_base
+        if not isinstance(window, WindowBase):
+            warnings.warn(f"Wrong backend for shape {drawn_shape.id}.")
+            return
         window.cairo_context.set_fill_rule(cairo.FILL_RULE_WINDING)
         if isinstance(drawn_shape.shape, charmy_stuff.styles.shape.SingleShape):
-            ShapeBase.draw_any_shape(drawn_shape, window, stroke, noskip, *args, **kwargs)
+            ShapeBase.draw_any_shape(drawn_shape, stroke, noskip, *args, **kwargs)
         elif isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
-            ShapeBase.draw_shape_group(drawn_shape, window, stroke, noskip, *args, **kwargs)
+            ShapeBase.draw_shape_group(drawn_shape, stroke, noskip, *args, **kwargs)
         else:
             template.not_implemented_func(Backend.friendly_name, 
                     f"Drawing a shape that is neither a subclass of SingleShape nor ShapeGroup")
@@ -565,20 +624,27 @@ class TextBase(template.TextBase):
     supports: TextSupportState = TextSupportState()
 
     @staticmethod
-    def draw_text(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase):
+    def draw_text(drawn_text: charmy_stuff.graphics.DrawnText):
         """To draw text on GUI or canvas."""
+        window = drawn_text.window.backend_base
+        if not isinstance(window, WindowBase):
+            warnings.warn(f"Wrong backend for shape {drawn_text.id}.")
+            return
         ## Set Cairo font
         TextBase.cairo_set_font(drawn_text, window)
         # Text size
         text_size = TextBase.get_text_bound(drawn_text, window.cairo_context) [1]
-        drawn_text._backend_reported_boundary = (drawn_text.offset, text_size)
+        drawn_text._backend_reported_size = text_size
         if DEBUG_FLAGS.DRAW_CAIRO_STOCK_TEXT_BOUND:
             text_bound = charmy_stuff.graphics.DrawnShape(
+                drawn_text.window, 
                 charmy_stuff.styles.shape.Rect(drawn_text.offset, text_size), 
                 (255, 0, 0, 50), 
                 2, (255, 0, 0)
-                )
-            window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, text_bound)
+                ) .draw()
+            # window.charmy_window._drawing_list.insert(
+            #     window.charmy_window._drawing_list.index(drawn_text) + 1, text_bound
+            #     )
         ## Draw text itself
         window.cairo_context.move_to(drawn_text.offset[0], drawn_text.offset[1] + text_size[1])
         # 👆 Cairo use bottom-left as anchor, while Charmy uses top-left, so needs conversion on y
@@ -589,30 +655,42 @@ class TextBase(template.TextBase):
             # Underline
             underline: charmy_stuff.graphics.DrawnLine
             if isinstance(drawn_text.style.underlined, bool):
-                underline = charmy_stuff.graphics.DrawnLine(charmy_stuff.styles.shape.Line([
-                    (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] + offset), 
-                    (drawn_text.offset[0] + text_size[0] + 2, 
-                     drawn_text.offset[1] + text_size[1] + offset)
+                underline = charmy_stuff.graphics.DrawnLine(
+                    drawn_text.window, 
+                    charmy_stuff.styles.shape.Line([
+                        (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] + offset), 
+                        (drawn_text.offset[0] + text_size[0] + 2, 
+                        drawn_text.offset[1] + text_size[1] + offset)
                     ]), 
                     drawn_text.texture, max(1, int(drawn_text.style.size) // 15))
             else:
                 underline = drawn_text.style.underlined
             # Insert the underline right after the text
-            window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, underline)
+            underline.draw()
+            # LineBase.draw_line(underline)
+            # window.charmy_window._drawing_list.insert(
+            #     window.charmy_window._drawing_list.index(drawn_text) + 1, underline
+            #     )
         if drawn_text.style.strikethrough != False:
             # Strikethrough
             strikethrough: charmy_stuff.graphics.DrawnLine
             if isinstance(drawn_text.style.strikethrough, bool):
-                strikethrough = charmy_stuff.graphics.DrawnLine(charmy_stuff.styles.shape.Line([
-                    (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] // 2 + offset), 
-                    (drawn_text.offset[0] + text_size[0] + 2, 
-                     drawn_text.offset[1] + text_size[1]//2 + offset)
+                strikethrough = charmy_stuff.graphics.DrawnLine(
+                    drawn_text.window, 
+                    charmy_stuff.styles.shape.Line([
+                        (drawn_text.offset[0] - 2, drawn_text.offset[1] + text_size[1] // 2 + offset), 
+                        (drawn_text.offset[0] + text_size[0] + 2, 
+                        drawn_text.offset[1] + text_size[1]//2 + offset)
                     ]), 
                     drawn_text.texture, max(1, int(drawn_text.style.size) // 15))
             else:
                 strikethrough = drawn_text.style.strikethrough
             # Insert the underline right after the text
-            window.drawing_list.insert(window.drawing_list.index(drawn_text) + 1, strikethrough)
+            strikethrough.draw()
+            # LineBase.draw_line(strikethrough)
+            # window.charmy_window._drawing_list.insert(
+            #     window.charmy_window._drawing_list.index(drawn_text) + 1, strikethrough
+            #     )
 
     @staticmethod
     def cairo_set_font(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase):

@@ -85,8 +85,16 @@ class Button(_Widget):
 
         # Drawn objects, used by internal drawing functions
         self._components: tuple[_graphics.DrawnShape, _graphics.DrawnText] = (
-            _graphics.DrawnShape(_styles.shape.Rect((0, 0), (0, 0)), None), 
-            _graphics.DrawnText(self.text, _styles.text_style.TextStyle.sys_default, None), 
+            _graphics.DrawnShape(
+                self.root_container, 
+                _styles.shape.Rect((0, 0), (0, 0)), 
+                None
+                ), 
+            _graphics.DrawnText(
+                self.root_container, 
+                self.text, _styles.text_style.TextStyle.sys_default, 
+                None
+                ), 
             )
 
         # Internal event binds
@@ -103,7 +111,8 @@ class Button(_Widget):
             lambda _: self.config(state="normal"), _is_internal=True
             )
 
-    @reactive_caching.cached_property(["state", "style", "text"])
+    @reactive_caching.cached_property("-exposed-")
+    # BUG of reactive_caching: cannot listen change in properties
     def components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
         """Components (drawn objects) that make up the button."""
         state=self.state

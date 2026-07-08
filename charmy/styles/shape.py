@@ -704,6 +704,12 @@ class Rect(SingleShape):
     @_reactive_caching.cached_property(["pos", "size"])
     def boundary(self) -> ShapeRange:
         return self.pos, self.size
+    
+    def __contains__(self, point: Point) -> bool:
+        """Accelerated implemention of point hit test in rect."""
+        x, y = self.pos
+        w, h = self.size
+        return x < point[0] < x + w and y < point[1] < y + h
 
 @_dataclass
 class RoundRect(SingleShape):

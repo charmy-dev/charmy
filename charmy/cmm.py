@@ -2,21 +2,25 @@ from __future__ import annotations as _
 
 import typing as _typing
 
-import time
+import time as _time
 
 from .backend import loader as _backend_loader
 # from .const import MANAGER_ID
 # from .event import WorkingThread
 # from .frameworks import Frameworks
-from .cm_object import CharmyObject as _CharmyObject
+from .cm_object import CharmyObject as _CharmyObject, CharmyRegisteredObject as _CharmyRegisteredObject
 from .event import EventHandling as _EventHandling, event_types as _event_types
+from .const import DEBUG_FLAGS as _DEBUG_FLAGS
 
 if _typing.TYPE_CHECKING:
     from .backend.template import Backend
     from . import window
 
 
-class CharmyManager(_CharmyObject, _EventHandling):
+__all__ = ["CharmyManager", "mainloop", "quit"]
+
+
+class CharmyManager(_CharmyRegisteredObject, _EventHandling):
     """Charmy windows manager. Used to manage windows created with one backend."""
 
     def __init__(self, backend: str | Backend, **kwargs):
@@ -24,7 +28,7 @@ class CharmyManager(_CharmyObject, _EventHandling):
 
         :param backend: The backend this manager uses
         """
-        _CharmyObject.__init__(self, **kwargs)
+        super().__init__(**kwargs)
         _EventHandling.__init__(self)
 
         if isinstance(backend, str):
@@ -69,21 +73,26 @@ def mainloop(interval: float = .01) -> None:
     :param interval: Time to wait between each loop, in integer seconds
     """
     none_alive = False
+    if _DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME != False:
+        if _DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME == True:
+            interval = 0.5
+        else:
+            interval = _DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME
     while not none_alive:
         none_alive = True
         for manager_ref in CharmyManager.instances:
-            manager = manager_ref()
+            manager = manager_ref
             if manager is not None:
                 if manager._alive:
                     none_alive = False
                     manager.update()
         if interval > 0:
-            time.sleep(interval)
+            _time.sleep(interval)
 
 
 def quit():  # NOQA
     """Quit Charmy."""
     for manager_ref in CharmyManager.instances:
-        manager = manager_ref()
+        manager = manager_ref
         if manager != None:
             manager.destroy()

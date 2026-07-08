@@ -9,26 +9,47 @@ import copy as _copy
 
 from . import styles as _styles
 from . import cm_object as _cm_object
+from .const import DEBUG_FLAGS as _DEBUG_FLAGS
 
 
 if _typing.TYPE_CHECKING:
     from .widgets import window as _window
 
 
-class DEBUG_FLAGS:
-    DRAW_OBJECTS_BOUNDARY: bool = False
+def _draw_bbox(obj: DrawnObject):
+    range_rect = DrawnShape(
+        obj.window, 
+        _styles.shape.Rect(*obj.boundary), 
+        (0, 0, 255, 20), 
+        1, (0, 0, 255), 
+        (0, 0), (0, 0)
+        # obj.offset, 
+        # obj.anchor, 
+        )
+    # obj.window.parent.backend.ShapeBase.draw_shape(range_rect)
+    _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY = False # Temporarily disable to avoid infinite loop
+    range_rect.draw()
+    _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY = True
 
 
 # region DrawnObject base class
 class DrawnObject(_cm_object.CharmyObject):
     """Base class of drawn objects in Charmy."""
 
-    def __init__(self):
+    def __init__(self, window: _window.WindowEntity):
+        """To represent a drawn object, inherit this class."""
+        self._booting: bool = True
         super().__init__()
-        self._actual_draw_list: dict[_window.Window, list[DrawnObject]] = {}
+        self._attrs: list[str] = []
+        self._need_redraw: bool = True
+        self._drawn: bool = False
+        self._booting = False
+        self.window: _window.WindowEntity = window
+        self.offset: _styles.shape.Point
+        self.anchor: _styles.shape.Point
 
     @_abstractmethod
-    def draw(self, window: _window.Window, *args, **kwargs) -> _typing.Self: ...
+    def draw(self, *args, **kwargs) -> _typing.Self: ...
 
     @property
     @_abstractmethod
@@ -37,12 +58,31 @@ class DrawnObject(_cm_object.CharmyObject):
     @_abstractmethod
     def __contains__(self, point: _styles.shape.Point) -> bool: ...
 
+    # def __setattr__(self, name: str, value: _typing.Any) -> None:
+    #     """Set attr and mark self need redraw."""
+    #     # Pass internal, and pass when object initializing
+    #     if name.startswith("_"):
+    #         return super().__setattr__(name, value)
+    #     if self._booting:
+    #         return super().__setattr__(name, value)
+    #     # If is an watched attr of self, add self bbox to redraw list
+    #     # If position changed, add both old and new bbox
+    #     if self._drawn:
+    #         old_boundary = self.boundary
+    #     super().__setattr__(name, value)
+    #     if name in self._attrs and self._drawn:
+    #         self.window._redraw_regions.append(self.boundary)
+    #         print(f"{self.id} redrawn on {name} change")
+    #         if self.boundary != old_boundary:
+    #             self.window._redraw_regions.append(old_boundary)
+
 # region Line
 
 class DrawnLine(DrawnObject):
     """A class used to represent lines drawn to GUI or canvas."""
 
     def __init__(self, 
+                window: _window.WindowEntity, 
                 line: _styles.shape.LinePath, 
                 texture: _styles.texture.Texture | _styles.texture.TextureLike, 
                 width: int = 5, 
@@ -57,7 +97,8 @@ class DrawnLine(DrawnObject):
         :param offset: Position offset of the drawn line
         :param anchor: Point of anchor on the original line
         """
-        super().__init__()
+        super().__init__(window)
+        self._attrs = ["line", "texture", "width", "offset", "anchor"]
 
         self.line: _styles.shape.LinePath = line
         self._texture: _styles.texture.Texture = _styles.texture.ensure_texture(texture)
@@ -91,7 +132,6 @@ class DrawnLine(DrawnObject):
             ), self.line.boundary[1]
 
     def draw(self, 
-            window: _window.Window,
             _fallback_from: _typing.Optional[list[type[_styles.shape.LinePath]]] = None
             ) -> _typing.Self:
         """Draw the line.
@@ -100,44 +140,33 @@ class DrawnLine(DrawnObject):
         :param _fallback_from: Internal use only, the fallback path
         """
 
+        window = self.window
+
         if not _fallback_from:
             _fallback_from = []
 
         backend = window.parent.backend
         # 👆 Alias to avoid path to backend properties getting too long. 😅
-        # Remove currently rendered copy of this object on the current window
-        if window not in self._actual_draw_list.keys():
-            self._actual_draw_list[window] = []
-        for draw_object in self._actual_draw_list[window]:
-            if draw_object in window.backend_base.drawing_list:
-                window.backend_base.drawing_list.remove(draw_object)
-        self._actual_draw_list[window] = []
+        # Remove self from render list if already rendered
+        if self in self.window._drawing_list:
+            self.window._drawing_list.remove(self)
         # Rendering process
         if self.line.type == "line_path_class":
             raise TypeError("styles.shape.LinePath class is a template, cannot be drawn.")
         else:
             if self.line.type in backend.LineBase.supports:
                 # If supported by the windows' backend.
-                window.backend_base.drawing_list.append(self)
-                self._actual_draw_list[window].append(self)
+                window.backend_base.charmy_window._drawing_list.append(self)
             else:
                 # If not supported, enters the fallback process
                 _fallback_from.append(self.line.__class__)
                 for fallback_line in self.line.fallback(_from = _fallback_from):
                     drawn_host = _copy.copy(self)
                     drawn_host.line = fallback_line
-                    drawn_host.draw(window, _fallback_from)
-                    self._actual_draw_list[window].append(drawn_host)
-            if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
-                range_rect = DrawnShape(
-                    _styles.shape.Rect(*self.line.boundary), 
-                    (0, 0, 255, 10), 
-                    1, (0, 0, 255), 
-                    self.offset, 
-                    self.anchor, 
-                    )
-                window.backend_base.drawing_list.append(range_rect)
-                self._actual_draw_list[window].append(range_rect)
+                    drawn_host.draw(_fallback_from)
+            if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
+                _draw_bbox(self)
+        self._drawn = True
         return self
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
@@ -150,6 +179,7 @@ class DrawnShape(DrawnObject):
     """A Class used to represent shapes drawn to GUI or canvas."""
 
     def __init__(self, 
+                window: _window.WindowEntity, 
                 shape: _styles.shape.ShapeType, 
                 texture: _styles.texture.Texture | _styles.texture.TextureLike, 
                 border_width: int = 0, 
@@ -166,7 +196,8 @@ class DrawnShape(DrawnObject):
         :param offset: Position offset of the drawn shape
         :param anchor: Point of anchor on the original shape
         """
-        super().__init__()
+        super().__init__(window)
+        self._attrs = ["shape", "texture", "border_width", "border_texture", "offset", "anchor"]
 
         self.shape: _styles.shape.ShapeType = shape
         self._texture: _styles.texture.Texture = _styles.texture.ensure_texture(texture)
@@ -216,6 +247,7 @@ class DrawnShape(DrawnObject):
 
     def copy(self) -> DrawnShape:
         return DrawnShape(
+            self.window, 
             self.shape, 
             self.texture, 
             self.border_width, 
@@ -225,7 +257,6 @@ class DrawnShape(DrawnObject):
             )
 
     def draw(self, 
-            window: _window.Window, 
             _fallback_from: list[type[_styles.shape.LinePath]] = [], 
             ) -> _typing.Self:
         """Draw the shape using backend.
@@ -233,29 +264,19 @@ class DrawnShape(DrawnObject):
         :param window: The window to draw shape to
         :param _fallback_from: Internal use only, the fallback path
         """
-        backend = window.parent.backend
-        # Remove currently rendered copy of this object on the current window
-        if window not in self._actual_draw_list.keys():
-            self._actual_draw_list[window] = []
-        for draw_object in self._actual_draw_list[window]:
-            if draw_object in window.backend_base.drawing_list:
-                window.backend_base.drawing_list.remove(draw_object)
-        self._actual_draw_list[window] = []
+        backend = self.window.parent.backend
+        # Remove self from render list if already rendered
+        if self in self.window._drawing_list:
+            self.window._drawing_list.remove(self)
         # Rendering process
-        backend = window.parent.backend
+        backend = self.window.parent.backend
         if self.shape.type in backend.ShapeBase.supports or \
             "any_shape" in backend.ShapeBase.supports:
-            window.backend_base.drawing_list.append(self)
-        if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
-                range_rect = DrawnShape(
-                    _styles.shape.Rect(*self.shape.boundary), 
-                    (0, 0, 255, 50), 
-                    1, (0, 0, 255), 
-                    self.offset, 
-                    self.anchor
-                    )
-                window.backend_base.drawing_list.append(range_rect)
-                self._actual_draw_list[window].append(range_rect)
+            self.window.backend_base.charmy_window._drawing_list.append(self)
+        if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
+            _draw_bbox(self)
+        self.window._redraw_regions.append(self.boundary)
+        self._drawn = True
         return self
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
@@ -273,6 +294,7 @@ class DrawnText(DrawnObject):
     """
 
     def __init__(self, 
+                window: _window.WindowEntity, 
                 text: str, 
                 style: _styles.text_style.TextStyle, 
                 texture: _styles.texture.Texture | _styles.texture.TextureLike, 
@@ -287,7 +309,8 @@ class DrawnText(DrawnObject):
         :param offset: Position of the drawn text
         :param anchor: Point of anchor on the text
         """
-        super().__init__()
+        super().__init__(window)
+        self._attrs = ["text", "style", "texture", "offset", "anchor"]
 
         self.text: str = text
         self.style: _styles.text_style.TextStyle = style
@@ -299,7 +322,7 @@ class DrawnText(DrawnObject):
             anchor = (0, 0)
         self.anchor: _styles.shape.Point = anchor
 
-        self._backend_reported_boundary: _styles.shape.ShapeRange = (0, 0), (0, 0)
+        self._backend_reported_size: _styles.shape.Size = (0, 0)
 
     @property
     def texture(self) -> _styles.texture.Texture:
@@ -318,21 +341,19 @@ class DrawnText(DrawnObject):
     def boundary(self) -> _styles.shape.ShapeRange:
         """Rect boundary of the drawn text."""
         # TODO: Implement getting text boundary via text-shape conversion
-        return self._backend_reported_boundary
+        pos = self.offset[0] - self.anchor[0], self.offset[1] - self.anchor[1]
+        size = self._backend_reported_size
+        return pos, size
 
-    def draw(self, window: _window.Window) -> _typing.Self:
+    def draw(self) -> _typing.Self:
         """Draw the text.
 
         :param window: The window to draw text to
         """
-        backend = window.parent.backend
-        # Remove currently rendered copy of this object on the current window
-        if window not in self._actual_draw_list.keys():
-            self._actual_draw_list[window] = []
-        for draw_object in self._actual_draw_list[window]:
-            if draw_object in window.backend_base.drawing_list:
-                window.backend_base.drawing_list.remove(draw_object)
-        self._actual_draw_list[window] = []
+        backend = self.window.parent.backend
+        # Remove self from render list if already rendered
+        if self in self.window._drawing_list:
+            self.window._drawing_list.remove(self)
         # Rendering process
         if backend.TextBase.supports.direct_render:
             # TODO: Add support for backend's prefer_conversion flag
@@ -362,23 +383,15 @@ class DrawnText(DrawnObject):
                 rendered_text.style = rendered_style
             else:
                 rendered_text = self
-            window.backend_base.drawing_list.append(rendered_text)
-            self._actual_draw_list[window].append(self)
-            if DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
-                range_rect = DrawnShape(
-                    _styles.shape.Rect(*self.boundary), 
-                    (0, 0, 255, 50), 
-                    1, (0, 0, 255), 
-                    # self.offset, 
-                    # self.anchor, 
-                    )
-                window.backend_base.drawing_list.append(range_rect)
-                self._actual_draw_list[window].append(range_rect)
-            return self
+            self.window.backend_base.charmy_window._drawing_list.append(rendered_text)
+            if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
+                _draw_bbox(self)
         else:
             #### Render as shape
             # TODO: Implement text → shape fallback
             raise NotImplementedError("Currently cannot render text as shape!")
+        self._drawn = True
+        return self
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
-        return point in _styles.shape.Rect(*self.boundary)
+        return point in _styles.shape.Rect((0, 0), self.boundary[1])

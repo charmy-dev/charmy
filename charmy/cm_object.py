@@ -45,42 +45,25 @@ class _InstancesList(typing.Generic[_InstanceType]):
         Remember to tell me your idea via GitHub discussions of this project (if available).
         """
         super().__init_subclass__()
-        self.instances: list[weakref.ReferenceType[_InstanceType]] = []
+        self.instances: weakref.WeakSet[_InstanceType] = weakref.WeakSet()
         self.instances_by_id: weakref.WeakValueDictionary[str, _InstanceType] = \
             weakref.WeakValueDictionary()
-
-    def gc(self):
-        """Garbage collection for _InstancesList, clear destroyed weakrefs."""
-        for ref in self.instances:
-            if ref() is None:
-                self.instances.remove(ref)
-                del ref
 
     def append(self, item: _InstanceType) -> typing.Self:
         """Add an object to this list.
 
         :param item: The object to add
         """
-        self.instances.append(weakref.ref(item))
+        self.instances.add(item)
         self.instances_by_id[item.id] = item
-        self.gc()
         return self
 
-    def __getitem__(self, item: int | str) -> _InstanceType:
+    def __getitem__(self, id_: str) -> _InstanceType:
         """Get or find an object from this list.
 
         :param item: Either the index or the ID of the target object
         """
-        instance: _InstanceType | None = None
-        if isinstance(item, int):
-            # int expressing an index
-            if item < len(self.instances):
-                ref: weakref.ReferenceType = self.instances[item]
-                instance: _InstanceType | None = ref()
-        else:
-            # str expressing an ID
-            if item in self.instances_by_id:
-                instance: _InstanceType | None = None
+        instance: _InstanceType | None = self.instances_by_id[id_]
         if instance is None:
             raise CharmyInstanceDestroyedError("Trying to access a destroyed or inexisting object.")
         else:
@@ -114,11 +97,7 @@ class CharmyObject:
     CharmyObject provides abilities of cumulating ID and set attributes.
     """
 
-    # Find by class {Button: _InstancesList(), Rect: _InstancesList(), ...}
-    objects_sorted: typing.ClassVar[typing.Dict[type[CharmyObject], _InstancesList]] = {}
-
-    # Instances list
-    instances: typing.ClassVar[_InstancesList[typing.Self]]
+    _next_id: int = 0
 
     def __init__(self, id_: typing.Optional[str] = None):
         """CharmyObject is this project's basic class.
@@ -132,24 +111,14 @@ class CharmyObject:
 
         if id_ is None:
             id_prefix = self.class_name
-            id_ = id_prefix + str(self.instance_count)
-        if  any(id_ in cls_instances for cls_instances in CharmyObject.objects_sorted.values()):
-            raise KeyError(id_)
+            id_ = id_prefix + str(self.__class__._next_id)
+            self.__class__._next_id += 1
 
         self.id: typing.Final[str] = id_  # Do not change after initialization
-
-        # if self.class_name not in self.objects_sorted:
-        #     self.objects_sorted[self.class_name] = {self.id: self}
-        # else:
-        #     self.objects_sorted[self.class_name][self.id] = self
-
-        self.__class__.instances.append(self)
 
     def __init_subclass__(cls):
         """To initialize a CharmyObject subclass."""
         super().__init_subclass__()
-        cls.instances = _InstancesList()
-        cls.objects_sorted[cls] = cls.instances
 
     # region: Properties
 
@@ -157,25 +126,6 @@ class CharmyObject:
     def class_name(self) -> str:
         """Returns class name."""
         return self.__class__.__name__
-
-    @property
-    def instance_count(self) -> int:
-        """Returns the class instance count."""
-        return len(self.__class__.instances)
-
-    # endregion
-
-    # region: Object search
-
-    def get_obj(self, target_id: str, default=None) -> typing.Any | None:
-        """Get registered object by id. (If not found, return default)"""
-        for cls_instances in CharmyObject.objects_sorted.values():
-            if target_id in cls_instances:
-                return cls_instances[target_id]
-        else:
-            return default
-
-    find = get_obj
 
     def set(self, name: str, value: typing.Any):
         """Set attributes in CharmyObject.
@@ -217,3 +167,31 @@ class CharmyObject:
         return str(f"CharmyObject[{self.id}]")
 
     # endregion
+
+
+# region Registed Objects
+
+class CharmyRegisteredObject(CharmyObject):
+
+    # Instances list
+    instances: typing.ClassVar[_InstancesList[typing.Self]] = _InstancesList()
+
+    def __init_subclass__(cls):
+        super().__init_subclass__()
+        cls.instances = _InstancesList()
+
+    def __init__(self):
+        super().__init__()
+        self.__class__.instances.append(self)
+
+    @property
+    def instance_count(self) -> int:
+        """Returns the class instance count."""
+        return len(self.__class__.instances)
+
+    def find_obj(self, target_id: str, default=None) -> typing.Any | None:
+        """Get registered object by id. (If not found, return default)"""
+        if target_id in self.instances:
+            return self.instances[target_id]
+        else:
+            return default
