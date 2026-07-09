@@ -7,7 +7,7 @@ import time as _time
 from .backend import loader as _backend_loader
 # from .const import MANAGER_ID
 # from .event import WorkingThread
-# from .frameworks import Frameworks
+# from .backend import Frameworks
 from .cm_object import CharmyObject as _CharmyObject, CharmyRegisteredObject as _CharmyRegisteredObject
 from .event import EventHandling as _EventHandling, event_types as _event_types
 from .const import DEBUG_FLAGS as _DEBUG_FLAGS

@@ -11,7 +11,14 @@ Charmy GUI documentation
     "The code I wrote seems like a pile of shit💩. 😭😭"
 
 
-Welcome to Charmy GUI documentation! ``Charmy GUI`` is modern, simple GUI library
+欢迎来到 `Charmy GUI` 的文档，我将带你了解、使用`Charmy`构建图形界面！
+
+**Charmy GUI** 是一个跨平台的 `Python GUI` 库，支持 `多种后端` 、 `多种前端` （当然那是开发到后面的了），由多位开发者共同维护。
+
+该项目原名为 `Suzaku` ，只是底层缺陷，导致性能出现问题，于是重构。
+
+.. note::
+    当前进度：制作 **pySDL3 + pycairo** 中。
 
 .. toctree::
    :maxdepth: 3
@@ -19,7 +26,6 @@ Welcome to Charmy GUI documentation! ``Charmy GUI`` is modern, simple GUI librar
 
    getstarted/index
    how_does_it_work/index
-   api/index
 
 .. toctree::
    :maxdepth: 3
