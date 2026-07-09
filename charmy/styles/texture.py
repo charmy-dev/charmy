@@ -64,6 +64,7 @@ class Texture:
         params for that texture. The following is an example for pure colors.
 
         .. code-block:: python
+
             {
             "type": "color", 
             "color": (255, 0, 0, 100),

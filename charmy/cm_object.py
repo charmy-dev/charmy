@@ -105,7 +105,7 @@ class CharmyObject:
         CharmyObject provides abilities of cumulating ID and set attributes.
 
         Args:
-            id_ (str): Optional, ID for the object
+            id_ (str): Optional, identifier for the object
 
         """
 

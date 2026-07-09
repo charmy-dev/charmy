@@ -276,6 +276,7 @@ class EventTask(CharmyObject):
     This is mostly for internal use of Charmy.
 
     .. code-block:: python
+
         class EventHandling():
             ...
             def bind(self, ...):

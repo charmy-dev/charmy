@@ -18,18 +18,21 @@ class Theme(CharmyObject):
     Example
     -------
     .. code-block:: python
+
         my_theme = CTheme({<Some styles>})
         my_sub_theme = CTheme(parent="default.light")
         my_external_theme = CTheme().load_from_file("./path/to/a/theme.json")
     This shows examples of creating themes, either from a JSON, a parent theme or a file.
 
     .. code-block:: python
+
         all_themes = CTheme.LOADED_THEMES
         INTERNAL_THEME = CTheme.INTERNAL_THEME
         DEFAULT_THEME = CTheme.DEFAULT_THEME
     This shows getting all loaded themes, internal themes, and the default theme.
 
     .. code-block:: python
+
         default_light_theme = CTheme.find_loaded_theme("default.light")
         if CTheme.validate_theme_existed("default.light"):
             print("Default light theme exists!")
@@ -59,6 +62,7 @@ class Theme(CharmyObject):
         Example
         -------
         .. code-block:: python
+
             my_theme = CTheme({<Some styles>})
             my_sub_theme = CTheme(parent="default.light")
             my_external_theme = CTheme().load_from_file("./path/to/a/theme.json")
@@ -93,6 +97,7 @@ class Theme(CharmyObject):
         Example
         -------
         .. code-block:: python
+
             DEFAULT_THEME = CTheme.find_loaded_theme("default.light")
         This returns the CTheme object of the default theme to `DEFAULT_THEME`.
 
@@ -111,6 +116,7 @@ class Theme(CharmyObject):
         Example
         -------
         .. code-block:: python
+
             CTheme.validate_theme_existed("default.light")
         This returns if the theme `default.light` is loaded.
 
@@ -147,6 +153,7 @@ class Theme(CharmyObject):
         Example
         -------
         .. code-block:: python
+
             my_theme = CTheme().load_from_file("./path/to/a/theme.json")
             my_theme.load_from_file("./path/to/another/theme.json")
 
@@ -187,6 +194,7 @@ class Theme(CharmyObject):
         Example
         -------
         .. code-block:: python
+
             my_theme = CTheme().load_from_json({<Some JSON theme data>})
             my_theme.load_from_json({<Some JSON theme data>})
         This shows loading a theme to `my_theme` from JSON data, and change it to theme from
