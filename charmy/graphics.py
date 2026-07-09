@@ -65,7 +65,7 @@ class DrawnObject(_cm_object.CharmyObject):
     #         return super().__setattr__(name, value)
     #     if self._booting:
     #         return super().__setattr__(name, value)
-    #     # If is an watched attr of self, add self bbox to redraw list
+    #     # If is a watched attr of self, add self bbox to redraw list
     #     # If position changed, add both old and new bbox
     #     if self._drawn:
     #         old_boundary = self.boundary
@@ -105,10 +105,10 @@ class DrawnLine(DrawnObject):
         self.width: int = width
         if offset == "auto":
             offset = self.line.boundary[0]
-        self.offset: _styles.shape.Point = offset
+        self.offset: _styles.shape.Point = offset  # NOQA
         if anchor == "auto":
             anchor = self.line.boundary[0]
-        self.anchor: _styles.shape.Point = anchor
+        self.anchor: _styles.shape.Point = anchor  # NOQA
 
     @property
     def texture(self) -> _styles.texture.Texture:

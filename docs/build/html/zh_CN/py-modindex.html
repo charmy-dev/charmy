@@ -19,27 +19,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -206,46 +197,60 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="getstarted/index.html">开始</a><input aria-label="Toggle navigation of 开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/install.html">安装Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">第一个程序</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/window_config.html">窗口的配置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">自定义 <cite>Main Manager</cite> 设置</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="getstarted/index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/install.html">安装 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API参考</a><input aria-label="Toggle navigation of API参考" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/cmm.html">charmy.cmm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/const.html">charmy.const</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/object.html">charmy.object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pos.html">charmy.pos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/rect.html">charmy.rect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/size.html">charmy.size</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/this.html">charmy.this</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/var.html">charmy.var</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/button.html">button</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/container.html">container</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/widget.html">widget</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/window.html">window</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/windowbase.html">windowbase</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/genesis.html">genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/loader.html">loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/template.html">template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/utils.html">utils</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="api/cmm.html">cmm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/const.html">const</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/event.html">event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/graphics.html">graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/object.html">object</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/shape.html">shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/style.html">style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/text_style.html">text_style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/texture.html">texture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/styles/theme.html">theme</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/ui.html">ui</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/drawing.html">drawing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/backend.html">backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/this.html">this</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/utils/index.html">charmy.utils</a><input aria-label="Toggle navigation of charmy.utils" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/caching.html">caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/event_types.html">event_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/geo_math.html">geo_math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/layout_profiles.html">layout_profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/svg.html">svg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/type_checking.html">type_checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/var.html">var</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/container.html">container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/frame.html">frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/widget.html">widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/window.html">window</a></li>
 </ul>
 </li>
 </ul>
@@ -253,8 +258,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contribution.html">贡献</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">许可证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -303,7 +307,43 @@
     <td><img src="_static/minus.png" class="toggler"
               id="toggle-1" style="display: none" alt="-" /></td>
     <td>
-        <code class="xref">charmy</code></td><td>
+        <a href="api/index.html#module-charmy"><code class="xref">charmy</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/backend/index.html#module-charmy.backend"><code class="xref">charmy.backend</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/backend/genesis.html#module-charmy.backend.genesis"><code class="xref">charmy.backend.genesis</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/backend/loader.html#module-charmy.backend.loader"><code class="xref">charmy.backend.loader</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/backend/template.html#module-charmy.backend.template"><code class="xref">charmy.backend.template</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/backend/utils.html#module-charmy.backend.utils"><code class="xref">charmy.backend.utils</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/object.html#module-charmy.cm_object"><code class="xref">charmy.cm_object</code></a></td><td>
     <em></em></td>
   </tr>
   <tr class="cg-1">
@@ -327,49 +367,7 @@
   <tr class="cg-1">
     <td></td>
     <td>&#160;&#160;&#160;
-        <a href="api/frameworks/index.html#module-charmy.frameworks"><code class="xref">charmy.frameworks</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-1">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="api/frameworks/backend.html#module-charmy.frameworks.backend"><code class="xref">charmy.frameworks.backend</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-1">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="api/frameworks/drawing.html#module-charmy.frameworks.drawing"><code class="xref">charmy.frameworks.drawing</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-1">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="api/frameworks/ui.html#module-charmy.frameworks.ui"><code class="xref">charmy.frameworks.ui</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-1">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="api/object.html#module-charmy.object"><code class="xref">charmy.object</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-1">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="api/pos.html#module-charmy.pos"><code class="xref">charmy.pos</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-1">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="api/rect.html#module-charmy.rect"><code class="xref">charmy.rect</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-1">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="api/size.html#module-charmy.size"><code class="xref">charmy.size</code></a></td><td>
+        <a href="api/graphics.html#module-charmy.graphics"><code class="xref">charmy.graphics</code></a></td><td>
     <em></em></td>
   </tr>
   <tr class="cg-1">
@@ -381,7 +379,25 @@
   <tr class="cg-1">
     <td></td>
     <td>&#160;&#160;&#160;
-        <a href="api/styles/color.html#module-charmy.styles.color"><code class="xref">charmy.styles.color</code></a></td><td>
+        <a href="api/styles/shape.html#module-charmy.styles.shape"><code class="xref">charmy.styles.shape</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/styles/style.html#module-charmy.styles.style"><code class="xref">charmy.styles.style</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/styles/text_style.html#module-charmy.styles.text_style"><code class="xref">charmy.styles.text_style</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/styles/texture.html#module-charmy.styles.texture"><code class="xref">charmy.styles.texture</code></a></td><td>
     <em></em></td>
   </tr>
   <tr class="cg-1">
@@ -399,7 +415,49 @@
   <tr class="cg-1">
     <td></td>
     <td>&#160;&#160;&#160;
-        <a href="api/var.html#module-charmy.var"><code class="xref">charmy.var</code></a></td><td>
+        <a href="api/utils/index.html#module-charmy.utils"><code class="xref">charmy.utils</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/utils/caching.html#module-charmy.utils.caching"><code class="xref">charmy.utils.caching</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/utils/event_types.html#module-charmy.utils.event_types"><code class="xref">charmy.utils.event_types</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/utils/geo_math.html#module-charmy.utils.geo_math"><code class="xref">charmy.utils.geo_math</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/utils/layout_profiles.html#module-charmy.utils.layout_profiles"><code class="xref">charmy.utils.layout_profiles</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/utils/svg.html#module-charmy.utils.svg"><code class="xref">charmy.utils.svg</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/utils/type_checking.html#module-charmy.utils.type_checking"><code class="xref">charmy.utils.type_checking</code></a></td><td>
+    <em></em></td>
+  </tr>
+  <tr class="cg-1">
+    <td></td>
+    <td>&#160;&#160;&#160;
+        <a href="api/utils/var.html#module-charmy.utils.var"><code class="xref">charmy.utils.var</code></a></td><td>
     <em></em></td>
   </tr>
   <tr class="cg-1">
@@ -417,13 +475,13 @@
   <tr class="cg-1">
     <td></td>
     <td>&#160;&#160;&#160;
-        <a href="api/widgets/canvas.html#module-charmy.widgets.canvas"><code class="xref">charmy.widgets.canvas</code></a></td><td>
+        <a href="api/widgets/container.html#module-charmy.widgets.container"><code class="xref">charmy.widgets.container</code></a></td><td>
     <em></em></td>
   </tr>
   <tr class="cg-1">
     <td></td>
     <td>&#160;&#160;&#160;
-        <a href="api/widgets/container.html#module-charmy.widgets.container"><code class="xref">charmy.widgets.container</code></a></td><td>
+        <a href="api/widgets/frame.html#module-charmy.widgets.frame"><code class="xref">charmy.widgets.frame</code></a></td><td>
     <em></em></td>
   </tr>
   <tr class="cg-1">
@@ -436,12 +494,6 @@
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="api/widgets/window.html#module-charmy.widgets.window"><code class="xref">charmy.widgets.window</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-1">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="api/widgets/windowbase.html#module-charmy.widgets.windowbase"><code class="xref">charmy.widgets.windowbase</code></a></td><td>
     <em></em></td>
   </tr>
 </table>

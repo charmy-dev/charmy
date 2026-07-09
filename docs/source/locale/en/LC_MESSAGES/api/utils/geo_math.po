@@ -1,0 +1,154 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/api/utils/geo_math.rst:2
+msgid "geo_math"
+msgstr ""
+
+#: charmy.utils.geo_math:1 of
+msgid "Geometry and math helpers extracted from `charmy.styles.shape`."
+msgstr ""
+
+#: charmy.utils.geo_math:3 of
+msgid ""
+"This module centralizes math utilities used for shapes: angle "
+"conversions, circle-point computations, arc-to-bezier conversion, and "
+"angle coverage tests."
+msgstr ""
+
+#: charmy.utils.geo_math:7 of
+msgid "!! THIS IS A VIBED MODULE !!"
+msgstr ""
+
+#: charmy.utils.geo_math:8 of
+msgid ""
+"This module was mostly vibed by GitHub Copilot, ChatGPT, and Google "
+"Gemini.  It includes geometric knowledge that the core devs (in 2026) "
+"have not learned  yet."
+msgstr ""
+
+#: charmy.utils.geo_math:12 of
+msgid ""
+"This module is impossible to be completed by three secondary school "
+"students  without the help from third-party, and here, in this era, we "
+"chose AI. We  provide no guarantee for codes this file."
+msgstr ""
+
+#: charmy.utils.geo_math.evaluate_quadratic_bezier:1 of
+msgid "Evaluate a quadratic Bezier at parameter t (0..1)."
+msgstr ""
+
+#: charmy.utils.geo_math.evaluate_quadratic_bezier:3 of
+msgid "Returns (x, y) as floats."
+msgstr ""
+
+#: charmy.utils.geo_math.quadratic_bezier_internal_t_roots:1 of
+msgid ""
+"Return the list of unique t roots (0<t<1) where derivative in x or y is "
+"zero."
+msgstr ""
+
+#: charmy.utils.geo_math.quadratic_bezier_internal_t_roots:3 of
+msgid "This mirrors solving (p0 - 2*p1 + p2) * t = (p0 - p1) for each coordinate."
+msgstr ""
+
+#: charmy.utils.geo_math.evaluate_cubic_bezier:1 of
+msgid "Evaluate a cubic Bezier at parameter t (0..1). Returns (x, y) floats."
+msgstr ""
+
+#: charmy.utils.geo_math.cubic_bezier_derivative_roots:1 of
+msgid "Return t roots (0<t<1) where derivative in x or y is zero."
+msgstr ""
+
+#: charmy.utils.geo_math.cubic_bezier_derivative_roots:3 of
+msgid ""
+"Solves quadratic 3*a t^2 + 2*b t + c = 0 for each coordinate, where a = "
+"-p0 + 3*p1 - 3*p2 + p3 b = 3*(p0 - 2*p1 + p2) c = 3*(p1 - p0)"
+msgstr ""
+
+#: charmy.utils.geo_math.gui_deg_to_math_rad:1 of
+msgid "Convert GUI degrees (0=North, clockwise) to math radians (0=East, CCW)."
+msgstr ""
+
+#: charmy.utils.geo_math.gui_deg_to_math_rad:3 of
+msgid "This follows the conversion used in the original shape code."
+msgstr ""
+
+#: charmy.utils.geo_math.point_on_circle:1 of
+msgid "Return the integer point on circle at GUI orientation degrees."
+msgstr ""
+
+#: charmy.utils.geo_math.point_on_circle:3 of
+msgid ""
+"GUI coordinate system: 0 degrees is up and angles increase clockwise. The"
+" returned point uses integer rounding consistent with the original code."
+msgstr ""
+
+#: charmy.utils.geo_math.is_angle_covered:1 of
+msgid ""
+"Check whether target angle (degrees) lies within [start, end] in GUI CW "
+"system."
+msgstr ""
+
+#: charmy.utils.geo_math.is_angle_covered:3 of
+msgid "Angles are normalized to 0..360. The function handles wrap-around ranges."
+msgstr ""
+
+#: charmy.utils.geo_math.arc_to_cubic_beziers:1 of
+msgid ""
+"Convert a circle arc (in GUI degrees) to a list of cubic Bezier point "
+"lists."
+msgstr ""
+
+#: charmy.utils.geo_math.arc_to_cubic_beziers:3 of
+msgid ""
+"Returns a list where each item is [p0, p1, p2, p3] with integer points. "
+"This mirrors the logic from the original Shape module."
+msgstr ""
+
+#: charmy.utils.geo_math.flatten_circle_arc:1 of
+msgid "Flatten a circle arc into a polyline approximation."
+msgstr ""
+
+#: charmy.utils.geo_math.flatten_circle_arc:3 of
+msgid ""
+"The returned list includes the start and end points of the arc. :param "
+"tolerance: Maximum allowed angle step between consecutive points, in "
+"degrees."
+msgstr ""
+
+#: charmy.utils.geo_math.flatten_quadratic_bezier:1 of
+msgid "Flatten a quadratic Bezier curve into a polyline."
+msgstr ""
+
+#: ../../source/api/utils/geo_math.rst
+msgid "参数"
+msgstr ""
+
+#: charmy.utils.geo_math.flatten_cubic_bezier:3
+#: charmy.utils.geo_math.flatten_quadratic_bezier:3 of
+msgid "Approximate maximum angle between adjacent polyline segments, in degrees."
+msgstr ""
+
+#: charmy.utils.geo_math.flatten_cubic_bezier:1 of
+msgid "Flatten a cubic Bezier curve into a polyline."
+msgstr ""
+

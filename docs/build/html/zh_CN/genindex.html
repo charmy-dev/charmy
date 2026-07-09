@@ -19,27 +19,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -206,46 +197,60 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="getstarted/index.html">开始</a><input aria-label="Toggle navigation of 开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/install.html">安装Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">第一个程序</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/window_config.html">窗口的配置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">自定义 <cite>Main Manager</cite> 设置</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="getstarted/index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/install.html">安装 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API参考</a><input aria-label="Toggle navigation of API参考" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/cmm.html">charmy.cmm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/const.html">charmy.const</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/object.html">charmy.object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pos.html">charmy.pos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/rect.html">charmy.rect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/size.html">charmy.size</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/this.html">charmy.this</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/var.html">charmy.var</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/button.html">button</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/container.html">container</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/widget.html">widget</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/window.html">window</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/windowbase.html">windowbase</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/genesis.html">genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/loader.html">loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/template.html">template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/utils.html">utils</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="api/cmm.html">cmm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/const.html">const</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/event.html">event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/graphics.html">graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/object.html">object</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/shape.html">shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/style.html">style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/text_style.html">text_style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/texture.html">texture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/styles/theme.html">theme</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/ui.html">ui</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/drawing.html">drawing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/backend.html">backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/this.html">this</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/utils/index.html">charmy.utils</a><input aria-label="Toggle navigation of charmy.utils" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/caching.html">caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/event_types.html">event_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/geo_math.html">geo_math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/layout_profiles.html">layout_profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/svg.html">svg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/type_checking.html">type_checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/var.html">var</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/container.html">container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/frame.html">frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/widget.html">widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/window.html">window</a></li>
 </ul>
 </li>
 </ul>
@@ -253,8 +258,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contribution.html">贡献</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">许可证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -290,65 +294,157 @@
           
 <section class="genindex-section">
   <h1 id="index">索引</h1>
-  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#X"><strong>X</strong></a> | <a href="#Y"><strong>Y</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#X"><strong>X</strong></a> | <a href="#Y"><strong>Y</strong></a></div>
 </section>
 <section id="_" class="genindex-section">
   <h2>_</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.__init__">__init__() （charmy.backend.genesis.Backend 方法）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.__init__">__init__() （charmy.backend.genesis.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.__init__">__init__() （charmy.backend.template.Backend 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.LineBase.__init__">__init__() （charmy.backend.template.Backend.LineBase 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.ShapeBase.__init__">__init__() （charmy.backend.template.Backend.ShapeBase 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextBase.__init__">__init__() （charmy.backend.template.Backend.TextBase 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextureBase.__init__">__init__() （charmy.backend.template.Backend.TextureBase 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.__init__">__init__() （charmy.backend.template.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.__init__">__init__() （charmy.cm_object.CharmyObject 方法）</a>
+</li>
+        <li><a href="api/object.html#charmy.cm_object.CharmyRegisteredObject.__init__">__init__() （charmy.cm_object.CharmyRegisteredObject 方法）</a>
+</li>
         <li><a href="api/cmm.html#charmy.cmm.CharmyManager.__init__">__init__() （charmy.cmm.CharmyManager 方法）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event.__init__">__init__() （charmy.event.Event 方法）</a>
+        <li><a href="api/const.html#charmy.const.Configs.__init__">__init__() （charmy.const.Configs 方法）</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventHandling.__init__">__init__() （charmy.event.EventHandling 方法）</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventTask.__init__">__init__() （charmy.event.EventTask 方法）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.__init__">__init__() （charmy.event.WorkingThread 方法）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnLine.__init__">__init__() （charmy.graphics.DrawnLine 方法）</a>
 </li>
-        <li><a href="api/frameworks/backend.html#charmy.frameworks.backend.OPENGL.__init__">__init__() （charmy.frameworks.backend.OPENGL 方法）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnObject.__init__">__init__() （charmy.graphics.DrawnObject 方法）</a>
 </li>
-        <li><a href="api/frameworks/drawing.html#charmy.frameworks.drawing.SKIA.__init__">__init__() （charmy.frameworks.drawing.SKIA 方法）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnShape.__init__">__init__() （charmy.graphics.DrawnShape 方法）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.__init__">__init__() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnText.__init__">__init__() （charmy.graphics.DrawnText 方法）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.__init__">__init__() （charmy.object.CharmyObject 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.AnyShape.__init__">__init__() （charmy.styles.shape.AnyShape 方法）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.InstanceCounterMeta.__init__">__init__() （charmy.object.InstanceCounterMeta 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.__init__">__init__() （charmy.styles.shape.CircleArc 方法）</a>
 </li>
-        <li><a href="api/pos.html#charmy.pos.Pos.__init__">__init__() （charmy.pos.Pos 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.__init__">__init__() （charmy.styles.shape.CubicBezier 方法）</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.__init__">__init__() （charmy.rect.Rect 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Curve.__init__">__init__() （charmy.styles.shape.Curve 方法）</a>
 </li>
-        <li><a href="api/size.html#charmy.size.Size.__init__">__init__() （charmy.size.Size 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.__init__">__init__() （charmy.styles.shape.EllipseArc 方法）</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/styles/color.html#charmy.styles.color.Color.__init__">__init__() （charmy.styles.color.Color 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line.__init__">__init__() （charmy.styles.shape.Line 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.__init__">__init__() （charmy.styles.shape.LinePath 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.__init__">__init__() （charmy.styles.shape.PolyLine 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.__init__">__init__() （charmy.styles.shape.QuadraticBezier 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.__init__">__init__() （charmy.styles.shape.Rect 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.__init__">__init__() （charmy.styles.shape.RoundRect 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeGroup.__init__">__init__() （charmy.styles.shape.ShapeGroup 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeType.__init__">__init__() （charmy.styles.shape.ShapeType 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.__init__">__init__() （charmy.styles.shape.SingleShape 方法）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.__init__">__init__() （charmy.styles.text_style.TextStyle 方法）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.__init__">__init__() （charmy.styles.texture.Color 方法）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Transparent.__init__">__init__() （charmy.styles.texture.Transparent 方法）</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.__init__">__init__() （charmy.styles.theme.Theme 方法）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.BooleanVar.__init__">__init__() （charmy.var.BooleanVar 方法）</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/utils/caching.html#charmy.utils.caching.CharmyCachedClass.__init__">__init__() （charmy.utils.caching.CharmyCachedClass 方法）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.FloatVar.__init__">__init__() （charmy.var.FloatVar 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.DelayTriggered.__init__">__init__() （charmy.utils.event_types.DelayTriggered 方法）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.IntVar.__init__">__init__() （charmy.var.IntVar 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.Event.__init__">__init__() （charmy.utils.event_types.Event 方法）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.StringVar.__init__">__init__() （charmy.var.StringVar 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.EventTriggered.__init__">__init__() （charmy.utils.event_types.EventTriggered 方法）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.Var.__init__">__init__() （charmy.var.Var 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusGain.__init__">__init__() （charmy.utils.event_types.FocusGain 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusLoss.__init__">__init__() （charmy.utils.event_types.FocusLoss 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseClick.__init__">__init__() （charmy.utils.event_types.MouseClick 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseEnter.__init__">__init__() （charmy.utils.event_types.MouseEnter 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseInteractEvent.__init__">__init__() （charmy.utils.event_types.MouseInteractEvent 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseLeave.__init__">__init__() （charmy.utils.event_types.MouseLeave 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseMove.__init__">__init__() （charmy.utils.event_types.MouseMove 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MousePress.__init__">__init__() （charmy.utils.event_types.MousePress 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent.__init__">__init__() （charmy.utils.event_types.MouseRawEvent 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRelease.__init__">__init__() （charmy.utils.event_types.MouseRelease 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseScroll.__init__">__init__() （charmy.utils.event_types.MouseScroll 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetConfigure.__init__">__init__() （charmy.utils.event_types.WidgetConfigure 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDestroy.__init__">__init__() （charmy.utils.event_types.WidgetDestroy 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDraw.__init__">__init__() （charmy.utils.event_types.WidgetDraw 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetEvent.__init__">__init__() （charmy.utils.event_types.WidgetEvent 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetMove.__init__">__init__() （charmy.utils.event_types.WidgetMove 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetResize.__init__">__init__() （charmy.utils.event_types.WidgetResize 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetUpdate.__init__">__init__() （charmy.utils.event_types.WidgetUpdate 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WindowEvent.__init__">__init__() （charmy.utils.event_types.WindowEvent 方法）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.LayoutProfile.__init__">__init__() （charmy.utils.layout_profiles.LayoutProfile 方法）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.ManagedLayoutProfile.__init__">__init__() （charmy.utils.layout_profiles.ManagedLayoutProfile 方法）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.PlaceProfile.__init__">__init__() （charmy.utils.layout_profiles.PlaceProfile 方法）</a>
+</li>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.ContainerLike.__init__">__init__() （charmy.utils.type_checking.ContainerLike 方法）</a>
+</li>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.PILImageType.__init__">__init__() （charmy.utils.type_checking.PILImageType 方法）</a>
+</li>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.WindowLike.__init__">__init__() （charmy.utils.type_checking.WindowLike 方法）</a>
+</li>
+        <li><a href="api/utils/var.html#charmy.utils.var.Var.__init__">__init__() （charmy.utils.var.Var 方法）</a>
 </li>
         <li><a href="api/widgets/button.html#charmy.widgets.button.Button.__init__">__init__() （charmy.widgets.button.Button 方法）</a>
-</li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.__init__">__init__() （charmy.widgets.canvas.CanvasBase 方法）</a>
 </li>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container.__init__">__init__() （charmy.widgets.container.Container 方法）</a>
 </li>
         <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.__init__">__init__() （charmy.widgets.widget.Widget 方法）</a>
 </li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile.__init__">__init__() （charmy.widgets.widget.WidgetProfile 方法）</a>
+</li>
         <li><a href="api/widgets/window.html#charmy.widgets.window.Window.__init__">__init__() （charmy.widgets.window.Window 方法）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.__init__">__init__() （charmy.widgets.windowbase.WindowBase 方法）</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.__init__">__init__() （charmy.widgets.window.WindowEntity 方法）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -358,21 +454,31 @@
   <h2>A</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.abs_pos">abs_pos（charmy.widgets.container.Container 属性）</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.abs_pos">abs_pos（charmy.widgets.widget.Widget 属性）</a>
+</li>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.abs_pos">abs_pos（charmy.widgets.window.WindowEntity 属性）</a>
+</li>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container.add_child">add_child() （charmy.widgets.container.Container 方法）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.add_element">add_element() （charmy.widgets.canvas.CanvasBase 方法）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.alpha">alpha（charmy.backend.template.Backend.WindowBase 属性）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.add_task">add_task() （charmy.event.WorkingThread 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.AnyShape">AnyShape（charmy.styles.shape 中的类）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.add_window">add_window() （charmy.cmm.CharmyManager 方法）</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.arc_to_cubic_beziers">arc_to_cubic_beziers()（在 charmy.utils.geo_math 模块中）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.attributes">attributes（charmy.object.CharmyObject 属性）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetConfigure.attrs_changed">attrs_changed（charmy.utils.event_types.WidgetConfigure 属性）</a>
 </li>
-        <li><a href="api/widgets/container.html#charmy.widgets.container.auto_find_parent">auto_find_parent()（在 charmy.widgets.container 模块中）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.author">author（charmy.backend.genesis.Backend 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.author">author（charmy.backend.template.Backend 属性）</a>
 </li>
         <li><a href="api/const.html#charmy.const.ID.AUTO">AUTO（charmy.const.ID 属性）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.a">a（charmy.styles.texture.Color 属性）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -382,23 +488,89 @@
   <h2>B</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.backend_name">backend_name（charmy.frameworks.Frameworks 属性）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.LineBase">Backend.LineBase（charmy.backend.genesis 中的类）</a>
 </li>
-        <li><a href="api/frameworks/backend.html#charmy.frameworks.backend.BackendFramework">BackendFramework（charmy.frameworks.backend 中的类）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.LineBase">Backend.LineBase（charmy.backend.template 中的类）</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends">Backends（charmy.const 中的类）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.ShapeBase">Backend.ShapeBase（charmy.backend.genesis 中的类）</a>
 </li>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.backend">backend（charmy.frameworks.Frameworks 属性）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.ShapeBase">Backend.ShapeBase（charmy.backend.template 中的类）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextBase">Backend.TextBase（charmy.backend.genesis 中的类）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextBase">Backend.TextBase（charmy.backend.template 中的类）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextureBase">Backend.TextureBase（charmy.backend.genesis 中的类）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextureBase">Backend.TextureBase（charmy.backend.template 中的类）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase">Backend.WindowBase（charmy.backend.genesis 中的类）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase">Backend.WindowBase（charmy.backend.template 中的类）</a>
+</li>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.WindowLike.backend_base">backend_base（charmy.utils.type_checking.WindowLike 属性）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.backend_init">backend_init() （charmy.backend.genesis.Backend 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.backend_init">backend_init() （charmy.backend.template.Backend 方法）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend">Backend（charmy.backend.genesis 中的类）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend">Backend（charmy.backend.template 中的类）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.background">background（charmy.backend.template.Backend.WindowBase 属性）</a>
+</li>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.background">background（charmy.widgets.window.WindowEntity 属性）</a>
+</li>
+        <li><a href="api/event.html#charmy.event.EventHandling.bind">bind() （charmy.event.EventHandling 方法）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.BLACK">BLACK（charmy.styles.text_style.WEIGHT 属性）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.BOLD">BOLD（charmy.styles.text_style.WEIGHT 属性）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventHandling.bind">bind() （charmy.event.EventHandling 方法）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnShape.border_texture">border_texture（charmy.graphics.DrawnShape 属性）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.BooleanVar">BooleanVar（charmy.var 中的类）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnLine.boundary">boundary（charmy.graphics.DrawnLine 属性）</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.bottom">bottom（charmy.rect.Rect 属性）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnObject.boundary">boundary（charmy.graphics.DrawnObject 属性）</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnShape.boundary">boundary（charmy.graphics.DrawnShape 属性）</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnText.boundary">boundary（charmy.graphics.DrawnText 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.boundary">boundary（charmy.styles.shape.CircleArc 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.boundary">boundary（charmy.styles.shape.CubicBezier 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line.boundary">boundary（charmy.styles.shape.Line 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.boundary">boundary（charmy.styles.shape.LinePath 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.boundary">boundary（charmy.styles.shape.PolyLine 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.boundary">boundary（charmy.styles.shape.QuadraticBezier 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.boundary">boundary（charmy.styles.shape.Rect 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.boundary">boundary（charmy.styles.shape.RoundRect 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeGroup.boundary">boundary（charmy.styles.shape.ShapeGroup 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeType.boundary">boundary（charmy.styles.shape.ShapeType 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.boundary">boundary（charmy.styles.shape.SingleShape 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseClick.button">button（charmy.utils.event_types.MouseClick 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MousePress.button">button（charmy.utils.event_types.MousePress 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRelease.button">button（charmy.utils.event_types.MouseRelease 属性）</a>
 </li>
         <li><a href="api/widgets/button.html#charmy.widgets.button.Button">Button（charmy.widgets.button 中的类）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.b">b（charmy.styles.texture.Color 属性）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -408,18 +580,81 @@
   <h2>C</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.can_be_close">can_be_close() （charmy.widgets.windowbase.WindowBase 方法）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.cairo_context">cairo_context（charmy.backend.genesis.Backend.WindowBase 属性）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.can_be_closed">can_be_closed() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.cairo_reinit_surface">cairo_reinit_surface() （charmy.backend.genesis.Backend.WindowBase 方法）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.cancel_dirty">cancel_dirty() （charmy.widgets.windowbase.WindowBase 方法）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextureBase.cairo_set_context_texture">cairo_set_context_texture()（charmy.backend.genesis.Backend.TextureBase 静态方法）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase">CanvasBase（charmy.widgets.canvas 中的类）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextBase.cairo_set_font">cairo_set_font()（charmy.backend.genesis.Backend.TextBase 静态方法）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.cconfig">cconfig() （charmy.object.CharmyObject 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.Event.call_chain">call_chain() （charmy.utils.event_types.Event 方法）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.cget">cget() （charmy.object.CharmyObject 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.EventTriggered.call_chain">call_chain() （charmy.utils.event_types.EventTriggered 方法）</a>
 </li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseMove.call_chain">call_chain() （charmy.utils.event_types.MouseMove 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MousePress.call_chain">call_chain() （charmy.utils.event_types.MousePress 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent.call_chain">call_chain() （charmy.utils.event_types.MouseRawEvent 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRelease.call_chain">call_chain() （charmy.utils.event_types.MouseRelease 方法）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetConfigure.call_chain">call_chain() （charmy.utils.event_types.WidgetConfigure 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.center">center（charmy.styles.shape.CircleArc 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.center">center（charmy.styles.shape.EllipseArc 属性）</a>
+</li>
+        <li>
+    charmy
+
+        <ul>
+          <li><a href="api/index.html#module-charmy">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.backend
+
+        <ul>
+          <li><a href="api/backend/index.html#module-charmy.backend">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.backend.genesis
+
+        <ul>
+          <li><a href="api/backend/genesis.html#module-charmy.backend.genesis">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.backend.loader
+
+        <ul>
+          <li><a href="api/backend/loader.html#module-charmy.backend.loader">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.backend.template
+
+        <ul>
+          <li><a href="api/backend/template.html#module-charmy.backend.template">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.backend.utils
+
+        <ul>
+          <li><a href="api/backend/utils.html#module-charmy.backend.utils">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.cm_object
+
+        <ul>
+          <li><a href="api/object.html#module-charmy.cm_object">module</a>
+</li>
+        </ul></li>
         <li>
     charmy.cmm
 
@@ -442,59 +677,10 @@
 </li>
         </ul></li>
         <li>
-    charmy.frameworks
+    charmy.graphics
 
         <ul>
-          <li><a href="api/frameworks/index.html#module-charmy.frameworks">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.frameworks.backend
-
-        <ul>
-          <li><a href="api/frameworks/backend.html#module-charmy.frameworks.backend">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.frameworks.drawing
-
-        <ul>
-          <li><a href="api/frameworks/drawing.html#module-charmy.frameworks.drawing">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.frameworks.ui
-
-        <ul>
-          <li><a href="api/frameworks/ui.html#module-charmy.frameworks.ui">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.object
-
-        <ul>
-          <li><a href="api/object.html#module-charmy.object">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.pos
-
-        <ul>
-          <li><a href="api/pos.html#module-charmy.pos">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.rect
-
-        <ul>
-          <li><a href="api/rect.html#module-charmy.rect">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.size
-
-        <ul>
-          <li><a href="api/size.html#module-charmy.size">module</a>
+          <li><a href="api/graphics.html#module-charmy.graphics">module</a>
 </li>
         </ul></li>
         <li>
@@ -505,10 +691,31 @@
 </li>
         </ul></li>
         <li>
-    charmy.styles.color
+    charmy.styles.shape
 
         <ul>
-          <li><a href="api/styles/color.html#module-charmy.styles.color">module</a>
+          <li><a href="api/styles/shape.html#module-charmy.styles.shape">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.styles.style
+
+        <ul>
+          <li><a href="api/styles/style.html#module-charmy.styles.style">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.styles.text_style
+
+        <ul>
+          <li><a href="api/styles/text_style.html#module-charmy.styles.text_style">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.styles.texture
+
+        <ul>
+          <li><a href="api/styles/texture.html#module-charmy.styles.texture">module</a>
 </li>
         </ul></li>
         <li>
@@ -518,8 +725,6 @@
           <li><a href="api/styles/theme.html#module-charmy.styles.theme">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     charmy.this
 
@@ -528,10 +733,61 @@
 </li>
         </ul></li>
         <li>
-    charmy.var
+    charmy.utils
 
         <ul>
-          <li><a href="api/var.html#module-charmy.var">module</a>
+          <li><a href="api/utils/index.html#module-charmy.utils">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    charmy.utils.caching
+
+        <ul>
+          <li><a href="api/utils/caching.html#module-charmy.utils.caching">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.event_types
+
+        <ul>
+          <li><a href="api/utils/event_types.html#module-charmy.utils.event_types">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.geo_math
+
+        <ul>
+          <li><a href="api/utils/geo_math.html#module-charmy.utils.geo_math">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.layout_profiles
+
+        <ul>
+          <li><a href="api/utils/layout_profiles.html#module-charmy.utils.layout_profiles">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.svg
+
+        <ul>
+          <li><a href="api/utils/svg.html#module-charmy.utils.svg">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.type_checking
+
+        <ul>
+          <li><a href="api/utils/type_checking.html#module-charmy.utils.type_checking">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.var
+
+        <ul>
+          <li><a href="api/utils/var.html#module-charmy.utils.var">module</a>
 </li>
         </ul></li>
         <li>
@@ -549,17 +805,17 @@
 </li>
         </ul></li>
         <li>
-    charmy.widgets.canvas
-
-        <ul>
-          <li><a href="api/widgets/canvas.html#module-charmy.widgets.canvas">module</a>
-</li>
-        </ul></li>
-        <li>
     charmy.widgets.container
 
         <ul>
           <li><a href="api/widgets/container.html#module-charmy.widgets.container">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.widgets.frame
+
+        <ul>
+          <li><a href="api/widgets/frame.html#module-charmy.widgets.frame">module</a>
 </li>
         </ul></li>
         <li>
@@ -576,46 +832,57 @@
           <li><a href="api/widgets/window.html#module-charmy.widgets.window">module</a>
 </li>
         </ul></li>
-        <li>
-    charmy.widgets.windowbase
-
-        <ul>
-          <li><a href="api/widgets/windowbase.html#module-charmy.widgets.windowbase">module</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.charmy_window">charmy_window（charmy.backend.template.Backend.WindowBase 属性）</a>
 </li>
-        </ul></li>
+        <li><a href="api/utils/caching.html#charmy.utils.caching.CharmyCachedClass">CharmyCachedClass（charmy.utils.caching 中的类）</a>
+</li>
+        <li><a href="api/object.html#charmy.cm_object.CharmyInstanceDestroyedError">CharmyInstanceDestroyedError</a>
+</li>
         <li><a href="api/cmm.html#charmy.cmm.CharmyManager">CharmyManager（charmy.cmm 中的类）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject">CharmyObject（charmy.object 中的类）</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject">CharmyObject（charmy.cm_object 中的类）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.class_name">class_name（charmy.object.CharmyObject 属性）</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyRegisteredObject">CharmyRegisteredObject（charmy.cm_object 中的类）</a>
 </li>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.cleanup">cleanup() （charmy.cmm.CharmyManager 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CharmyShapeError">CharmyShapeError</a>
 </li>
-        <li><a href="api/styles/color.html#charmy.styles.color.Color">Color（charmy.styles.color 中的类）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc">CircleArc（charmy.styles.shape 中的类）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.config">config() （charmy.object.CharmyObject 方法）</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.class_name">class_name（charmy.cm_object.CharmyObject 属性）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.config_element">config_element() （charmy.widgets.canvas.CanvasBase 方法）</a>
+        <li><a href="api/event.html#charmy.event.EventHandling.clear_bind">clear_bind() （charmy.event.EventHandling 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.clear_screen">clear_screen() （charmy.backend.template.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.close">close() （charmy.backend.genesis.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.close">close() （charmy.backend.template.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color">Color（charmy.styles.texture 中的类）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.color">color（charmy.styles.texture.Color 属性）</a>
+</li>
+        <li><a href="api/widgets/button.html#charmy.widgets.button.Button.components">components（charmy.widgets.button.Button 属性）</a>
+</li>
+        <li><a href="api/event.html#charmy.event.EventTask.conditions">conditions（charmy.event.EventTask 属性）</a>
+</li>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.config">config() （charmy.cm_object.CharmyObject 方法）</a>
+</li>
+        <li><a href="api/const.html#charmy.const.Configs">Configs（charmy.const 中的类）</a>
+</li>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.ContainerLike">ContainerLike（charmy.utils.type_checking 中的类）</a>
 </li>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container">Container（charmy.widgets.container 中的类）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.contextlib">contextlib（charmy.widgets.windowbase.WindowBase 属性）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnShape.copy">copy() （charmy.graphics.DrawnShape 方法）</a>
 </li>
-        <li><a href="api/cmm.html#charmy.cmm.cquit">cquit()（在 charmy.cmm 模块中）</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.cubic_bezier_derivative_roots">cubic_bezier_derivative_roots()（在 charmy.utils.geo_math 模块中）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.create">create() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier">CubicBezier（charmy.styles.shape 中的类）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.create">create() （charmy.frameworks.ui.UIFramework 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.DelayTriggered.current_time">current_time（charmy.utils.event_types.DelayTriggered 属性）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.create">create() （charmy.widgets.windowbase.WindowBase 方法）</a>
-</li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.create_event_bounds">create_event_bounds() （charmy.frameworks.ui.GLFW 方法）</a>
-</li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.create_event_bounds">create_event_bounds() （charmy.frameworks.ui.UIFramework 方法）</a>
-</li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.create_event_bounds">create_event_bounds() （charmy.widgets.windowbase.WindowBase 方法）</a>
-</li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.cset">cset() （charmy.object.CharmyObject 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Curve">Curve（charmy.styles.shape 中的类）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -625,49 +892,83 @@
   <h2>D</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.DEBUG_FLAGS">DEBUG_FLAGS（charmy.backend.genesis 中的类）</a>
+</li>
+        <li><a href="api/const.html#charmy.const.DEBUG_FLAGS">DEBUG_FLAGS（charmy.const 中的类）</a>
+</li>
+        <li><a href="api/styles/style.html#charmy.styles.style.DEBUG_FLAGS">DEBUG_FLAGS（charmy.styles.style 中的类）</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile.default">default()（charmy.widgets.widget.WidgetProfile 类方法）</a>
+</li>
+        <li><a href="api/const.html#charmy.const.Configs.default_backend">default_backend（charmy.const.Configs 属性）</a>
+</li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.DEFAULT_THEME_FILENAME">DEFAULT_THEME_FILENAME（charmy.styles.theme.Theme 属性）</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.DEFAULT_THEME">DEFAULT_THEME（charmy.styles.theme.Theme 属性）</a>
 </li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.DelayTriggered.delay_time">delay_time（charmy.utils.event_types.DelayTriggered 属性）</a>
+</li>
         <li><a href="api/event.html#charmy.event.DelayTask">DelayTask（charmy.event 中的类）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.destroy">destroy() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.DelayTriggered">DelayTriggered（charmy.utils.event_types 中的类）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.destroy">destroy() （charmy.frameworks.ui.UIFramework 方法）</a>
+        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.destroy">destroy() （charmy.cmm.CharmyManager 方法）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.destroy">destroy() （charmy.widgets.windowbase.WindowBase 方法）</a>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.destroy">destroy() （charmy.widgets.widget.Widget 方法）</a>
 </li>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.destroy_window">destroy_window() （charmy.cmm.CharmyManager 方法）</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.Window.destroy">destroy() （charmy.widgets.window.Window 方法）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.dirty">dirty() （charmy.widgets.windowbase.WindowBase 方法）</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.destroy">destroy() （charmy.widgets.window.WindowEntity 方法）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw">draw() （charmy.widgets.canvas.CanvasBase 方法）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnLine.draw">draw() （charmy.graphics.DrawnLine 方法）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.draw">draw() （charmy.widgets.windowbase.WindowBase 方法）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnObject.draw">draw() （charmy.graphics.DrawnObject 方法）</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnShape.draw">draw() （charmy.graphics.DrawnShape 方法）</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnText.draw">draw() （charmy.graphics.DrawnText 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Curve.draw">draw() （charmy.styles.shape.Curve 方法）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.draw">draw() （charmy.widgets.widget.Widget 方法）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.ShapeBase.draw_any_shape">draw_any_shape()（charmy.backend.genesis.Backend.ShapeBase 静态方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.draw_background">draw_background() （charmy.backend.template.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.DEBUG_FLAGS.DRAW_CAIRO_STOCK_TEXT_BOUND">DRAW_CAIRO_STOCK_TEXT_BOUND（charmy.backend.genesis.DEBUG_FLAGS 属性）</a>
+</li>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container.draw_children">draw_children() （charmy.widgets.container.Container 方法）</a>
 </li>
-        <li><a href="api/widgets/button.html#charmy.widgets.button.Button.draw_config">draw_config() （charmy.widgets.button.Button 方法）</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.draw_frame">draw_frame() （charmy.widgets.window.WindowEntity 方法）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw_config">draw_config() （charmy.widgets.canvas.CanvasBase 方法）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.LineBase.draw_line">draw_line()（charmy.backend.genesis.Backend.LineBase 静态方法）</a>
 </li>
-        <li><a href="api/frameworks/drawing.html#charmy.frameworks.drawing.DrawingFramework.draw_rect">draw_rect() （charmy.frameworks.drawing.DrawingFramework 方法）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.LineBase.draw_line">draw_line()（charmy.backend.template.Backend.LineBase 静态方法）</a>
 </li>
-        <li><a href="api/frameworks/drawing.html#charmy.frameworks.drawing.SKIA.draw_rect">draw_rect() （charmy.frameworks.drawing.SKIA 方法）</a>
+        <li><a href="api/const.html#charmy.const.DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY">DRAW_OBJECTS_BOUNDARY（charmy.const.DEBUG_FLAGS 属性）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw_rect">draw_rect() （charmy.widgets.canvas.CanvasBase 方法）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.ShapeBase.draw_shape">draw_shape()（charmy.backend.genesis.Backend.ShapeBase 静态方法）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw_type_map">draw_type_map（charmy.widgets.canvas.CanvasBase 属性）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.ShapeBase.draw_shape">draw_shape()（charmy.backend.template.Backend.ShapeBase 静态方法）</a>
 </li>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.drawing_name">drawing_name（charmy.frameworks.Frameworks 属性）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.ShapeBase.draw_shape_group">draw_shape_group()（charmy.backend.genesis.Backend.ShapeBase 静态方法）</a>
 </li>
-        <li><a href="api/frameworks/drawing.html#charmy.frameworks.drawing.DrawingFramework">DrawingFramework（charmy.frameworks.drawing 中的类）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextBase.draw_text">draw_text()（charmy.backend.genesis.Backend.TextBase 静态方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextBase.draw_text">draw_text()（charmy.backend.template.Backend.TextBase 静态方法）</a>
 </li>
         <li><a href="api/const.html#charmy.const.DrawingMode">DrawingMode（charmy.const 中的类）</a>
 </li>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.drawing">drawing（charmy.frameworks.Frameworks 属性）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnLine">DrawnLine（charmy.graphics 中的类）</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnObject">DrawnObject（charmy.graphics 中的类）</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnShape">DrawnShape（charmy.graphics 中的类）</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnText">DrawnText（charmy.graphics 中的类）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -677,29 +978,49 @@
   <h2>E</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.elements">elements（charmy.widgets.canvas.CanvasBase 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc">EllipseArc（charmy.styles.shape 中的类）</a>
 </li>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.error">error()（charmy.cmm.CharmyManager 静态方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.end_orient">end_orient（charmy.styles.shape.CircleArc 属性）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event.event_data">event_data（charmy.event.Event 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.end_orient">end_orient（charmy.styles.shape.EllipseArc 属性）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.EventHandling.EVENT_TYPES">EVENT_TYPES（charmy.event.EventHandling 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.end_point">end_point（charmy.styles.shape.CircleArc 属性）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event.event_type">event_type（charmy.event.Event 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.end_point">end_point（charmy.styles.shape.CubicBezier 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line.end_point">end_point（charmy.styles.shape.Line 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.end_point">end_point（charmy.styles.shape.LinePath 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.end_point">end_point（charmy.styles.shape.PolyLine 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.end_point">end_point（charmy.styles.shape.QuadraticBezier 属性）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.ensure_texture">ensure_texture()（在 charmy.styles.texture 模块中）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.evaluate_cubic_bezier">evaluate_cubic_bezier()（在 charmy.utils.geo_math 模块中）</a>
+</li>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.evaluate_quadratic_bezier">evaluate_quadratic_bezier()（在 charmy.utils.geo_math 模块中）</a>
+</li>
         <li><a href="api/event.html#charmy.event.EventHandling">EventHandling（charmy.event 中的类）</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventTask">EventTask（charmy.event 中的类）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event">Event（charmy.event 中的类）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.EventTriggered">EventTriggered（charmy.utils.event_types 中的类）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.EventHandling.execute_task">execute_task() （charmy.event.EventHandling 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.Event">Event（charmy.utils.event_types 中的类）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.execute_tasks">execute_tasks() （charmy.event.WorkingThread 方法）</a>
+        <li><a href="api/event.html#charmy.event.EventTask.execute">execute() （charmy.event.EventTask 方法）</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.EXPECTED_DATA_TYPE">EXPECTED_DATA_TYPE（charmy.styles.theme.Theme 属性）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.EXTRABLACK">EXTRABLACK（charmy.styles.text_style.WEIGHT 属性）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.EXTRABOLD">EXTRABOLD（charmy.styles.text_style.WEIGHT 属性）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.EXTRALIGHT">EXTRALIGHT（charmy.styles.text_style.WEIGHT 属性）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -709,19 +1030,73 @@
   <h2>F</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/object.html#charmy.object.CharmyObject.find">find() （charmy.object.CharmyObject 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.fallback">fallback() （charmy.styles.shape.CircleArc 方法）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.find_element">find_element() （charmy.widgets.canvas.CanvasBase 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line.fallback">fallback() （charmy.styles.shape.Line 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.fallback">fallback() （charmy.styles.shape.LinePath 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.fallback">fallback() （charmy.styles.shape.PolyLine 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.fallback">fallback() （charmy.styles.shape.QuadraticBezier 方法）</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile.fallback_state">fallback_state（charmy.widgets.widget.WidgetProfile 属性）</a>
+</li>
+        <li><a href="api/styles/style.html#charmy.styles.style.fill_vars">fill_vars()（在 charmy.styles.style 模块中）</a>
+</li>
+        <li><a href="api/styles/style.html#charmy.styles.style.DEBUG_FLAGS.FILL_VARS_DEBUG_OUTPUT">FILL_VARS_DEBUG_OUTPUT（charmy.styles.style.DEBUG_FLAGS 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.find_class_by_type">find_class_by_type()（charmy.styles.shape.LinePath 静态方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.find_class_by_type">find_class_by_type()（charmy.styles.shape.SingleShape 静态方法）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Texture.find_class_by_type">find_class_by_type()（charmy.styles.texture.Texture 静态方法）</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.find_loaded_theme">find_loaded_theme()（charmy.styles.theme.Theme 类方法）</a>
 </li>
+        <li><a href="api/object.html#charmy.cm_object.CharmyRegisteredObject.find_obj">find_obj() （charmy.cm_object.CharmyRegisteredObject 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.flatten">flatten() （charmy.styles.shape.CircleArc 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.flatten">flatten() （charmy.styles.shape.CubicBezier 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Curve.flatten">flatten() （charmy.styles.shape.Curve 方法）</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventHandling.find_task">find_task() （charmy.event.EventHandling 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.flatten">flatten() （charmy.styles.shape.QuadraticBezier 方法）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.FloatVar">FloatVar（charmy.var 中的类）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.flatten">flatten() （charmy.styles.shape.SingleShape 方法）</a>
 </li>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks">Frameworks（charmy.frameworks 中的类）</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.flatten_circle_arc">flatten_circle_arc()（在 charmy.utils.geo_math 模块中）</a>
+</li>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.flatten_cubic_bezier">flatten_cubic_bezier()（在 charmy.utils.geo_math 模块中）</a>
+</li>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.flatten_quadratic_bezier">flatten_quadratic_bezier()（在 charmy.utils.geo_math 模块中）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusGain">FocusGain（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusLoss">FocusLoss（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.font">font（charmy.styles.text_style.TextStyle 属性）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.DEBUG_FLAGS.FORCE_CLOSE_SHAPE">FORCE_CLOSE_SHAPE（charmy.backend.genesis.DEBUG_FLAGS 属性）</a>
+</li>
+        <li><a href="api/widgets/frame.html#charmy.widgets.frame.Frame">Frame（charmy.widgets.frame 中的类）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.friendly_name">friendly_name（charmy.backend.genesis.Backend 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.friendly_name">friendly_name（charmy.backend.template.Backend 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.from_json">from_json()（charmy.styles.shape.LinePath 静态方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.from_json">from_json()（charmy.styles.shape.SingleShape 静态方法）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.from_json">from_json()（charmy.styles.text_style.TextStyle 静态方法）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Texture.from_json">from_json()（charmy.styles.texture.Texture 静态方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.fullscreen">fullscreen（charmy.backend.template.Backend.WindowBase 属性）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -731,27 +1106,23 @@
   <h2>G</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/object.html#charmy.object.CharmyObject.get">get() （charmy.object.CharmyObject 方法）</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.get">get() （charmy.cm_object.CharmyObject 方法）</a>
 </li>
-        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.get_context">get_context()（charmy.widgets.container.Container 类方法）</a>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.ContainerLike.get_mouse_hover">get_mouse_hover() （charmy.utils.type_checking.ContainerLike 方法）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.get_element">get_element() （charmy.widgets.canvas.CanvasBase 方法）</a>
+        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.get_mouse_hover">get_mouse_hover() （charmy.widgets.container.Container 方法）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.get_mouse_pos">get_mouse_pos() （charmy.frameworks.ui.GLFW 方法）</a>
-</li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.get_mouse_pos">get_mouse_pos() （charmy.frameworks.ui.UIFramework 方法）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextBase.get_text_bound">get_text_bound()（charmy.backend.genesis.Backend.TextBase 静态方法）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/object.html#charmy.object.CharmyObject.get_obj">get_obj() （charmy.object.CharmyObject 方法）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextBase.get_text_bound">get_text_bound()（charmy.backend.template.Backend.TextBase 静态方法）</a>
 </li>
-        <li><a href="api/cmm.html#charmy.cmm.GLFWError">GLFWError</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.get_text_boundary">get_text_boundary() （charmy.styles.text_style.TextStyle 方法）</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends.GLFW">GLFW（charmy.const.Backends 属性）</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.gui_deg_to_math_rad">gui_deg_to_math_rad()（在 charmy.utils.geo_math 模块中）</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends.glfw">glfw（charmy.const.Backends 属性）</a>
-</li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW">GLFW（charmy.frameworks.ui 中的类）</a>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.g">g（charmy.styles.texture.Color 属性）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -761,13 +1132,17 @@
   <h2>H</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/rect.html#charmy.rect.Rect.height">height（charmy.rect.Rect 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.h_radius">h_radius（charmy.styles.shape.EllipseArc 属性）</a>
 </li>
         <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.height">height（charmy.widgets.widget.Widget 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.hide">hide() （charmy.backend.template.Backend.WindowBase 方法）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/const.html#charmy.const.Orient.HORIZONTAL">HORIZONTAL（charmy.const.Orient 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseScroll.horizontal">horizontal（charmy.utils.event_types.MouseScroll 属性）</a>
 </li>
         <li><a href="api/const.html#charmy.const.Orient.H">H（charmy.const.Orient 属性）</a>
 </li>
@@ -779,65 +1154,47 @@
   <h2>I</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.icon">icon（charmy.backend.template.Backend.WindowBase 属性）</a>
+</li>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.icon">icon（charmy.widgets.window.WindowEntity 属性）</a>
+</li>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.id">id（charmy.cm_object.CharmyObject 属性）</a>
+</li>
         <li><a href="api/const.html#charmy.const.ID">ID（charmy.const 中的类）</a>
-</li>
-        <li><a href="api/event.html#charmy.event.EventTask.id">id（charmy.event.EventTask 属性）</a>
-</li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.id">id（charmy.object.CharmyObject 属性）</a>
-</li>
-        <li><a href="api/pos.html#charmy.pos.Pos.id">id（charmy.pos.Pos 属性）</a>
-</li>
-        <li><a href="api/rect.html#charmy.rect.Rect.id">id（charmy.rect.Rect 属性）</a>
-</li>
-        <li><a href="api/size.html#charmy.size.Size.id">id（charmy.size.Size 属性）</a>
-</li>
-        <li><a href="api/styles/color.html#charmy.styles.color.Color.id">id（charmy.styles.color.Color 属性）</a>
-</li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.id">id（charmy.widgets.canvas.CanvasBase 属性）</a>
-</li>
-        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.id">id（charmy.widgets.container.Container 属性）</a>
 </li>
         <li><a href="api/const.html#charmy.const.DrawingMode.IMMEDIATE">IMMEDIATE（charmy.const.DrawingMode 属性）</a>
 </li>
         <li><a href="api/const.html#charmy.const.DrawingMode.immediate">immediate（charmy.const.DrawingMode 属性）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.init">init() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.PILImageType.im">im（charmy.utils.type_checking.PILImageType 属性）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.init">init() （charmy.frameworks.ui.UIFramework 方法）</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyRegisteredObject.instance_count">instance_count（charmy.cm_object.CharmyRegisteredObject 属性）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.insert_element">insert_element() （charmy.widgets.canvas.CanvasBase 方法）</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyRegisteredObject.instances">instances（charmy.cm_object.CharmyRegisteredObject 属性）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.instance_count">instance_count（charmy.object.CharmyObject 属性）</a>
-</li>
-        <li><a href="api/object.html#charmy.object.InstanceCounterMeta">InstanceCounterMeta（charmy.object 中的类）</a>
-</li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.instances">instances（charmy.object.CharmyObject 属性）</a>
+        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.instances">instances（charmy.cmm.CharmyManager 属性）</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.INTERNAL_THEME_DIR">INTERNAL_THEME_DIR（charmy.styles.theme.Theme 属性）</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.INTERNAL_THEME">INTERNAL_THEME（charmy.styles.theme.Theme 属性）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.IntVar">IntVar（charmy.var 中的类）</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.is_angle_covered">is_angle_covered()（在 charmy.utils.geo_math 模块中）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.is_alive">is_alive（charmy.widgets.windowbase.WindowBase 属性）</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.Window.is_root_container">is_root_container（charmy.widgets.window.Window 属性）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.is_dirty">is_dirty（charmy.widgets.windowbase.WindowBase 属性）</a>
-</li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.is_force_hardware_acceleration">is_force_hardware_acceleration（charmy.widgets.windowbase.WindowBase 属性）</a>
-</li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.is_visible">is_visible（charmy.widgets.windowbase.WindowBase 属性）</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.italic">italic（charmy.styles.text_style.TextStyle 属性）</a>
 </li>
     </ul></td>
   </tr></table>
 </section>
 
-<section id="K" class="genindex-section">
-  <h2>K</h2>
+<section id="J" class="genindex-section">
+  <h2>J</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventTask.keep_at_clear">keep_at_clear（charmy.event.EventTask 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.join">join()（charmy.styles.shape.PolyLine 静态方法）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -847,37 +1204,39 @@
   <h2>L</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/var.html#charmy.var.BooleanVar.latest_event">latest_event（charmy.var.BooleanVar 属性）</a>
+        <li><a href="api/event.html#charmy.event.EventHandling.latest_event">latest_event（charmy.event.EventHandling 属性）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.FloatVar.latest_event">latest_event（charmy.var.FloatVar 属性）</a>
+        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.layers">layers（charmy.widgets.container.Container 属性）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.IntVar.latest_event">latest_event（charmy.var.IntVar 属性）</a>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.LayoutProfile">LayoutProfile（charmy.utils.layout_profiles 中的类）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.StringVar.latest_event">latest_event（charmy.var.StringVar 属性）</a>
+        <li><a href="api/const.html#charmy.const.MOUSE_KEYS.LEFT">LEFT（charmy.const.MOUSE_KEYS 属性）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.Var.latest_event">latest_event（charmy.var.Var 属性）</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.LIGHT">LIGHT（charmy.styles.text_style.WEIGHT 属性）</a>
 </li>
-        <li><a href="api/widgets/button.html#charmy.widgets.button.Button.latest_event">latest_event（charmy.widgets.button.Button 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath">LinePath（charmy.styles.shape 中的类）</a>
 </li>
-        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.latest_event">latest_event（charmy.widgets.widget.Widget 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.AnyShape.lines">lines（charmy.styles.shape.AnyShape 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.lines">lines（charmy.styles.shape.Rect 属性）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/window.html#charmy.widgets.window.Window.latest_event">latest_event（charmy.widgets.window.Window 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.lines">lines（charmy.styles.shape.RoundRect 属性）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.latest_event">latest_event（charmy.widgets.windowbase.WindowBase 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.lines">lines（charmy.styles.shape.SingleShape 属性）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event.latest">latest（charmy.event.Event 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line">Line（charmy.styles.shape 中的类）</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.left">left（charmy.rect.Rect 属性）</a>
+        <li><a href="api/backend/loader.html#charmy.backend.loader.list_backends_ep">list_backends_ep()（在 charmy.backend.loader 模块中）</a>
+</li>
+        <li><a href="api/backend/loader.html#charmy.backend.loader.load_backend">load_backend()（在 charmy.backend.loader 模块中）</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.load_from_file">load_from_file() （charmy.styles.theme.Theme 方法）</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.load_from_json">load_from_json() （charmy.styles.theme.Theme 方法）</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.LOADED_THEMES">LOADED_THEMES（charmy.styles.theme.Theme 属性）</a>
-</li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.lock">lock（charmy.event.WorkingThread 属性）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -887,72 +1246,110 @@
   <h2>M</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.mainloop">mainloop() （charmy.cmm.CharmyManager 方法）</a>
-</li>
         <li><a href="api/cmm.html#charmy.cmm.mainloop">mainloop()（在 charmy.cmm 模块中）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.make_context_current">make_context_current() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.ManagedLayoutProfile">ManagedLayoutProfile（charmy.utils.layout_profiles 中的类）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.make_context_current">make_context_current() （charmy.frameworks.ui.UIFramework 方法）</a>
+        <li><a href="api/const.html#charmy.const.DEBUG_FLAGS.MARK_REDRAWS">MARK_REDRAWS（charmy.const.DEBUG_FLAGS 属性）</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.make_LTRB">make_LTRB() （charmy.rect.Rect 方法）</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.MEDIUM">MEDIUM（charmy.styles.text_style.WEIGHT 属性）</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.make_XYWH">make_XYWH() （charmy.rect.Rect 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.Event.meets">meets() （charmy.utils.event_types.Event 方法）</a>
+</li>
+        <li><a href="api/const.html#charmy.const.MOUSE_KEYS.MIDDLE">MIDDLE（charmy.const.MOUSE_KEYS 属性）</a>
 </li>
         <li>
     module
 
         <ul>
+          <li><a href="api/index.html#module-charmy">charmy</a>
+</li>
+          <li><a href="api/backend/index.html#module-charmy.backend">charmy.backend</a>
+</li>
+          <li><a href="api/backend/genesis.html#module-charmy.backend.genesis">charmy.backend.genesis</a>
+</li>
+          <li><a href="api/backend/loader.html#module-charmy.backend.loader">charmy.backend.loader</a>
+</li>
+          <li><a href="api/backend/template.html#module-charmy.backend.template">charmy.backend.template</a>
+</li>
+          <li><a href="api/backend/utils.html#module-charmy.backend.utils">charmy.backend.utils</a>
+</li>
+          <li><a href="api/object.html#module-charmy.cm_object">charmy.cm_object</a>
+</li>
           <li><a href="api/cmm.html#module-charmy.cmm">charmy.cmm</a>
 </li>
           <li><a href="api/const.html#module-charmy.const">charmy.const</a>
 </li>
           <li><a href="api/event.html#module-charmy.event">charmy.event</a>
 </li>
-          <li><a href="api/frameworks/index.html#module-charmy.frameworks">charmy.frameworks</a>
-</li>
-          <li><a href="api/frameworks/backend.html#module-charmy.frameworks.backend">charmy.frameworks.backend</a>
-</li>
-          <li><a href="api/frameworks/drawing.html#module-charmy.frameworks.drawing">charmy.frameworks.drawing</a>
-</li>
-          <li><a href="api/frameworks/ui.html#module-charmy.frameworks.ui">charmy.frameworks.ui</a>
-</li>
-          <li><a href="api/object.html#module-charmy.object">charmy.object</a>
-</li>
-          <li><a href="api/pos.html#module-charmy.pos">charmy.pos</a>
-</li>
-          <li><a href="api/rect.html#module-charmy.rect">charmy.rect</a>
-</li>
-          <li><a href="api/size.html#module-charmy.size">charmy.size</a>
+          <li><a href="api/graphics.html#module-charmy.graphics">charmy.graphics</a>
 </li>
           <li><a href="api/styles/index.html#module-charmy.styles">charmy.styles</a>
 </li>
-          <li><a href="api/styles/color.html#module-charmy.styles.color">charmy.styles.color</a>
+          <li><a href="api/styles/shape.html#module-charmy.styles.shape">charmy.styles.shape</a>
+</li>
+          <li><a href="api/styles/style.html#module-charmy.styles.style">charmy.styles.style</a>
+</li>
+          <li><a href="api/styles/text_style.html#module-charmy.styles.text_style">charmy.styles.text_style</a>
+</li>
+          <li><a href="api/styles/texture.html#module-charmy.styles.texture">charmy.styles.texture</a>
 </li>
           <li><a href="api/styles/theme.html#module-charmy.styles.theme">charmy.styles.theme</a>
 </li>
           <li><a href="api/this.html#module-charmy.this">charmy.this</a>
 </li>
-          <li><a href="api/var.html#module-charmy.var">charmy.var</a>
+          <li><a href="api/utils/index.html#module-charmy.utils">charmy.utils</a>
+</li>
+          <li><a href="api/utils/caching.html#module-charmy.utils.caching">charmy.utils.caching</a>
+</li>
+          <li><a href="api/utils/event_types.html#module-charmy.utils.event_types">charmy.utils.event_types</a>
+</li>
+          <li><a href="api/utils/geo_math.html#module-charmy.utils.geo_math">charmy.utils.geo_math</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#module-charmy.utils.layout_profiles">charmy.utils.layout_profiles</a>
+</li>
+          <li><a href="api/utils/svg.html#module-charmy.utils.svg">charmy.utils.svg</a>
+</li>
+          <li><a href="api/utils/type_checking.html#module-charmy.utils.type_checking">charmy.utils.type_checking</a>
+</li>
+          <li><a href="api/utils/var.html#module-charmy.utils.var">charmy.utils.var</a>
 </li>
           <li><a href="api/widgets/index.html#module-charmy.widgets">charmy.widgets</a>
 </li>
           <li><a href="api/widgets/button.html#module-charmy.widgets.button">charmy.widgets.button</a>
 </li>
-          <li><a href="api/widgets/canvas.html#module-charmy.widgets.canvas">charmy.widgets.canvas</a>
-</li>
           <li><a href="api/widgets/container.html#module-charmy.widgets.container">charmy.widgets.container</a>
+</li>
+          <li><a href="api/widgets/frame.html#module-charmy.widgets.frame">charmy.widgets.frame</a>
 </li>
           <li><a href="api/widgets/widget.html#module-charmy.widgets.widget">charmy.widgets.widget</a>
 </li>
           <li><a href="api/widgets/window.html#module-charmy.widgets.window">charmy.widgets.window</a>
 </li>
-          <li><a href="api/widgets/windowbase.html#module-charmy.widgets.windowbase">charmy.widgets.windowbase</a>
-</li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.move">move() （charmy.widgets.windowbase.WindowBase 方法）</a>
+        <li><a href="api/const.html#charmy.const.MOUSE_KEYS">MOUSE_KEYS（charmy.const 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent.mouse_pos">mouse_pos（charmy.utils.event_types.MouseRawEvent 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseClick">MouseClick（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseEnter">MouseEnter（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseInteractEvent">MouseInteractEvent（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseLeave">MouseLeave（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseMove">MouseMove（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MousePress">MousePress（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent">MouseRawEvent（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRelease">MouseRelease（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseScroll">MouseScroll（charmy.utils.event_types 中的类）</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventHandling.multithread_tasks">multithread_tasks（charmy.event.EventHandling 属性）</a>
 </li>
@@ -966,7 +1363,19 @@
   <h2>N</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.name">name（charmy.backend.genesis.Backend 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.name">name（charmy.backend.template.Backend 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetMove.new_pos">new_pos（charmy.utils.event_types.WidgetMove 属性）</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetResize.new_size">new_size（charmy.utils.event_types.WidgetResize 属性）</a>
+</li>
         <li><a href="api/const.html#charmy.const.ID.NONE">NONE（charmy.const.ID 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.not_implemented_func">not_implemented_func()（在 charmy.backend.template 模块中）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -976,17 +1385,17 @@
   <h2>O</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/object.html#charmy.object.CharmyObject.objects_sorted">objects_sorted（charmy.object.CharmyObject 属性）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING">OBSERVE_SHAPE_DRAWING（charmy.backend.genesis.DEBUG_FLAGS 属性）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.objects">objects（charmy.object.CharmyObject 属性）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetMove.old_pos">old_pos（charmy.utils.event_types.WidgetMove 属性）</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends.OPENGL">OPENGL（charmy.const.Backends 属性）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetResize.old_size">old_size（charmy.utils.event_types.WidgetResize 属性）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/const.html#charmy.const.Backends.opengl">opengl（charmy.const.Backends 属性）</a>
+        <li><a href="api/event.html#charmy.event.EventHandling.on">on() （charmy.event.EventHandling 方法）</a>
 </li>
-        <li><a href="api/frameworks/backend.html#charmy.frameworks.backend.OPENGL">OPENGL（charmy.frameworks.backend 中的类）</a>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile.on_value_change">on_value_change()（charmy.widgets.widget.WidgetProfile 静态方法）</a>
 </li>
         <li><a href="api/const.html#charmy.const.Orient">Orient（charmy.const 中的类）</a>
 </li>
@@ -998,13 +1407,49 @@
   <h2>P</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.parent">parent（charmy.widgets.widget.Widget 属性）</a>
+        <li><a href="api/event.html#charmy.event.EventHandling.parse_event_type_str">parse_event_type_str() （charmy.event.EventHandling 方法）</a>
+</li>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.PILImageType">PILImageType（charmy.utils.type_checking 中的类）</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.place">place() （charmy.widgets.widget.Widget 方法）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.PlaceProfile">PlaceProfile（charmy.utils.layout_profiles 中的类）</a>
+</li>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.point_on_circle">point_on_circle()（在 charmy.utils.geo_math 模块中）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.points">points（charmy.styles.shape.CubicBezier 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line.points">points（charmy.styles.shape.Line 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.points">points（charmy.styles.shape.PolyLine 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.points">points（charmy.styles.shape.QuadraticBezier 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine">PolyLine（charmy.styles.shape 中的类）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventHandling.parse_event_type_str">parse_event_type_str() （charmy.event.EventHandling 方法）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.pos">pos（charmy.backend.template.Backend.WindowBase 属性）</a>
 </li>
-        <li><a href="api/pos.html#charmy.pos.Pos">Pos（charmy.pos 中的类）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.pos">pos（charmy.styles.shape.Rect 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.pos">pos（charmy.styles.shape.RoundRect 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDraw.pos">pos（charmy.utils.event_types.WidgetDraw 属性）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.ManagedLayoutProfile.pos">pos（charmy.utils.layout_profiles.ManagedLayoutProfile 属性）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.PlaceProfile.pos">pos（charmy.utils.layout_profiles.PlaceProfile 属性）</a>
+</li>
+        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.pos">pos（charmy.widgets.container.Container 属性）</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.pos">pos（charmy.widgets.widget.Widget 属性）</a>
+</li>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.pos">pos（charmy.widgets.window.WindowEntity 属性）</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.profiles">profiles（charmy.widgets.widget.Widget 属性）</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.ProfileType">ProfileType（charmy.widgets.widget.Widget 属性）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1014,7 +1459,13 @@
   <h2>Q</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.quit">quit() （charmy.cmm.CharmyManager 方法）</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.quadratic_bezier_internal_t_roots">quadratic_bezier_internal_t_roots()（在 charmy.utils.geo_math 模块中）</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier">QuadraticBezier（charmy.styles.shape 中的类）</a>
+</li>
+        <li><a href="api/cmm.html#charmy.cmm.quit">quit()（在 charmy.cmm 模块中）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1024,13 +1475,17 @@
   <h2>R</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/rect.html#charmy.rect.Rect">Rect（charmy.rect 中的类）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.radius">radius（charmy.styles.shape.CircleArc 属性）</a>
 </li>
-        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.rect">rect（charmy.widgets.container.Container 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.radius">radius（charmy.styles.shape.RoundRect 属性）</a>
 </li>
-        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.rect">rect（charmy.widgets.widget.Widget 属性）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseInteractEvent.recent_raw_event">recent_raw_event（charmy.utils.event_types.MouseInteractEvent 属性）</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.remove_element">remove_element() （charmy.widgets.canvas.CanvasBase 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Rect">Rect（charmy.styles.shape 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetUpdate.redraw">redraw（charmy.utils.event_types.WidgetUpdate 属性）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.REGULAR">REGULAR（charmy.styles.text_style.WEIGHT 属性）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
@@ -1038,9 +1493,15 @@
 </li>
         <li><a href="api/const.html#charmy.const.DrawingMode.retained">retained（charmy.const.DrawingMode 属性）</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.right">right（charmy.rect.Rect 属性）</a>
+        <li><a href="api/const.html#charmy.const.MOUSE_KEYS.RIGHT">RIGHT（charmy.const.MOUSE_KEYS 属性）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.run">run() （charmy.event.WorkingThread 方法）</a>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.root_container">root_container（charmy.widgets.widget.Widget 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.rotation">rotation（charmy.styles.shape.EllipseArc 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect">RoundRect（charmy.styles.shape 中的类）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.r">r（charmy.styles.texture.Color 属性）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1050,53 +1511,135 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/const.html#charmy.const.Backends.SDL">SDL（charmy.const.Backends 属性）</a>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.PILImageType.save">save() （charmy.utils.type_checking.PILImageType 方法）</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends.sdl">sdl（charmy.const.Backends 属性）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.scale_mode">scale_mode（charmy.backend.template.Backend.WindowBase 属性）</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.set">set() （charmy.object.CharmyObject 方法）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.sdl2_handle_event">sdl2_handle_event() （charmy.backend.genesis.Backend.WindowBase 方法）</a>
 </li>
-        <li><a href="api/styles/color.html#charmy.styles.color.Color.set_color_hex">set_color_hex() （charmy.styles.color.Color 方法）</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.SEMIBOLD">SEMIBOLD（charmy.styles.text_style.WEIGHT 属性）</a>
 </li>
-        <li><a href="api/styles/color.html#charmy.styles.color.Color.set_color_name">set_color_name() （charmy.styles.color.Color 方法）</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.set">set() （charmy.cm_object.CharmyObject 方法）</a>
 </li>
-        <li><a href="api/styles/color.html#charmy.styles.color.Color.set_color_rgba">set_color_rgba() （charmy.styles.color.Color 方法）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.set_icon">set_icon() （charmy.backend.genesis.Backend.WindowBase 方法）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.set_pos">set_pos() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.set_icon">set_icon() （charmy.backend.template.Backend.WindowBase 方法）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.set_pos">set_pos() （charmy.frameworks.ui.UIFramework 方法）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.set_pos">set_pos() （charmy.backend.genesis.Backend.WindowBase 方法）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.set_size">set_size() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.set_pos">set_pos() （charmy.backend.template.Backend.WindowBase 方法）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.set_size">set_size() （charmy.frameworks.ui.UIFramework 方法）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.set_size">set_size() （charmy.backend.genesis.Backend.WindowBase 方法）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.set_title">set_title() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.set_size">set_size() （charmy.backend.template.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.set_title">set_title() （charmy.backend.genesis.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.set_title">set_title() （charmy.backend.template.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeGroup">ShapeGroup（charmy.styles.shape 中的类）</a>
+</li>
+        <li><a href="api/utils/svg.html#charmy.utils.svg.shapes_from_svg_path">shapes_from_svg_path()（在 charmy.utils.svg 模块中）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeGroup.shapes">shapes（charmy.styles.shape.ShapeGroup 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeType">ShapeType（charmy.styles.shape 中的类）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.show">show() （charmy.backend.genesis.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.show">show() （charmy.backend.template.Backend.WindowBase 方法）</a>
+</li>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.show">show() （charmy.widgets.window.WindowEntity 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape">SingleShape（charmy.styles.shape 中的类）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.size">size（charmy.backend.genesis.Backend.WindowBase 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.size">size（charmy.backend.template.Backend.WindowBase 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.size">size（charmy.styles.shape.Rect 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.size">size（charmy.styles.shape.RoundRect 属性）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.size">size（charmy.styles.text_style.TextStyle 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDraw.size">size（charmy.utils.event_types.WidgetDraw 属性）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.ManagedLayoutProfile.size">size（charmy.utils.layout_profiles.ManagedLayoutProfile 属性）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.PlaceProfile.size">size（charmy.utils.layout_profiles.PlaceProfile 属性）</a>
+</li>
+        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.size">size（charmy.widgets.container.Container 属性）</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.size">size（charmy.widgets.widget.Widget 属性）</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile.size">size（charmy.widgets.widget.WidgetProfile 属性）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.set_title">set_title() （charmy.frameworks.ui.UIFramework 方法）</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.size">size（charmy.widgets.window.WindowEntity 属性）</a>
 </li>
-        <li><a href="api/size.html#charmy.size.Size">Size（charmy.size 中的类）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.start_orient">start_orient（charmy.styles.shape.CircleArc 属性）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.size">size（charmy.widgets.windowbase.WindowBase 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.start_orient">start_orient（charmy.styles.shape.EllipseArc 属性）</a>
 </li>
-        <li><a href="api/widgets/window.html#charmy.widgets.window.Window.skia_draw_func">skia_draw_func() （charmy.widgets.window.Window 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.start_point">start_point（charmy.styles.shape.CircleArc 属性）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.skia_surface">skia_surface() （charmy.widgets.windowbase.WindowBase 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.start_point">start_point（charmy.styles.shape.CubicBezier 属性）</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends.SKIA">SKIA（charmy.const.Backends 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line.start_point">start_point（charmy.styles.shape.Line 属性）</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends.skia">skia（charmy.const.Backends 属性）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.start_point">start_point（charmy.styles.shape.LinePath 属性）</a>
 </li>
-        <li><a href="api/frameworks/drawing.html#charmy.frameworks.drawing.SKIA">SKIA（charmy.frameworks.drawing 中的类）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.start_point">start_point（charmy.styles.shape.PolyLine 属性）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.StringVar">StringVar（charmy.var 中的类）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.start_point">start_point（charmy.styles.shape.QuadraticBezier 属性）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.swap_buffers">swap_buffers() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/styles/style.html#charmy.styles.style.StateStyle">StateStyle（charmy.styles.style 中的类）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.swap_buffers">swap_buffers() （charmy.frameworks.ui.UIFramework 方法）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.state">state（charmy.backend.template.Backend.WindowBase 属性）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.swap_interval">swap_interval() （charmy.frameworks.ui.GLFW 方法）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseScroll.steps">steps（charmy.utils.event_types.MouseScroll 属性）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.strikethrough">strikethrough（charmy.styles.text_style.TextStyle 属性）</a>
+</li>
+        <li><a href="api/styles/style.html#charmy.styles.style.StyleSheet">StyleSheet（charmy.styles.style 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.EventTriggered.subject">subject（charmy.utils.event_types.EventTriggered 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseInteractEvent.subject">subject（charmy.utils.event_types.MouseInteractEvent 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent.subject">subject（charmy.utils.event_types.MouseRawEvent 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetEvent.subject">subject（charmy.utils.event_types.WidgetEvent 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetUpdate.subject">subject（charmy.utils.event_types.WidgetUpdate 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WindowEvent.subject">subject（charmy.utils.event_types.WindowEvent 属性）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.LineBase.supports">supports（charmy.backend.genesis.Backend.LineBase 属性）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.ShapeBase.supports">supports（charmy.backend.genesis.Backend.ShapeBase 属性）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextBase.supports">supports（charmy.backend.genesis.Backend.TextBase 属性）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.supports">supports（charmy.backend.genesis.Backend.WindowBase 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.LineBase.supports">supports（charmy.backend.template.Backend.LineBase 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.ShapeBase.supports">supports（charmy.backend.template.Backend.ShapeBase 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextBase.supports">supports（charmy.backend.template.Backend.TextBase 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextureBase.supports">supports（charmy.backend.template.Backend.TextureBase 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.supports">supports（charmy.backend.template.Backend.WindowBase 属性）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.surface">surface（charmy.backend.genesis.Backend.WindowBase 属性）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.sys_default">sys_default（charmy.styles.text_style.TextStyle 属性）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.sys_fonts">sys_fonts（charmy.styles.text_style.TextStyle 属性）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1108,37 +1651,117 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/event.html#charmy.event.EventTask.target">target（charmy.event.EventTask 属性）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.tasks">tasks（charmy.event.WorkingThread 属性）</a>
+        <li><a href="api/event.html#charmy.event.EventTask.task_threads">task_threads（charmy.event.EventTask 属性）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.BooleanVar.tasks">tasks（charmy.var.BooleanVar 属性）</a>
+        <li><a href="api/event.html#charmy.event.EventHandling.tasks">tasks（charmy.event.EventHandling 属性）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.FloatVar.tasks">tasks（charmy.var.FloatVar 属性）</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle">TextStyle（charmy.styles.text_style 中的类）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.IntVar.tasks">tasks（charmy.var.IntVar 属性）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnLine.texture">texture（charmy.graphics.DrawnLine 属性）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.StringVar.tasks">tasks（charmy.var.StringVar 属性）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnShape.texture">texture（charmy.graphics.DrawnShape 属性）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.Var.tasks">tasks（charmy.var.Var 属性）</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnText.texture">texture（charmy.graphics.DrawnText 属性）</a>
 </li>
-        <li><a href="api/widgets/button.html#charmy.widgets.button.Button.tasks">tasks（charmy.widgets.button.Button 属性）</a>
-</li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.tasks">tasks（charmy.widgets.widget.Widget 属性）</a>
-</li>
-        <li><a href="api/widgets/window.html#charmy.widgets.window.Window.tasks">tasks（charmy.widgets.window.Window 属性）</a>
-</li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.tasks">tasks（charmy.widgets.windowbase.WindowBase 属性）</a>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Texture">Texture（charmy.styles.texture 中的类）</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme">Theme（charmy.styles.theme 中的类）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.title">title（charmy.widgets.windowbase.WindowBase 属性）</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.THIN">THIN（charmy.styles.text_style.WEIGHT 属性）</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.top">top（charmy.rect.Rect 属性）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.title">title（charmy.backend.genesis.Backend.WindowBase 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.title">title（charmy.backend.template.Backend.WindowBase 属性）</a>
+</li>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.title">title（charmy.widgets.window.WindowEntity 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.to_lines">to_lines() （charmy.styles.shape.PolyLine 方法）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line.to_polyline">to_polyline() （charmy.styles.shape.Line 方法）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Transparent">Transparent（charmy.styles.texture 中的类）</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventHandling.trigger">trigger() （charmy.event.EventHandling 方法）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.EventHandling.trigger_event">trigger_event() （charmy.event.EventHandling 方法）</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.type">type（charmy.styles.shape.CircleArc 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.type">type（charmy.styles.shape.CubicBezier 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.type">type（charmy.styles.shape.EllipseArc 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line.type">type（charmy.styles.shape.Line 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.type">type（charmy.styles.shape.LinePath 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.type">type（charmy.styles.shape.PolyLine 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.type">type（charmy.styles.shape.QuadraticBezier 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.type">type（charmy.styles.shape.Rect 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.type">type（charmy.styles.shape.RoundRect 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeGroup.type">type（charmy.styles.shape.ShapeGroup 属性）</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeType.type">type（charmy.styles.shape.ShapeType 属性）</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.type">type（charmy.styles.shape.SingleShape 属性）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.type">type（charmy.styles.texture.Color 属性）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Texture.type">type（charmy.styles.texture.Texture 属性）</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Transparent.type">type（charmy.styles.texture.Transparent 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.DelayTriggered.type">type（charmy.utils.event_types.DelayTriggered 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.Event.type">type（charmy.utils.event_types.Event 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.EventTriggered.type">type（charmy.utils.event_types.EventTriggered 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusGain.type">type（charmy.utils.event_types.FocusGain 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusLoss.type">type（charmy.utils.event_types.FocusLoss 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseClick.type">type（charmy.utils.event_types.MouseClick 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseEnter.type">type（charmy.utils.event_types.MouseEnter 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseInteractEvent.type">type（charmy.utils.event_types.MouseInteractEvent 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseLeave.type">type（charmy.utils.event_types.MouseLeave 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseMove.type">type（charmy.utils.event_types.MouseMove 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MousePress.type">type（charmy.utils.event_types.MousePress 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent.type">type（charmy.utils.event_types.MouseRawEvent 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRelease.type">type（charmy.utils.event_types.MouseRelease 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseScroll.type">type（charmy.utils.event_types.MouseScroll 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetConfigure.type">type（charmy.utils.event_types.WidgetConfigure 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDestroy.type">type（charmy.utils.event_types.WidgetDestroy 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDraw.type">type（charmy.utils.event_types.WidgetDraw 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetEvent.type">type（charmy.utils.event_types.WidgetEvent 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetMove.type">type（charmy.utils.event_types.WidgetMove 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetResize.type">type（charmy.utils.event_types.WidgetResize 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetUpdate.type">type（charmy.utils.event_types.WidgetUpdate 属性）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.LayoutProfile.type">type（charmy.utils.layout_profiles.LayoutProfile 属性）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.ManagedLayoutProfile.type">type（charmy.utils.layout_profiles.ManagedLayoutProfile 属性）</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.PlaceProfile.type">type（charmy.utils.layout_profiles.PlaceProfile 属性）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1148,19 +1771,21 @@
   <h2>U</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.ui_name">ui_name（charmy.frameworks.Frameworks 属性）</a>
+        <li><a href="api/event.html#charmy.event.EventHandling.unbind">unbind() （charmy.event.EventHandling 方法）</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework">UIFramework（charmy.frameworks.ui 中的类）</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.underlined">underlined（charmy.styles.text_style.TextStyle 属性）</a>
 </li>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.ui">ui（charmy.frameworks.Frameworks 属性）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.update">update() （charmy.backend.genesis.Backend.WindowBase 方法）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventHandling.unbind">unbind() （charmy.event.EventHandling 方法）</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.update">update() （charmy.backend.template.Backend.WindowBase 方法）</a>
 </li>
         <li><a href="api/cmm.html#charmy.cmm.CharmyManager.update">update() （charmy.cmm.CharmyManager 方法）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.update">update() （charmy.widgets.windowbase.WindowBase 方法）</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.Window.update">update() （charmy.widgets.window.Window 方法）</a>
+</li>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.update">update() （charmy.widgets.window.WindowEntity 方法）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1170,13 +1795,19 @@
   <h2>V</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.v_radius">v_radius（charmy.styles.shape.EllipseArc 属性）</a>
+</li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.validate_theme_existed">validate_theme_existed()（charmy.styles.theme.Theme 类方法）</a>
 </li>
-        <li><a href="api/var.html#charmy.var.Var.value">value（charmy.var.Var 属性）</a>
+        <li><a href="api/utils/var.html#charmy.utils.var.Var.value">value（charmy.utils.var.Var 属性）</a>
+</li>
+        <li><a href="api/utils/var.html#charmy.utils.var.Var">Var（charmy.utils.var 中的类）</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/var.html#charmy.var.Var">Var（charmy.var 中的类）</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.version">version（charmy.backend.genesis.Backend 属性）</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.version">version（charmy.backend.template.Backend 属性）</a>
 </li>
         <li><a href="api/const.html#charmy.const.Orient.VERTICAL">VERTICAL（charmy.const.Orient 属性）</a>
 </li>
@@ -1190,45 +1821,47 @@
   <h2>W</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.Event.widget">widget（charmy.event.Event 属性）</a>
+        <li><a href="api/const.html#charmy.const.DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME">WAIT_AFTER_EACH_FRAME（charmy.const.DEBUG_FLAGS 属性）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.DEBUG_FLAGS.WARN_UNCLOSED_SHAPES">WARN_UNCLOSED_SHAPES（charmy.backend.genesis.DEBUG_FLAGS 属性）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT">WEIGHT（charmy.styles.text_style 中的类）</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.weight">weight（charmy.styles.text_style.TextStyle 属性）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetConfigure">WidgetConfigure（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDestroy">WidgetDestroy（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDraw">WidgetDraw（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetEvent">WidgetEvent（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetMove">WidgetMove（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile">WidgetProfile（charmy.widgets.widget 中的类）</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetResize">WidgetResize（charmy.utils.event_types 中的类）</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetUpdate">WidgetUpdate（charmy.utils.event_types 中的类）</a>
 </li>
         <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget">Widget（charmy.widgets.widget 中的类）</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.width">width（charmy.rect.Rect 属性）</a>
-</li>
         <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.width">width（charmy.widgets.widget.Widget 属性）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event.window_base">window_base（charmy.event.Event 属性）</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity">WindowEntity（charmy.widgets.window 中的类）</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase">WindowBase（charmy.widgets.windowbase 中的类）</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WindowEvent">WindowEvent（charmy.utils.event_types 中的类）</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event.window">window（charmy.event.Event 属性）</a>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.WindowLike">WindowLike（charmy.utils.type_checking 中的类）</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.window">window（charmy.backend.genesis.Backend.WindowBase 属性）</a>
 </li>
         <li><a href="api/widgets/window.html#charmy.widgets.window.Window">Window（charmy.widgets.window 中的类）</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventHandling.WORKING_THREAD">WORKING_THREAD（charmy.event.EventHandling 属性）</a>
-</li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/var.html#charmy.var.BooleanVar.WORKING_THREAD">WORKING_THREAD（charmy.var.BooleanVar 属性）</a>
-</li>
-        <li><a href="api/var.html#charmy.var.FloatVar.WORKING_THREAD">WORKING_THREAD（charmy.var.FloatVar 属性）</a>
-</li>
-        <li><a href="api/var.html#charmy.var.IntVar.WORKING_THREAD">WORKING_THREAD（charmy.var.IntVar 属性）</a>
-</li>
-        <li><a href="api/var.html#charmy.var.StringVar.WORKING_THREAD">WORKING_THREAD（charmy.var.StringVar 属性）</a>
-</li>
-        <li><a href="api/var.html#charmy.var.Var.WORKING_THREAD">WORKING_THREAD（charmy.var.Var 属性）</a>
-</li>
-        <li><a href="api/widgets/button.html#charmy.widgets.button.Button.WORKING_THREAD">WORKING_THREAD（charmy.widgets.button.Button 属性）</a>
-</li>
-        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.WORKING_THREAD">WORKING_THREAD（charmy.widgets.widget.Widget 属性）</a>
-</li>
-        <li><a href="api/widgets/window.html#charmy.widgets.window.Window.WORKING_THREAD">WORKING_THREAD（charmy.widgets.window.Window 属性）</a>
-</li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.WORKING_THREAD">WORKING_THREAD（charmy.widgets.windowbase.WindowBase 属性）</a>
-</li>
-        <li><a href="api/event.html#charmy.event.WorkingThread">WorkingThread（charmy.event 中的类）</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1237,10 +1870,6 @@
 <section id="X" class="genindex-section">
   <h2>X</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/rect.html#charmy.rect.Rect.x">x（charmy.rect.Rect 属性）</a>
-</li>
-    </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.x">x（charmy.widgets.widget.Widget 属性）</a>
 </li>
@@ -1251,10 +1880,6 @@
 <section id="Y" class="genindex-section">
   <h2>Y</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/rect.html#charmy.rect.Rect.y">y（charmy.rect.Rect 属性）</a>
-</li>
-    </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.y">y（charmy.widgets.widget.Widget 属性）</a>
 </li>

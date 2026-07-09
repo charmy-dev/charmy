@@ -185,7 +185,7 @@ class EventHandling:
         :param condition: Conditions required for the task to run when event is triggered
         :param multithread: If this task should be executed in another thread (False by default)
         :param _is_internal: If the task is added by Charmy and should be kept when clear bind
-        :return: EventTask if `return_task` is True, othwise the EventHandling itself.
+        :return: EventTask if `return_task` is True, otherwise the EventHandling itself.
         """
         if conditions is None:
             conditions = {}
@@ -276,6 +276,7 @@ class EventTask(CharmyObject):
     This is mostly for internal use of Charmy.
 
     .. code-block:: python
+
         class EventHandling():
             ...
             def bind(self, ...):

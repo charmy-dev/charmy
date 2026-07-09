@@ -1,0 +1,167 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/getstarted/install.rst:2
+msgid "安装 Charmy"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:6
+msgid "Python 版本要求 **>= 3.11**！"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:9
+msgid "使用 pip 安装（推荐）"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:16
+msgid "项目仍处于早期开发阶段，可能尚未发布到 PyPI。 如果上方命令失败，请使用下面的源码安装方式。"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:20
+msgid "从源码安装"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:29
+msgid "``pip install -e .`` 会以可编辑模式安装，你对源码的修改会即时生效， 适合开发和调试。"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:33
+msgid "后端依赖"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:35
+msgid ""
+"Charmy 将底层图形框架抽象为 **后端** 。目前唯一可用的后端是 **Genesis** ， 它使用 SDL2 创建窗口、Cairo 进行"
+" 2D 渲染。"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:38
+msgid "安装 Genesis 后端所需的依赖："
+msgstr ""
+
+#: ../../source/getstarted/install.rst:44
+msgid "各平台注意事项："
+msgstr ""
+
+#: ../../source/getstarted/install.rst:49
+msgid "平台"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:50
+msgid "注意事项"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:51
+msgid "Windows"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:52
+msgid "通常直接 ``pip install`` 即可，无需额外配置。"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:53
+msgid "如果 ``pycairo`` 安装失败，尝试从 https://github.com/pygobject/pycairo 下载 wheel。"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:54
+msgid "macOS"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:55
+msgid "可能需要先安装 Cairo 库： ``brew install cairo``"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:56
+#: ../../source/getstarted/install.rst:59
+#: ../../source/getstarted/install.rst:62
+msgid "然后再 ``pip install pycairo``"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:57
+msgid "Linux (Debian/Ubuntu)"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:58
+msgid "``sudo apt install libcairo2-dev pkg-config``"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:60
+msgid "Linux (Fedora/RHEL)"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:61
+msgid "``sudo dnf install cairo-devel pkg-config``"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:65
+msgid ""
+"``pysdl2-dll`` 包含了 SDL2 的预编译动态库，通常情况下不需要手动安装 SDL2。 如果遇到 SDL2 相关的错误，可以尝试从 "
+"https://libsdl.org 下载最新版本的 SDL2。"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:69
+msgid "验证安装"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:71
+msgid "创建一个 Python 文件，写入以下代码并运行："
+msgstr ""
+
+#: ../../source/getstarted/install.rst:80
+msgid "如果出现一个灰色窗口，说明安装成功！"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:83
+msgid "常见问题"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:85
+msgid "**Q: 导入 charmy 时报错 ``No module named 'sdl2'``**"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:87
+msgid "A: 没有安装 SDL2 依赖。执行 ``pip install pysdl2 pysdl2-dll``"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:89
+msgid "**Q: 导入 charmy 时报错 ``No module named 'cairo'``**"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:91
+msgid "A: 没有安装 Cairo 依赖。执行 ``pip install pycairo``。如果安装失败，请参考上方各平台注意事项。"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:93
+msgid "**Q: 运行后窗口一闪而过**"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:95
+msgid "A: 检查代码中是否有 ``cm.mainloop()``。如果缺少主循环，程序会立即退出。"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:97
+msgid "**Q: 窗口显示但不响应鼠标**"
+msgstr ""
+
+#: ../../source/getstarted/install.rst:99
+msgid "A: 确认 SDL2 事件循环在工作。在 ``mainloop()`` 之前添加以下代码测试："
+msgstr ""
+

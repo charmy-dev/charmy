@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../../genindex.html"><link rel="search" title="搜索" href="../../search.html"><link rel="next" title="canvas" href="canvas.html"><link rel="prev" title="charmy.widgets" href="index.html">
+<link rel="index" title="索引" href="../../genindex.html"><link rel="search" title="搜索" href="../../search.html"><link rel="next" title="container" href="container.html"><link rel="prev" title="charmy.widgets" href="index.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>button - Charmy GUI 0.1.0 文档</title>
@@ -21,27 +21,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -208,46 +199,60 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul class="current">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../getstarted/index.html">开始</a><input aria-label="Toggle navigation of 开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../getstarted/install.html">安装Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../getstarted/first_app.html">第一个程序</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../getstarted/window_config.html">窗口的配置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../getstarted/custom_app_settings.html">自定义 <cite>Main Manager</cite> 设置</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../getstarted/index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/install.html">安装 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/first_app.html">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getstarted/debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../how_does_it_work/abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API参考</a><input aria-label="Toggle navigation of API参考" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../cmm.html">charmy.cmm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../const.html">charmy.const</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../object.html">charmy.object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../pos.html">charmy.pos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../rect.html">charmy.rect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../size.html">charmy.size</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../this.html">charmy.this</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../var.html">charmy.var</a></li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">button</a></li>
-<li class="toctree-l3"><a class="reference internal" href="canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="container.html">container</a></li>
-<li class="toctree-l3"><a class="reference internal" href="widget.html">widget</a></li>
-<li class="toctree-l3"><a class="reference internal" href="window.html">window</a></li>
-<li class="toctree-l3"><a class="reference internal" href="windowbase.html">windowbase</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">charmy</a><input aria-label="Toggle navigation of charmy" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../backend/genesis.html">genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../backend/loader.html">loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../backend/template.html">template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../backend/utils.html">utils</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../cmm.html">cmm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../const.html">const</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../event.html">event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../graphics.html">graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../object.html">object</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../styles/shape.html">shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../styles/style.html">style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../styles/text_style.html">text_style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../styles/texture.html">texture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../styles/theme.html">theme</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../frameworks/ui.html">ui</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../frameworks/drawing.html">drawing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../frameworks/backend.html">backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../this.html">this</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../utils/index.html">charmy.utils</a><input aria-label="Toggle navigation of charmy.utils" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../utils/caching.html">caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/event_types.html">event_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/geo_math.html">geo_math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/layout_profiles.html">layout_profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/svg.html">svg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/type_checking.html">type_checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/var.html">var</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="container.html">container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="frame.html">frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="widget.html">widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="window.html">window</a></li>
 </ul>
 </li>
 </ul>
@@ -255,8 +260,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../contribution.html">贡献</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">许可证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -303,38 +307,39 @@
 <h1>button<a class="headerlink" href="#button" title="链接到此标题。">¶</a></h1>
 <pre  class="mermaid">
         classDiagram
-  CanvasBase &lt;|-- Widget
-  CharmyObject &lt;|-- CanvasBase
-  CharmyObject &lt;|-- EventHandling
+  CachedClass &lt;|-- Widget
+  CharmyObject &lt;|-- Widget
   EventHandling &lt;|-- Widget
   Widget &lt;|-- Button
-    </pre><dl class="py class" id="module-charmy.widgets.button">
+    </pre><p id="module-charmy.widgets.button">Charmy button.</p>
+<dl class="py class">
 <dt class="sig sig-object py" id="charmy.widgets.button.Button">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.widgets.button.</span></span><span class="sig-name descname"><span class="pre">Button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.button.Button" title="链接到此定义。">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.widgets.button.</span></span><span class="sig-name descname"><span class="pre">Button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_container.Container</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Button'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_click</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_typing.Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">Button.&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_typing.Optional[dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_typing.Any]]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.button.Button" title="链接到此定义。">¶</a></dt>
 <dd><p>基类：<a class="reference internal" href="widget.html#charmy.widgets.widget.Widget" title="charmy.widgets.widget.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a></p>
+<p>Text buttons in Charmy.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.widgets.button.Button.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.button.Button.__init__" title="链接到此定义。">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_container.Container</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Button'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_click</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_typing.Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">Button.&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_typing.Optional[dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_typing.Any]]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.button.Button.__init__" title="链接到此定义。">¶</a></dt>
+<dd><p>Text buttons in Charmy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> -- Parent of the button</p></li>
+<li><p><strong>text</strong> -- Text shown on the button</p></li>
+<li><p><strong>on_click</strong> -- Function to execute when clicked</p></li>
+<li><p><strong>styles</strong> -- Styles of the button</p></li>
+<li><p><strong>*args</strong> -- <p>→ See <cite>Widget.__init__(...)</cite></p>
+</p></li>
+<li><p><strong>**kwargs</strong> -- <p>→ See <cite>Widget.__init__(...)</cite></p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="charmy.widgets.button.Button.draw_config">
-<span class="sig-name descname"><span class="pre">draw_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.widgets.button.Button.draw_config" title="链接到此定义。">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.widgets.button.Button.WORKING_THREAD">
-<span class="sig-name descname"><span class="pre">WORKING_THREAD</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">threading.Thread</span></span><a class="headerlink" href="#charmy.widgets.button.Button.WORKING_THREAD" title="链接到此定义。">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.widgets.button.Button.latest_event">
-<span class="sig-name descname"><span class="pre">latest_event</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../event.html#charmy.event.Event" title="charmy.event.Event"><span class="pre">Event</span></a></span><a class="headerlink" href="#charmy.widgets.button.Button.latest_event" title="链接到此定义。">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.widgets.button.Button.tasks">
-<span class="sig-name descname"><span class="pre">tasks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../event.html#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.widgets.button.Button.tasks" title="链接到此定义。">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="charmy.widgets.button.Button.components">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">components</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PropType</span></span><a class="headerlink" href="#charmy.widgets.button.Button.components" title="链接到此定义。">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -346,12 +351,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="canvas.html">
+          <a class="next-page" href="container.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">canvas</div>
+                <div class="title">container</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -399,10 +404,7 @@
 <li><a class="reference internal" href="#">button</a><ul>
 <li><a class="reference internal" href="#charmy.widgets.button.Button"><code class="docutils literal notranslate"><span class="pre">Button</span></code></a><ul>
 <li><a class="reference internal" href="#charmy.widgets.button.Button.__init__"><code class="docutils literal notranslate"><span class="pre">Button.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.button.Button.draw_config"><code class="docutils literal notranslate"><span class="pre">Button.draw_config()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.button.Button.WORKING_THREAD"><code class="docutils literal notranslate"><span class="pre">Button.WORKING_THREAD</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.button.Button.latest_event"><code class="docutils literal notranslate"><span class="pre">Button.latest_event</span></code></a></li>
-<li><a class="reference internal" href="#charmy.widgets.button.Button.tasks"><code class="docutils literal notranslate"><span class="pre">Button.tasks</span></code></a></li>
+<li><a class="reference internal" href="#charmy.widgets.button.Button.components"><code class="docutils literal notranslate"><span class="pre">Button.components</span></code></a></li>
 </ul>
 </li>
 </ul>

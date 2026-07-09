@@ -10,11 +10,9 @@ charmy.widgets
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    button
-   canvas
    container
+   frame
    widget
    window
-   windowbase

@@ -1,5 +1,5 @@
 container
-==========
+=========
 
 .. autoclasstree:: charmy.widgets.container
    :full:

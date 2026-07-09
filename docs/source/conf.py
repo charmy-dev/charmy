@@ -8,6 +8,10 @@
 import sys
 from pathlib import Path
 
+# 增加递归深度：genesis 后端的循环类引用 (Backend↔WindowBase↔Backend…)
+# 会被 autodoc 反复追踪，默认 1000 不够用
+sys.setrecursionlimit(5000)
+
 # 添加项目根目录到Python路径
 project_root = Path(__file__).parent.parent.parent.resolve()
 sys.path.insert(0, str(project_root))
@@ -21,7 +25,7 @@ copyright = "2026, XiangQinxi, rgzz666, littlewhitecloud"
 author = "XiangQinxi, rgzz666, littlewhitecloud"
 release = "0.1.0"
 locale_dirs = ["locale/"]
-language = "en"
+language = "zh_CN"
 gettext_compact = False
 
 # -- General configuration ---------------------------------------------------
@@ -69,16 +73,24 @@ autodoc_inherit_docstrings = False
 sys.path.insert(0, str(project_root))
 
 
-# 跳过某些可能导致递归的模块
-def skip_recursive_members(app, what, name, obj, skip, options):
-    # 跳过可能导致递归的模块
-    if name in ["charmy", "charmy.widgets", "charmy.styles", "charmy.drawing"]:
+# 跳过会导致循环引用的成员
+
+def _skip_circular_refs(app, what, name, obj, skip, options):
+    # ── 修复 1: 拦截 Backend 类作为其他类的属性 ─────────────────────────
+    # genesis 后端的架构:
+    #   class Backend:    WindowBase: type[WindowBase] = WindowBase
+    #   class WindowBase: Backend = Backend
+    # 这导致 Backend.WindowBase.Backend.WindowBase... 无限链。
+    # 当 autodoc 在遍历 *Base 类的成员时遇到 Backend 属性，直接跳过。
+    if what == "class" and name == "Backend":
         return True
+
+    # ── 修复 2: 旧的规则已失效，删除 ─────────────────────────────────────
     return skip
 
 
 def setup(app):
-    app.connect("autodoc-skip-member", skip_recursive_members)
+    app.connect("autodoc-skip-member", _skip_circular_refs)
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -91,14 +103,14 @@ html_theme_options = {
     "source_branch": "master",
     "source_directory": "docs/source",
     "announcement": "It's <em>Developing</em> !",
-    "light_css_variables": {
-        "color-brand-primary": "red",
-        "color-brand-content": "#CC3333",
-        "color-brand-visited": "#CC8033",
-    },
-    "dark_css_variables": {
-        "color-brand-primary": "#CC8033",
-        "color-brand-content": "#CC8033",
-        "color-brand-visited": "#CC3333",
-    },
+    #"light_css_variables": {
+    #    "color-brand-primary": "red",
+    #    "color-brand-content": "#CC3333",
+    #    "color-brand-visited": "#CC8033",
+    #},
+    #"dark_css_variables": {
+    #    "color-brand-primary": "#CC8033",
+    #    "color-brand-content": "#CC8033",
+    #    "color-brand-visited": "#CC3333",
+    #},
 }

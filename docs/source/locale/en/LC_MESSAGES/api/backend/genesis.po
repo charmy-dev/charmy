@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/api/backend/genesis.rst:2
+msgid "genesis"
+msgstr ""
+
+#: charmy.backend.genesis.Backend:1 of
+msgid "The Genesis backend."
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase:1 of
+msgid "Window APIs in Genesis backend."
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.__init__:1 of
+msgid "Creates a window."
+msgstr ""
+
+#: ../../source/api/backend/genesis.rst
+msgid "参数"
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.__init__:3 of
+msgid "The backend that this window uses (can be get from CharmyManager)"
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.cairo_reinit_surface:1 of
+msgid "Re-init Cairo surface and canvas, only avail in Genesis backend."
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.sdl2_handle_event:1 of
+msgid "Handle SDL2 events and trigger upper level Charmy events"
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.set_icon:1 of
+msgid "Set window icon from image bytes."
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.set_icon:3 of
+msgid "New icon in bytes data"
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.set_pos:1 of
+msgid "Set window position."
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.set_pos:3 of
+msgid "New window pos"
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.set_size:1 of
+msgid "Set window size."
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.set_size:3 of
+msgid "The new window size in tuple of `(width, height)`"
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.set_size:4 of
+msgid "Whether the resize is triggered by dragging window etc., internal use only"
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.set_title:1 of
+msgid "Set window title."
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.set_title:3 of
+msgid "The new window size in string"
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.show:1 of
+msgid "Show the window."
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.show
+#: charmy.backend.genesis.WindowBase.update of
+msgid "return self"
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.show:3
+#: charmy.backend.genesis.WindowBase.update:3 of
+msgid "The WindowBase itself"
+msgstr ""
+
+#: charmy.backend.genesis.WindowBase.update:1 of
+msgid "Update the window."
+msgstr ""
+
+#: charmy.backend.genesis.LineBase:1 of
+msgid "Line-related APIs in Genesis backend."
+msgstr ""
+
+#: charmy.backend.genesis.LineBase.draw_line:1 of
+msgid "To draw a line on a specific window."
+msgstr ""
+
+#: charmy.backend.genesis.LineBase.draw_line:3 of
+msgid "Args:"
+msgstr ""
+
+#: charmy.backend.genesis.LineBase.draw_line:4 of
+msgid "line: The line to be drawn window: The WindowBase to draw line"
+msgstr ""
+
+#: charmy.backend.genesis.ShapeBase:1 of
+msgid "Shape-related APIs in Genesis backend."
+msgstr ""
+
+#: charmy.backend.genesis.ShapeBase.draw_any_shape:1 of
+msgid "Draw shape by lines."
+msgstr ""
+
+#: charmy.backend.genesis.ShapeBase.draw_shape_group:1 of
+msgid "Draw shape group."
+msgstr ""
+
+#: charmy.backend.genesis.TextureBase:1 of
+msgid "Texture-related APIs in Genesis backend."
+msgstr ""
+
+#: charmy.backend.genesis.TextureBase.cairo_set_context_texture:1 of
+msgid ""
+"Set texture of a Cairo context, and returns if following drawing still "
+"needs to be done."
+msgstr ""
+
+#: charmy.backend.genesis.TextureBase.cairo_set_context_texture:3 of
+msgid "function only available in Genesis backend."
+msgstr ""
+
+#: charmy.backend.genesis.TextureBase.cairo_set_context_texture:5 of
+msgid "The Cairo context to set texture"
+msgstr ""
+
+#: charmy.backend.genesis.TextureBase.cairo_set_context_texture:6 of
+msgid "The texture to set"
+msgstr ""
+
+#: charmy.backend.genesis.TextureBase.cairo_set_context_texture of
+msgid "return bool"
+msgstr ""
+
+#: charmy.backend.genesis.TextureBase.cairo_set_context_texture:7 of
+msgid "If the object needs to be drawn"
+msgstr ""
+
+#: charmy.backend.genesis.Backend.__init__:1 of
+msgid "APIs are aliased here."
+msgstr ""
+
+#: charmy.backend.genesis.TextBase:1 of
+msgid "Text-related APIs in Genesis backend."
+msgstr ""
+
+#: charmy.backend.genesis.TextBase.cairo_set_font:1
+#: charmy.backend.genesis.TextBase.draw_text:1 of
+msgid "To draw text on GUI or canvas."
+msgstr ""
+

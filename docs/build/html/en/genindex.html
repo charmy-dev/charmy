@@ -19,27 +19,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -204,57 +195,70 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Main Content:</span></p>
+  <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="getstarted/index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/install.html">Install Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">First application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/window_config.html">Window`s config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">Custom main manager settings</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="getstarted/index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/install.html">安装 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="how_does_it_work/index.html">How does it work</a><input aria-label="Toggle navigation of How does it work" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/cmm.html">charmy.cmm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/const.html">charmy.const</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/object.html">charmy.object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pos.html">charmy.pos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/rect.html">charmy.rect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/size.html">charmy.size</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/this.html">charmy.this</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/var.html">charmy.var</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/button.html">button</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/container.html">container</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/widget.html">widget</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/window.html">window</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/windowbase.html">windowbase</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/genesis.html">genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/loader.html">loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/template.html">template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/utils.html">utils</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="api/cmm.html">cmm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/const.html">const</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/event.html">event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/graphics.html">graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/object.html">object</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/shape.html">shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/style.html">style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/text_style.html">text_style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/texture.html">texture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/styles/theme.html">theme</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/ui.html">ui</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/drawing.html">drawing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/backend.html">backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/this.html">this</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/utils/index.html">charmy.utils</a><input aria-label="Toggle navigation of charmy.utils" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/caching.html">caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/event_types.html">event_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/geo_math.html">geo_math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/layout_profiles.html">layout_profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/svg.html">svg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/type_checking.html">type_checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/var.html">var</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/container.html">container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/frame.html">frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/widget.html">widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/window.html">window</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Other:</span></p>
+<p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contribution.html">Contribution</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -290,64 +294,156 @@
           
 <section class="genindex-section">
   <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#X"><strong>X</strong></a> | <a href="#Y"><strong>Y</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> | <a href="#X"><strong>X</strong></a> | <a href="#Y"><strong>Y</strong></a></div>
 </section>
 <section id="_" class="genindex-section">
   <h2>_</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.__init__">__init__() (charmy.cmm.CharmyManager method)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.__init__">__init__() (charmy.backend.genesis.Backend method)</a>
 
         <ul>
-          <li><a href="api/event.html#charmy.event.Event.__init__">(charmy.event.Event method)</a>
+          <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.__init__">(charmy.backend.genesis.Backend.WindowBase method)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.__init__">(charmy.backend.template.Backend method)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.LineBase.__init__">(charmy.backend.template.Backend.LineBase method)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.ShapeBase.__init__">(charmy.backend.template.Backend.ShapeBase method)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextBase.__init__">(charmy.backend.template.Backend.TextBase method)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextureBase.__init__">(charmy.backend.template.Backend.TextureBase method)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.__init__">(charmy.backend.template.Backend.WindowBase method)</a>
+</li>
+          <li><a href="api/object.html#charmy.cm_object.CharmyObject.__init__">(charmy.cm_object.CharmyObject method)</a>
+</li>
+          <li><a href="api/object.html#charmy.cm_object.CharmyRegisteredObject.__init__">(charmy.cm_object.CharmyRegisteredObject method)</a>
+</li>
+          <li><a href="api/cmm.html#charmy.cmm.CharmyManager.__init__">(charmy.cmm.CharmyManager method)</a>
+</li>
+          <li><a href="api/const.html#charmy.const.Configs.__init__">(charmy.const.Configs method)</a>
 </li>
           <li><a href="api/event.html#charmy.event.EventHandling.__init__">(charmy.event.EventHandling method)</a>
 </li>
           <li><a href="api/event.html#charmy.event.EventTask.__init__">(charmy.event.EventTask method)</a>
 </li>
-          <li><a href="api/event.html#charmy.event.WorkingThread.__init__">(charmy.event.WorkingThread method)</a>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnLine.__init__">(charmy.graphics.DrawnLine method)</a>
 </li>
-          <li><a href="api/frameworks/backend.html#charmy.frameworks.backend.OPENGL.__init__">(charmy.frameworks.backend.OPENGL method)</a>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnObject.__init__">(charmy.graphics.DrawnObject method)</a>
 </li>
-          <li><a href="api/frameworks/drawing.html#charmy.frameworks.drawing.SKIA.__init__">(charmy.frameworks.drawing.SKIA method)</a>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnShape.__init__">(charmy.graphics.DrawnShape method)</a>
 </li>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.__init__">(charmy.frameworks.ui.GLFW method)</a>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnText.__init__">(charmy.graphics.DrawnText method)</a>
 </li>
-          <li><a href="api/object.html#charmy.object.CharmyObject.__init__">(charmy.object.CharmyObject method)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.AnyShape.__init__">(charmy.styles.shape.AnyShape method)</a>
 </li>
-          <li><a href="api/object.html#charmy.object.InstanceCounterMeta.__init__">(charmy.object.InstanceCounterMeta method)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.__init__">(charmy.styles.shape.CircleArc method)</a>
 </li>
-          <li><a href="api/pos.html#charmy.pos.Pos.__init__">(charmy.pos.Pos method)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.__init__">(charmy.styles.shape.CubicBezier method)</a>
 </li>
-          <li><a href="api/rect.html#charmy.rect.Rect.__init__">(charmy.rect.Rect method)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Curve.__init__">(charmy.styles.shape.Curve method)</a>
 </li>
-          <li><a href="api/size.html#charmy.size.Size.__init__">(charmy.size.Size method)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.__init__">(charmy.styles.shape.EllipseArc method)</a>
 </li>
-          <li><a href="api/styles/color.html#charmy.styles.color.Color.__init__">(charmy.styles.color.Color method)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Line.__init__">(charmy.styles.shape.Line method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.__init__">(charmy.styles.shape.LinePath method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.__init__">(charmy.styles.shape.PolyLine method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.__init__">(charmy.styles.shape.QuadraticBezier method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.__init__">(charmy.styles.shape.Rect method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.__init__">(charmy.styles.shape.RoundRect method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeGroup.__init__">(charmy.styles.shape.ShapeGroup method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeType.__init__">(charmy.styles.shape.ShapeType method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.__init__">(charmy.styles.shape.SingleShape method)</a>
+</li>
+          <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.__init__">(charmy.styles.text_style.TextStyle method)</a>
+</li>
+          <li><a href="api/styles/texture.html#charmy.styles.texture.Color.__init__">(charmy.styles.texture.Color method)</a>
+</li>
+          <li><a href="api/styles/texture.html#charmy.styles.texture.Transparent.__init__">(charmy.styles.texture.Transparent method)</a>
 </li>
           <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.__init__">(charmy.styles.theme.Theme method)</a>
 </li>
-          <li><a href="api/var.html#charmy.var.BooleanVar.__init__">(charmy.var.BooleanVar method)</a>
+          <li><a href="api/utils/caching.html#charmy.utils.caching.CharmyCachedClass.__init__">(charmy.utils.caching.CharmyCachedClass method)</a>
 </li>
-          <li><a href="api/var.html#charmy.var.FloatVar.__init__">(charmy.var.FloatVar method)</a>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.DelayTriggered.__init__">(charmy.utils.event_types.DelayTriggered method)</a>
 </li>
-          <li><a href="api/var.html#charmy.var.IntVar.__init__">(charmy.var.IntVar method)</a>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.Event.__init__">(charmy.utils.event_types.Event method)</a>
 </li>
-          <li><a href="api/var.html#charmy.var.StringVar.__init__">(charmy.var.StringVar method)</a>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.EventTriggered.__init__">(charmy.utils.event_types.EventTriggered method)</a>
 </li>
-          <li><a href="api/var.html#charmy.var.Var.__init__">(charmy.var.Var method)</a>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusGain.__init__">(charmy.utils.event_types.FocusGain method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusLoss.__init__">(charmy.utils.event_types.FocusLoss method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseClick.__init__">(charmy.utils.event_types.MouseClick method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseEnter.__init__">(charmy.utils.event_types.MouseEnter method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseInteractEvent.__init__">(charmy.utils.event_types.MouseInteractEvent method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseLeave.__init__">(charmy.utils.event_types.MouseLeave method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseMove.__init__">(charmy.utils.event_types.MouseMove method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MousePress.__init__">(charmy.utils.event_types.MousePress method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent.__init__">(charmy.utils.event_types.MouseRawEvent method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRelease.__init__">(charmy.utils.event_types.MouseRelease method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseScroll.__init__">(charmy.utils.event_types.MouseScroll method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetConfigure.__init__">(charmy.utils.event_types.WidgetConfigure method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDestroy.__init__">(charmy.utils.event_types.WidgetDestroy method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDraw.__init__">(charmy.utils.event_types.WidgetDraw method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetEvent.__init__">(charmy.utils.event_types.WidgetEvent method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetMove.__init__">(charmy.utils.event_types.WidgetMove method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetResize.__init__">(charmy.utils.event_types.WidgetResize method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetUpdate.__init__">(charmy.utils.event_types.WidgetUpdate method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WindowEvent.__init__">(charmy.utils.event_types.WindowEvent method)</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.LayoutProfile.__init__">(charmy.utils.layout_profiles.LayoutProfile method)</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.ManagedLayoutProfile.__init__">(charmy.utils.layout_profiles.ManagedLayoutProfile method)</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.PlaceProfile.__init__">(charmy.utils.layout_profiles.PlaceProfile method)</a>
+</li>
+          <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.ContainerLike.__init__">(charmy.utils.type_checking.ContainerLike method)</a>
+</li>
+          <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.PILImageType.__init__">(charmy.utils.type_checking.PILImageType method)</a>
+</li>
+          <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.WindowLike.__init__">(charmy.utils.type_checking.WindowLike method)</a>
+</li>
+          <li><a href="api/utils/var.html#charmy.utils.var.Var.__init__">(charmy.utils.var.Var method)</a>
 </li>
           <li><a href="api/widgets/button.html#charmy.widgets.button.Button.__init__">(charmy.widgets.button.Button method)</a>
-</li>
-          <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.__init__">(charmy.widgets.canvas.CanvasBase method)</a>
 </li>
           <li><a href="api/widgets/container.html#charmy.widgets.container.Container.__init__">(charmy.widgets.container.Container method)</a>
 </li>
           <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.__init__">(charmy.widgets.widget.Widget method)</a>
 </li>
+          <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile.__init__">(charmy.widgets.widget.WidgetProfile method)</a>
+</li>
           <li><a href="api/widgets/window.html#charmy.widgets.window.Window.__init__">(charmy.widgets.window.Window method)</a>
 </li>
-          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.__init__">(charmy.widgets.windowbase.WindowBase method)</a>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.__init__">(charmy.widgets.window.WindowEntity method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -358,21 +454,35 @@
   <h2>A</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.a">a (charmy.styles.texture.Color property)</a>
+</li>
+        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.abs_pos">abs_pos (charmy.widgets.container.Container property)</a>
+
+        <ul>
+          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.abs_pos">(charmy.widgets.widget.Widget property)</a>
+</li>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.abs_pos">(charmy.widgets.window.WindowEntity property)</a>
+</li>
+        </ul></li>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container.add_child">add_child() (charmy.widgets.container.Container method)</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.add_element">add_element() (charmy.widgets.canvas.CanvasBase method)</a>
-</li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.add_task">add_task() (charmy.event.WorkingThread method)</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.alpha">alpha (charmy.backend.template.Backend.WindowBase attribute)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.add_window">add_window() (charmy.cmm.CharmyManager method)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.AnyShape">AnyShape (class in charmy.styles.shape)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.attributes">attributes (charmy.object.CharmyObject attribute)</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.arc_to_cubic_beziers">arc_to_cubic_beziers() (in module charmy.utils.geo_math)</a>
 </li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetConfigure.attrs_changed">attrs_changed (charmy.utils.event_types.WidgetConfigure attribute)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.author">author (charmy.backend.genesis.Backend attribute)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.author">(charmy.backend.template.Backend attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/const.html#charmy.const.ID.AUTO">AUTO (charmy.const.ID attribute)</a>
-</li>
-        <li><a href="api/widgets/container.html#charmy.widgets.container.auto_find_parent">auto_find_parent() (in module charmy.widgets.container)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -382,22 +492,108 @@
   <h2>B</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.backend">backend (charmy.frameworks.Frameworks attribute)</a>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.b">b (charmy.styles.texture.Color property)</a>
 </li>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.backend_name">backend_name (charmy.frameworks.Frameworks attribute)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend">Backend (class in charmy.backend.genesis)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend">(class in charmy.backend.template)</a>
 </li>
-        <li><a href="api/frameworks/backend.html#charmy.frameworks.backend.BackendFramework">BackendFramework (class in charmy.frameworks.backend)</a>
+        </ul></li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.LineBase">Backend.LineBase (class in charmy.backend.genesis)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.LineBase">(class in charmy.backend.template)</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends">Backends (class in charmy.const)</a>
+        </ul></li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.ShapeBase">Backend.ShapeBase (class in charmy.backend.genesis)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.ShapeBase">(class in charmy.backend.template)</a>
+</li>
+        </ul></li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextBase">Backend.TextBase (class in charmy.backend.genesis)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextBase">(class in charmy.backend.template)</a>
+</li>
+        </ul></li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextureBase">Backend.TextureBase (class in charmy.backend.genesis)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextureBase">(class in charmy.backend.template)</a>
+</li>
+        </ul></li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase">Backend.WindowBase (class in charmy.backend.genesis)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase">(class in charmy.backend.template)</a>
+</li>
+        </ul></li>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.WindowLike.backend_base">backend_base (charmy.utils.type_checking.WindowLike attribute)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.backend_init">backend_init() (charmy.backend.genesis.Backend method)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.backend_init">(charmy.backend.template.Backend method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.background">background (charmy.backend.template.Backend.WindowBase attribute)</a>
+
+        <ul>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.background">(charmy.widgets.window.WindowEntity property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/event.html#charmy.event.EventHandling.bind">bind() (charmy.event.EventHandling method)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.BLACK">BLACK (charmy.styles.text_style.WEIGHT attribute)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventHandling.bind">bind() (charmy.event.EventHandling method)</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.BOLD">BOLD (charmy.styles.text_style.WEIGHT attribute)</a>
 </li>
-        <li><a href="api/var.html#charmy.var.BooleanVar">BooleanVar (class in charmy.var)</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnShape.border_texture">border_texture (charmy.graphics.DrawnShape property)</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.bottom">bottom (charmy.rect.Rect property)</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnLine.boundary">boundary (charmy.graphics.DrawnLine property)</a>
+
+        <ul>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnObject.boundary">(charmy.graphics.DrawnObject property)</a>
 </li>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnShape.boundary">(charmy.graphics.DrawnShape property)</a>
+</li>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnText.boundary">(charmy.graphics.DrawnText property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.boundary">(charmy.styles.shape.CircleArc property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.boundary">(charmy.styles.shape.CubicBezier property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Line.boundary">(charmy.styles.shape.Line property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.boundary">(charmy.styles.shape.LinePath property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.boundary">(charmy.styles.shape.PolyLine property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.boundary">(charmy.styles.shape.QuadraticBezier property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.boundary">(charmy.styles.shape.Rect property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.boundary">(charmy.styles.shape.RoundRect property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeGroup.boundary">(charmy.styles.shape.ShapeGroup property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeType.boundary">(charmy.styles.shape.ShapeType property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.boundary">(charmy.styles.shape.SingleShape property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseClick.button">button (charmy.utils.event_types.MouseClick attribute)</a>
+
+        <ul>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MousePress.button">(charmy.utils.event_types.MousePress attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRelease.button">(charmy.utils.event_types.MouseRelease attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/widgets/button.html#charmy.widgets.button.Button">Button (class in charmy.widgets.button)</a>
 </li>
     </ul></td>
@@ -408,18 +604,85 @@
   <h2>C</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.can_be_close">can_be_close() (charmy.widgets.windowbase.WindowBase method)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.cairo_context">cairo_context (charmy.backend.genesis.Backend.WindowBase attribute)</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.can_be_closed">can_be_closed() (charmy.frameworks.ui.GLFW method)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.cairo_reinit_surface">cairo_reinit_surface() (charmy.backend.genesis.Backend.WindowBase method)</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.cancel_dirty">cancel_dirty() (charmy.widgets.windowbase.WindowBase method)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextureBase.cairo_set_context_texture">cairo_set_context_texture() (charmy.backend.genesis.Backend.TextureBase static method)</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase">CanvasBase (class in charmy.widgets.canvas)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextBase.cairo_set_font">cairo_set_font() (charmy.backend.genesis.Backend.TextBase static method)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.cconfig">cconfig() (charmy.object.CharmyObject method)</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.Event.call_chain">call_chain() (charmy.utils.event_types.Event method)</a>
+
+        <ul>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.EventTriggered.call_chain">(charmy.utils.event_types.EventTriggered method)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.cget">cget() (charmy.object.CharmyObject method)</a>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseMove.call_chain">(charmy.utils.event_types.MouseMove method)</a>
 </li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MousePress.call_chain">(charmy.utils.event_types.MousePress method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent.call_chain">(charmy.utils.event_types.MouseRawEvent method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRelease.call_chain">(charmy.utils.event_types.MouseRelease method)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetConfigure.call_chain">(charmy.utils.event_types.WidgetConfigure method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.center">center (charmy.styles.shape.CircleArc attribute)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.center">(charmy.styles.shape.EllipseArc attribute)</a>
+</li>
+        </ul></li>
+        <li>
+    charmy
+
+        <ul>
+          <li><a href="api/index.html#module-charmy">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.backend
+
+        <ul>
+          <li><a href="api/backend/index.html#module-charmy.backend">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.backend.genesis
+
+        <ul>
+          <li><a href="api/backend/genesis.html#module-charmy.backend.genesis">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.backend.loader
+
+        <ul>
+          <li><a href="api/backend/loader.html#module-charmy.backend.loader">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.backend.template
+
+        <ul>
+          <li><a href="api/backend/template.html#module-charmy.backend.template">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.backend.utils
+
+        <ul>
+          <li><a href="api/backend/utils.html#module-charmy.backend.utils">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.cm_object
+
+        <ul>
+          <li><a href="api/object.html#module-charmy.cm_object">module</a>
+</li>
+        </ul></li>
         <li>
     charmy.cmm
 
@@ -442,59 +705,10 @@
 </li>
         </ul></li>
         <li>
-    charmy.frameworks
+    charmy.graphics
 
         <ul>
-          <li><a href="api/frameworks/index.html#module-charmy.frameworks">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.frameworks.backend
-
-        <ul>
-          <li><a href="api/frameworks/backend.html#module-charmy.frameworks.backend">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.frameworks.drawing
-
-        <ul>
-          <li><a href="api/frameworks/drawing.html#module-charmy.frameworks.drawing">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.frameworks.ui
-
-        <ul>
-          <li><a href="api/frameworks/ui.html#module-charmy.frameworks.ui">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.object
-
-        <ul>
-          <li><a href="api/object.html#module-charmy.object">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.pos
-
-        <ul>
-          <li><a href="api/pos.html#module-charmy.pos">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.rect
-
-        <ul>
-          <li><a href="api/rect.html#module-charmy.rect">module</a>
-</li>
-        </ul></li>
-        <li>
-    charmy.size
-
-        <ul>
-          <li><a href="api/size.html#module-charmy.size">module</a>
+          <li><a href="api/graphics.html#module-charmy.graphics">module</a>
 </li>
         </ul></li>
         <li>
@@ -505,10 +719,31 @@
 </li>
         </ul></li>
         <li>
-    charmy.styles.color
+    charmy.styles.shape
 
         <ul>
-          <li><a href="api/styles/color.html#module-charmy.styles.color">module</a>
+          <li><a href="api/styles/shape.html#module-charmy.styles.shape">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.styles.style
+
+        <ul>
+          <li><a href="api/styles/style.html#module-charmy.styles.style">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.styles.text_style
+
+        <ul>
+          <li><a href="api/styles/text_style.html#module-charmy.styles.text_style">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.styles.texture
+
+        <ul>
+          <li><a href="api/styles/texture.html#module-charmy.styles.texture">module</a>
 </li>
         </ul></li>
         <li>
@@ -518,8 +753,6 @@
           <li><a href="api/styles/theme.html#module-charmy.styles.theme">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     charmy.this
 
@@ -528,10 +761,61 @@
 </li>
         </ul></li>
         <li>
-    charmy.var
+    charmy.utils
 
         <ul>
-          <li><a href="api/var.html#module-charmy.var">module</a>
+          <li><a href="api/utils/index.html#module-charmy.utils">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    charmy.utils.caching
+
+        <ul>
+          <li><a href="api/utils/caching.html#module-charmy.utils.caching">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.event_types
+
+        <ul>
+          <li><a href="api/utils/event_types.html#module-charmy.utils.event_types">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.geo_math
+
+        <ul>
+          <li><a href="api/utils/geo_math.html#module-charmy.utils.geo_math">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.layout_profiles
+
+        <ul>
+          <li><a href="api/utils/layout_profiles.html#module-charmy.utils.layout_profiles">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.svg
+
+        <ul>
+          <li><a href="api/utils/svg.html#module-charmy.utils.svg">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.type_checking
+
+        <ul>
+          <li><a href="api/utils/type_checking.html#module-charmy.utils.type_checking">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.utils.var
+
+        <ul>
+          <li><a href="api/utils/var.html#module-charmy.utils.var">module</a>
 </li>
         </ul></li>
         <li>
@@ -549,17 +833,17 @@
 </li>
         </ul></li>
         <li>
-    charmy.widgets.canvas
-
-        <ul>
-          <li><a href="api/widgets/canvas.html#module-charmy.widgets.canvas">module</a>
-</li>
-        </ul></li>
-        <li>
     charmy.widgets.container
 
         <ul>
           <li><a href="api/widgets/container.html#module-charmy.widgets.container">module</a>
+</li>
+        </ul></li>
+        <li>
+    charmy.widgets.frame
+
+        <ul>
+          <li><a href="api/widgets/frame.html#module-charmy.widgets.frame">module</a>
 </li>
         </ul></li>
         <li>
@@ -576,50 +860,59 @@
           <li><a href="api/widgets/window.html#module-charmy.widgets.window">module</a>
 </li>
         </ul></li>
-        <li>
-    charmy.widgets.windowbase
-
-        <ul>
-          <li><a href="api/widgets/windowbase.html#module-charmy.widgets.windowbase">module</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.charmy_window">charmy_window (charmy.backend.template.Backend.WindowBase attribute)</a>
 </li>
-        </ul></li>
+        <li><a href="api/utils/caching.html#charmy.utils.caching.CharmyCachedClass">CharmyCachedClass (class in charmy.utils.caching)</a>
+</li>
+        <li><a href="api/object.html#charmy.cm_object.CharmyInstanceDestroyedError">CharmyInstanceDestroyedError</a>
+</li>
         <li><a href="api/cmm.html#charmy.cmm.CharmyManager">CharmyManager (class in charmy.cmm)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject">CharmyObject (class in charmy.object)</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject">CharmyObject (class in charmy.cm_object)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.class_name">class_name (charmy.object.CharmyObject property)</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyRegisteredObject">CharmyRegisteredObject (class in charmy.cm_object)</a>
 </li>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.cleanup">cleanup() (charmy.cmm.CharmyManager method)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CharmyShapeError">CharmyShapeError</a>
 </li>
-        <li><a href="api/styles/color.html#charmy.styles.color.Color">Color (class in charmy.styles.color)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc">CircleArc (class in charmy.styles.shape)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.config">config() (charmy.object.CharmyObject method)</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.class_name">class_name (charmy.cm_object.CharmyObject property)</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.config_element">config_element() (charmy.widgets.canvas.CanvasBase method)</a>
+        <li><a href="api/event.html#charmy.event.EventHandling.clear_bind">clear_bind() (charmy.event.EventHandling method)</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.clear_screen">clear_screen() (charmy.backend.template.Backend.WindowBase method)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.close">close() (charmy.backend.genesis.Backend.WindowBase method)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.close">(charmy.backend.template.Backend.WindowBase method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.color">color (charmy.styles.texture.Color attribute)</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color">Color (class in charmy.styles.texture)</a>
+</li>
+        <li><a href="api/widgets/button.html#charmy.widgets.button.Button.components">components (charmy.widgets.button.Button property)</a>
+</li>
+        <li><a href="api/event.html#charmy.event.EventTask.conditions">conditions (charmy.event.EventTask attribute)</a>
+</li>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.config">config() (charmy.cm_object.CharmyObject method)</a>
+</li>
+        <li><a href="api/const.html#charmy.const.Configs">Configs (class in charmy.const)</a>
 </li>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container">Container (class in charmy.widgets.container)</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.contextlib">contextlib (charmy.widgets.windowbase.WindowBase attribute)</a>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.ContainerLike">ContainerLike (class in charmy.utils.type_checking)</a>
 </li>
-        <li><a href="api/cmm.html#charmy.cmm.cquit">cquit() (in module charmy.cmm)</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnShape.copy">copy() (charmy.graphics.DrawnShape method)</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.create">create() (charmy.frameworks.ui.GLFW method)</a>
-
-        <ul>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.create">(charmy.frameworks.ui.UIFramework method)</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.cubic_bezier_derivative_roots">cubic_bezier_derivative_roots() (in module charmy.utils.geo_math)</a>
 </li>
-          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.create">(charmy.widgets.windowbase.WindowBase method)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier">CubicBezier (class in charmy.styles.shape)</a>
 </li>
-        </ul></li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.create_event_bounds">create_event_bounds() (charmy.frameworks.ui.GLFW method)</a>
-
-        <ul>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.create_event_bounds">(charmy.frameworks.ui.UIFramework method)</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.DelayTriggered.current_time">current_time (charmy.utils.event_types.DelayTriggered attribute)</a>
 </li>
-          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.create_event_bounds">(charmy.widgets.windowbase.WindowBase method)</a>
-</li>
-        </ul></li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.cset">cset() (charmy.object.CharmyObject method)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Curve">Curve (class in charmy.styles.shape)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -629,57 +922,95 @@
   <h2>D</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.DEBUG_FLAGS">DEBUG_FLAGS (class in charmy.backend.genesis)</a>
+
+        <ul>
+          <li><a href="api/const.html#charmy.const.DEBUG_FLAGS">(class in charmy.const)</a>
+</li>
+          <li><a href="api/styles/style.html#charmy.styles.style.DEBUG_FLAGS">(class in charmy.styles.style)</a>
+</li>
+        </ul></li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile.default">default() (charmy.widgets.widget.WidgetProfile class method)</a>
+</li>
+        <li><a href="api/const.html#charmy.const.Configs.default_backend">default_backend (charmy.const.Configs attribute)</a>
+</li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.DEFAULT_THEME">DEFAULT_THEME (charmy.styles.theme.Theme attribute)</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.DEFAULT_THEME_FILENAME">DEFAULT_THEME_FILENAME (charmy.styles.theme.Theme attribute)</a>
 </li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.DelayTriggered.delay_time">delay_time (charmy.utils.event_types.DelayTriggered attribute)</a>
+</li>
         <li><a href="api/event.html#charmy.event.DelayTask">DelayTask (class in charmy.event)</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.destroy">destroy() (charmy.frameworks.ui.GLFW method)</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.DelayTriggered">DelayTriggered (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.destroy">destroy() (charmy.cmm.CharmyManager method)</a>
 
         <ul>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.destroy">(charmy.frameworks.ui.UIFramework method)</a>
+          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.destroy">(charmy.widgets.widget.Widget method)</a>
 </li>
-          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.destroy">(charmy.widgets.windowbase.WindowBase method)</a>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.Window.destroy">(charmy.widgets.window.Window method)</a>
+</li>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.destroy">(charmy.widgets.window.WindowEntity method)</a>
 </li>
         </ul></li>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.destroy_window">destroy_window() (charmy.cmm.CharmyManager method)</a>
-</li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.dirty">dirty() (charmy.widgets.windowbase.WindowBase method)</a>
-</li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw">draw() (charmy.widgets.canvas.CanvasBase method)</a>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnLine.draw">draw() (charmy.graphics.DrawnLine method)</a>
 
         <ul>
-          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.draw">(charmy.widgets.windowbase.WindowBase method)</a>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnObject.draw">(charmy.graphics.DrawnObject method)</a>
+</li>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnShape.draw">(charmy.graphics.DrawnShape method)</a>
+</li>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnText.draw">(charmy.graphics.DrawnText method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Curve.draw">(charmy.styles.shape.Curve method)</a>
+</li>
+          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.draw">(charmy.widgets.widget.Widget method)</a>
 </li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.ShapeBase.draw_any_shape">draw_any_shape() (charmy.backend.genesis.Backend.ShapeBase static method)</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.draw_background">draw_background() (charmy.backend.template.Backend.WindowBase method)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.DEBUG_FLAGS.DRAW_CAIRO_STOCK_TEXT_BOUND">DRAW_CAIRO_STOCK_TEXT_BOUND (charmy.backend.genesis.DEBUG_FLAGS attribute)</a>
+</li>
         <li><a href="api/widgets/container.html#charmy.widgets.container.Container.draw_children">draw_children() (charmy.widgets.container.Container method)</a>
 </li>
-        <li><a href="api/widgets/button.html#charmy.widgets.button.Button.draw_config">draw_config() (charmy.widgets.button.Button method)</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.draw_frame">draw_frame() (charmy.widgets.window.WindowEntity method)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.LineBase.draw_line">draw_line() (charmy.backend.genesis.Backend.LineBase static method)</a>
 
         <ul>
-          <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw_config">(charmy.widgets.canvas.CanvasBase method)</a>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.LineBase.draw_line">(charmy.backend.template.Backend.LineBase static method)</a>
 </li>
         </ul></li>
-        <li><a href="api/frameworks/drawing.html#charmy.frameworks.drawing.DrawingFramework.draw_rect">draw_rect() (charmy.frameworks.drawing.DrawingFramework method)</a>
+        <li><a href="api/const.html#charmy.const.DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY">DRAW_OBJECTS_BOUNDARY (charmy.const.DEBUG_FLAGS attribute)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.ShapeBase.draw_shape">draw_shape() (charmy.backend.genesis.Backend.ShapeBase static method)</a>
 
         <ul>
-          <li><a href="api/frameworks/drawing.html#charmy.frameworks.drawing.SKIA.draw_rect">(charmy.frameworks.drawing.SKIA method)</a>
-</li>
-          <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw_rect">(charmy.widgets.canvas.CanvasBase method)</a>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.ShapeBase.draw_shape">(charmy.backend.template.Backend.ShapeBase static method)</a>
 </li>
         </ul></li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.draw_type_map">draw_type_map (charmy.widgets.canvas.CanvasBase attribute)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.ShapeBase.draw_shape_group">draw_shape_group() (charmy.backend.genesis.Backend.ShapeBase static method)</a>
 </li>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.drawing">drawing (charmy.frameworks.Frameworks attribute)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextBase.draw_text">draw_text() (charmy.backend.genesis.Backend.TextBase static method)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextBase.draw_text">(charmy.backend.template.Backend.TextBase static method)</a>
 </li>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.drawing_name">drawing_name (charmy.frameworks.Frameworks attribute)</a>
-</li>
-        <li><a href="api/frameworks/drawing.html#charmy.frameworks.drawing.DrawingFramework">DrawingFramework (class in charmy.frameworks.drawing)</a>
-</li>
+        </ul></li>
         <li><a href="api/const.html#charmy.const.DrawingMode">DrawingMode (class in charmy.const)</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnLine">DrawnLine (class in charmy.graphics)</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnObject">DrawnObject (class in charmy.graphics)</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnShape">DrawnShape (class in charmy.graphics)</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnText">DrawnText (class in charmy.graphics)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -689,29 +1020,53 @@
   <h2>E</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.elements">elements (charmy.widgets.canvas.CanvasBase attribute)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc">EllipseArc (class in charmy.styles.shape)</a>
 </li>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.error">error() (charmy.cmm.CharmyManager static method)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.end_orient">end_orient (charmy.styles.shape.CircleArc attribute)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.end_orient">(charmy.styles.shape.EllipseArc attribute)</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event">Event (class in charmy.event)</a>
+        </ul></li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.end_point">end_point (charmy.styles.shape.CircleArc property)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.end_point">(charmy.styles.shape.CubicBezier property)</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event.event_data">event_data (charmy.event.Event attribute)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Line.end_point">(charmy.styles.shape.Line property)</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event.event_type">event_type (charmy.event.Event attribute)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.end_point">(charmy.styles.shape.LinePath property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.end_point">(charmy.styles.shape.PolyLine property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.end_point">(charmy.styles.shape.QuadraticBezier property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.ensure_texture">ensure_texture() (in module charmy.styles.texture)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventHandling.EVENT_TYPES">EVENT_TYPES (charmy.event.EventHandling attribute)</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.evaluate_cubic_bezier">evaluate_cubic_bezier() (in module charmy.utils.geo_math)</a>
+</li>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.evaluate_quadratic_bezier">evaluate_quadratic_bezier() (in module charmy.utils.geo_math)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.Event">Event (class in charmy.utils.event_types)</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventHandling">EventHandling (class in charmy.event)</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventTask">EventTask (class in charmy.event)</a>
 </li>
-        <li><a href="api/event.html#charmy.event.EventHandling.execute_task">execute_task() (charmy.event.EventHandling method)</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.EventTriggered">EventTriggered (class in charmy.utils.event_types)</a>
 </li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.execute_tasks">execute_tasks() (charmy.event.WorkingThread method)</a>
+        <li><a href="api/event.html#charmy.event.EventTask.execute">execute() (charmy.event.EventTask method)</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.EXPECTED_DATA_TYPE">EXPECTED_DATA_TYPE (charmy.styles.theme.Theme attribute)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.EXTRABLACK">EXTRABLACK (charmy.styles.text_style.WEIGHT attribute)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.EXTRABOLD">EXTRABOLD (charmy.styles.text_style.WEIGHT attribute)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.EXTRALIGHT">EXTRALIGHT (charmy.styles.text_style.WEIGHT attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -721,19 +1076,83 @@
   <h2>F</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/object.html#charmy.object.CharmyObject.find">find() (charmy.object.CharmyObject method)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.fallback">fallback() (charmy.styles.shape.CircleArc method)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Line.fallback">(charmy.styles.shape.Line method)</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.find_element">find_element() (charmy.widgets.canvas.CanvasBase method)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.fallback">(charmy.styles.shape.LinePath method)</a>
 </li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.fallback">(charmy.styles.shape.PolyLine method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.fallback">(charmy.styles.shape.QuadraticBezier method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile.fallback_state">fallback_state (charmy.widgets.widget.WidgetProfile attribute)</a>
+</li>
+        <li><a href="api/styles/style.html#charmy.styles.style.fill_vars">fill_vars() (in module charmy.styles.style)</a>
+</li>
+        <li><a href="api/styles/style.html#charmy.styles.style.DEBUG_FLAGS.FILL_VARS_DEBUG_OUTPUT">FILL_VARS_DEBUG_OUTPUT (charmy.styles.style.DEBUG_FLAGS attribute)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.find_class_by_type">find_class_by_type() (charmy.styles.shape.LinePath static method)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.find_class_by_type">(charmy.styles.shape.SingleShape static method)</a>
+</li>
+          <li><a href="api/styles/texture.html#charmy.styles.texture.Texture.find_class_by_type">(charmy.styles.texture.Texture static method)</a>
+</li>
+        </ul></li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.find_loaded_theme">find_loaded_theme() (charmy.styles.theme.Theme class method)</a>
 </li>
+        <li><a href="api/object.html#charmy.cm_object.CharmyRegisteredObject.find_obj">find_obj() (charmy.cm_object.CharmyRegisteredObject method)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.flatten">flatten() (charmy.styles.shape.CircleArc method)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.flatten">(charmy.styles.shape.CubicBezier method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Curve.flatten">(charmy.styles.shape.Curve method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.flatten">(charmy.styles.shape.QuadraticBezier method)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.flatten">(charmy.styles.shape.SingleShape method)</a>
+</li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventHandling.find_task">find_task() (charmy.event.EventHandling method)</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.flatten_circle_arc">flatten_circle_arc() (in module charmy.utils.geo_math)</a>
 </li>
-        <li><a href="api/var.html#charmy.var.FloatVar">FloatVar (class in charmy.var)</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.flatten_cubic_bezier">flatten_cubic_bezier() (in module charmy.utils.geo_math)</a>
 </li>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks">Frameworks (class in charmy.frameworks)</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.flatten_quadratic_bezier">flatten_quadratic_bezier() (in module charmy.utils.geo_math)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusGain">FocusGain (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusLoss">FocusLoss (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.font">font (charmy.styles.text_style.TextStyle attribute)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.DEBUG_FLAGS.FORCE_CLOSE_SHAPE">FORCE_CLOSE_SHAPE (charmy.backend.genesis.DEBUG_FLAGS attribute)</a>
+</li>
+        <li><a href="api/widgets/frame.html#charmy.widgets.frame.Frame">Frame (class in charmy.widgets.frame)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.friendly_name">friendly_name (charmy.backend.genesis.Backend attribute)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.friendly_name">(charmy.backend.template.Backend attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.from_json">from_json() (charmy.styles.shape.LinePath static method)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.from_json">(charmy.styles.shape.SingleShape static method)</a>
+</li>
+          <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.from_json">(charmy.styles.text_style.TextStyle static method)</a>
+</li>
+          <li><a href="api/styles/texture.html#charmy.styles.texture.Texture.from_json">(charmy.styles.texture.Texture static method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.fullscreen">fullscreen (charmy.backend.template.Backend.WindowBase attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -743,29 +1162,27 @@
   <h2>G</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/object.html#charmy.object.CharmyObject.get">get() (charmy.object.CharmyObject method)</a>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.g">g (charmy.styles.texture.Color property)</a>
 </li>
-        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.get_context">get_context() (charmy.widgets.container.Container class method)</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.get">get() (charmy.cm_object.CharmyObject method)</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.get_element">get_element() (charmy.widgets.canvas.CanvasBase method)</a>
-</li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.get_mouse_pos">get_mouse_pos() (charmy.frameworks.ui.GLFW method)</a>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.ContainerLike.get_mouse_hover">get_mouse_hover() (charmy.utils.type_checking.ContainerLike method)</a>
 
         <ul>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.get_mouse_pos">(charmy.frameworks.ui.UIFramework method)</a>
+          <li><a href="api/widgets/container.html#charmy.widgets.container.Container.get_mouse_hover">(charmy.widgets.container.Container method)</a>
 </li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/object.html#charmy.object.CharmyObject.get_obj">get_obj() (charmy.object.CharmyObject method)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextBase.get_text_bound">get_text_bound() (charmy.backend.genesis.Backend.TextBase static method)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextBase.get_text_bound">(charmy.backend.template.Backend.TextBase static method)</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends.GLFW">GLFW (charmy.const.Backends attribute)</a>
+        </ul></li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.get_text_boundary">get_text_boundary() (charmy.styles.text_style.TextStyle method)</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends.glfw">glfw (charmy.const.Backends attribute)</a>
-</li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW">GLFW (class in charmy.frameworks.ui)</a>
-</li>
-        <li><a href="api/cmm.html#charmy.cmm.GLFWError">GLFWError</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.gui_deg_to_math_rad">gui_deg_to_math_rad() (in module charmy.utils.geo_math)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -777,15 +1194,17 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/const.html#charmy.const.Orient.H">H (charmy.const.Orient attribute)</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.height">height (charmy.rect.Rect property)</a>
-
-        <ul>
-          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.height">(charmy.widgets.widget.Widget property)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.h_radius">h_radius (charmy.styles.shape.EllipseArc attribute)</a>
 </li>
-        </ul></li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.height">height (charmy.widgets.widget.Widget property)</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.hide">hide() (charmy.backend.template.Backend.WindowBase method)</a>
+</li>
         <li><a href="api/const.html#charmy.const.Orient.HORIZONTAL">HORIZONTAL (charmy.const.Orient attribute)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseScroll.horizontal">horizontal (charmy.utils.event_types.MouseScroll attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -795,69 +1214,51 @@
   <h2>I</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventTask.id">id (charmy.event.EventTask attribute)</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.icon">icon (charmy.backend.template.Backend.WindowBase attribute)</a>
 
         <ul>
-          <li><a href="api/object.html#charmy.object.CharmyObject.id">(charmy.object.CharmyObject attribute)</a>
-</li>
-          <li><a href="api/pos.html#charmy.pos.Pos.id">(charmy.pos.Pos attribute)</a>
-</li>
-          <li><a href="api/rect.html#charmy.rect.Rect.id">(charmy.rect.Rect attribute)</a>
-</li>
-          <li><a href="api/size.html#charmy.size.Size.id">(charmy.size.Size attribute)</a>
-</li>
-          <li><a href="api/styles/color.html#charmy.styles.color.Color.id">(charmy.styles.color.Color attribute)</a>
-</li>
-          <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.id">(charmy.widgets.canvas.CanvasBase attribute)</a>
-</li>
-          <li><a href="api/widgets/container.html#charmy.widgets.container.Container.id">(charmy.widgets.container.Container attribute)</a>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.icon">(charmy.widgets.window.WindowEntity property)</a>
 </li>
         </ul></li>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.id">id (charmy.cm_object.CharmyObject attribute)</a>
+</li>
         <li><a href="api/const.html#charmy.const.ID">ID (class in charmy.const)</a>
+</li>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.PILImageType.im">im (charmy.utils.type_checking.PILImageType attribute)</a>
 </li>
         <li><a href="api/const.html#charmy.const.DrawingMode.IMMEDIATE">IMMEDIATE (charmy.const.DrawingMode attribute)</a>
 </li>
         <li><a href="api/const.html#charmy.const.DrawingMode.immediate">immediate (charmy.const.DrawingMode attribute)</a>
 </li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.init">init() (charmy.frameworks.ui.GLFW method)</a>
-
-        <ul>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.init">(charmy.frameworks.ui.UIFramework method)</a>
-</li>
-        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.insert_element">insert_element() (charmy.widgets.canvas.CanvasBase method)</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyRegisteredObject.instance_count">instance_count (charmy.cm_object.CharmyRegisteredObject property)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.instance_count">instance_count (charmy.object.CharmyObject property)</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyRegisteredObject.instances">instances (charmy.cm_object.CharmyRegisteredObject attribute)</a>
+
+        <ul>
+          <li><a href="api/cmm.html#charmy.cmm.CharmyManager.instances">(charmy.cmm.CharmyManager attribute)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.InstanceCounterMeta">InstanceCounterMeta (class in charmy.object)</a>
-</li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.instances">instances (charmy.object.CharmyObject property)</a>
-</li>
+        </ul></li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.INTERNAL_THEME">INTERNAL_THEME (charmy.styles.theme.Theme attribute)</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.INTERNAL_THEME_DIR">INTERNAL_THEME_DIR (charmy.styles.theme.Theme attribute)</a>
 </li>
-        <li><a href="api/var.html#charmy.var.IntVar">IntVar (class in charmy.var)</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.is_angle_covered">is_angle_covered() (in module charmy.utils.geo_math)</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.is_alive">is_alive (charmy.widgets.windowbase.WindowBase attribute)</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.Window.is_root_container">is_root_container (charmy.widgets.window.Window attribute)</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.is_dirty">is_dirty (charmy.widgets.windowbase.WindowBase attribute)</a>
-</li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.is_force_hardware_acceleration">is_force_hardware_acceleration (charmy.widgets.windowbase.WindowBase attribute)</a>
-</li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.is_visible">is_visible (charmy.widgets.windowbase.WindowBase attribute)</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.italic">italic (charmy.styles.text_style.TextStyle attribute)</a>
 </li>
     </ul></td>
   </tr></table>
 </section>
 
-<section id="K" class="genindex-section">
-  <h2>K</h2>
+<section id="J" class="genindex-section">
+  <h2>J</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventTask.keep_at_clear">keep_at_clear (charmy.event.EventTask attribute)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.join">join() (charmy.styles.shape.PolyLine static method)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -867,39 +1268,41 @@
   <h2>L</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.Event.latest">latest (charmy.event.Event attribute)</a>
+        <li><a href="api/event.html#charmy.event.EventHandling.latest_event">latest_event (charmy.event.EventHandling attribute)</a>
 </li>
-        <li><a href="api/var.html#charmy.var.BooleanVar.latest_event">latest_event (charmy.var.BooleanVar attribute)</a>
+        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.layers">layers (charmy.widgets.container.Container property)</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.LayoutProfile">LayoutProfile (class in charmy.utils.layout_profiles)</a>
+</li>
+        <li><a href="api/const.html#charmy.const.MOUSE_KEYS.LEFT">LEFT (charmy.const.MOUSE_KEYS attribute)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.LIGHT">LIGHT (charmy.styles.text_style.WEIGHT attribute)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line">Line (class in charmy.styles.shape)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath">LinePath (class in charmy.styles.shape)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.AnyShape.lines">lines (charmy.styles.shape.AnyShape property)</a>
 
         <ul>
-          <li><a href="api/var.html#charmy.var.FloatVar.latest_event">(charmy.var.FloatVar attribute)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.lines">(charmy.styles.shape.Rect property)</a>
 </li>
-          <li><a href="api/var.html#charmy.var.IntVar.latest_event">(charmy.var.IntVar attribute)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.lines">(charmy.styles.shape.RoundRect property)</a>
 </li>
-          <li><a href="api/var.html#charmy.var.StringVar.latest_event">(charmy.var.StringVar attribute)</a>
-</li>
-          <li><a href="api/var.html#charmy.var.Var.latest_event">(charmy.var.Var attribute)</a>
-</li>
-          <li><a href="api/widgets/button.html#charmy.widgets.button.Button.latest_event">(charmy.widgets.button.Button attribute)</a>
-</li>
-          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.latest_event">(charmy.widgets.widget.Widget attribute)</a>
-</li>
-          <li><a href="api/widgets/window.html#charmy.widgets.window.Window.latest_event">(charmy.widgets.window.Window attribute)</a>
-</li>
-          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.latest_event">(charmy.widgets.windowbase.WindowBase attribute)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.lines">(charmy.styles.shape.SingleShape property)</a>
 </li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/rect.html#charmy.rect.Rect.left">left (charmy.rect.Rect property)</a>
+        <li><a href="api/backend/loader.html#charmy.backend.loader.list_backends_ep">list_backends_ep() (in module charmy.backend.loader)</a>
+</li>
+        <li><a href="api/backend/loader.html#charmy.backend.loader.load_backend">load_backend() (in module charmy.backend.loader)</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.load_from_file">load_from_file() (charmy.styles.theme.Theme method)</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.load_from_json">load_from_json() (charmy.styles.theme.Theme method)</a>
 </li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.LOADED_THEMES">LOADED_THEMES (charmy.styles.theme.Theme attribute)</a>
-</li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.lock">lock (charmy.event.WorkingThread attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -909,76 +1312,110 @@
   <h2>M</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.mainloop">mainloop() (charmy.cmm.CharmyManager method)</a>
-
-        <ul>
-          <li><a href="api/cmm.html#charmy.cmm.mainloop">(in module charmy.cmm)</a>
+        <li><a href="api/cmm.html#charmy.cmm.mainloop">mainloop() (in module charmy.cmm)</a>
 </li>
-        </ul></li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.make_context_current">make_context_current() (charmy.frameworks.ui.GLFW method)</a>
-
-        <ul>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.make_context_current">(charmy.frameworks.ui.UIFramework method)</a>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.ManagedLayoutProfile">ManagedLayoutProfile (class in charmy.utils.layout_profiles)</a>
 </li>
-        </ul></li>
-        <li><a href="api/rect.html#charmy.rect.Rect.make_LTRB">make_LTRB() (charmy.rect.Rect method)</a>
+        <li><a href="api/const.html#charmy.const.DEBUG_FLAGS.MARK_REDRAWS">MARK_REDRAWS (charmy.const.DEBUG_FLAGS attribute)</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.make_XYWH">make_XYWH() (charmy.rect.Rect method)</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.MEDIUM">MEDIUM (charmy.styles.text_style.WEIGHT attribute)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.Event.meets">meets() (charmy.utils.event_types.Event method)</a>
+</li>
+        <li><a href="api/const.html#charmy.const.MOUSE_KEYS.MIDDLE">MIDDLE (charmy.const.MOUSE_KEYS attribute)</a>
 </li>
         <li>
     module
 
         <ul>
+          <li><a href="api/index.html#module-charmy">charmy</a>
+</li>
+          <li><a href="api/backend/index.html#module-charmy.backend">charmy.backend</a>
+</li>
+          <li><a href="api/backend/genesis.html#module-charmy.backend.genesis">charmy.backend.genesis</a>
+</li>
+          <li><a href="api/backend/loader.html#module-charmy.backend.loader">charmy.backend.loader</a>
+</li>
+          <li><a href="api/backend/template.html#module-charmy.backend.template">charmy.backend.template</a>
+</li>
+          <li><a href="api/backend/utils.html#module-charmy.backend.utils">charmy.backend.utils</a>
+</li>
+          <li><a href="api/object.html#module-charmy.cm_object">charmy.cm_object</a>
+</li>
           <li><a href="api/cmm.html#module-charmy.cmm">charmy.cmm</a>
 </li>
           <li><a href="api/const.html#module-charmy.const">charmy.const</a>
 </li>
           <li><a href="api/event.html#module-charmy.event">charmy.event</a>
 </li>
-          <li><a href="api/frameworks/index.html#module-charmy.frameworks">charmy.frameworks</a>
-</li>
-          <li><a href="api/frameworks/backend.html#module-charmy.frameworks.backend">charmy.frameworks.backend</a>
-</li>
-          <li><a href="api/frameworks/drawing.html#module-charmy.frameworks.drawing">charmy.frameworks.drawing</a>
-</li>
-          <li><a href="api/frameworks/ui.html#module-charmy.frameworks.ui">charmy.frameworks.ui</a>
-</li>
-          <li><a href="api/object.html#module-charmy.object">charmy.object</a>
-</li>
-          <li><a href="api/pos.html#module-charmy.pos">charmy.pos</a>
-</li>
-          <li><a href="api/rect.html#module-charmy.rect">charmy.rect</a>
-</li>
-          <li><a href="api/size.html#module-charmy.size">charmy.size</a>
+          <li><a href="api/graphics.html#module-charmy.graphics">charmy.graphics</a>
 </li>
           <li><a href="api/styles/index.html#module-charmy.styles">charmy.styles</a>
 </li>
-          <li><a href="api/styles/color.html#module-charmy.styles.color">charmy.styles.color</a>
+          <li><a href="api/styles/shape.html#module-charmy.styles.shape">charmy.styles.shape</a>
+</li>
+          <li><a href="api/styles/style.html#module-charmy.styles.style">charmy.styles.style</a>
+</li>
+          <li><a href="api/styles/text_style.html#module-charmy.styles.text_style">charmy.styles.text_style</a>
+</li>
+          <li><a href="api/styles/texture.html#module-charmy.styles.texture">charmy.styles.texture</a>
 </li>
           <li><a href="api/styles/theme.html#module-charmy.styles.theme">charmy.styles.theme</a>
 </li>
           <li><a href="api/this.html#module-charmy.this">charmy.this</a>
 </li>
-          <li><a href="api/var.html#module-charmy.var">charmy.var</a>
+          <li><a href="api/utils/index.html#module-charmy.utils">charmy.utils</a>
+</li>
+          <li><a href="api/utils/caching.html#module-charmy.utils.caching">charmy.utils.caching</a>
+</li>
+          <li><a href="api/utils/event_types.html#module-charmy.utils.event_types">charmy.utils.event_types</a>
+</li>
+          <li><a href="api/utils/geo_math.html#module-charmy.utils.geo_math">charmy.utils.geo_math</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#module-charmy.utils.layout_profiles">charmy.utils.layout_profiles</a>
+</li>
+          <li><a href="api/utils/svg.html#module-charmy.utils.svg">charmy.utils.svg</a>
+</li>
+          <li><a href="api/utils/type_checking.html#module-charmy.utils.type_checking">charmy.utils.type_checking</a>
+</li>
+          <li><a href="api/utils/var.html#module-charmy.utils.var">charmy.utils.var</a>
 </li>
           <li><a href="api/widgets/index.html#module-charmy.widgets">charmy.widgets</a>
 </li>
           <li><a href="api/widgets/button.html#module-charmy.widgets.button">charmy.widgets.button</a>
 </li>
-          <li><a href="api/widgets/canvas.html#module-charmy.widgets.canvas">charmy.widgets.canvas</a>
-</li>
           <li><a href="api/widgets/container.html#module-charmy.widgets.container">charmy.widgets.container</a>
+</li>
+          <li><a href="api/widgets/frame.html#module-charmy.widgets.frame">charmy.widgets.frame</a>
 </li>
           <li><a href="api/widgets/widget.html#module-charmy.widgets.widget">charmy.widgets.widget</a>
 </li>
           <li><a href="api/widgets/window.html#module-charmy.widgets.window">charmy.widgets.window</a>
 </li>
-          <li><a href="api/widgets/windowbase.html#module-charmy.widgets.windowbase">charmy.widgets.windowbase</a>
-</li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.move">move() (charmy.widgets.windowbase.WindowBase method)</a>
+        <li><a href="api/const.html#charmy.const.MOUSE_KEYS">MOUSE_KEYS (class in charmy.const)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent.mouse_pos">mouse_pos (charmy.utils.event_types.MouseRawEvent attribute)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseClick">MouseClick (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseEnter">MouseEnter (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseInteractEvent">MouseInteractEvent (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseLeave">MouseLeave (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseMove">MouseMove (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MousePress">MousePress (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent">MouseRawEvent (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRelease">MouseRelease (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseScroll">MouseScroll (class in charmy.utils.event_types)</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventTask.multithread">multithread (charmy.event.EventTask attribute)</a>
 </li>
@@ -992,7 +1429,21 @@
   <h2>N</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.name">name (charmy.backend.genesis.Backend attribute)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.name">(charmy.backend.template.Backend attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetMove.new_pos">new_pos (charmy.utils.event_types.WidgetMove attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetResize.new_size">new_size (charmy.utils.event_types.WidgetResize attribute)</a>
+</li>
         <li><a href="api/const.html#charmy.const.ID.NONE">NONE (charmy.const.ID attribute)</a>
+</li>
+        <li><a href="api/backend/template.html#charmy.backend.template.not_implemented_func">not_implemented_func() (in module charmy.backend.template)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1002,17 +1453,17 @@
   <h2>O</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/object.html#charmy.object.CharmyObject.objects">objects (charmy.object.CharmyObject attribute)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.DEBUG_FLAGS.OBSERVE_SHAPE_DRAWING">OBSERVE_SHAPE_DRAWING (charmy.backend.genesis.DEBUG_FLAGS attribute)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.objects_sorted">objects_sorted (charmy.object.CharmyObject attribute)</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetMove.old_pos">old_pos (charmy.utils.event_types.WidgetMove attribute)</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends.OPENGL">OPENGL (charmy.const.Backends attribute)</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetResize.old_size">old_size (charmy.utils.event_types.WidgetResize attribute)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/const.html#charmy.const.Backends.opengl">opengl (charmy.const.Backends attribute)</a>
+        <li><a href="api/event.html#charmy.event.EventHandling.on">on() (charmy.event.EventHandling method)</a>
 </li>
-        <li><a href="api/frameworks/backend.html#charmy.frameworks.backend.OPENGL">OPENGL (class in charmy.frameworks.backend)</a>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile.on_value_change">on_value_change() (charmy.widgets.widget.WidgetProfile static method)</a>
 </li>
         <li><a href="api/const.html#charmy.const.Orient">Orient (class in charmy.const)</a>
 </li>
@@ -1024,13 +1475,53 @@
   <h2>P</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.parent">parent (charmy.widgets.widget.Widget attribute)</a>
+        <li><a href="api/event.html#charmy.event.EventHandling.parse_event_type_str">parse_event_type_str() (charmy.event.EventHandling method)</a>
+</li>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.PILImageType">PILImageType (class in charmy.utils.type_checking)</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.place">place() (charmy.widgets.widget.Widget method)</a>
+</li>
+        <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.PlaceProfile">PlaceProfile (class in charmy.utils.layout_profiles)</a>
+</li>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.point_on_circle">point_on_circle() (in module charmy.utils.geo_math)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.points">points (charmy.styles.shape.CubicBezier attribute)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Line.points">(charmy.styles.shape.Line attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.points">(charmy.styles.shape.PolyLine attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.points">(charmy.styles.shape.QuadraticBezier attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine">PolyLine (class in charmy.styles.shape)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.EventHandling.parse_event_type_str">parse_event_type_str() (charmy.event.EventHandling method)</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.pos">pos (charmy.backend.template.Backend.WindowBase attribute)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.pos">(charmy.styles.shape.Rect attribute)</a>
 </li>
-        <li><a href="api/pos.html#charmy.pos.Pos">Pos (class in charmy.pos)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.pos">(charmy.styles.shape.RoundRect attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDraw.pos">(charmy.utils.event_types.WidgetDraw attribute)</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.ManagedLayoutProfile.pos">(charmy.utils.layout_profiles.ManagedLayoutProfile property)</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.PlaceProfile.pos">(charmy.utils.layout_profiles.PlaceProfile attribute)</a>
+</li>
+          <li><a href="api/widgets/container.html#charmy.widgets.container.Container.pos">(charmy.widgets.container.Container property)</a>
+</li>
+          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.pos">(charmy.widgets.widget.Widget property)</a>
+</li>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.pos">(charmy.widgets.window.WindowEntity property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.profiles">profiles (charmy.widgets.widget.Widget property)</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.ProfileType">ProfileType (charmy.widgets.widget.Widget attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1040,7 +1531,13 @@
   <h2>Q</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.quit">quit() (charmy.cmm.CharmyManager method)</a>
+        <li><a href="api/utils/geo_math.html#charmy.utils.geo_math.quadratic_bezier_internal_t_roots">quadratic_bezier_internal_t_roots() (in module charmy.utils.geo_math)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier">QuadraticBezier (class in charmy.styles.shape)</a>
+</li>
+        <li><a href="api/cmm.html#charmy.cmm.quit">quit() (in module charmy.cmm)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1050,25 +1547,35 @@
   <h2>R</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/container.html#charmy.widgets.container.Container.rect">rect (charmy.widgets.container.Container property)</a>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Color.r">r (charmy.styles.texture.Color property)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.radius">radius (charmy.styles.shape.CircleArc attribute)</a>
 
         <ul>
-          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.rect">(charmy.widgets.widget.Widget property)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.radius">(charmy.styles.shape.RoundRect attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/rect.html#charmy.rect.Rect">Rect (class in charmy.rect)</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseInteractEvent.recent_raw_event">recent_raw_event (charmy.utils.event_types.MouseInteractEvent attribute)</a>
 </li>
-        <li><a href="api/widgets/canvas.html#charmy.widgets.canvas.CanvasBase.remove_element">remove_element() (charmy.widgets.canvas.CanvasBase method)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Rect">Rect (class in charmy.styles.shape)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetUpdate.redraw">redraw (charmy.utils.event_types.WidgetUpdate attribute)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.REGULAR">REGULAR (charmy.styles.text_style.WEIGHT attribute)</a>
+</li>
         <li><a href="api/const.html#charmy.const.DrawingMode.RETAINED">RETAINED (charmy.const.DrawingMode attribute)</a>
 </li>
         <li><a href="api/const.html#charmy.const.DrawingMode.retained">retained (charmy.const.DrawingMode attribute)</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.right">right (charmy.rect.Rect property)</a>
+        <li><a href="api/const.html#charmy.const.MOUSE_KEYS.RIGHT">RIGHT (charmy.const.MOUSE_KEYS attribute)</a>
 </li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.run">run() (charmy.event.WorkingThread method)</a>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.root_container">root_container (charmy.widgets.widget.Widget property)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.rotation">rotation (charmy.styles.shape.EllipseArc attribute)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect">RoundRect (class in charmy.styles.shape)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1078,61 +1585,155 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/const.html#charmy.const.Backends.SDL">SDL (charmy.const.Backends attribute)</a>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.PILImageType.save">save() (charmy.utils.type_checking.PILImageType method)</a>
 </li>
-        <li><a href="api/const.html#charmy.const.Backends.sdl">sdl (charmy.const.Backends attribute)</a>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.scale_mode">scale_mode (charmy.backend.template.Backend.WindowBase attribute)</a>
 </li>
-        <li><a href="api/object.html#charmy.object.CharmyObject.set">set() (charmy.object.CharmyObject method)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.sdl2_handle_event">sdl2_handle_event() (charmy.backend.genesis.Backend.WindowBase method)</a>
 </li>
-        <li><a href="api/styles/color.html#charmy.styles.color.Color.set_color_hex">set_color_hex() (charmy.styles.color.Color method)</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.SEMIBOLD">SEMIBOLD (charmy.styles.text_style.WEIGHT attribute)</a>
 </li>
-        <li><a href="api/styles/color.html#charmy.styles.color.Color.set_color_name">set_color_name() (charmy.styles.color.Color method)</a>
+        <li><a href="api/object.html#charmy.cm_object.CharmyObject.set">set() (charmy.cm_object.CharmyObject method)</a>
 </li>
-        <li><a href="api/styles/color.html#charmy.styles.color.Color.set_color_rgba">set_color_rgba() (charmy.styles.color.Color method)</a>
-</li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.set_pos">set_pos() (charmy.frameworks.ui.GLFW method)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.set_icon">set_icon() (charmy.backend.genesis.Backend.WindowBase method)</a>
 
         <ul>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.set_pos">(charmy.frameworks.ui.UIFramework method)</a>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.set_icon">(charmy.backend.template.Backend.WindowBase method)</a>
 </li>
         </ul></li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.set_size">set_size() (charmy.frameworks.ui.GLFW method)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.set_pos">set_pos() (charmy.backend.genesis.Backend.WindowBase method)</a>
 
         <ul>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.set_size">(charmy.frameworks.ui.UIFramework method)</a>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.set_pos">(charmy.backend.template.Backend.WindowBase method)</a>
 </li>
         </ul></li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.set_title">set_title() (charmy.frameworks.ui.GLFW method)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.set_size">set_size() (charmy.backend.genesis.Backend.WindowBase method)</a>
 
         <ul>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.set_title">(charmy.frameworks.ui.UIFramework method)</a>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.set_size">(charmy.backend.template.Backend.WindowBase method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.set_title">set_title() (charmy.backend.genesis.Backend.WindowBase method)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.set_title">(charmy.backend.template.Backend.WindowBase method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeGroup">ShapeGroup (class in charmy.styles.shape)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeGroup.shapes">shapes (charmy.styles.shape.ShapeGroup property)</a>
+</li>
+        <li><a href="api/utils/svg.html#charmy.utils.svg.shapes_from_svg_path">shapes_from_svg_path() (in module charmy.utils.svg)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeType">ShapeType (class in charmy.styles.shape)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.show">show() (charmy.backend.genesis.Backend.WindowBase method)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.show">(charmy.backend.template.Backend.WindowBase method)</a>
+</li>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.show">(charmy.widgets.window.WindowEntity method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape">SingleShape (class in charmy.styles.shape)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.size">size (charmy.backend.genesis.Backend.WindowBase attribute)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.size">(charmy.backend.template.Backend.WindowBase attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.size">(charmy.styles.shape.Rect attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.size">(charmy.styles.shape.RoundRect attribute)</a>
+</li>
+          <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.size">(charmy.styles.text_style.TextStyle attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDraw.size">(charmy.utils.event_types.WidgetDraw attribute)</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.ManagedLayoutProfile.size">(charmy.utils.layout_profiles.ManagedLayoutProfile property)</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.PlaceProfile.size">(charmy.utils.layout_profiles.PlaceProfile attribute)</a>
+</li>
+          <li><a href="api/widgets/container.html#charmy.widgets.container.Container.size">(charmy.widgets.container.Container property)</a>
+</li>
+          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.size">(charmy.widgets.widget.Widget property)</a>
+</li>
+          <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile.size">(charmy.widgets.widget.WidgetProfile attribute)</a>
+</li>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.size">(charmy.widgets.window.WindowEntity property)</a>
 </li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.size">size (charmy.widgets.windowbase.WindowBase property)</a>
-</li>
-        <li><a href="api/size.html#charmy.size.Size">Size (class in charmy.size)</a>
-</li>
-        <li><a href="api/const.html#charmy.const.Backends.SKIA">SKIA (charmy.const.Backends attribute)</a>
-</li>
-        <li><a href="api/const.html#charmy.const.Backends.skia">skia (charmy.const.Backends attribute)</a>
-</li>
-        <li><a href="api/frameworks/drawing.html#charmy.frameworks.drawing.SKIA">SKIA (class in charmy.frameworks.drawing)</a>
-</li>
-        <li><a href="api/widgets/window.html#charmy.widgets.window.Window.skia_draw_func">skia_draw_func() (charmy.widgets.window.Window method)</a>
-</li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.skia_surface">skia_surface() (charmy.widgets.windowbase.WindowBase method)</a>
-</li>
-        <li><a href="api/var.html#charmy.var.StringVar">StringVar (class in charmy.var)</a>
-</li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.swap_buffers">swap_buffers() (charmy.frameworks.ui.GLFW method)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.start_orient">start_orient (charmy.styles.shape.CircleArc attribute)</a>
 
         <ul>
-          <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework.swap_buffers">(charmy.frameworks.ui.UIFramework method)</a>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.start_orient">(charmy.styles.shape.EllipseArc attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.GLFW.swap_interval">swap_interval() (charmy.frameworks.ui.GLFW method)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.start_point">start_point (charmy.styles.shape.CircleArc property)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.start_point">(charmy.styles.shape.CubicBezier property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Line.start_point">(charmy.styles.shape.Line property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.start_point">(charmy.styles.shape.LinePath property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.start_point">(charmy.styles.shape.PolyLine property)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.start_point">(charmy.styles.shape.QuadraticBezier property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.state">state (charmy.backend.template.Backend.WindowBase attribute)</a>
+</li>
+        <li><a href="api/styles/style.html#charmy.styles.style.StateStyle">StateStyle (class in charmy.styles.style)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseScroll.steps">steps (charmy.utils.event_types.MouseScroll attribute)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.strikethrough">strikethrough (charmy.styles.text_style.TextStyle attribute)</a>
+</li>
+        <li><a href="api/styles/style.html#charmy.styles.style.StyleSheet">StyleSheet (class in charmy.styles.style)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.EventTriggered.subject">subject (charmy.utils.event_types.EventTriggered attribute)</a>
+
+        <ul>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseInteractEvent.subject">(charmy.utils.event_types.MouseInteractEvent attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent.subject">(charmy.utils.event_types.MouseRawEvent attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetEvent.subject">(charmy.utils.event_types.WidgetEvent attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetUpdate.subject">(charmy.utils.event_types.WidgetUpdate attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WindowEvent.subject">(charmy.utils.event_types.WindowEvent attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.LineBase.supports">supports (charmy.backend.genesis.Backend.LineBase attribute)</a>
+
+        <ul>
+          <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.ShapeBase.supports">(charmy.backend.genesis.Backend.ShapeBase attribute)</a>
+</li>
+          <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.TextBase.supports">(charmy.backend.genesis.Backend.TextBase attribute)</a>
+</li>
+          <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.supports">(charmy.backend.genesis.Backend.WindowBase attribute)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.LineBase.supports">(charmy.backend.template.Backend.LineBase attribute)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.ShapeBase.supports">(charmy.backend.template.Backend.ShapeBase attribute)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextBase.supports">(charmy.backend.template.Backend.TextBase attribute)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.TextureBase.supports">(charmy.backend.template.Backend.TextureBase attribute)</a>
+</li>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.supports">(charmy.backend.template.Backend.WindowBase attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.surface">surface (charmy.backend.genesis.Backend.WindowBase attribute)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.sys_default">sys_default (charmy.styles.text_style.TextStyle attribute)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.sys_fonts">sys_fonts (charmy.styles.text_style.TextStyle attribute)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1144,40 +1745,122 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/event.html#charmy.event.EventTask.target">target (charmy.event.EventTask attribute)</a>
 </li>
-        <li><a href="api/event.html#charmy.event.WorkingThread.tasks">tasks (charmy.event.WorkingThread attribute)</a>
+        <li><a href="api/event.html#charmy.event.EventTask.task_threads">task_threads (charmy.event.EventTask attribute)</a>
+</li>
+        <li><a href="api/event.html#charmy.event.EventHandling.tasks">tasks (charmy.event.EventHandling attribute)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle">TextStyle (class in charmy.styles.text_style)</a>
+</li>
+        <li><a href="api/graphics.html#charmy.graphics.DrawnLine.texture">texture (charmy.graphics.DrawnLine property)</a>
 
         <ul>
-          <li><a href="api/var.html#charmy.var.BooleanVar.tasks">(charmy.var.BooleanVar attribute)</a>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnShape.texture">(charmy.graphics.DrawnShape property)</a>
 </li>
-          <li><a href="api/var.html#charmy.var.FloatVar.tasks">(charmy.var.FloatVar attribute)</a>
-</li>
-          <li><a href="api/var.html#charmy.var.IntVar.tasks">(charmy.var.IntVar attribute)</a>
-</li>
-          <li><a href="api/var.html#charmy.var.StringVar.tasks">(charmy.var.StringVar attribute)</a>
-</li>
-          <li><a href="api/var.html#charmy.var.Var.tasks">(charmy.var.Var attribute)</a>
-</li>
-          <li><a href="api/widgets/button.html#charmy.widgets.button.Button.tasks">(charmy.widgets.button.Button attribute)</a>
-</li>
-          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.tasks">(charmy.widgets.widget.Widget attribute)</a>
-</li>
-          <li><a href="api/widgets/window.html#charmy.widgets.window.Window.tasks">(charmy.widgets.window.Window attribute)</a>
-</li>
-          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.tasks">(charmy.widgets.windowbase.WindowBase attribute)</a>
+          <li><a href="api/graphics.html#charmy.graphics.DrawnText.texture">(charmy.graphics.DrawnText property)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Texture">Texture (class in charmy.styles.texture)</a>
+</li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme">Theme (class in charmy.styles.theme)</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.title">title (charmy.widgets.windowbase.WindowBase property)</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT.THIN">THIN (charmy.styles.text_style.WEIGHT attribute)</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.top">top (charmy.rect.Rect property)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.title">title (charmy.backend.genesis.Backend.WindowBase attribute)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.title">(charmy.backend.template.Backend.WindowBase attribute)</a>
+</li>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.title">(charmy.widgets.window.WindowEntity property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.to_lines">to_lines() (charmy.styles.shape.PolyLine method)</a>
+</li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.Line.to_polyline">to_polyline() (charmy.styles.shape.Line method)</a>
+</li>
+        <li><a href="api/styles/texture.html#charmy.styles.texture.Transparent">Transparent (class in charmy.styles.texture)</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventHandling.trigger">trigger() (charmy.event.EventHandling method)</a>
 </li>
-        <li><a href="api/event.html#charmy.event.EventHandling.trigger_event">trigger_event() (charmy.event.EventHandling method)</a>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.CircleArc.type">type (charmy.styles.shape.CircleArc attribute)</a>
+
+        <ul>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.CubicBezier.type">(charmy.styles.shape.CubicBezier attribute)</a>
 </li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.type">(charmy.styles.shape.EllipseArc attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Line.type">(charmy.styles.shape.Line attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.LinePath.type">(charmy.styles.shape.LinePath attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.PolyLine.type">(charmy.styles.shape.PolyLine attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.QuadraticBezier.type">(charmy.styles.shape.QuadraticBezier attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.Rect.type">(charmy.styles.shape.Rect attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.RoundRect.type">(charmy.styles.shape.RoundRect attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeGroup.type">(charmy.styles.shape.ShapeGroup attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.ShapeType.type">(charmy.styles.shape.ShapeType attribute)</a>
+</li>
+          <li><a href="api/styles/shape.html#charmy.styles.shape.SingleShape.type">(charmy.styles.shape.SingleShape attribute)</a>
+</li>
+          <li><a href="api/styles/texture.html#charmy.styles.texture.Color.type">(charmy.styles.texture.Color attribute)</a>
+</li>
+          <li><a href="api/styles/texture.html#charmy.styles.texture.Texture.type">(charmy.styles.texture.Texture attribute)</a>
+</li>
+          <li><a href="api/styles/texture.html#charmy.styles.texture.Transparent.type">(charmy.styles.texture.Transparent attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.DelayTriggered.type">(charmy.utils.event_types.DelayTriggered attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.Event.type">(charmy.utils.event_types.Event attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.EventTriggered.type">(charmy.utils.event_types.EventTriggered attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusGain.type">(charmy.utils.event_types.FocusGain attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.FocusLoss.type">(charmy.utils.event_types.FocusLoss attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseClick.type">(charmy.utils.event_types.MouseClick attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseEnter.type">(charmy.utils.event_types.MouseEnter attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseInteractEvent.type">(charmy.utils.event_types.MouseInteractEvent attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseLeave.type">(charmy.utils.event_types.MouseLeave attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseMove.type">(charmy.utils.event_types.MouseMove attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MousePress.type">(charmy.utils.event_types.MousePress attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRawEvent.type">(charmy.utils.event_types.MouseRawEvent attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseRelease.type">(charmy.utils.event_types.MouseRelease attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.MouseScroll.type">(charmy.utils.event_types.MouseScroll attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetConfigure.type">(charmy.utils.event_types.WidgetConfigure attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDestroy.type">(charmy.utils.event_types.WidgetDestroy attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDraw.type">(charmy.utils.event_types.WidgetDraw attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetEvent.type">(charmy.utils.event_types.WidgetEvent attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetMove.type">(charmy.utils.event_types.WidgetMove attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetResize.type">(charmy.utils.event_types.WidgetResize attribute)</a>
+</li>
+          <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetUpdate.type">(charmy.utils.event_types.WidgetUpdate attribute)</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.LayoutProfile.type">(charmy.utils.layout_profiles.LayoutProfile attribute)</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.ManagedLayoutProfile.type">(charmy.utils.layout_profiles.ManagedLayoutProfile attribute)</a>
+</li>
+          <li><a href="api/utils/layout_profiles.html#charmy.utils.layout_profiles.PlaceProfile.type">(charmy.utils.layout_profiles.PlaceProfile attribute)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -1186,20 +1869,20 @@
   <h2>U</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.ui">ui (charmy.frameworks.Frameworks attribute)</a>
-</li>
-        <li><a href="api/frameworks/index.html#charmy.frameworks.Frameworks.ui_name">ui_name (charmy.frameworks.Frameworks attribute)</a>
-</li>
-        <li><a href="api/frameworks/ui.html#charmy.frameworks.ui.UIFramework">UIFramework (class in charmy.frameworks.ui)</a>
-</li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/event.html#charmy.event.EventHandling.unbind">unbind() (charmy.event.EventHandling method)</a>
 </li>
-        <li><a href="api/cmm.html#charmy.cmm.CharmyManager.update">update() (charmy.cmm.CharmyManager method)</a>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.underlined">underlined (charmy.styles.text_style.TextStyle attribute)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.update">update() (charmy.backend.genesis.Backend.WindowBase method)</a>
 
         <ul>
-          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.update">(charmy.widgets.windowbase.WindowBase method)</a>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.WindowBase.update">(charmy.backend.template.Backend.WindowBase method)</a>
+</li>
+          <li><a href="api/cmm.html#charmy.cmm.CharmyManager.update">(charmy.cmm.CharmyManager method)</a>
+</li>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.Window.update">(charmy.widgets.window.Window method)</a>
+</li>
+          <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity.update">(charmy.widgets.window.WindowEntity method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -1212,14 +1895,22 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/const.html#charmy.const.Orient.V">V (charmy.const.Orient attribute)</a>
 </li>
+        <li><a href="api/styles/shape.html#charmy.styles.shape.EllipseArc.v_radius">v_radius (charmy.styles.shape.EllipseArc attribute)</a>
+</li>
         <li><a href="api/styles/theme.html#charmy.styles.theme.Theme.validate_theme_existed">validate_theme_existed() (charmy.styles.theme.Theme class method)</a>
+</li>
+        <li><a href="api/utils/var.html#charmy.utils.var.Var.value">value (charmy.utils.var.Var property)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/var.html#charmy.var.Var.value">value (charmy.var.Var property)</a>
+        <li><a href="api/utils/var.html#charmy.utils.var.Var">Var (class in charmy.utils.var)</a>
 </li>
-        <li><a href="api/var.html#charmy.var.Var">Var (class in charmy.var)</a>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.version">version (charmy.backend.genesis.Backend attribute)</a>
+
+        <ul>
+          <li><a href="api/backend/template.html#charmy.backend.template.Backend.version">(charmy.backend.template.Backend attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/const.html#charmy.const.Orient.VERTICAL">VERTICAL (charmy.const.Orient attribute)</a>
 </li>
     </ul></td>
@@ -1230,49 +1921,47 @@
   <h2>W</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.Event.widget">widget (charmy.event.Event attribute)</a>
+        <li><a href="api/const.html#charmy.const.DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME">WAIT_AFTER_EACH_FRAME (charmy.const.DEBUG_FLAGS attribute)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.DEBUG_FLAGS.WARN_UNCLOSED_SHAPES">WARN_UNCLOSED_SHAPES (charmy.backend.genesis.DEBUG_FLAGS attribute)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.TextStyle.weight">weight (charmy.styles.text_style.TextStyle attribute)</a>
+</li>
+        <li><a href="api/styles/text_style.html#charmy.styles.text_style.WEIGHT">WEIGHT (class in charmy.styles.text_style)</a>
 </li>
         <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget">Widget (class in charmy.widgets.widget)</a>
 </li>
-        <li><a href="api/rect.html#charmy.rect.Rect.width">width (charmy.rect.Rect property)</a>
-
-        <ul>
-          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.width">(charmy.widgets.widget.Widget property)</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetConfigure">WidgetConfigure (class in charmy.utils.event_types)</a>
 </li>
-        </ul></li>
-        <li><a href="api/event.html#charmy.event.Event.window">window (charmy.event.Event attribute)</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDestroy">WidgetDestroy (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetDraw">WidgetDraw (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetEvent">WidgetEvent (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetMove">WidgetMove (class in charmy.utils.event_types)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.WidgetProfile">WidgetProfile (class in charmy.widgets.widget)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetResize">WidgetResize (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WidgetUpdate">WidgetUpdate (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.width">width (charmy.widgets.widget.Widget property)</a>
+</li>
+        <li><a href="api/backend/genesis.html#charmy.backend.genesis.Backend.WindowBase.window">window (charmy.backend.genesis.Backend.WindowBase attribute)</a>
 </li>
         <li><a href="api/widgets/window.html#charmy.widgets.window.Window">Window (class in charmy.widgets.window)</a>
 </li>
-        <li><a href="api/event.html#charmy.event.Event.window_base">window_base (charmy.event.Event attribute)</a>
+        <li><a href="api/widgets/window.html#charmy.widgets.window.WindowEntity">WindowEntity (class in charmy.widgets.window)</a>
 </li>
-        <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase">WindowBase (class in charmy.widgets.windowbase)</a>
+        <li><a href="api/utils/event_types.html#charmy.utils.event_types.WindowEvent">WindowEvent (class in charmy.utils.event_types)</a>
+</li>
+        <li><a href="api/utils/type_checking.html#charmy.utils.type_checking.WindowLike">WindowLike (class in charmy.utils.type_checking)</a>
 </li>
         <li><a href="api/event.html#charmy.event.EventHandling.WORKING_THREAD">WORKING_THREAD (charmy.event.EventHandling attribute)</a>
-
-        <ul>
-          <li><a href="api/var.html#charmy.var.BooleanVar.WORKING_THREAD">(charmy.var.BooleanVar attribute)</a>
-</li>
-          <li><a href="api/var.html#charmy.var.FloatVar.WORKING_THREAD">(charmy.var.FloatVar attribute)</a>
-</li>
-          <li><a href="api/var.html#charmy.var.IntVar.WORKING_THREAD">(charmy.var.IntVar attribute)</a>
-</li>
-          <li><a href="api/var.html#charmy.var.StringVar.WORKING_THREAD">(charmy.var.StringVar attribute)</a>
-</li>
-          <li><a href="api/var.html#charmy.var.Var.WORKING_THREAD">(charmy.var.Var attribute)</a>
-</li>
-          <li><a href="api/widgets/button.html#charmy.widgets.button.Button.WORKING_THREAD">(charmy.widgets.button.Button attribute)</a>
-</li>
-          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.WORKING_THREAD">(charmy.widgets.widget.Widget attribute)</a>
-</li>
-          <li><a href="api/widgets/window.html#charmy.widgets.window.Window.WORKING_THREAD">(charmy.widgets.window.Window attribute)</a>
-</li>
-          <li><a href="api/widgets/windowbase.html#charmy.widgets.windowbase.WindowBase.WORKING_THREAD">(charmy.widgets.windowbase.WindowBase attribute)</a>
-</li>
-        </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/event.html#charmy.event.WorkingThread">WorkingThread (class in charmy.event)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1282,12 +1971,8 @@
   <h2>X</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/rect.html#charmy.rect.Rect.x">x (charmy.rect.Rect property)</a>
-
-        <ul>
-          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.x">(charmy.widgets.widget.Widget property)</a>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.x">x (charmy.widgets.widget.Widget property)</a>
 </li>
-        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -1296,12 +1981,8 @@
   <h2>Y</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/rect.html#charmy.rect.Rect.y">y (charmy.rect.Rect property)</a>
-
-        <ul>
-          <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.y">(charmy.widgets.widget.Widget property)</a>
+        <li><a href="api/widgets/widget.html#charmy.widgets.widget.Widget.y">y (charmy.widgets.widget.Widget property)</a>
 </li>
-        </ul></li>
     </ul></td>
   </tr></table>
 </section>

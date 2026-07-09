@@ -1,5 +1,5 @@
-charmy.cmm
-=============
+cmm
+===
 
 .. autoclasstree:: charmy.cmm
    :full:

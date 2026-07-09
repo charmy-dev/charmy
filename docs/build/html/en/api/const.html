@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="charmy.event" href="event.html"><link rel="prev" title="charmy.cmm" href="cmm.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="event" href="event.html"><link rel="prev" title="cmm" href="cmm.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>charmy.const - Charmy GUI 0.1.0 documentation</title>
+        <title>const - Charmy GUI 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -21,27 +21,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -206,57 +197,70 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Main Content:</span></p>
+  <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul class="current">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../getstarted/index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/install.html">Install Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/first_app.html">First application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/window_config.html">Window`s config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/custom_app_settings.html">Custom main manager settings</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getstarted/index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/install.html">安装 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/first_app.html">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">How does it work</a><input aria-label="Toggle navigation of How does it work" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="cmm.html">charmy.cmm</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">charmy.const</a></li>
-<li class="toctree-l2"><a class="reference internal" href="event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="object.html">charmy.object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pos.html">charmy.pos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rect.html">charmy.rect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="size.html">charmy.size</a></li>
-<li class="toctree-l2"><a class="reference internal" href="this.html">charmy.this</a></li>
-<li class="toctree-l2"><a class="reference internal" href="var.html">charmy.var</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="widgets/button.html">button</a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/container.html">container</a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/widget.html">widget</a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/window.html">window</a></li>
-<li class="toctree-l3"><a class="reference internal" href="widgets/windowbase.html">windowbase</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">charmy</a><input aria-label="Toggle navigation of charmy" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="backend/genesis.html">genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backend/loader.html">loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backend/template.html">template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="backend/utils.html">utils</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="cmm.html">cmm</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">const</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event.html">event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graphics.html">graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object.html">object</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="styles/shape.html">shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="styles/style.html">style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="styles/text_style.html">text_style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="styles/texture.html">texture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="styles/theme.html">theme</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="frameworks/ui.html">ui</a></li>
-<li class="toctree-l3"><a class="reference internal" href="frameworks/drawing.html">drawing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="frameworks/backend.html">backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="this.html">this</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="utils/index.html">charmy.utils</a><input aria-label="Toggle navigation of charmy.utils" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/caching.html">caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/event_types.html">event_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/geo_math.html">geo_math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/layout_profiles.html">layout_profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/svg.html">svg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/type_checking.html">type_checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/var.html">var</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="widgets/button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="widgets/container.html">container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="widgets/frame.html">frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="widgets/widget.html">widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="widgets/window.html">window</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Other:</span></p>
+<p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../contribution.html">Contribution</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -299,15 +303,79 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="charmy-const">
-<h1>charmy.const<a class="headerlink" href="#charmy-const" title="Link to this heading">¶</a></h1>
+          <section id="const">
+<h1>const<a class="headerlink" href="#const" title="Link to this heading">¶</a></h1>
 <pre  class="mermaid">
         classDiagram
-  Enum &lt;|-- Backends
   Enum &lt;|-- DrawingMode
   Enum &lt;|-- ID
   Enum &lt;|-- Orient
     </pre><p id="module-charmy.const">Charmy constants.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="charmy.const.DEBUG_FLAGS">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.const.</span></span><span class="sig-name descname"><span class="pre">DEBUG_FLAGS</span></span><a class="headerlink" href="#charmy.const.DEBUG_FLAGS" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Debug options, for testing only, no guarantee under production.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY">
+<span class="sig-name descname"><span class="pre">DRAW_OBJECTS_BOUNDARY</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#charmy.const.DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME">
+<span class="sig-name descname"><span class="pre">WAIT_AFTER_EACH_FRAME</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#charmy.const.DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.DEBUG_FLAGS.MARK_REDRAWS">
+<span class="sig-name descname"><span class="pre">MARK_REDRAWS</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#charmy.const.DEBUG_FLAGS.MARK_REDRAWS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="charmy.const.Configs">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.const.</span></span><span class="sig-name descname"><span class="pre">Configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.const.Configs" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.Configs.default_backend">
+<span class="sig-name descname"><span class="pre">default_backend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'auto'</span></span><a class="headerlink" href="#charmy.const.Configs.default_backend" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="charmy.const.Configs.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#charmy.const.Configs.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="charmy.const.MOUSE_KEYS">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.const.</span></span><span class="sig-name descname"><span class="pre">MOUSE_KEYS</span></span><a class="headerlink" href="#charmy.const.MOUSE_KEYS" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Consts of mouse keys.</p>
+<ul class="simple">
+<li><p>LEFT: 0</p></li>
+<li><p>MIDDLE: 1</p></li>
+<li><p>RIGHT: 2</p></li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.MOUSE_KEYS.LEFT">
+<span class="sig-name descname"><span class="pre">LEFT</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#charmy.const.MOUSE_KEYS.LEFT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.MOUSE_KEYS.MIDDLE">
+<span class="sig-name descname"><span class="pre">MIDDLE</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#charmy.const.MOUSE_KEYS.MIDDLE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="charmy.const.MOUSE_KEYS.RIGHT">
+<span class="sig-name descname"><span class="pre">RIGHT</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#charmy.const.MOUSE_KEYS.RIGHT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="charmy.const.ID">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.const.</span></span><span class="sig-name descname"><span class="pre">ID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.const.ID" title="Link to this definition">¶</a></dt>
@@ -323,54 +391,6 @@ NONE: No ID.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="charmy.const.ID.NONE">
 <span class="sig-name descname"><span class="pre">NONE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#charmy.const.ID.NONE" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="charmy.const.Backends">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">charmy.const.</span></span><span class="sig-name descname"><span class="pre">Backends</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#charmy.const.Backends" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<p>UIFrame is an enum to store UI frame.</p>
-<p>GLFW, SDL, OPENGL, SKIA are consts representing those backends</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.Backends.GLFW">
-<span class="sig-name descname"><span class="pre">GLFW</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GLFW'</span></span><a class="headerlink" href="#charmy.const.Backends.GLFW" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.Backends.glfw">
-<span class="sig-name descname"><span class="pre">glfw</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GLFW'</span></span><a class="headerlink" href="#charmy.const.Backends.glfw" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.Backends.SDL">
-<span class="sig-name descname"><span class="pre">SDL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SDL'</span></span><a class="headerlink" href="#charmy.const.Backends.SDL" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.Backends.sdl">
-<span class="sig-name descname"><span class="pre">sdl</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SDL'</span></span><a class="headerlink" href="#charmy.const.Backends.sdl" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.Backends.OPENGL">
-<span class="sig-name descname"><span class="pre">OPENGL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENGL'</span></span><a class="headerlink" href="#charmy.const.Backends.OPENGL" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.Backends.opengl">
-<span class="sig-name descname"><span class="pre">opengl</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENGL'</span></span><a class="headerlink" href="#charmy.const.Backends.opengl" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.Backends.SKIA">
-<span class="sig-name descname"><span class="pre">SKIA</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SKIA'</span></span><a class="headerlink" href="#charmy.const.Backends.SKIA" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.const.Backends.skia">
-<span class="sig-name descname"><span class="pre">skia</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SKIA'</span></span><a class="headerlink" href="#charmy.const.Backends.skia" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -442,7 +462,7 @@ RETAINED(retained): RETAINED is an enum to store drawing mode.</p>
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">charmy.event</div>
+                <div class="title">event</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -453,7 +473,7 @@ RETAINED(retained): RETAINED is an enum to store drawing mode.</p>
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">charmy.cmm</div>
+                <div class="title">cmm</div>
                 
               </div>
             </a>
@@ -487,21 +507,27 @@ RETAINED(retained): RETAINED is an enum to store drawing mode.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">charmy.const</a><ul>
+<li><a class="reference internal" href="#">const</a><ul>
+<li><a class="reference internal" href="#charmy.const.DEBUG_FLAGS"><code class="docutils literal notranslate"><span class="pre">DEBUG_FLAGS</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.const.DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY"><code class="docutils literal notranslate"><span class="pre">DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME"><code class="docutils literal notranslate"><span class="pre">DEBUG_FLAGS.WAIT_AFTER_EACH_FRAME</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.DEBUG_FLAGS.MARK_REDRAWS"><code class="docutils literal notranslate"><span class="pre">DEBUG_FLAGS.MARK_REDRAWS</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#charmy.const.Configs"><code class="docutils literal notranslate"><span class="pre">Configs</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.const.Configs.default_backend"><code class="docutils literal notranslate"><span class="pre">Configs.default_backend</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.Configs.__init__"><code class="docutils literal notranslate"><span class="pre">Configs.__init__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#charmy.const.MOUSE_KEYS"><code class="docutils literal notranslate"><span class="pre">MOUSE_KEYS</span></code></a><ul>
+<li><a class="reference internal" href="#charmy.const.MOUSE_KEYS.LEFT"><code class="docutils literal notranslate"><span class="pre">MOUSE_KEYS.LEFT</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.MOUSE_KEYS.MIDDLE"><code class="docutils literal notranslate"><span class="pre">MOUSE_KEYS.MIDDLE</span></code></a></li>
+<li><a class="reference internal" href="#charmy.const.MOUSE_KEYS.RIGHT"><code class="docutils literal notranslate"><span class="pre">MOUSE_KEYS.RIGHT</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#charmy.const.ID"><code class="docutils literal notranslate"><span class="pre">ID</span></code></a><ul>
 <li><a class="reference internal" href="#charmy.const.ID.AUTO"><code class="docutils literal notranslate"><span class="pre">ID.AUTO</span></code></a></li>
 <li><a class="reference internal" href="#charmy.const.ID.NONE"><code class="docutils literal notranslate"><span class="pre">ID.NONE</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#charmy.const.Backends"><code class="docutils literal notranslate"><span class="pre">Backends</span></code></a><ul>
-<li><a class="reference internal" href="#charmy.const.Backends.GLFW"><code class="docutils literal notranslate"><span class="pre">Backends.GLFW</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.Backends.glfw"><code class="docutils literal notranslate"><span class="pre">Backends.glfw</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.Backends.SDL"><code class="docutils literal notranslate"><span class="pre">Backends.SDL</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.Backends.sdl"><code class="docutils literal notranslate"><span class="pre">Backends.sdl</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.Backends.OPENGL"><code class="docutils literal notranslate"><span class="pre">Backends.OPENGL</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.Backends.opengl"><code class="docutils literal notranslate"><span class="pre">Backends.opengl</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.Backends.SKIA"><code class="docutils literal notranslate"><span class="pre">Backends.SKIA</span></code></a></li>
-<li><a class="reference internal" href="#charmy.const.Backends.skia"><code class="docutils literal notranslate"><span class="pre">Backends.skia</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#charmy.const.DrawingMode"><code class="docutils literal notranslate"><span class="pre">DrawingMode</span></code></a><ul>

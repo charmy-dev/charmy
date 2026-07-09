@@ -4,6 +4,8 @@ TEST_WIDGET_MOVE: bool = True
 
 
 import charmy as cm
+
+
 if PERFORMANCE_STATS:
     import cProfile
 if MEM_STATS:

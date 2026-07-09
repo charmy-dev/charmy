@@ -1,0 +1,125 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/api/styles/text_style.rst:2
+msgid "text_style"
+msgstr ""
+
+#: charmy.styles.text_style:1 of
+msgid "Charmy text style module."
+msgstr ""
+
+#: charmy.styles.text_style:3 of
+msgid ""
+"This module is relatively simple, which only contains ability to express "
+"fonts."
+msgstr ""
+
+#: charmy.styles.text_style.WEIGHT:1 of
+msgid "Preset constant values of fontweight."
+msgstr ""
+
+#: charmy.styles.text_style.WEIGHT:4 of
+msgid "Introduction to TrueType Fontweight"
+msgstr ""
+
+#: charmy.styles.text_style.WEIGHT:5 of
+msgid ""
+"TrueType fontweight determines the thickness of text. It has some common"
+"  presets which are listed below. Learn more in [MSDN docs about "
+"this](https://learn.microsoft.com/en-"
+"us/dotnet/api/system.windows.fontweights?view=netframework-4.8#remarks)."
+msgstr ""
+
+#: charmy.styles.text_style.WEIGHT:9 of
+msgid "List of Presets"
+msgstr ""
+
+#: charmy.styles.text_style.WEIGHT:13 of
+msgid ""
+"Thin / Hairline             `THIN`         100     Extra Light / Ultra "
+"Light   `EXTRALIGHT`   200     Light                       `LIGHT`"
+"        300     Regular                     `REGULAR`      400     Medium"
+"                      `MEDIUM`       500     Semi Bold                   "
+"`SEMIBOLD`     600     Bold                        `BOLD`         700"
+"     Extra Bold / Ultra Bold     `EXTRABOLD`    800     Black / Heavy"
+"               `BLACK`        900     Extra Black / Ultra Black   "
+"`EXTRABLACK`   950"
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle:1 of
+msgid "Represents text styles in Charmy."
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle.__init__:1 of
+msgid "To express a font style in Charmy."
+msgstr ""
+
+#: ../../source/api/styles/text_style.rst
+msgid "参数"
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle.__init__:3 of
+msgid "The name of the font to use, default is system font (reported by backend)"
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle.__init__:4 of
+msgid "The size of the text, default is system font size (reported by backend)"
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle.__init__:5 of
+msgid ""
+"Weight of the text, in integer, default is `charmy.font.WEIGHT.REGULAR` "
+"which equals to  400"
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle.__init__:8 of
+msgid "Whether the text should be italic, default is `False`"
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle.__init__:9 of
+msgid ""
+"Either a bool indicating if underlined, or a `DrawnLine` object to "
+"specify line used,  default is `False`"
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle.__init__:12 of
+msgid ""
+"Either a bool indicating if striked through, or a `DrawnLine` object to "
+"specify line  used, default is `False`"
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle.__init__:17 of
+msgid "For parameter `weight`"
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle.__init__:18 of
+msgid ""
+"See [TrueType fontweight](https://learn.microsoft.com/en-"
+"us/dotnet/api/system.windows.fontweights?view=netframework-4.8#remarks) "
+"to learn more about the values. Presets are provided in  "
+"`charmy.font.WEIGHT` class, which my be used in the way shown below"
+msgstr ""
+
+#: charmy.styles.text_style.TextStyle.get_text_boundary:1 of
+msgid "Get boundary of a specific text in this style."
+msgstr ""
+

@@ -6,13 +6,13 @@ import re as _re
 __all__ = ["shapes_from_svg_path"]
 
 
-class CharmySVGIntepreterError(Exception): ...
+class CharmySVGInterpreterError(Exception): ...
 
 @staticmethod
 def shapes_from_svg_path(svg_path: str, scale: float = 1) -> _shape.AnyShape | _shape.ShapeGroup:
     """This converts SVG path into sequence of Charmy lines.
 
-    I made a fucking complete SVG path intepreter man!!!   —— rgzz666 @ 26/05/16
+    I made a fucking complete SVG path interpreter man!!!   —— rgzz666 @ 26/05/16
 
     We assume that the SVG path that you give is valid, otherwise we will throw an error.
 
@@ -122,7 +122,7 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> _shape.AnyShape | _
                 if command.upper() == "S":
                     # Chained cubic Beziers (chained smooth curves)
                     if not isinstance(lines[-1], _shape.CubicBezier):
-                        raise CharmySVGIntepreterError(
+                        raise CharmySVGInterpreterError(
                             "An S command must follow a C command in SVG path."
                             )
                     lines.append(calc_s_curve(
@@ -154,7 +154,7 @@ def shapes_from_svg_path(svg_path: str, scale: float = 1) -> _shape.AnyShape | _
                 command_index += 1
             case _:
                 # TODO: Support quadratic Beziers and oval arcs
-                raise CharmySVGIntepreterError(f"Invalid or unsupported command: {command}.")
+                raise CharmySVGInterpreterError(f"Invalid or unsupported command: {command}.")
     if len(shapes) == 1:
         return shapes[0]
     else:

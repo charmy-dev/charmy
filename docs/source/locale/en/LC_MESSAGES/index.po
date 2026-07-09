@@ -1,0 +1,138 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:14+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/index.rst:62
+msgid "主要内容："
+msgstr ""
+
+#: ../../source/index.rst:70
+msgid "其他："
+msgstr ""
+
+#: ../../source/index.rst:2
+msgid "Charmy GUI 文档"
+msgstr ""
+
+#: ../../source/index.rst:-1
+msgid "作者 / XiangQinxi"
+msgstr ""
+
+#: ../../source/index.rst:6
+msgid "来自 ``中国`` 的一名高中生。"
+msgstr ""
+
+#: ../../source/index.rst:8
+msgid "xqx_logo"
+msgstr ""
+
+#: ../../source/index.rst:11
+msgid "\"我写的代码就像一坨💩。😭😭\""
+msgstr ""
+
+#: ../../source/index.rst:13
+msgid "欢迎来到 **Charmy GUI** 的文档！"
+msgstr ""
+
+#: ../../source/index.rst:15
+msgid "Charmy 是一个跨平台的 Python GUI 库，采用 **三层架构** 设计，后端可切换， 在保持轻量的同时实现跨平台桌面应用开发。"
+msgstr ""
+
+#: ../../source/index.rst:19
+msgid "项目特点"
+msgstr ""
+
+#: ../../source/index.rst:21
+msgid "**三层架构**：后端层 → 图形层 → 控件层，各层职责清晰"
+msgstr ""
+
+#: ../../source/index.rst:22
+msgid "**后端可切换**：同一套 API 可对接不同底层图形库（目前仅 Genesis 后端）"
+msgstr ""
+
+#: ../../source/index.rst:23
+msgid "**事件驱动**：基于发布-订阅模式的事件系统，支持条件过滤和事件链"
+msgstr ""
+
+#: ../../source/index.rst:24
+msgid "**自动 ID 管理**：所有对象自动分配唯一 ID，支持通过 ID 查找"
+msgstr ""
+
+#: ../../source/index.rst:25
+msgid "**弱引用追踪**：使用 ``weakref`` 自动管理对象生命周期，无内存泄漏"
+msgstr ""
+
+#: ../../source/index.rst:26
+msgid "**Fallback 机制**：线条/图形类型自动降级，保证跨后端兼容"
+msgstr ""
+
+#: ../../source/index.rst:27
+msgid "**SVG 路径支持**：内置完整的 SVG path 解析器，可直接绘制 SVG 图形"
+msgstr ""
+
+#: ../../source/index.rst:30
+msgid "当前状态"
+msgstr ""
+
+#: ../../source/index.rst:33
+msgid "Charmy 处于 **早期开发阶段** （v0.0.1），API 尚未稳定。"
+msgstr ""
+
+#: ../../source/index.rst:35
+msgid "✅ 后端层：完成（Genesis: SDL2 + Cairo）"
+msgstr ""
+
+#: ../../source/index.rst:36
+msgid "✅ 图形层：完成（线条、形状、文字绘制）"
+msgstr ""
+
+#: ../../source/index.rst:37
+msgid "🚧 控件层：进行中（仅 Button 可用，Frame/Text 为空壳）"
+msgstr ""
+
+#: ../../source/index.rst:38
+msgid "🚧 事件系统：基本完成（鼠标事件已桥接）"
+msgstr ""
+
+#: ../../source/index.rst:39
+msgid "❌ 布局管理：仅 ``place`` 布局，尚无 pack/grid"
+msgstr ""
+
+#: ../../source/index.rst:40
+msgid "❌ 主题系统：基础框架存在，尚未接入控件"
+msgstr ""
+
+#: ../../source/index.rst:43
+msgid "快速开始"
+msgstr ""
+
+#: ../../source/index.rst:56
+msgid "项目渊源"
+msgstr ""
+
+#: ../../source/index.rst:59
+msgid ""
+"项目原名为 **Suzaku**，因底层架构缺陷导致性能问题，重构为现在的 Charmy。 部分设计理念继承自 "
+"Suzaku，代码中保留了一些\"彩蛋\"作为纪念（如 ``skhynix.py``）。"
+msgstr ""
+
+#~ msgid "作者 / 项沁曦 (Xiang Qinxi)"
+#~ msgstr ""
+

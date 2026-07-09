@@ -1,0 +1,197 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/api/graphics.rst:2
+msgid "graphics"
+msgstr ""
+
+#: charmy.graphics:1 of
+msgid ""
+"A set of classes represent drawn objects on window. Part of the graphics "
+"layer of Charmy."
+msgstr ""
+
+#: charmy.graphics.DrawnObject:1 of
+msgid "Base class of drawn objects in Charmy."
+msgstr ""
+
+#: charmy.graphics.DrawnObject.__init__:1 of
+msgid "To represent a drawn object, inherit this class."
+msgstr ""
+
+#: charmy.graphics.DrawnLine:1 of
+msgid "A class used to represent lines drawn to GUI or canvas."
+msgstr ""
+
+#: charmy.graphics.DrawnLine.__init__:1 of
+msgid "Used to express lines drawn on GUI or canvas."
+msgstr ""
+
+#: ../../source/api/graphics.rst charmy.graphics.DrawnText of
+msgid "参数"
+msgstr ""
+
+#: charmy.graphics.DrawnLine.__init__:3 of
+msgid "The line (to be drawn)"
+msgstr ""
+
+#: charmy.graphics.DrawnLine.__init__:4 of
+msgid "Texture of the drawn line"
+msgstr ""
+
+#: charmy.graphics.DrawnLine.__init__:5 of
+msgid "Line width"
+msgstr ""
+
+#: charmy.graphics.DrawnLine.__init__:6 of
+msgid "Position offset of the drawn line"
+msgstr ""
+
+#: charmy.graphics.DrawnLine.__init__:7 of
+msgid "Point of anchor on the original line"
+msgstr ""
+
+#: charmy.graphics.DrawnLine.texture:1 of
+msgid "Texture of the drawn line."
+msgstr ""
+
+#: charmy.graphics.DrawnLine.boundary:1 of
+msgid "Rect boundary of the drawn line"
+msgstr ""
+
+#: charmy.graphics.DrawnLine.draw:1 of
+msgid "Draw the line."
+msgstr ""
+
+#: charmy.graphics.DrawnLine.draw:3 of
+msgid "The window to draw line to"
+msgstr ""
+
+#: charmy.graphics.DrawnLine.draw:4 charmy.graphics.DrawnShape.draw:4 of
+msgid "Internal use only, the fallback path"
+msgstr ""
+
+#: charmy.graphics.DrawnShape:1 of
+msgid "A Class used to represent shapes drawn to GUI or canvas."
+msgstr ""
+
+#: charmy.graphics.DrawnShape.__init__:1 of
+msgid "Used to express shapes drawn on GUI or canvas."
+msgstr ""
+
+#: charmy.graphics.DrawnShape.__init__:3 of
+msgid "The shape (to be drawn)"
+msgstr ""
+
+#: charmy.graphics.DrawnShape.__init__:4 of
+msgid "styles.texture.Texture inside the drawn shape"
+msgstr ""
+
+#: charmy.graphics.DrawnShape.__init__:5 of
+msgid "Border width in px, positive for outer and negative for inner"
+msgstr ""
+
+#: charmy.graphics.DrawnShape.__init__:6 of
+msgid "styles.texture.Texture of the drawn border"
+msgstr ""
+
+#: charmy.graphics.DrawnShape.__init__:7 of
+msgid "Position offset of the drawn shape"
+msgstr ""
+
+#: charmy.graphics.DrawnShape.__init__:8 of
+msgid "Point of anchor on the original shape"
+msgstr ""
+
+#: charmy.graphics.DrawnShape.texture:1 of
+msgid "Texture of the drawn shape."
+msgstr ""
+
+#: charmy.graphics.DrawnShape.border_texture:1 of
+msgid "Texture used on the border of the drawn shape."
+msgstr ""
+
+#: charmy.graphics.DrawnShape.boundary:1 of
+msgid "Rect boundary of the drawn shape."
+msgstr ""
+
+#: charmy.graphics.DrawnShape.draw:1 of
+msgid "Draw the shape using backend."
+msgstr ""
+
+#: charmy.graphics.DrawnShape.draw:3 of
+msgid "The window to draw shape to"
+msgstr ""
+
+#: charmy.graphics.DrawnText:1 of
+msgid "A class used to represent texts drawn to GUI or canvas."
+msgstr ""
+
+#: charmy.graphics.DrawnText:4 of
+msgid "Notes For Getting Boundary"
+msgstr ""
+
+#: charmy.graphics.DrawnText:5 of
+msgid ""
+"Text relies on backend to render in most cases, so its boundary should be"
+" gotten from backend."
+msgstr ""
+
+#: charmy.graphics.DrawnText.__init__:1 of
+msgid "Used to express text drawn on GUI or canvas."
+msgstr ""
+
+#: charmy.graphics.DrawnText.__init__:3 of
+msgid "The text content, in Python string"
+msgstr ""
+
+#: charmy.graphics.DrawnText.__init__:4 of
+msgid "The text style to use"
+msgstr ""
+
+#: charmy.graphics.DrawnText.__init__:5 of
+msgid "The texture to use on"
+msgstr ""
+
+#: charmy.graphics.DrawnText.__init__:6 of
+msgid "Position of the drawn text"
+msgstr ""
+
+#: charmy.graphics.DrawnText.__init__:7 of
+msgid "Point of anchor on the text"
+msgstr ""
+
+#: charmy.graphics.DrawnText.texture:1 of
+msgid "Texture of the drawn text."
+msgstr ""
+
+#: charmy.graphics.DrawnText.boundary:1 of
+msgid "Rect boundary of the drawn text."
+msgstr ""
+
+#: charmy.graphics.DrawnText.draw:1 of
+msgid "Draw the text."
+msgstr ""
+
+#: charmy.graphics.DrawnText.draw:3 of
+msgid "The window to draw text to"
+msgstr ""
+

@@ -7,7 +7,7 @@ import time as _time
 from .backend import loader as _backend_loader
 # from .const import MANAGER_ID
 # from .event import WorkingThread
-# from .frameworks import Frameworks
+# from .backend import Frameworks
 from .cm_object import CharmyObject as _CharmyObject, CharmyRegisteredObject as _CharmyRegisteredObject
 from .event import EventHandling as _EventHandling, event_types as _event_types
 from .const import DEBUG_FLAGS as _DEBUG_FLAGS
@@ -94,5 +94,5 @@ def quit():  # NOQA
     """Quit Charmy."""
     for manager_ref in CharmyManager.instances:
         manager = manager_ref
-        if manager != None:
+        if manager is not None:
             manager.destroy()

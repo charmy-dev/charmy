@@ -17,7 +17,7 @@ if _typing.TYPE_CHECKING:
 
 button_default_style: dict[str, _typing.Any] = {
     # Default button style (bootstrap)
-    # These styles JSON might be moved to somewhere else in future...
+    # These styles JSON might be moved to somewhere else in the future...
     ":default": { # Default state
         "size": (72, 28), 
         "shape": {

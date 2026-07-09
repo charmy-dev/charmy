@@ -1,0 +1,149 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/how_does_it_work/message_loop.rst:2
+msgid "消息循环（事件循环）"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:4
+msgid "Charmy 使用 **事件驱动** 模型：程序启动后进入一个死循环，不断处理窗口事件和更新界面。"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:7
+msgid "主循环结构"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:43
+msgid "CharmyManager 生命周期"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:45
+msgid "``CharmyManager`` 是窗口管理器，一个后端对应一个 Manager："
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:60
+msgid "Manager 使用 ``CharmyRegisteredObject.instances`` 追踪所有实例"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:61
+msgid "所有 Manager 通过 ``CharmyManager.instances`` 类变量可全局访问"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:62
+msgid "当 Manager 下所有窗口都关闭后，Manager 自动销毁（``_alive = False``）"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:63
+msgid "``mainloop()`` 在所有 Manager 都销毁后退出"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:66
+msgid "增量重绘机制"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:68
+msgid "为了提升性能，Charmy 不会每帧重绘整个窗口，而是只重绘发生变化的区域："
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:75
+msgid "当控件的某个属性改变时，该控件的边界矩形被加入 ``_redraw_regions``。 在下一帧，只重绘这些区域中的图形对象。"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:91
+msgid "可以通过 ``DEBUG_FLAGS.MARK_REDRAWS = True`` 来可视化重绘区域： 每次被标记重绘的区域会显示为紫色半透明矩形。"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:95
+msgid "事件系统详解"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:97
+msgid "Charmy 的事件系统采用 **发布-订阅模式** ，核心组件："
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:99
+msgid "**事件类型**：用 ``dataclass`` 类表示，具有类型安全的事件匹配"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:100
+msgid "**EventHandling 混入类**：提供 ``bind()`` / ``trigger()`` / ``on()`` 方法"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:101
+msgid "**EventTask**：代表一个绑定的任务，包含回调函数和条件"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:104
+msgid "事件类型层次结构"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:131
+msgid "事件链"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:133
+msgid "某些事件会自动级联触发其他事件："
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:143
+msgid "鼠标悬停跟踪："
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:161
+msgid "条件绑定"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:163
+msgid "``bind()`` 支持按条件过滤事件："
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:174
+msgid "多线程"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:177
+msgid "多线程支持目前处于 **实验阶段** ，建议在主线程中完成所有 UI 操作。"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:179
+msgid "Charmy 支持将事件处理任务分发到工作线程，避免耗时操作阻塞 UI 刷新："
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:192
+msgid ""
+"启用多线程时，回调函数在 **独立线程** 中运行，不能直接操作 Charmy 的 UI 对象。 如果需要更新 UI，请使用 "
+"``EventTask`` 的消息传递机制（待实现）。"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:196
+msgid "实例追踪系统"
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:198
+msgid "Charmy 使用弱引用（``weakref``）追踪所有 ``CharmyRegisteredObject`` 的实例："
+msgstr ""
+
+#: ../../source/how_does_it_work/message_loop.rst:214
+msgid ""
+"更多事件 API 细节请参考 :doc:`event 模块 </api/event>` 和 :doc:`event_types 模块 "
+"</api/utils/event_types>` 的自动生成文档。"
+msgstr ""
+

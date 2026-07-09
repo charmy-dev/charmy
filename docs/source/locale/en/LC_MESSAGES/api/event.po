@@ -1,0 +1,246 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/api/event.rst:2
+msgid "event"
+msgstr ""
+
+#: charmy.event.EventHandling.__init__:1 of
+msgid "A class containing event handling abilities."
+msgstr ""
+
+#: charmy.event.EventHandling.__init__:4 charmy.event.EventHandling.bind:4
+#: charmy.event.EventHandling.clear_bind:4 charmy.event.EventHandling.trigger:7
+#: charmy.event.EventHandling.unbind:4 charmy.event.EventTask:6 of
+msgid "Example"
+msgstr ""
+
+#: charmy.event.EventHandling.__init__:5 charmy.event.EventTask:7 of
+msgid "This is mostly for internal use of Charmy."
+msgstr ""
+
+#: charmy.event.EventHandling.__init__:14 of
+msgid ""
+"This shows subclassing EventHandling to let Widget gain the ability of "
+"handling events."
+msgstr ""
+
+#: charmy.event.EventHandling.parse_event_type_str:1 of
+msgid "This function parses event type string."
+msgstr ""
+
+#: charmy.event.EventHandling.parse_event_type_str:4 of
+msgid "Type String Format"
+msgstr ""
+
+#: charmy.event.EventHandling.parse_event_type_str:5 of
+#, python-brace-format
+msgid ""
+"Either in `{Event type}` or `{Event type}[{Param 1}, {Param 2}]`. "
+"Example: `MousePressed`  or `MousePressed[0]`"
+msgstr ""
+
+#: charmy.event.EventHandling.parse_event_type_str:9 of
+msgid "Return Value & Deprecation"
+msgstr ""
+
+#: charmy.event.EventHandling.parse_event_type_str:10 of
+msgid ""
+"The return value is a `dict` containing the type and params expressed in "
+"string. This kind  of return value might be unused in the new events "
+"system designed for Charmy. Therefore,  this function might be removed in"
+" the future."
+msgstr ""
+
+#: charmy.event.EventHandling.parse_event_type_str of
+msgid "param event_type_str"
+msgstr ""
+
+#: charmy.event.EventHandling.parse_event_type_str:14 of
+msgid "The event type string to be parsed"
+msgstr ""
+
+#: charmy.event.EventHandling.parse_event_type_str of
+msgid "returns"
+msgstr ""
+
+#: charmy.event.EventHandling.parse_event_type_str:15 of
+msgid "JSON, parsed event type"
+msgstr ""
+
+#: charmy.event.EventHandling.trigger:1 of
+msgid "To trigger a type of event"
+msgstr ""
+
+#: charmy.event.EventHandling.trigger:3 of
+msgid "Args:"
+msgstr ""
+
+#: charmy.event.EventHandling.trigger:4 of
+msgid "event_type: The type of event to trigger"
+msgstr ""
+
+#: charmy.event.EventHandling.trigger:16 of
+msgid ""
+"This shows triggering a `mouse.press` event in a `Widget`, which "
+"inherited `EventHandling` so has the ability to handle events."
+msgstr ""
+
+#: charmy.event.EventHandling.bind:1 of
+msgid "To bind a task to the object when a specific type of event is triggered."
+msgstr ""
+
+#: charmy.event.EventHandling.bind:10 of
+msgid "This shows binding a hello world to the button when it's press."
+msgstr ""
+
+#: charmy.event.EventHandling.bind of
+msgid "param event_type"
+msgstr ""
+
+#: charmy.event.EventHandling.bind:12 of
+msgid "The type of event to be bound to"
+msgstr ""
+
+#: charmy.event.EventHandling.bind charmy.event.EventTask of
+msgid "param target"
+msgstr ""
+
+#: charmy.event.EventHandling.bind:13 of
+msgid "A (list of) callable thing, what to do when this task is executed"
+msgstr ""
+
+#: charmy.event.EventHandling.bind of
+msgid "param condition"
+msgstr ""
+
+#: charmy.event.EventHandling.bind:14 of
+msgid "Conditions required for the task to run when event is triggered"
+msgstr ""
+
+#: charmy.event.EventHandling.bind charmy.event.EventTask of
+msgid "param multithread"
+msgstr ""
+
+#: charmy.event.EventHandling.bind:15 charmy.event.EventTask:22 of
+msgid "If this task should be executed in another thread (False by default)"
+msgstr ""
+
+#: charmy.event.EventHandling.bind of
+msgid "param _is_internal"
+msgstr ""
+
+#: charmy.event.EventHandling.bind:16 of
+msgid "If the task is added by Charmy and should be kept when clear bind"
+msgstr ""
+
+#: charmy.event.EventHandling.bind charmy.event.EventHandling.clear_bind
+#: charmy.event.EventHandling.unbind of
+msgid "return"
+msgstr ""
+
+#: charmy.event.EventHandling.bind:17 of
+msgid "EventTask if `return_task` is True, otherwise the EventHandling itself."
+msgstr ""
+
+#: charmy.event.EventHandling.on:1 of
+msgid "Generate a decorator that binds the event."
+msgstr ""
+
+#: charmy.event.EventHandling.on:3 of
+msgid "→ See `bind()` for parameters description."
+msgstr ""
+
+#: charmy.event.EventHandling.unbind:1 of
+msgid "To unbind a specific task."
+msgstr ""
+
+#: charmy.event.EventHandling.unbind:12 of
+msgid "This show unbinding the task bound to `Click` event from `my_button`."
+msgstr ""
+
+#: charmy.event.EventHandling.unbind of
+msgid "param target_task"
+msgstr ""
+
+#: charmy.event.EventHandling.unbind:14 of
+msgid "The `EventTask` to unbind."
+msgstr ""
+
+#: charmy.event.EventHandling.clear_bind:15
+#: charmy.event.EventHandling.unbind:15 of
+msgid "If success"
+msgstr ""
+
+#: charmy.event.EventHandling.clear_bind:1 of
+msgid "To unbind the tasks bound to a specific type of events."
+msgstr ""
+
+#: charmy.event.EventHandling.clear_bind:12 of
+msgid "This show unbinding all tasks bound to `Click` event from `my_button`."
+msgstr ""
+
+#: charmy.event.EventHandling.clear_bind of
+msgid "param target_type"
+msgstr ""
+
+#: charmy.event.EventHandling.clear_bind:14 of
+msgid "The event type to clear bind."
+msgstr ""
+
+#: charmy.event.EventTask:1 of
+msgid "A class to represent event task when an event is triggered."
+msgstr ""
+
+#: charmy.event.EventTask:3 of
+msgid "Each object is to represent a task bound to the event."
+msgstr ""
+
+#: charmy.event.EventTask:19 of
+msgid ""
+"This shows where this class is used for storing task properties in most "
+"cases."
+msgstr ""
+
+#: charmy.event.EventTask:21 of
+msgid "A callable thing, what to do when this task is executed"
+msgstr ""
+
+#: charmy.event.EventTask of
+msgid "param _internal_task"
+msgstr ""
+
+#: charmy.event.EventTask:23 of
+msgid "If the task is internally created and used by Charmy"
+msgstr ""
+
+#: charmy.event.EventTask.execute:1 of
+msgid "Execute the task."
+msgstr ""
+
+#: charmy.event.EventTask.execute of
+msgid "return value"
+msgstr ""
+
+#: charmy.event.EventTask.execute:3 of
+msgid "Return value of the target if not multitask, otherwise None"
+msgstr ""
+

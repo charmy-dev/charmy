@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="genindex.html"><link rel="search" title="搜索" href="search.html"><link rel="next" title="许可证" href="license.html"><link rel="prev" title="backend" href="api/frameworks/backend.html">
+<link rel="index" title="索引" href="genindex.html"><link rel="search" title="搜索" href="search.html"><link rel="prev" title="window" href="api/widgets/window.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>贡献 - Charmy GUI 0.1.0 文档</title>
+        <title>贡献指南 - Charmy GUI 0.1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -21,27 +21,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -208,46 +199,60 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="getstarted/index.html">开始</a><input aria-label="Toggle navigation of 开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/install.html">安装Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">第一个程序</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/window_config.html">窗口的配置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">自定义 <cite>Main Manager</cite> 设置</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="getstarted/index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/install.html">安装 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API参考</a><input aria-label="Toggle navigation of API参考" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/cmm.html">charmy.cmm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/const.html">charmy.const</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/object.html">charmy.object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pos.html">charmy.pos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/rect.html">charmy.rect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/size.html">charmy.size</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/this.html">charmy.this</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/var.html">charmy.var</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/button.html">button</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/container.html">container</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/widget.html">widget</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/window.html">window</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/widgets/windowbase.html">windowbase</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/genesis.html">genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/loader.html">loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/template.html">template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/backend/utils.html">utils</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="api/cmm.html">cmm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/const.html">const</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/event.html">event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/graphics.html">graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/object.html">object</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/shape.html">shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/style.html">style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/text_style.html">text_style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/styles/texture.html">texture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/styles/theme.html">theme</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="api/frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/ui.html">ui</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/drawing.html">drawing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/frameworks/backend.html">backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/this.html">this</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/utils/index.html">charmy.utils</a><input aria-label="Toggle navigation of charmy.utils" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/caching.html">caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/event_types.html">event_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/geo_math.html">geo_math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/layout_profiles.html">layout_profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/svg.html">svg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/type_checking.html">type_checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils/var.html">var</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/container.html">container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/frame.html">frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/widget.html">widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/widgets/window.html">window</a></li>
 </ul>
 </li>
 </ul>
@@ -255,8 +260,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">贡献</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">许可证</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">贡献指南</a></li>
 </ul>
 
 </div>
@@ -299,101 +303,148 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="contribution">
-<h1>贡献<a class="headerlink" href="#contribution" title="链接到此标题。">¶</a></h1>
+          <section id="id1">
+<h1>贡献指南<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
 <aside class="sidebar">
-<p class="sidebar-title">Contributor / Xiao Baiyun (Little White Cloud)</p>
-<p>一名来自``中国``的高中生。</p>
-<p>完成中文`charmy.this`的编写</p>
+<p class="sidebar-title">贡献者 / 小白云 (Little White Cloud)</p>
+<p>来自 <code class="docutils literal notranslate"><span class="pre">中国</span></code> 的一名高中生。</p>
+<p>编写了 <code class="docutils literal notranslate"><span class="pre">charmy.this</span></code> 的中文原文。</p>
 <img alt="xby_logo" src="_images/xby_logo.jpg" />
 <img alt="xby_content" src="_images/xby_content.png" />
 </aside>
 <aside class="sidebar">
-<p class="sidebar-title">Contributor / rgzz666</p>
-<p>一名来自``中国``的高中生。</p>
-<p>完成`charmy.this`的英文翻译</p>
+<p class="sidebar-title">贡献者 / rgzz666</p>
+<p>来自 <code class="docutils literal notranslate"><span class="pre">中国</span></code> 的一名高中生。</p>
+<p>翻译了 <code class="docutils literal notranslate"><span class="pre">charmy.this</span></code> 的英文版本。进行了绝大部分`Charmy`的重构，并负责`SDL3+Cairo`后端的开发。</p>
 <img alt="rgzz666_logo" src="_images/rgzz666_logo.png" />
 </aside>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
-<p>Github存储库: <a class="reference external" href="https://github.com/XiangQinxi/charmy">https://github.com/XiangQinxi/charmy</a></p>
+<p>GitHub 仓库：<a class="reference external" href="https://github.com/XiangQinxi/charmy">https://github.com/XiangQinxi/charmy</a></p>
 </div>
-<section id="how-to-contribute">
-<h2>如何 <em>贡献</em><a class="headerlink" href="#how-to-contribute" title="链接到此标题。">¶</a></h2>
+<section id="id2">
+<h2>如何贡献<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
 <ol class="arabic simple">
-<li><p>在Github上给该项目创建分支</p></li>
+<li><p>在 GitHub 上 Fork 本项目。</p></li>
 </ol>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/XiangQinxi/charmy.git
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
-<li><p>创建一个新分支来写下你的Bug修复与想法</p></li>
+<li><p>为你的功能或 Bug 修复创建一个新分支。</p></li>
 </ol>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/your-feature-name
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
-<li><p>做出改动并提交它们</p></li>
+<li><p>进行修改并提交。</p></li>
 </ol>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add your commit message here&quot;</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;简要描述你的改动&quot;</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="4">
-<li><p>在你的分支上推送你的分支</p></li>
+<li><p>将分支推送到你的 Fork。</p></li>
 </ol>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feature/your-feature-name
 </pre></div>
 </div>
-<ol class="arabic" start="5">
-<li><p>在原项目打开一个pull请求</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>清楚地介绍你的改动</p></li>
+<ol class="arabic simple" start="5">
+<li><p>向原始项目提交 Pull Request。</p>
+<ul class="simple">
+<li><p>清晰地描述你所做的改动</p></li>
+<li><p>如果涉及 API 变更，请更新相关文档</p></li>
+<li><p>如果可能，附上测试用例或运行截图</p></li>
 </ul>
-</div></blockquote>
 </li>
 </ol>
 </section>
-<section id="build-documents">
-<h2>构建文档<a class="headerlink" href="#build-documents" title="链接到此标题。">¶</a></h2>
-<p>这个文档是用Sphinx构建的</p>
-<p>运行改命令以下载依赖库</p>
+<section id="id3">
+<h2>构建文档<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<p>本文档使用 Sphinx 构建。首先安装文档构建所需的依赖：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>charmy<span class="o">[</span>docs<span class="o">]</span>
 </pre></div>
 </div>
+<p>然后执行：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
-.<span class="se">\m</span>ake<span class="w"> </span>html
+.<span class="se">\m</span>ake<span class="w"> </span>html<span class="w">          </span><span class="c1"># Windows</span>
+<span class="c1"># make html          # Linux / macOS</span>
 </pre></div>
 </div>
-<p>在写文档时，可以使用Markdown、reStructuredText格式书写</p>
+<p>文档支持 <strong>reStructuredText</strong> （ <code class="docutils literal notranslate"><span class="pre">.rst</span></code> ）和 <strong>Markdown</strong> （ <code class="docutils literal notranslate"><span class="pre">.md</span></code> ）两种格式。</p>
+<section id="api">
+<h3>API 文档自动生成<a class="headerlink" href="#api" title="链接到此标题。">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">docs/source/api/</span></code> 下的 API 文档由 <code class="docutils literal notranslate"><span class="pre">autoapi.py</span></code> <strong>自动生成</strong>，请勿手动编辑：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 当你新增/修改了 Python 模块后，重新运行自动生成器</span>
+python<span class="w"> </span>docs/source/api/autoapi.py
+
+<span class="c1"># 然后重新构建 HTML</span>
+<span class="nb">cd</span><span class="w"> </span>docs<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>.<span class="se">\m</span>ake<span class="w"> </span>html
+</pre></div>
+</div>
+<p>自动生成器会：</p>
+<ul class="simple">
+<li><p>扫描 <code class="docutils literal notranslate"><span class="pre">charmy/</span></code> 包下所有 <code class="docutils literal notranslate"><span class="pre">.py</span></code> 文件（排除彩蛋和空壳文件）</p></li>
+<li><p>为每个模块生成 <code class="docutils literal notranslate"><span class="pre">.rst</span></code> 文件（包含 <code class="docutils literal notranslate"><span class="pre">autoclasstree</span></code> + <code class="docutils literal notranslate"><span class="pre">automodule</span></code>）</p></li>
+<li><p>为每个子包生成 <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> （包含 toctree，链接到所有子模块）</p></li>
+<li><p>自动识别 <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> 作为包索引</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><code class="docutils literal notranslate"><span class="pre">autoapi.py</span></code> 会自动覆盖 <code class="docutils literal notranslate"><span class="pre">api/</span></code> 目录下的 <code class="docutils literal notranslate"><span class="pre">.rst</span></code> 文件。
+如果你需要手动修改 API 文档，请修改源码中的 <strong>docstring</strong>，然后重新运行生成器。</p>
+</div>
 </section>
-<section id="code-standards">
-<h2>代码规范<a class="headerlink" href="#code-standards" title="链接到此标题。">¶</a></h2>
-<p>我们遵循 <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP 8</a> 代码指导</p>
-<p>注释应使用`Sphinx`或`Goggle`注释格式</p>
-<p>例如</p>
+</section>
+<section id="id4">
+<h2>测试指南<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
+<p>目前测试用例位于 <code class="docutils literal notranslate"><span class="pre">tests/</span></code> 目录下，主要是手动运行的可执行脚本：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 图形绘制测试</span>
+python<span class="w"> </span>tests/graphics.py
+
+<span class="c1"># Button 控件测试</span>
+python<span class="w"> </span>tests/button.py
+
+<span class="c1"># 事件系统测试</span>
+python<span class="w"> </span>tests/event.py
+</pre></div>
+</div>
+<p>添加新测试时：</p>
+<ul class="simple">
+<li><p>功能测试：在 <code class="docutils literal notranslate"><span class="pre">tests/</span></code> 下创建 <code class="docutils literal notranslate"><span class="pre">test_功能名.py</span></code></p></li>
+<li><p>手动验证测试：创建可以直接 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tests/xxx.py</span></code> 运行的脚本</p></li>
+<li><p>后续计划引入 <code class="docutils literal notranslate"><span class="pre">pytest</span></code> 自动化测试框架</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>代码规范<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
+<ul class="simple">
+<li><p>遵循 <strong>PEP 8</strong> 编码规范（<a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">https://www.python.org/dev/peps/pep-0008/</a>）</p></li>
+<li><p>行长度限制：<strong>100 字符</strong></p></li>
+<li><p>注释统一使用 <strong>Sphinx</strong> 或 <strong>Google</strong> 风格</p></li>
+<li><p>导入使用绝对导入，避免循环引用（必要时使用 <code class="docutils literal notranslate"><span class="pre">TYPE_CHECKING</span></code>）</p></li>
+</ul>
+<p>注释风格示例：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">function_name</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
-<span class="w">     </span><span class="sd">&quot;&quot;&quot;Function summary line.</span>
+<span class="w">     </span><span class="sd">&quot;&quot;&quot;函数功能简述。</span>
 
 <span class="sd">     Args:</span>
-<span class="sd">         param1 (int): The first parameter.</span>
-<span class="sd">         param2 (str): The second parameter.</span>
+<span class="sd">         param1 (int): 第一个参数。</span>
+<span class="sd">         param2 (str): 第二个参数。</span>
 
 <span class="sd">     Returns:</span>
-<span class="sd">         bool: The return value. True for success, False otherwise.</span>
+<span class="sd">         bool: 返回 True 表示成功，False 表示失败。</span>
 
 <span class="sd">     Raises:</span>
-<span class="sd">         ValueError: If `param1` is equal to `param2`.</span>
+<span class="sd">         ValueError: 当 `param1` 等于 `param2` 时抛出。</span>
 <span class="sd">     &quot;&quot;&quot;</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">SampleClass</span><span class="p">:</span>
-<span class="w">     </span><span class="sd">&quot;&quot;&quot;Summary of class here.</span>
+<span class="w">     </span><span class="sd">&quot;&quot;&quot;类的简要说明。</span>
 
-<span class="sd">     Longer class information....</span>
-<span class="sd">     Longer class information....</span>
+<span class="sd">     更详细的类说明……</span>
 
-<span class="sd">     Examples:</span>
+<span class="sd">     示例::</span>
 
 <span class="sd">         &gt;&gt;&gt; sample = SampleClass()</span>
 <span class="sd">         &gt;&gt;&gt; sample.likes_spam</span>
@@ -402,12 +453,12 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <span class="sd">         0</span>
 
 <span class="sd">     Attributes:</span>
-<span class="sd">         likes_spam (bool): A boolean indicating if we like SPAM or not.</span>
-<span class="sd">         eggs (int): The number of eggs we have.</span>
+<span class="sd">         likes_spam (bool): 是否喜欢 SPAM。</span>
+<span class="sd">         eggs (int): 拥有的鸡蛋数量。</span>
 <span class="sd">     &quot;&quot;&quot;</span>
 
      <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">likes_spam</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">         </span><span class="sd">&quot;&quot;&quot;Inits SampleClass with blah.&quot;&quot;&quot;</span>
+<span class="w">         </span><span class="sd">&quot;&quot;&quot;初始化 SampleClass。&quot;&quot;&quot;</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">likes_spam</span> <span class="o">=</span> <span class="n">likes_spam</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">eggs</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
@@ -420,23 +471,15 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="license.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">许可证</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="api/frameworks/backend.html">
+          
+          <a class="prev-page" href="api/widgets/window.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">backend</div>
+                <div class="title">window</div>
                 
               </div>
             </a>
@@ -470,10 +513,14 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">贡献</a><ul>
-<li><a class="reference internal" href="#how-to-contribute">如何 <em>贡献</em></a></li>
-<li><a class="reference internal" href="#build-documents">构建文档</a></li>
-<li><a class="reference internal" href="#code-standards">代码规范</a></li>
+<li><a class="reference internal" href="#">贡献指南</a><ul>
+<li><a class="reference internal" href="#id2">如何贡献</a></li>
+<li><a class="reference internal" href="#id3">构建文档</a><ul>
+<li><a class="reference internal" href="#api">API 文档自动生成</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">测试指南</a></li>
+<li><a class="reference internal" href="#id5">代码规范</a></li>
 </ul>
 </li>
 </ul>

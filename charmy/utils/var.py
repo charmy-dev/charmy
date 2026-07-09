@@ -26,5 +26,5 @@ class Var(_typing.Generic[VarType]):
     def value(self, new: VarType) -> None:
         if self._value != new:
             self._value = new
-            # TODO: Triger event when var value changed
+            # TODO: Trigger event when var value changed
             # ...trigger(...)

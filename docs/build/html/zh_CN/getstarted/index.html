@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="安装Charmy" href="install.html"><link rel="prev" title="Charmy GUI 文档" href="../index.html">
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="安装 Charmy" href="install.html"><link rel="prev" title="Charmy GUI 文档" href="../index.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>开始 - Charmy GUI 0.1.0 文档</title>
+        <title>快速开始 - Charmy GUI 0.1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -21,27 +21,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -208,46 +199,60 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">开始</a><input aria-label="Toggle navigation of 开始" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="install.html">安装Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="first_app.html">第一个程序</a></li>
-<li class="toctree-l2"><a class="reference internal" href="window_config.html">窗口的配置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html">自定义 <cite>Main Manager</cite> 设置</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">快速开始</a><input aria-label="Toggle navigation of 快速开始" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html">安装 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_app.html">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API参考</a><input aria-label="Toggle navigation of API参考" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api/cmm.html">charmy.cmm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/const.html">charmy.const</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/object.html">charmy.object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/pos.html">charmy.pos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/rect.html">charmy.rect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/size.html">charmy.size</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/this.html">charmy.this</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/var.html">charmy.var</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/button.html">button</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/container.html">container</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/widget.html">widget</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/window.html">window</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/windowbase.html">windowbase</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/genesis.html">genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/loader.html">loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/template.html">template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/utils.html">utils</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../api/cmm.html">cmm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/const.html">const</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/event.html">event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/graphics.html">graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/object.html">object</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/styles/shape.html">shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/styles/style.html">style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/styles/text_style.html">text_style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/styles/texture.html">texture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/styles/theme.html">theme</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api/frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/frameworks/ui.html">ui</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/frameworks/drawing.html">drawing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/frameworks/backend.html">backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/this.html">this</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/utils/index.html">charmy.utils</a><input aria-label="Toggle navigation of charmy.utils" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/caching.html">caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/event_types.html">event_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/geo_math.html">geo_math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/layout_profiles.html">layout_profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/svg.html">svg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/type_checking.html">type_checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/var.html">var</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/container.html">container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/frame.html">frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/widget.html">widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/window.html">window</a></li>
 </ul>
 </li>
 </ul>
@@ -255,8 +260,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../contribution.html">贡献</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">许可证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -299,23 +303,89 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="get-started">
-<h1>开始<a class="headerlink" href="#get-started" title="链接到此标题。">¶</a></h1>
-<p>一起来开始Charmy之旅</p>
+          <section id="id1">
+<h1>快速开始<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
+<p>带你快速上手 Charmy！</p>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">开始：</span></p>
+<p class="caption" role="heading"><span class="caption-text">快速开始：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">安装Charmy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="install.html#dependency-library-matching">依赖库搭配</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">安装 Charmy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#pip">使用 pip 安装（推荐）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#id1">从源码安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#id2">后端依赖</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#id3">验证安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#id4">常见问题</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="first_app.html">第一个程序</a></li>
-<li class="toctree-l1"><a class="reference internal" href="window_config.html">窗口的配置</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="window_config.html#rename-window-s-title">重命名窗口的标题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="first_app.html">第一个应用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="first_app.html#charmy">1. 导入 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_app.html#id2">2. 创建窗口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_app.html#id3">3. 添加按钮</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_app.html#id4">4. 运行应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_app.html#id5">完整的代码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_app.html#id6">更复杂的例子：绑定事件</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="custom_app_settings.html">自定义 <cite>Main Manager</cite> 设置</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html#switch-ui-framework">切换UI框架</a></li>
+<li class="toctree-l1"><a class="reference internal" href="window_config.html">窗口配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="window_config.html#id2">窗口标题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window_config.html#id3">窗口大小</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window_config.html#id4">窗口位置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window_config.html#id5">窗口背景</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window_config.html#id6">窗口图标</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window_config.html#id7">其他窗口属性</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_app_settings.html">自定义应用设置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html#id2">1. 环境变量设置（导入前）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html#id3">2. 调试标志（运行时）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html#id4">3. 主循环帧率控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html#id5">4. 自定义后端行为</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">深入进阶：</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="event_handling.html">事件处理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html#id2">基本用法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html#widget-on">装饰器写法 <code class="docutils literal notranslate"><span class="pre">&#64;widget.on()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html#id3">事件对象</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html#id4">条件过滤</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html#id5">事件链</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html#id6">解绑事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html#id7">多线程事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html#id8">窗口事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html#id9">内部事件与用户事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html#id10">可用的事件类型一览</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html">布局与定位</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="layout.html#id2">坐标系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html#place">绝对位置 (<code class="docutils literal notranslate"><span class="pre">place</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html#id3">相对位置与绝对位置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html#id4">容器系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html#id5">上下文管理器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html#id6">控件大小</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html#id7">布局支持状态</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drawing.html">自定义绘图</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html#id2">基本概念</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html#id3">绘制线条</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html#id4">绘制形状</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html#id5">绘制文字</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html#id6">透明度与纹理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html#id7">偏移与锚点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html#svg">SVG 路径绘制</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">调试与故障排查</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#id2">调试标志</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#genesis">Genesis 后端调试标志</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#id3">运行测试用例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#id4">常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#id5">配置文件参考</a></li>
 </ul>
 </li>
 </ul>
@@ -332,7 +402,7 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">安装Charmy</div>
+                <div class="title">安装 Charmy</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

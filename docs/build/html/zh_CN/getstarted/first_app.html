@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="窗口的配置" href="window_config.html"><link rel="prev" title="安装Charmy" href="install.html">
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="窗口配置" href="window_config.html"><link rel="prev" title="安装 Charmy" href="install.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>第一个程序 - Charmy GUI 0.1.0 文档</title>
+        <title>第一个应用 - Charmy GUI 0.1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -21,27 +21,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -188,7 +179,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -208,46 +199,60 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">开始</a><input aria-label="Toggle navigation of 开始" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="install.html">安装Charmy</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">第一个程序</a></li>
-<li class="toctree-l2"><a class="reference internal" href="window_config.html">窗口的配置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html">自定义 <cite>Main Manager</cite> 设置</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="install.html">安装 Charmy</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API参考</a><input aria-label="Toggle navigation of API参考" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../api/cmm.html">charmy.cmm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/const.html">charmy.const</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/event.html">charmy.event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/object.html">charmy.object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/pos.html">charmy.pos</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/rect.html">charmy.rect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/size.html">charmy.size</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/this.html">charmy.this</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/var.html">charmy.var</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/button.html">button</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/canvas.html">canvas</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/container.html">container</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/widget.html">widget</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/window.html">window</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/widgets/windowbase.html">windowbase</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/genesis.html">genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/loader.html">loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/template.html">template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/backend/utils.html">utils</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../api/cmm.html">cmm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/const.html">const</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/event.html">event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/graphics.html">graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/object.html">object</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/styles/index.html">charmy.styles</a><input aria-label="Toggle navigation of charmy.styles" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/styles/color.html">color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/styles/shape.html">shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/styles/style.html">style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/styles/text_style.html">text_style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/styles/texture.html">texture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/styles/theme.html">theme</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api/frameworks/index.html">charmy.frameworks</a><input aria-label="Toggle navigation of charmy.frameworks" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../api/frameworks/ui.html">ui</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/frameworks/drawing.html">drawing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api/frameworks/backend.html">backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/this.html">this</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/utils/index.html">charmy.utils</a><input aria-label="Toggle navigation of charmy.utils" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/caching.html">caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/event_types.html">event_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/geo_math.html">geo_math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/layout_profiles.html">layout_profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/svg.html">svg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/type_checking.html">type_checking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils/var.html">var</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/widgets/index.html">charmy.widgets</a><input aria-label="Toggle navigation of charmy.widgets" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/button.html">button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/container.html">container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/frame.html">frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/widget.html">widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/widgets/window.html">window</a></li>
 </ul>
 </li>
 </ul>
@@ -255,8 +260,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../contribution.html">贡献</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">许可证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -294,43 +298,119 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="first-application">
-<h1>第一个程序<a class="headerlink" href="#first-application" title="链接到此标题。">¶</a></h1>
-<ol class="arabic simple">
-<li><p>导入 <code class="docutils literal notranslate"><span class="pre">Charmy</span></code></p></li>
-</ol>
+          <section id="id1">
+<h1>第一个应用<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
+<p>下面带你一步步创建第一个 Charmy 应用。</p>
+<section id="charmy">
+<h2>1. 导入 Charmy<a class="headerlink" href="#charmy" title="链接到此标题。">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>2. 创建窗口<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
+<p>有两种方式创建窗口：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 方式一：直接创建 Window（推荐）</span>
+<span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;我的窗口&quot;</span><span class="p">)</span>
+
+<span class="c1"># 方式二：先创建 WindowEntity 再转为 Window（内部使用）</span>
+<span class="c1"># window = cm.window.Window(size=(400, 300))</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Window</span></code> 继承自 <code class="docutils literal notranslate"><span class="pre">WindowEntity</span></code> （后端窗口实体）+ <code class="docutils literal notranslate"><span class="pre">Container</span></code> （容器能力）。
+大部分时候你只需要用 <code class="docutils literal notranslate"><span class="pre">cm.Window()</span></code> 。</p>
+<p>设置窗口背景色：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">)</span>  <span class="c1"># (R, G, B) 或 (R, G, B, A)</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>3. 添加按钮<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;按钮被点击了！&quot;</span><span class="p">)</span>
+
+<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;点我&quot;</span><span class="p">,</span> <span class="n">on_click</span><span class="o">=</span><span class="n">on_click</span><span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>  <span class="c1"># place(pos, size)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">place()</span></code> 方法的参数：</p>
+<ul class="simple">
+<li><p>第一个参数 <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code> ：控件在父容器中的位置（相对于父容器的偏移）</p></li>
+<li><p>第二个参数 <code class="docutils literal notranslate"><span class="pre">(width,</span> <span class="pre">height)</span></code> （可选）：控件的尺寸</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>也可以使用 <code class="docutils literal notranslate"><span class="pre">with</span></code> 语句上下文自动设置父容器：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">window</span><span class="p">:</span>
+    <span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;点我&quot;</span><span class="p">)</span>
+    <span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>在 <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">window:</span></code> 块内创建的控件会自动以 <code class="docutils literal notranslate"><span class="pre">window</span></code> 为父容器。</p>
+</div>
+</section>
+<section id="id4">
+<h2>4. 运行应用<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code> 会进入主事件循环，不断处理窗口事件和更新界面。
+程序会一直运行直到所有窗口被关闭。</p>
+</section>
+<section id="id5">
+<h2>完整的代码<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello from Charmy!&quot;</span><span class="p">)</span>
+
+<span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;我的第一个 Charmy 应用&quot;</span><span class="p">)</span>
+<span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">)</span>
+
+<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;点我&quot;</span><span class="p">,</span> <span class="n">on_click</span><span class="o">=</span><span class="n">on_click</span><span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+
+<span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
-<p>不在这开发 <cite>cm</cite> 反而在玩`MC`</p>
+<p>关于 Button 的已知限制：</p>
+<ul class="simple">
+<li><p>Button 目前使用 Bootstrap 风格的默认样式（浅灰背景、黑色文字）</p></li>
+<li><p>悬停效果（暗色背景 + 白色文字）由事件系统驱动，需要鼠标事件正确传递</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">on_click</span></code> 回调在 Button 初始化时绑定到 <code class="docutils literal notranslate"><span class="pre">MouseClick</span></code> 事件（条件：左键）</p></li>
+<li><p>目前 Button 不支持文本以外的内容（如图标）</p></li>
+</ul>
 </div>
-<ol class="arabic simple" start="2">
-<li><p>创建一个 <code class="docutils literal notranslate"><span class="pre">Window</span></code></p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>3. Run the application
-There is auto created <code class="docutils literal notranslate"><span class="pre">App</span></code> object. You can run it by <code class="docutils literal notranslate"><span class="pre">cm.mainloop()</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>综合起来这些代码，你的第一个程序代码应该长这样：</p>
+</section>
+<section id="id6">
+<h2>更复杂的例子：绑定事件<a class="headerlink" href="#id6" title="链接到此标题。">¶</a></h2>
+<p>Button 的 <code class="docutils literal notranslate"><span class="pre">on_click</span></code> 参数是最简单的用法。你也可以直接使用 <code class="docutils literal notranslate"><span class="pre">bind()</span></code> 方法：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
 
-<span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_enter</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;鼠标进入按钮区域&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">on_leave</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;鼠标离开按钮区域&quot;</span><span class="p">)</span>
+
+<span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;跟踪鼠标&quot;</span><span class="p">)</span>
+
+<span class="n">btn</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseEnter</span><span class="p">,</span> <span class="n">on_enter</span><span class="p">)</span>
+<span class="n">btn</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseLeave</span><span class="p">,</span> <span class="n">on_leave</span><span class="p">)</span>
+
+<span class="n">btn</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
 <span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>之后，你将会得到一个窗口。</p>
-<img alt="../_images/first_app_preview.png" src="../_images/first_app_preview.png" />
+</section>
 </section>
 
         </article>
@@ -343,7 +423,7 @@ There is auto created <code class="docutils literal notranslate"><span class="pr
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">窗口的配置</div>
+                <div class="title">窗口配置</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -354,7 +434,7 @@ There is auto created <code class="docutils literal notranslate"><span class="pr
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">安装Charmy</div>
+                <div class="title">安装 Charmy</div>
                 
               </div>
             </a>
@@ -376,8 +456,32 @@ There is auto created <code class="docutils literal notranslate"><span class="pr
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">第一个应用</a><ul>
+<li><a class="reference internal" href="#charmy">1. 导入 Charmy</a></li>
+<li><a class="reference internal" href="#id2">2. 创建窗口</a></li>
+<li><a class="reference internal" href="#id3">3. 添加按钮</a></li>
+<li><a class="reference internal" href="#id4">4. 运行应用</a></li>
+<li><a class="reference internal" href="#id5">完整的代码</a></li>
+<li><a class="reference internal" href="#id6">更复杂的例子：绑定事件</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

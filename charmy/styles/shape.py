@@ -100,6 +100,7 @@ class LinePath(_reactive_caching.CachedClass):
         for that line. The following is an example for polylines.
 
         .. code-block:: python
+
             {
             "type": "polyline", 
             "points": [
@@ -586,6 +587,7 @@ class SingleShape(ShapeType):
         for that shape. The following is an example for rectangles.
 
         .. code-block:: python
+
             {
             "type": "rect", 
             "pos": (50, 50), 

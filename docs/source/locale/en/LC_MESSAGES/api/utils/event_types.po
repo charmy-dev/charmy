@@ -1,0 +1,145 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/api/utils/event_types.rst:2
+msgid "event_types"
+msgstr ""
+
+#: charmy.utils.event_types.Event:1 of
+msgid ""
+"Used to represent an event. Can be regarded as a placeholder if directly "
+"used."
+msgstr ""
+
+#: charmy.utils.event_types.Event.meets:1 of
+msgid "Check if current event meets the target condition."
+msgstr ""
+
+#: ../../source/api/utils/event_types.rst
+msgid "参数"
+msgstr ""
+
+#: charmy.utils.event_types.Event.meets:3 of
+msgid "Condition specified by task etc. to meet"
+msgstr ""
+
+#: charmy.utils.event_types.EventTriggered:1 of
+msgid "Triggered when any other kind of event is triggered."
+msgstr ""
+
+#: charmy.utils.event_types.WidgetEvent:1 of
+msgid "The type of events that represents widget events."
+msgstr ""
+
+#: charmy.utils.event_types.MouseRawEvent:4
+#: charmy.utils.event_types.WidgetEvent:4
+#: charmy.utils.event_types.WindowEvent:4 of
+msgid "Notes on Param `subject`"
+msgstr ""
+
+#: charmy.utils.event_types.WidgetEvent:5 of
+msgid "`subject` should be the widget that is triggered the event."
+msgstr ""
+
+#: charmy.utils.event_types.WidgetUpdate:1 of
+msgid "Will be generated when a widget or window is updated."
+msgstr ""
+
+#: charmy.utils.event_types.WidgetUpdate:4 of
+msgid "Note on Param `subject`"
+msgstr ""
+
+#: charmy.utils.event_types.WidgetUpdate:5 of
+msgid ""
+"When `subject` is set to none, it means Charmy's global update routine is"
+" triggered."
+msgstr ""
+
+#: charmy.utils.event_types.WidgetDraw:1 of
+msgid "Will be generated when a widget or window is redrawn."
+msgstr ""
+
+#: charmy.utils.event_types.WidgetConfigure:1 of
+msgid "Will be generated when a widget or window has its configuration changed."
+msgstr ""
+
+#: charmy.utils.event_types.WidgetResize:1 of
+msgid "Will be generated when a widget or window is resized."
+msgstr ""
+
+#: charmy.utils.event_types.WidgetMove:1 of
+msgid "Will be generated when a widget or window is moved."
+msgstr ""
+
+#: charmy.utils.event_types.FocusGain:1 of
+msgid "Will be generated when a widget or window gained focus."
+msgstr ""
+
+#: charmy.utils.event_types.FocusLoss:1 of
+msgid "Will be generated when a widget or window lose focus."
+msgstr ""
+
+#: charmy.utils.event_types.WidgetDestroy:1 of
+msgid "Will be generated when a widget or window is destroyed."
+msgstr ""
+
+#: charmy.utils.event_types.WindowEvent:1 of
+msgid "The type of events that represents window events."
+msgstr ""
+
+#: charmy.utils.event_types.WindowEvent:5 of
+msgid "`subject` should be the window where the events happened."
+msgstr ""
+
+#: charmy.utils.event_types.MouseRawEvent:1 of
+msgid "The type of events that represents mouse actions."
+msgstr ""
+
+#: charmy.utils.event_types.MouseRawEvent:5 of
+msgid "`subject` should be the window that detected the mouse event."
+msgstr ""
+
+#: charmy.utils.event_types.MouseMove:1 of
+msgid "Will be generated when mouse movement is detected."
+msgstr ""
+
+#: charmy.utils.event_types.MousePress:1 of
+msgid "Will be generated when a mouse button is pressed."
+msgstr ""
+
+#: charmy.utils.event_types.MouseRelease:1
+#: charmy.utils.event_types.MouseScroll:1 of
+msgid "Will be generated when a mouse button is released."
+msgstr ""
+
+#: charmy.utils.event_types.MouseInteractEvent:1 of
+msgid "Will be generated when the mouse interacts with an EventHandling."
+msgstr ""
+
+#: charmy.utils.event_types.MouseEnter:1 charmy.utils.event_types.MouseLeave:1
+#: of
+msgid "Will be generated when the mouse enters an EventHandling."
+msgstr ""
+
+#: charmy.utils.event_types.MouseClick:1 of
+msgid "Will be generated when the mouse clicks an EventHandling."
+msgstr ""
+
