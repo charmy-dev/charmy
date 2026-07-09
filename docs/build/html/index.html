@@ -188,7 +188,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -220,7 +220,7 @@
 <li class="toctree-l2"><a class="reference internal" href="how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/backend/genesis.html">genesis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/backend/loader.html">loader</a></li>
@@ -303,7 +303,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
@@ -317,16 +317,53 @@
 <p>&quot;我写的代码就像一坨💩。😭😭&quot;</p>
 </aside>
 <p>欢迎来到 <strong>Charmy GUI</strong> 的文档！</p>
-<p><strong>Charmy GUI</strong> 是一个跨平台的 Python GUI 库，采用**三层架构**（后端 → 图形层 → 控件层），
-支持在不同后端之间切换，从而在保持轻量的同时实现跨平台。</p>
-<div class="admonition note">
-<p class="admonition-title">备注</p>
-<p>Charmy 目前处于早期开发阶段，API 可能发生变动。
-当前唯一可用的后端是 <strong>Genesis</strong> （基于 SDL2 + Cairo）。</p>
+<p>Charmy 是一个跨平台的 Python GUI 库，采用**三层架构**设计，后端可切换，
+在保持轻量的同时实现跨平台桌面应用开发。</p>
+<section id="id1">
+<h2>项目特点<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h2>
+<ul class="simple">
+<li><p><strong>三层架构</strong>：后端层 → 图形层 → 控件层，各层职责清晰</p></li>
+<li><p><strong>后端可切换</strong>：同一套 API 可对接不同底层图形库（目前仅 Genesis 后端）</p></li>
+<li><p><strong>事件驱动</strong>：基于发布-订阅模式的事件系统，支持条件过滤和事件链</p></li>
+<li><p><strong>自动 ID 管理</strong>：所有对象自动分配唯一 ID，支持通过 ID 查找</p></li>
+<li><p><strong>弱引用追踪</strong>：使用 <code class="docutils literal notranslate"><span class="pre">weakref</span></code> 自动管理对象生命周期，无内存泄漏</p></li>
+<li><p><strong>Fallback 机制</strong>：线条/图形类型自动降级，保证跨后端兼容</p></li>
+<li><p><strong>SVG 路径支持</strong>：内置完整的 SVG path 解析器，可直接绘制 SVG 图形</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>当前状态<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
+<div class="admonition caution">
+<p class="admonition-title">小心</p>
+<p>Charmy 处于 <strong>早期开发阶段</strong> （v0.0.1），API 尚未稳定。</p>
+<ul class="simple">
+<li><p>✅ 后端层：完成（Genesis: SDL2 + Cairo）</p></li>
+<li><p>✅ 图形层：完成（线条、形状、文字绘制）</p></li>
+<li><p>🚧 控件层：进行中（仅 Button 可用，Frame/Text 为空壳）</p></li>
+<li><p>🚧 事件系统：基本完成（鼠标事件已桥接）</p></li>
+<li><p>❌ 布局管理：仅 <code class="docutils literal notranslate"><span class="pre">place</span></code> 布局，尚无 pack/grid</p></li>
+<li><p>❌ 主题系统：基础框架存在，尚未接入控件</p></li>
+</ul>
 </div>
+</section>
+<section id="id3">
+<h2>快速开始<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
+
+<span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;我的应用&quot;</span><span class="p">)</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;点我&quot;</span><span class="p">,</span> <span class="n">on_click</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">))</span>
+<span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+
+<span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>项目渊源<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
 <div class="admonition tip">
 <p class="admonition-title">小技巧</p>
-<p>项目原名为 Suzaku，因底层缺陷导致性能问题而重构为现在的 Charmy。</p>
+<p>项目原名为 <strong>Suzaku</strong>，因底层架构缺陷导致性能问题，重构为现在的 Charmy。
+部分设计理念继承自 Suzaku，代码中保留了一些&quot;彩蛋&quot;作为纪念（如 <code class="docutils literal notranslate"><span class="pre">skhynix.py</span></code>）。</p>
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
@@ -337,14 +374,16 @@
 <li class="toctree-l3"><a class="reference internal" href="getstarted/install.html#id1">从源码安装</a></li>
 <li class="toctree-l3"><a class="reference internal" href="getstarted/install.html#id2">后端依赖</a></li>
 <li class="toctree-l3"><a class="reference internal" href="getstarted/install.html#id3">验证安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getstarted/install.html#id4">常见问题</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">第一个应用</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="getstarted/first_app.html#charmy">1. 导入 Charmy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="getstarted/first_app.html#id2">2. 创建窗口</a></li>
 <li class="toctree-l3"><a class="reference internal" href="getstarted/first_app.html#id3">3. 添加按钮</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getstarted/first_app.html#id4">4. 运行应用</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getstarted/first_app.html#id5">完整的代码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getstarted/first_app.html#id6">4. 运行应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getstarted/first_app.html#id7">完整的代码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getstarted/first_app.html#id8">更复杂的例子：绑定事件</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="getstarted/window_config.html">窗口配置</a><ul>
@@ -353,11 +392,14 @@
 <li class="toctree-l3"><a class="reference internal" href="getstarted/window_config.html#id4">窗口位置</a></li>
 <li class="toctree-l3"><a class="reference internal" href="getstarted/window_config.html#id5">窗口背景</a></li>
 <li class="toctree-l3"><a class="reference internal" href="getstarted/window_config.html#id6">窗口图标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getstarted/window_config.html#id7">其他窗口属性</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">自定义应用设置</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="getstarted/custom_app_settings.html#id2">切换后端</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getstarted/custom_app_settings.html#id3">调试选项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getstarted/custom_app_settings.html#id2">1. 环境变量设置（导入前）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getstarted/custom_app_settings.html#id3">2. 调试标志（运行时）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getstarted/custom_app_settings.html#id4">3. 主循环帧率控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getstarted/custom_app_settings.html#id5">4. 自定义后端行为</a></li>
 </ul>
 </li>
 </ul>
@@ -365,22 +407,26 @@
 <li class="toctree-l1"><a class="reference internal" href="how_does_it_work/index.html">工作原理</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="how_does_it_work/abstraction_layer.html">抽象层</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="how_does_it_work/abstraction_layer.html#id2">为什么需要抽象层</a></li>
-<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/abstraction_layer.html#id3">后端模板</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/abstraction_layer.html#id3">后端模块的划分</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/abstraction_layer.html#template-py">后端模板 (template.py)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="how_does_it_work/abstraction_layer.html#genesis">Genesis 后端</a></li>
-<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/abstraction_layer.html#id4">渲染流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/abstraction_layer.html#id4">事件桥接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/abstraction_layer.html#id5">渲染流程</a></li>
 <li class="toctree-l3"><a class="reference internal" href="how_does_it_work/abstraction_layer.html#fallback">Fallback 机制</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="how_does_it_work/message_loop.html">消息循环（事件循环）</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/message_loop.html#id2">事件系统</a></li>
-<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/message_loop.html#id3">事件链</a></li>
-<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/message_loop.html#id4">多线程</a></li>
-<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/message_loop.html#id5">异步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/message_loop.html#id2">主循环结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/message_loop.html#charmymanager">CharmyManager 生命周期</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/message_loop.html#id3">增量重绘机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/message_loop.html#id4">事件系统详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/message_loop.html#id8">多线程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_does_it_work/message_loop.html#id9">实例追踪系统</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api/index.html">API</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">charmy</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/backend/index.html">charmy.backend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/backend/genesis.html">genesis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/backend/loader.html">loader</a></li>
@@ -459,11 +505,13 @@
 <li class="toctree-l1"><a class="reference internal" href="contribution.html">贡献指南</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="contribution.html#id2">如何贡献</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contribution.html#id3">构建文档</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contribution.html#id4">代码规范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribution.html#id10">测试指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribution.html#id11">代码规范</a></li>
 </ul>
 </li>
 </ul>
 </div>
+</section>
 </section>
 
         </article>
@@ -499,8 +547,32 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Charmy GUI 文档</a><ul>
+<li><a class="reference internal" href="#id1">项目特点</a></li>
+<li><a class="reference internal" href="#id2">当前状态</a></li>
+<li><a class="reference internal" href="#id3">快速开始</a></li>
+<li><a class="reference internal" href="#id4">项目渊源</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

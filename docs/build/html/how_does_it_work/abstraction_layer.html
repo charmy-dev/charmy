@@ -220,7 +220,7 @@
 <li class="toctree-l2"><a class="reference internal" href="message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/genesis.html">genesis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/loader.html">loader</a></li>
@@ -322,9 +322,38 @@
 并且能够在不同后端之间切换，我们需要将后端的具体实现抽象出来。</p>
 </section>
 <section id="id3">
-<h2>后端模板<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<h2>后端模块的划分<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">charmy/backend/</span></code> 目录下的模块：</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>作用</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">template.py</span></code></p></td>
+<td><p>定义后端接口模板（抽象基类）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">genesis.py</span></code></p></td>
+<td><p>Genesis 后端的具体实现（SDL2 + Cairo）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">loader.py</span></code></p></td>
+<td><p>后端加载器，根据名称动态加载后端</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">utils.py</span></code></p></td>
+<td><p>后端工具模块，安全引用 Charmy 上层对象，避免循环导入</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="template-py">
+<h2>后端模板 (template.py)<a class="headerlink" href="#template-py" title="链接到此标题。">¶</a></h2>
 <p>在 <code class="docutils literal notranslate"><span class="pre">charmy/backend/template.py</span></code> 中定义了所有后端的接口模板：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Backend</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>                      <span class="c1"># 后端标识名</span>
+    <span class="n">friendly_name</span><span class="p">:</span> <span class="nb">str</span>             <span class="c1"># 可读名称</span>
     <span class="n">WindowBase</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">WindowBase</span><span class="p">]</span>   <span class="c1"># 窗口操作</span>
     <span class="n">LineBase</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">LineBase</span><span class="p">]</span>       <span class="c1"># 线条绘制</span>
     <span class="n">ShapeBase</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ShapeBase</span><span class="p">]</span>     <span class="c1"># 形状绘制</span>
@@ -332,42 +361,128 @@
     <span class="n">TextBase</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">TextBase</span><span class="p">]</span>       <span class="c1"># 文字绘制</span>
 </pre></div>
 </div>
-<p>每个具体的后端（如 Genesis）必须实现这些接口。</p>
+<p>每个 <code class="docutils literal notranslate"><span class="pre">*Base</span></code> 类都有一个 <code class="docutils literal notranslate"><span class="pre">supports</span></code> 属性，声明后端支持哪些特性：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">WindowSupportState</span><span class="p">(</span><span class="n">SupportState</span><span class="p">):</span>
+    <span class="n">set_title</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>        <span class="c1"># 是否支持修改标题</span>
+    <span class="n">set_icon</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>         <span class="c1"># 是否支持修改图标</span>
+    <span class="n">set_pos</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>          <span class="c1"># 是否支持移动窗口</span>
+    <span class="n">set_size</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>         <span class="c1"># 是否支持调整大小</span>
+    <span class="n">transparent</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>      <span class="c1"># 是否支持透明度</span>
+    <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>       <span class="c1"># 是否支持全屏</span>
+</pre></div>
+</div>
+<p>这种设计 allows Charmy 在运行时查询后端能力，选择最优的绘制方式。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>后端模板中使用了一个**循环引用设计**：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">WhateverBase</span><span class="p">:</span>
+    <span class="n">Backend</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Backend</span><span class="p">]</span> <span class="o">=</span> <span class="n">Backend</span>  <span class="c1"># 引用 Backend 类</span>
+</pre></div>
+</div>
+<p>每个 <code class="docutils literal notranslate"><span class="pre">*Base</span></code> 类持有 <code class="docutils literal notranslate"><span class="pre">Backend</span></code> 类引用，而 <code class="docutils literal notranslate"><span class="pre">Backend</span></code> 类又持有
+各个 <code class="docutils literal notranslate"><span class="pre">*Base</span></code> 类引用。这是为了方便后端内部调度，但会导致
+<strong>Sphinx autodoc 在生成文档时出现递归深度溢出</strong>。
+解决方案见 <code class="docutils literal notranslate"><span class="pre">docs/source/conf.py</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">_skip_circular_refs</span></code> 函数。</p>
+</div>
 </section>
 <section id="genesis">
 <h2>Genesis 后端<a class="headerlink" href="#genesis" title="链接到此标题。">¶</a></h2>
 <p>目前唯一的后端实现，使用 <strong>SDL2</strong> 创建和管理窗口，使用 <strong>Cairo</strong> 进行 2D 渲染。</p>
+<p><strong>SDL2 负责：</strong></p>
 <ul class="simple">
-<li><p><strong>SDL2</strong> 负责：窗口创建、事件循环、像素缓冲区管理</p></li>
-<li><p><strong>Cairo</strong> 负责：矢量图形渲染、文字渲染、图像合成</p></li>
+<li><p>窗口创建与管理</p></li>
+<li><p>事件循环（鼠标、键盘、窗口事件）</p></li>
+<li><p>像素缓冲区管理（SDL Surface）</p></li>
+<li><p>窗口刷新 (SDL_UpdateWindowSurface)</p></li>
 </ul>
+<p><strong>Cairo 负责：</strong></p>
+<ul class="simple">
+<li><p>矢量图形渲染（线条、形状、贝塞尔曲线）</p></li>
+<li><p>文字渲染</p></li>
+<li><p>图像合成</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>Genesis 后端的一个设计特点是：Cairo 绘制到内存中的 <code class="docutils literal notranslate"><span class="pre">ImageSurface</span></code>，
+然后通过 <code class="docutils literal notranslate"><span class="pre">ctypes.memmove</span></code> 直接拷贝到 SDL2 的窗口 Surface。
+这种方式避免了额外的编码/解码开销，性能较好。</p>
+</div>
 </section>
 <section id="id4">
-<h2>渲染流程<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>控件 → 图形对象 (DrawnShape/DrawnLine/DrawnText)
-   ↓
-后端 ShapeBase/LineBase/TextBase
-   ↓
-Cairo 绘制到 ImageSurface
-   ↓
-ctypes.memmove 拷贝到 SDL2 surface
-   ↓
-SDL_UpdateWindowSurface 刷新显示
+<h2>事件桥接<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
+<p>Genesis 后端通过 <code class="docutils literal notranslate"><span class="pre">sdl2_handle_event()</span></code> 方法将 SDL2 的事件转换为 Charmy 事件：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># genesis.py (简化)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sdl2_handle_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">sdl2</span><span class="o">.</span><span class="n">SDL_MOUSEMOTION</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">charmy_window</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">MouseMove</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+        <span class="k">case</span> <span class="n">sdl2</span><span class="o">.</span><span class="n">SDL_MOUSEBUTTONDOWN</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">charmy_window</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">MousePress</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+        <span class="k">case</span> <span class="n">sdl2</span><span class="o">.</span><span class="n">SDL_MOUSEBUTTONUP</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">charmy_window</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">MouseRelease</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+        <span class="k">case</span> <span class="n">sdl2</span><span class="o">.</span><span class="n">SDL_WINDOWEVENT</span><span class="p">:</span>
+            <span class="c1"># 处理窗口大小变化、移动、焦点事件</span>
+            <span class="o">...</span>
+        <span class="k">case</span> <span class="n">sdl2</span><span class="o">.</span><span class="n">SDL_QUIT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">charmy_window</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>渲染流程<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
+<p>完整的帧渲染流程：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mainloop() 每帧调用
+   │
+   ▼
+Window.update()
+   │
+   ├─ Widget.draw() → 控件更新图形对象
+   │     ├─ Button: 更新 DrawnShape + DrawnText
+   │     └─ Container: 递归绘制所有子控件
+   │
+   ├─ Window.draw_frame()
+   │     ├─ 绘制背景
+   │     ├─ 绘制所有 DrawnLine
+   │     ├─ 绘制所有 DrawnShape
+   │     └─ 绘制所有 DrawnText
+   │
+   ├─ Cairo 渲染到 ImageSurface
+   │
+   ├─ ctypes.memmove → SDL2 Surface
+   │
+   └─ SDL_UpdateWindowSurface → 屏幕显示
 </pre></div>
 </div>
 </section>
 <section id="fallback">
 <h2>Fallback 机制<a class="headerlink" href="#fallback" title="链接到此标题。">¶</a></h2>
 <p>Charmy 的线条和形状系统支持 <strong>fallback</strong>——如果后端不支持某种图形类型，
-会自动降级为其他类型绘制。例如，如果后端不支持椭圆弧，它会被分解为
-多条三次贝塞尔曲线来近似绘制。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 后端不支持 CircleArc → 自动 fallback 到 CubicBezier 序列</span>
+会自动降级为其他类型绘制。</p>
+<p>例如，Genesis 后端支持 <a href="#id6"><span class="problematic" id="id7">``</span></a>CircleArc``（圆弧）的直接绘制，
+但如果某个假想的后端只支持 <a href="#id8"><span class="problematic" id="id9">``</span></a>CubicBezier``（三次贝塞尔曲线），
+Charmy 会自动将圆弧分解为多条贝塞尔曲线：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 用户代码（不关心后端是否支持）</span>
 <span class="n">arc</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">styles</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">CircleArc</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
                                  <span class="n">start_orient</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_orient</span><span class="o">=</span><span class="mi">270</span><span class="p">)</span>
 <span class="n">cm</span><span class="o">.</span><span class="n">graphics</span><span class="o">.</span><span class="n">DrawnLine</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">arc</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>更多细节请参考 <code class="docutils literal notranslate"><span class="pre">charmy/backend/</span></code> 目录下的源代码和测试文件。</p>
+<p>Fallback 链示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CircleArc → 不支持 → CubicBezier(s) → 还不支持？ → PolyLine(s)
+                                                           ↓
+                                                     Line(s)
+                                                           ↓
+                                                    警告：无法绘制
+</pre></div>
+</div>
+<p>这种设计来自于 <code class="docutils literal notranslate"><span class="pre">shape.py</span></code> 中每个线条类的 <code class="docutils literal notranslate"><span class="pre">fallback()</span></code> 方法：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CircleArc</span><span class="p">(</span><span class="n">Curve</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_from</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="c1"># 转换为多次贝塞尔曲线</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">CubicBezier</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="n">CubicBezier</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>更多细节请参考 <code class="docutils literal notranslate"><span class="pre">charmy/backend/</span></code> 目录下的源代码和 <code class="docutils literal notranslate"><span class="pre">tests/</span></code> 目录下的测试文件。</p>
 </section>
 </section>
 
@@ -428,9 +543,11 @@ SDL_UpdateWindowSurface 刷新显示
             <ul>
 <li><a class="reference internal" href="#">抽象层</a><ul>
 <li><a class="reference internal" href="#id2">为什么需要抽象层</a></li>
-<li><a class="reference internal" href="#id3">后端模板</a></li>
+<li><a class="reference internal" href="#id3">后端模块的划分</a></li>
+<li><a class="reference internal" href="#template-py">后端模板 (template.py)</a></li>
 <li><a class="reference internal" href="#genesis">Genesis 后端</a></li>
-<li><a class="reference internal" href="#id4">渲染流程</a></li>
+<li><a class="reference internal" href="#id4">事件桥接</a></li>
+<li><a class="reference internal" href="#id5">渲染流程</a></li>
 <li><a class="reference internal" href="#fallback">Fallback 机制</a></li>
 </ul>
 </li>

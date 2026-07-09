@@ -220,7 +220,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/genesis.html">genesis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/loader.html">loader</a></li>
@@ -310,12 +310,17 @@
         <article role="main" id="furo-main-content">
           <section id="id1">
 <h1>窗口配置<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
-<p>你可以通过属性来读取和修改窗口的各项配置。</p>
+<p>你可以通过属性来读取和修改窗口的各项配置。所有属性修改会**实时同步**到后端窗口。</p>
+<div class="admonition caution">
+<p class="admonition-title">小心</p>
+<p>窗口属性必须在 <code class="docutils literal notranslate"><span class="pre">mainloop()</span></code> 之前或事件回调中设置。
+如果在主循环运行期间从非 UI 线程修改属性，可能导致未定义行为。</p>
+</div>
 <section id="id2">
 <h2>窗口标题<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">()</span>
-<span class="n">window</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;我的窗口&quot;</span>          <span class="c1"># 设置标题</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>               <span class="c1"># 读取标题</span>
+<span class="n">window</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;我的窗口&quot;</span>          <span class="c1"># 设置标题，立即更新窗口标题栏</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>               <span class="c1"># 读取当前标题</span>
 </pre></div>
 </div>
 </section>
@@ -325,29 +330,69 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>                <span class="c1"># 读取大小</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>修改 <code class="docutils literal notranslate"><span class="pre">size</span></code> 属性会触发后端的 <code class="docutils literal notranslate"><span class="pre">set_size()</span></code> 方法，同时重新初始化 Cairo 画布
+（调用 <code class="docutils literal notranslate"><span class="pre">cairo_reinit_surface()</span></code>）。因此窗口上已有的绘制内容会被清空。</p>
+</div>
 </section>
 <section id="id4">
 <h2>窗口位置<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>           <span class="c1"># 设置位置 (x, y)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>           <span class="c1"># 设置位置 (x, y)，相对于屏幕左上角</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>                 <span class="c1"># 读取位置</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>窗口位置由后端 SDL2 管理，<code class="docutils literal notranslate"><span class="pre">pos</span></code> setter 会调用 <code class="docutils literal notranslate"><span class="pre">SDL_SetWindowPosition</span></code>。
+Genesis 后端会在窗口初始化时自动同步 SDL2 的窗口位置到 Charmy。</p>
 </div>
 </section>
 <section id="id5">
 <h2>窗口背景<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
-<p>背景色使用 (R, G, B) 或 (R, G, B, A) 元组表示：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>   <span class="c1"># 白色背景</span>
-<span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>    <span class="c1"># 半透明黑色背景</span>
+<p>背景使用 (R, G, B) 或 (R, G, B, A) 元组表示，值范围为 0-255：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>      <span class="c1"># 白色背景（不透明）</span>
+<span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>       <span class="c1"># 半透明黑色背景（A=200）</span>
+<span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>      <span class="c1"># 灰色背景（默认值）</span>
 </pre></div>
 </div>
+<p>背景色修改会触发窗口重绘。如果设置为透明背景（A=0），
+后端仍会绘制一个透明层，但不会遮挡后面的内容。</p>
 </section>
 <section id="id6">
 <h2>窗口图标<a class="headerlink" href="#id6" title="链接到此标题。">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="s2">&quot;path/to/icon.png&quot;</span>   <span class="c1"># 从文件设置</span>
-<span class="c1"># 或使用 bytes 数据</span>
+<p>图标支持多种格式：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 从文件路径设置</span>
+<span class="n">window</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="s2">&quot;path/to/icon.png&quot;</span>
+
+<span class="c1"># 从 bytes 数据设置</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;icon.png&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">window</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># 从 PIL Image 对象设置</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;icon.png&quot;</span><span class="p">)</span>
+<span class="n">window</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">img</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>Genesis 后端通过 SDL2 的 <code class="docutils literal notranslate"><span class="pre">SDL_SetWindowIcon</span></code> 设置图标，
+内部将图标数据写入临时文件再加载。图标格式需要 SDL2 支持的类型（通常是 PNG 或 BMP）。</p>
+</div>
+</section>
+<section id="id7">
+<h2>其他窗口属性<a class="headerlink" href="#id7" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 窗口可见性（只读）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">visible</span><span class="p">)</span>             <span class="c1"># True / False</span>
+
+<span class="c1"># 窗口是否存活（只读，调用 destroy() 后为 False）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">_alive</span><span class="p">)</span>              <span class="c1"># 注意：以下划线开头的属性为内部属性</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>更多窗口相关的 API 请参考 <a class="reference internal" href="../api/widgets/window.html"><span class="doc">WindowEntity</span></a> 的自动生成文档。</p>
 </div>
 </section>
 </section>
@@ -413,6 +458,7 @@
 <li><a class="reference internal" href="#id4">窗口位置</a></li>
 <li><a class="reference internal" href="#id5">窗口背景</a></li>
 <li><a class="reference internal" href="#id6">窗口图标</a></li>
+<li><a class="reference internal" href="#id7">其他窗口属性</a></li>
 </ul>
 </li>
 </ul>

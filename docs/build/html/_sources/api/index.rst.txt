@@ -1,5 +1,5 @@
-API
-===
+charmy
+======
 
 .. autoclasstree:: charmy
    :full:

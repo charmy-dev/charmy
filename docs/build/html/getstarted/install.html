@@ -220,7 +220,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/genesis.html">genesis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/loader.html">loader</a></li>
@@ -319,6 +319,11 @@
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>charmy-gui
 </pre></div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>项目仍处于早期开发阶段，可能尚未发布到 PyPI。
+如果上方命令失败，请使用下面的源码安装方式。</p>
+</div>
 </section>
 <section id="id1">
 <h2>从源码安装<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h2>
@@ -327,23 +332,64 @@
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> 会以可编辑模式安装，你对源码的修改会即时生效，
+适合开发和调试。</p>
+</div>
 </section>
 <section id="id2">
 <h2>后端依赖<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
-<p>Charmy 的架构将 GUI 框架分为三层，底层是**后端**。目前唯一可用的后端是 <strong>Genesis</strong>，
-它使用 SDL2 创建窗口、Cairo 进行渲染。</p>
+<p>Charmy 将底层图形框架抽象为**后端**。目前唯一可用的后端是 <strong>Genesis</strong>，
+它使用 SDL2 创建窗口、Cairo 进行 2D 渲染。</p>
 <p>安装 Genesis 后端所需的依赖：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pysdl2<span class="w"> </span>pysdl2-dll<span class="w"> </span>pycairo
 </pre></div>
 </div>
+<p>各平台注意事项：</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>平台</p></th>
+<th class="head"><p>注意事项</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Windows</p></td>
+<td><dl class="simple">
+<dt>通常直接 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> 即可，无需额外配置。</dt><dd><p>如果 <code class="docutils literal notranslate"><span class="pre">pycairo</span></code> 安装失败，尝试从 <a class="reference external" href="https://github.com/pygobject/pycairo">https://github.com/pygobject/pycairo</a> 下载 wheel。</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p>macOS</p></td>
+<td><dl class="simple">
+<dt>可能需要先安装 Cairo 库： <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">cairo</span></code></dt><dd><p>然后再 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pycairo</span></code></p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><p>Linux (Debian/Ubuntu)</p></td>
+<td><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">libcairo2-dev</span> <span class="pre">pkg-config</span></code></dt><dd><p>然后再 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pycairo</span></code></p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Linux (Fedora/RHEL)</p></td>
+<td><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">dnf</span> <span class="pre">install</span> <span class="pre">cairo-devel</span> <span class="pre">pkg-config</span></code></dt><dd><p>然后再 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pycairo</span></code></p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
-<ul class="simple">
-<li><p>如果安装 <code class="docutils literal notranslate"><span class="pre">pycairo</span></code> 失败，请先安装系统级的 Cairo 库</p></li>
-<li><p>Windows 用户通常可以直接通过 pip 安装，无需额外配置</p></li>
-<li><p>macOS 用户可能需要 <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">cairo</span></code></p></li>
-<li><p>Linux 用户可能需要 <code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">install</span> <span class="pre">libcairo2-dev</span></code> （或对应发行版的包管理器）</p></li>
-</ul>
+<p><code class="docutils literal notranslate"><span class="pre">pysdl2-dll</span></code> 包含了 SDL2 的预编译动态库，通常情况下不需要手动安装 SDL2。
+如果遇到 SDL2 相关的错误，可以尝试从 <a class="reference external" href="https://libsdl.org">https://libsdl.org</a> 下载最新版本的 SDL2。</p>
 </div>
 </section>
 <section id="id3">
@@ -356,6 +402,23 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </pre></div>
 </div>
 <p>如果出现一个灰色窗口，说明安装成功！</p>
+</section>
+<section id="id4">
+<h2>常见问题<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
+<p><strong>Q: 导入 charmy 时报错 ``No module named 'sdl2'``</strong></p>
+<p>A: 没有安装 SDL2 依赖。执行 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pysdl2</span> <span class="pre">pysdl2-dll</span></code></p>
+<p><strong>Q: 导入 charmy 时报错 ``No module named 'cairo'``</strong></p>
+<p>A: 没有安装 Cairo 依赖。执行 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pycairo</span></code>。如果安装失败，请参考上方各平台注意事项。</p>
+<p><strong>Q: 运行后窗口一闪而过</strong></p>
+<p>A: 检查代码中是否有 <code class="docutils literal notranslate"><span class="pre">cm.mainloop()</span></code>。如果缺少主循环，程序会立即退出。</p>
+<p><strong>Q: 窗口显示但不响应鼠标</strong></p>
+<p>A: 确认 SDL2 事件循环在工作。在 <code class="docutils literal notranslate"><span class="pre">mainloop()</span></code> 之前添加以下代码测试：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;鼠标点击: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">mouse_pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">on_click</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -419,6 +482,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <li><a class="reference internal" href="#id1">从源码安装</a></li>
 <li><a class="reference internal" href="#id2">后端依赖</a></li>
 <li><a class="reference internal" href="#id3">验证安装</a></li>
+<li><a class="reference internal" href="#id4">常见问题</a></li>
 </ul>
 </li>
 </ul>

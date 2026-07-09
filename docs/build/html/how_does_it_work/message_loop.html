@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="API" href="../api/index.html"><link rel="prev" title="抽象层" href="abstraction_layer.html">
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="charmy" href="../api/index.html"><link rel="prev" title="抽象层" href="abstraction_layer.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>消息循环（事件循环） - Charmy GUI 0.1.0 文档</title>
@@ -220,7 +220,7 @@
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">消息循环（事件循环）</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">charmy</a><input aria-label="Toggle navigation of charmy" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/backend/index.html">charmy.backend</a><input aria-label="Toggle navigation of charmy.backend" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/genesis.html">genesis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api/backend/loader.html">loader</a></li>
@@ -311,63 +311,165 @@
           <section id="id1">
 <h1>消息循环（事件循环）<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
 <p>Charmy 使用**事件驱动**模型：程序启动后进入一个死循环，不断处理窗口事件和更新界面。</p>
-<p>主循环结构
-----------:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cm.mainloop()
-  └─ 遍历所有 CharmyManager
-       └─ 遍历所有 Window
-            ├─ 处理 SDL2 事件（鼠标、键盘、窗口变化）
-            ├─ 绘制所有需要重绘的控件
-            └─ 触发 WidgetUpdate 事件
+<section id="id2">
+<h2>主循环结构<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cm.mainloop(interval=0.01)
+  │
+  ├─ 遍历所有 CharmyManager.instances
+  │    （每个 manager 管理一组使用同一后端的窗口）
+  │    │
+  │    └─ manager.update()
+  │         │
+  │         ├─ 遍历 manager 下所有存活窗口
+  │         │    │
+  │         │    └─ window.update()
+  │         │         │
+  │         │         ├─ 触发 WidgetUpdate 事件
+  │         │         ├─ Container.draw_children()
+  │         │         │    └─ 递归绘制所有子控件
+  │         │         ├─ Window.draw_frame()
+  │         │         │    ├─ 绘制背景
+  │         │         │    ├─ 后端 LineBase.draw_line()
+  │         │         │    ├─ 后端 ShapeBase.draw_shape()
+  │         │         │    └─ 后端 TextBase.draw_text()
+  │         │         ├─ 后端 update()
+  │         │         │    ├─ Cairo → SDL Surface 拷贝
+  │         │         │    ├─ SDL_UpdateWindowSurface()
+  │         │         │    └─ 处理 SDL2 事件队列
+  │         │         └─ 清空 _redraw_regions
+  │         │
+  │         └─ 触发 WidgetUpdate(manager) 事件
+  │
+  ├─ 如果没有存活窗口 → manager.destroy()
+  │
   └─ time.sleep(interval)  ← 控制帧率
 </pre></div>
 </div>
-<p>当前，事件主要使用**同步单线程**方式处理（可选择启用多线程）。</p>
-<pre  class="mermaid">
-        graph TD
-A[主循环开始] --&gt; B{有事件或需要重绘？}
-B -- 是 --&gt; C[处理事件并绘制]
-B -- 否 --&gt; D[等待 interval 秒]
-D --&gt; B
-C --&gt; B
-    </pre><section id="id2">
-<h2>事件系统<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
-<p>Charmy 的事件系统采用**发布-订阅模式**：</p>
-<ul class="simple">
-<li><p><strong>事件类型</strong>：用 dataclass 类表示（如 <code class="docutils literal notranslate"><span class="pre">MouseClick</span></code>、<code class="docutils literal notranslate"><span class="pre">WidgetResize</span></code>）</p></li>
-<li><p><strong>事件绑定</strong>：通过 <code class="docutils literal notranslate"><span class="pre">widget.bind(event_type,</span> <span class="pre">callback)</span></code> 注册</p></li>
-<li><p><strong>事件触发</strong>：通过 <code class="docutils literal notranslate"><span class="pre">widget.trigger(event_obj)</span></code> 触发</p></li>
-<li><p><strong>条件过滤</strong>：支持按条件绑定，如只响应鼠标左键点击</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;鼠标在 </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">mouse_pos</span><span class="si">}</span><span class="s2"> 位置点击了按钮&quot;</span><span class="p">)</span>
+</section>
+<section id="charmymanager">
+<h2>CharmyManager 生命周期<a class="headerlink" href="#charmymanager" title="链接到此标题。">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">CharmyManager</span></code> 是窗口管理器，一个后端对应一个 Manager：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 自动创建（不指定 manager 时）</span>
+<span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">()</span>
+<span class="c1"># → 内部自动创建 CharmyManager(genesis)</span>
+<span class="c1"># → window.parent = manager</span>
 
-<span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">on_click</span><span class="p">,</span>
-            <span class="n">conditions</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;button&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>  <span class="c1"># 只响应左键</span>
+<span class="c1"># 手动指定 manager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">charmy.cmm</span><span class="w"> </span><span class="kn">import</span> <span class="n">CharmyManager</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">CharmyManager</span><span class="p">(</span><span class="s2">&quot;genesis&quot;</span><span class="p">)</span>
+<span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">manager</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<ul class="simple">
+<li><p>Manager 使用 <code class="docutils literal notranslate"><span class="pre">CharmyRegisteredObject.instances</span></code> 追踪所有实例</p></li>
+<li><p>所有 Manager 通过 <code class="docutils literal notranslate"><span class="pre">CharmyManager.instances</span></code> 类变量可全局访问</p></li>
+<li><p>当 Manager 下所有窗口都关闭后，Manager 自动销毁（<code class="docutils literal notranslate"><span class="pre">_alive</span> <span class="pre">=</span> <span class="pre">False</span></code>）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code> 在所有 Manager 都销毁后退出</p></li>
+</ul>
 </div>
 </section>
 <section id="id3">
-<h2>事件链<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<h2>增量重绘机制<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<p>为了提升性能，Charmy 不会每帧重绘整个窗口，而是只重绘发生变化的区域：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># window 内部维护 _redraw_regions 列表</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">_redraw_regions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ShapeRange</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>当控件的某个属性改变时，该控件的边界矩形被加入 <code class="docutils literal notranslate"><span class="pre">_redraw_regions</span></code>。
+在下一帧，只重绘这些区域中的图形对象。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Window._find_need_redraw() 的实现逻辑</span>
+<span class="k">for</span> <span class="n">drawn_obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_drawing_list</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redraw_regions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">drawn_obj</span><span class="o">.</span><span class="n">boundary</span> <span class="n">与</span> <span class="n">region</span> <span class="n">有重叠</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">drawn_obj</span><span class="p">)</span>  <span class="c1"># 需要重绘</span>
+
+<span class="c1"># 如果 _redraw_regions 包含整个窗口 → 强制全量重绘</span>
+<span class="k">if</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redraw_regions</span><span class="p">:</span>
+    <span class="n">force_redraw</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>可以通过 <code class="docutils literal notranslate"><span class="pre">DEBUG_FLAGS.MARK_REDRAWS</span> <span class="pre">=</span> <span class="pre">True</span></code> 来可视化重绘区域：
+每次被标记重绘的区域会显示为紫色半透明矩形。</p>
+</div>
+</section>
+<section id="id4">
+<h2>事件系统详解<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
+<p>Charmy 的事件系统采用**发布-订阅模式**，核心组件：</p>
+<ul class="simple">
+<li><p><strong>事件类型</strong>：用 <code class="docutils literal notranslate"><span class="pre">dataclass</span></code> 类表示，具有类型安全的事件匹配</p></li>
+<li><p><strong>EventHandling 混入类</strong>：提供 <code class="docutils literal notranslate"><span class="pre">bind()</span></code> / <code class="docutils literal notranslate"><span class="pre">trigger()</span></code> / <code class="docutils literal notranslate"><span class="pre">on()</span></code> 方法</p></li>
+<li><p><strong>EventTask</strong>：代表一个绑定的任务，包含回调函数和条件</p></li>
+</ul>
+<section id="id5">
+<h3>事件类型层次结构<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Event（基类）
+├─ EventTriggered           ── 任意事件触发时触发
+├─ WidgetEvent              ── 控件事件基类
+│   ├─ WidgetUpdate         ── 控件/窗口更新
+│   ├─ WidgetDraw           ── 控件/窗口重绘
+│   ├─ WidgetConfigure      ── 配置改变
+│   ├─ WidgetResize         ── 大小改变
+│   ├─ WidgetMove           ── 位置改变
+│   ├─ FocusGain            ── 获得焦点
+│   ├─ FocusLoss            ── 失去焦点
+│   └─ WidgetDestroy        ── 销毁
+├─ WindowEvent              ── 窗口事件基类
+├─ MouseRawEvent            ── 鼠标原始事件
+│   ├─ MouseMove            ── 鼠标移动
+│   ├─ MousePress           ── 鼠标按下
+│   ├─ MouseRelease         ── 鼠标释放
+│   └─ MouseScroll          ── 滚轮
+└─ MouseInteractEvent       ── 鼠标交互事件
+    ├─ MouseEnter           ── 鼠标进入
+    ├─ MouseLeave           ── 鼠标离开
+    └─ MouseClick           ── 鼠标点击
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>事件链<a class="headerlink" href="#id6" title="链接到此标题。">¶</a></h3>
 <p>某些事件会自动级联触发其他事件：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MousePress + MouseRelease
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MousePress + MouseRelease  (在同一控件上)
     ↓
   MouseClick
     ↓
-  on_click() 回调
+  回调函数执行
 </pre></div>
 </div>
-<p>控件的鼠标悬停跟踪也是通过事件链实现的：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MouseMove
-  ├─ 计算鼠标下有哪些控件
-  ├─ 对每个控件触发 MouseMove
-  └─ 检测进入/离开 → 触发 MouseEnter / MouseLeave
+<p>鼠标悬停跟踪：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SDL_MOUSEMOTION
+    ↓
+  MouseMove  →  event.call_chain()
+    │
+    ├─ Container.get_mouse_hover(pos)
+    │    └─ 递归检查所有子控件，返回悬停路径
+    │
+    ├─ 对悬停路径上的每个控件触发 MouseMove
+    │
+    ├─ 检测新进入的控件 → MouseEnter
+    │
+    └─ 检测离开的控件 → MouseLeave
 </pre></div>
 </div>
-<p>更多细节请参考 <a class="reference internal" href="../api/event.html"><span class="doc">事件API</span></a>。</p>
 </section>
-<section id="id4">
-<h2>多线程<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
+<section id="id7">
+<h3>条件绑定<a class="headerlink" href="#id7" title="链接到此标题。">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">bind()</span></code> 支持按条件过滤事件：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">on_click</span><span class="p">,</span>
+            <span class="n">conditions</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;button&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>  <span class="c1"># 只响应左键</span>
+
+<span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">on_right_click</span><span class="p">,</span>
+            <span class="n">conditions</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;button&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>  <span class="c1"># 只响应右键</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2>多线程<a class="headerlink" href="#id8" title="链接到此标题。">¶</a></h2>
 <div class="admonition caution">
 <p class="admonition-title">小心</p>
 <p>多线程支持目前处于**实验阶段**，建议在主线程中完成所有 UI 操作。</p>
@@ -375,17 +477,38 @@ C --&gt; B
 <p>Charmy 支持将事件处理任务分发到工作线程，避免耗时操作阻塞 UI 刷新：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">heavy_task</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
     <span class="c1"># 耗时操作，不会阻塞 UI</span>
-    <span class="o">...</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;任务完成&quot;</span><span class="p">)</span>
 
 <span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">heavy_task</span><span class="p">,</span> <span class="n">multithread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>启用多线程时，回调函数在**独立线程**中运行，不能直接操作 Charmy 的 UI 对象。
+如果需要更新 UI，请使用 <code class="docutils literal notranslate"><span class="pre">EventTask</span></code> 的消息传递机制（待实现）。</p>
+</div>
 </section>
-<section id="id5">
-<h2>异步<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
-<div class="caution admonition">
-<p class="admonition-title">等待后续开发</p>
-<p>异步支持目前尚未实现，计划在后续版本中加入。</p>
+<section id="id9">
+<h2>实例追踪系统<a class="headerlink" href="#id9" title="链接到此标题。">¶</a></h2>
+<p>Charmy 使用弱引用（<code class="docutils literal notranslate"><span class="pre">weakref</span></code>）追踪所有 <code class="docutils literal notranslate"><span class="pre">CharmyRegisteredObject</span></code> 的实例：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 每个子类自动拥有独立的实例列表</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="o">.</span><span class="n">instances</span><span class="p">)</span>         <span class="c1"># 所有 Button 实例</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="o">.</span><span class="n">instances</span><span class="p">)</span>         <span class="c1"># 所有 Window 实例</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">CharmyManager</span><span class="o">.</span><span class="n">instances</span><span class="p">)</span>     <span class="c1"># 所有 Manager 实例</span>
+
+<span class="c1"># 通过 ID 查找实例</span>
+<span class="n">btn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="s2">&quot;Button0&quot;</span><span class="p">]</span>
+
+<span class="c1"># 实例被销毁后自动从列表移除（WeakSet）</span>
+<span class="k">del</span> <span class="n">btn</span>  <span class="c1"># Button0 不再出现在 .instances 中</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">参见</p>
+<p>更多事件 API 细节请参考 <a class="reference internal" href="../api/event.html"><span class="doc">event 模块</span></a> 和
+<a class="reference internal" href="../api/utils/event_types.html"><span class="doc">event_types 模块</span></a> 的自动生成文档。</p>
 </div>
 </section>
 </section>
@@ -400,7 +523,7 @@ C --&gt; B
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">API</div>
+                <div class="title">charmy</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -446,10 +569,17 @@ C --&gt; B
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">消息循环（事件循环）</a><ul>
-<li><a class="reference internal" href="#id2">事件系统</a></li>
-<li><a class="reference internal" href="#id3">事件链</a></li>
-<li><a class="reference internal" href="#id4">多线程</a></li>
-<li><a class="reference internal" href="#id5">异步</a></li>
+<li><a class="reference internal" href="#id2">主循环结构</a></li>
+<li><a class="reference internal" href="#charmymanager">CharmyManager 生命周期</a></li>
+<li><a class="reference internal" href="#id3">增量重绘机制</a></li>
+<li><a class="reference internal" href="#id4">事件系统详解</a><ul>
+<li><a class="reference internal" href="#id5">事件类型层次结构</a></li>
+<li><a class="reference internal" href="#id6">事件链</a></li>
+<li><a class="reference internal" href="#id7">条件绑定</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id8">多线程</a></li>
+<li><a class="reference internal" href="#id9">实例追踪系统</a></li>
 </ul>
 </li>
 </ul>
@@ -469,440 +599,5 @@ C --&gt; B
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/translations.js?v=540d3cec"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
-
-
-
-
-
-const initStyles = () => {
-    const defaultStyle = document.createElement('style');
-    defaultStyle.textContent = `pre.mermaid {
-    /* Same as .mermaid-container > pre */
-    display: block;
-    width: 100%;
-}
-
-pre.mermaid > svg {
-    /* Same as .mermaid-container > pre > svg */
-    height: 500px;
-    width: 100%;
-    max-width: 100% !important;
-}`;
-    document.head.appendChild(defaultStyle);
-
-    const fullscreenStyle = document.createElement('style');
-    fullscreenStyle.textContent = `.mermaid-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-.mermaid-container > pre {
-    display: block;
-    width: 100%;
-}
-
-.mermaid-container > pre > svg {
-    height: 500px;
-    width: 100%;
-    max-width: 100% !important;
-}
-
-.mermaid-fullscreen-btn {
-    width: 28px;
-    height: 28px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    font-size: 14px;
-    line-height: 1;
-    padding: 0;
-    color: #333;
-}
-
-.mermaid-fullscreen-btn:hover {
-    opacity: 100% !important;
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-    transform: scale(1.1);
-}
-
-.mermaid-fullscreen-btn.dark-theme {
-    background: rgba(50, 50, 50, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #e0e0e0;
-}
-
-.mermaid-fullscreen-btn.dark-theme:hover {
-    background: rgba(60, 60, 60, 1);
-    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
-}
-
-.mermaid-fullscreen-modal {
-    display: none;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 95vw;
-    height: 100vh;
-    background: rgba(255, 255, 255, 0.98);
-    z-index: 9999;
-    padding: 20px;
-    overflow: auto;
-}
-
-.mermaid-fullscreen-modal.dark-theme {
-    background: rgba(0, 0, 0, 0.98);
-}
-
-.mermaid-fullscreen-modal.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mermaid-container-fullscreen {
-    position: relative;
-    width: 95vw;
-    height: 90vh;
-    max-width: 95vw;
-    max-height: 90vh;
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    overflow: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mermaid-container-fullscreen.dark-theme {
-    background: #1a1a1a;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-}
-
-.mermaid-container-fullscreen pre.mermaid {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mermaid-container-fullscreen .mermaid svg {
-    height: 100% !important;
-    width: 100% !important;
-    cursor: grab;
-}
-
-.mermaid-fullscreen-close {
-    position: fixed !important;
-    top: 20px !important;
-    right: 20px !important;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 0.2s;
-    font-size: 24px;
-    line-height: 1;
-    color: #333;
-}
-
-.mermaid-fullscreen-close:hover {
-    background: white;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    transform: scale(1.1);
-}
-
-.mermaid-fullscreen-close.dark-theme {
-    background: rgba(50, 50, 50, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #e0e0e0;
-}
-
-.mermaid-fullscreen-close.dark-theme:hover {
-    background: rgba(60, 60, 60, 1);
-    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
-}
-
-.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
-    display: none !important;
-}`;
-    document.head.appendChild(fullscreenStyle);
-}
-
-// Detect if page has dark background
-const isDarkTheme = () => {
-    // We use a set of heuristics:
-    // 1. Check for common dark mode classes or attributes
-    // 2. Check computed background color brightness
-    if (document.documentElement.classList.contains('dark') ||
-        document.documentElement.getAttribute('data-theme') === 'dark' ||
-        document.body.classList.contains('dark') ||
-        document.body.getAttribute('data-theme') === 'dark') {
-        // console.log("Dark theme detected via class/attribute");
-        return true;
-    }
-    if (document.documentElement.classList.contains('light') ||
-        document.documentElement.getAttribute('data-theme') === 'light' ||
-        document.body.classList.contains('light') ||
-        document.body.getAttribute('data-theme') === 'light') {
-        // console.log("Light theme detected via class/attribute");
-        return false;
-    }
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        // console.log("Dark theme detected via prefers-color-scheme");
-        return true;
-    }
-    const bgColor = window.getComputedStyle(document.body).backgroundColor;
-    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
-    if (match) {
-        const r = parseInt(match[1]);
-        const g = parseInt(match[2]);
-        const b = parseInt(match[3]);
-        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-        // console.log("Background color brightness:", brightness);
-        return brightness < 128;
-    }
-    // console.log("No dark or light theme detected, defaulting to light theme");
-    return false;
-};
-
-let darkTheme = isDarkTheme();
-let modal = null;
-let modalContent = null;
-let previousScrollOffset = [window.scrollX, window.scrollY];
-
-const runMermaid = async (rerun) => {
-    console.log("Running mermaid diagrams, rerun =", rerun);
-    // clear all existing mermaid charts
-    let all_mermaids = document.querySelectorAll(".mermaid");
-
-    if (rerun) {
-        all_mermaids.forEach((el) => {
-            if(!el.hasAttribute("data-original-code")) {
-                // store original code
-                // console.log(`Storing original code for first run: `, el.innerHTML);
-                el.setAttribute('data-original-code', el.innerHTML);
-            }
-            if(el.getAttribute("data-processed") === "true") {
-                // remove and restore original
-                el.removeAttribute("data-processed");
-                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
-                el.innerHTML = el.getAttribute('data-original-code');
-            } else {
-                // store original code
-                // console.log(`Storing original code for re-run: `, el.innerHTML);
-                el.setAttribute('data-original-code', el.innerHTML);
-            }
-        });
-        await mermaid.run();
-    }
-
-    all_mermaids = document.querySelectorAll(".mermaid");
-    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
-
-    if ("False" === "True") {
-        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
-        if(mermaids_to_add_zoom > 0) {
-            var svgs = d3.selectAll("");
-            if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(() => runMermaid(false), 200);
-                return;
-            } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(() => runMermaid(false), 200);
-                return;
-            } else {
-                svgs.each(function() {
-                    var svg = d3.select(this);
-                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
-                    var inner = svg.select("g");
-                    var zoom = d3.zoom().on("zoom", function(event) {
-                        inner.attr("transform", event.transform);
-                    });
-                    svg.call(zoom);
-                });
-            }
-        }
-    } else if(all_mermaids.length !== mermaids_processed.length) {
-        // Wait for mermaid to process all diagrams
-        setTimeout(() => runMermaid(false), 200);
-        return;
-    }
-
-    // Stop here if not adding fullscreen capability
-    if ("True" !== "True") return;
-
-    if (modal !== null ) {
-        // Destroy existing modal
-        modal.remove();
-        modal = null;
-        modalContent = null;
-    }
-
-    modal = document.createElement('div');
-    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
-    modal.setAttribute('role', 'dialog');
-    modal.setAttribute('aria-modal', 'true');
-    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
-    modal.innerHTML = `
-        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
-        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
-    `;
-    document.body.appendChild(modal);
-
-    modalContent = modal.querySelector('.mermaid-container-fullscreen');
-    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    const closeModal = () => {
-        modal.classList.remove('active');
-        modalContent.innerHTML = '';
-        document.body.style.overflow = ''
-        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
-    };
-
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-        }
-    });
-
-    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
-        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
-            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
-            // Already processed, adjust button class if needed
-            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
-            if (existingBtn) {
-                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
-            }
-            return;
-        }
-
-        const container = document.createElement('div');
-        container.className = 'mermaid-container';
-        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
-        container.appendChild(mermaidDiv);
-
-        const fullscreenBtn = document.createElement('button');
-        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
-        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
-        fullscreenBtn.textContent = '⛶';
-        fullscreenBtn.style.opacity = '50%';
-
-        // Calculate dynamic position based on diagram's margin and padding
-        const diagramStyle = window.getComputedStyle(mermaidDiv);
-        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
-        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
-        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
-        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
-        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
-        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
-
-        fullscreenBtn.addEventListener('click', () => {
-            previousScrollOffset = [window.scroll, window.scrollY];
-            const clone = mermaidDiv.cloneNode(true);
-            modalContent.innerHTML = '';
-            modalContent.appendChild(clone);
-
-            const svg = clone.querySelector('svg');
-            if (svg) {
-                svg.removeAttribute('width');
-                svg.removeAttribute('height');
-                svg.style.width = '100%';
-                svg.style.height = 'auto';
-                svg.style.maxWidth = '100%';
-                svg.style.sdisplay = 'block';
-
-                if ("False" === "True") {
-                    setTimeout(() => {
-                        const g = svg.querySelector('g');
-                        if (g) {
-                            var svgD3 = d3.select(svg);
-                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
-                            var inner = svgD3.select("g");
-                            var zoom = d3.zoom().on("zoom", function(event) {
-                                inner.attr("transform", event.transform);
-                            });
-                            svgD3.call(zoom);
-                        }
-                    }, 100);
-                }
-            }
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        container.appendChild(fullscreenBtn);
-    });
-};
-
-const load = async () => {
-    initStyles();
-
-    await runMermaid(true);
-
-    const reRunIfThemeChanges = async () => {
-        const newDarkTheme = isDarkTheme();
-        if (newDarkTheme !== darkTheme) {
-            darkTheme = newDarkTheme;
-            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
-            await mermaid.initialize(
-                {...JSON.parse(
-                    `{"startOnLoad": false}`
-                ),
-                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
-                }
-            );
-            await runMermaid(true);
-        }
-    };
-
-    // Update theme classes when theme changes
-    const themeObserver = new MutationObserver(reRunIfThemeChanges);
-    themeObserver.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    themeObserver.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-};
-
-
-
-
-
-console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
-mermaid.initialize(
-    {...JSON.parse(
-        `{"startOnLoad": false}`
-    ),
-    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
-    }
-);
-
-window.addEventListener("load", load);</script>
     </body>
 </html>
