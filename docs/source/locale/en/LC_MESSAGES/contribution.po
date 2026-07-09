@@ -1,0 +1,187 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/contribution.rst:2
+msgid "贡献指南"
+msgstr ""
+
+#: ../../source/contribution.rst:6 ../../source/contribution.rst:18
+msgid "来自 ``中国`` 的一名高中生。"
+msgstr ""
+
+#: ../../source/contribution.rst:8
+msgid "编写了 ``charmy.this`` 的中文原文。"
+msgstr ""
+
+#: ../../source/contribution.rst:10
+msgid "xby_logo"
+msgstr ""
+
+#: ../../source/contribution.rst:13
+msgid "xby_content"
+msgstr ""
+
+#: ../../source/contribution.rst:20
+msgid "翻译了 ``charmy.this`` 的英文版本。进行了绝大部分`Charmy`的重构，并负责`SDL3+Cairo`后端的开发。"
+msgstr ""
+
+#: ../../source/contribution.rst:22
+msgid "rgzz666_logo"
+msgstr ""
+
+#: ../../source/contribution.rst:27
+msgid "GitHub 仓库：https://github.com/XiangQinxi/charmy"
+msgstr ""
+
+#: ../../source/contribution.rst:30
+msgid "如何贡献"
+msgstr ""
+
+#: ../../source/contribution.rst:32
+msgid "在 GitHub 上 Fork 本项目。"
+msgstr ""
+
+#: ../../source/contribution.rst:38
+msgid "为你的功能或 Bug 修复创建一个新分支。"
+msgstr ""
+
+#: ../../source/contribution.rst:44
+msgid "进行修改并提交。"
+msgstr ""
+
+#: ../../source/contribution.rst:51
+msgid "将分支推送到你的 Fork。"
+msgstr ""
+
+#: ../../source/contribution.rst:57
+msgid "向原始项目提交 Pull Request。"
+msgstr ""
+
+#: ../../source/contribution.rst:59
+msgid "清晰地描述你所做的改动"
+msgstr ""
+
+#: ../../source/contribution.rst:60
+msgid "如果涉及 API 变更，请更新相关文档"
+msgstr ""
+
+#: ../../source/contribution.rst:61
+msgid "如果可能，附上测试用例或运行截图"
+msgstr ""
+
+#: ../../source/contribution.rst:64
+msgid "构建文档"
+msgstr ""
+
+#: ../../source/contribution.rst:66
+msgid "本文档使用 Sphinx 构建。首先安装文档构建所需的依赖："
+msgstr ""
+
+#: ../../source/contribution.rst:72
+msgid "然后执行："
+msgstr ""
+
+#: ../../source/contribution.rst:80
+msgid "文档支持 **reStructuredText** （ ``.rst`` ）和 **Markdown** （ ``.md`` ）两种格式。"
+msgstr ""
+
+#: ../../source/contribution.rst:83
+msgid "API 文档自动生成"
+msgstr ""
+
+#: ../../source/contribution.rst:85
+msgid "``docs/source/api/`` 下的 API 文档由 ``autoapi.py`` **自动生成**，请勿手动编辑："
+msgstr ""
+
+#: ../../source/contribution.rst:95
+msgid "自动生成器会："
+msgstr ""
+
+#: ../../source/contribution.rst:97
+msgid "扫描 ``charmy/`` 包下所有 ``.py`` 文件（排除彩蛋和空壳文件）"
+msgstr ""
+
+#: ../../source/contribution.rst:98
+msgid "为每个模块生成 ``.rst`` 文件（包含 ``autoclasstree`` + ``automodule``）"
+msgstr ""
+
+#: ../../source/contribution.rst:99
+msgid "为每个子包生成 ``index.rst`` （包含 toctree，链接到所有子模块）"
+msgstr ""
+
+#: ../../source/contribution.rst:100
+msgid "自动识别 ``__init__.py`` 作为包索引"
+msgstr ""
+
+#: ../../source/contribution.rst:103
+msgid ""
+"``autoapi.py`` 会自动覆盖 ``api/`` 目录下的 ``.rst`` 文件。 如果你需要手动修改 API 文档，请修改源码中的 "
+"**docstring**，然后重新运行生成器。"
+msgstr ""
+
+#: ../../source/contribution.rst:107
+msgid "测试指南"
+msgstr ""
+
+#: ../../source/contribution.rst:109
+msgid "目前测试用例位于 ``tests/`` 目录下，主要是手动运行的可执行脚本："
+msgstr ""
+
+#: ../../source/contribution.rst:122
+msgid "添加新测试时："
+msgstr ""
+
+#: ../../source/contribution.rst:124
+msgid "功能测试：在 ``tests/`` 下创建 ``test_功能名.py``"
+msgstr ""
+
+#: ../../source/contribution.rst:125
+msgid "手动验证测试：创建可以直接 ``python tests/xxx.py`` 运行的脚本"
+msgstr ""
+
+#: ../../source/contribution.rst:126
+msgid "后续计划引入 ``pytest`` 自动化测试框架"
+msgstr ""
+
+#: ../../source/contribution.rst:129
+msgid "代码规范"
+msgstr ""
+
+#: ../../source/contribution.rst:131
+msgid "遵循 **PEP 8** 编码规范（https://www.python.org/dev/peps/pep-0008/）"
+msgstr ""
+
+#: ../../source/contribution.rst:132
+msgid "行长度限制：**100 字符**"
+msgstr ""
+
+#: ../../source/contribution.rst:133
+msgid "注释统一使用 **Sphinx** 或 **Google** 风格"
+msgstr ""
+
+#: ../../source/contribution.rst:134
+msgid "导入使用绝对导入，避免循环引用（必要时使用 ``TYPE_CHECKING``）"
+msgstr ""
+
+#: ../../source/contribution.rst:136
+msgid "注释风格示例："
+msgstr ""
+

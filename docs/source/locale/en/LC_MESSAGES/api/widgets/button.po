@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/api/widgets/button.rst:2
+msgid "button"
+msgstr ""
+
+#: charmy.widgets.button:1 of
+msgid "Charmy button."
+msgstr ""
+
+#: charmy.widgets.button.Button:1 charmy.widgets.button.Button.__init__:1 of
+msgid "Text buttons in Charmy."
+msgstr ""
+
+#: ../../source/api/widgets/button.rst
+msgid "参数"
+msgstr ""
+
+#: charmy.widgets.button.Button.__init__:3 of
+msgid "Parent of the button"
+msgstr ""
+
+#: charmy.widgets.button.Button.__init__:4 of
+msgid "Text shown on the button"
+msgstr ""
+
+#: charmy.widgets.button.Button.__init__:5 of
+msgid "Function to execute when clicked"
+msgstr ""
+
+#: charmy.widgets.button.Button.__init__:6 of
+msgid "Styles of the button"
+msgstr ""
+
+#: charmy.widgets.button.Button.__init__:7
+#: charmy.widgets.button.Button.__init__:8 of
+msgid "→ See `Widget.__init__(...)`"
+msgstr ""
+

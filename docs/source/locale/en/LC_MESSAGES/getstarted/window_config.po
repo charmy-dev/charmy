@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, XiangQinxi, rgzz666, littlewhitecloud
+# This file is distributed under the same license as the Charmy GUI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Charmy GUI \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/getstarted/window_config.rst:2
+msgid "窗口配置"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:4
+msgid "你可以通过属性来读取和修改窗口的各项配置。所有属性修改会 **实时同步** 到后端窗口。"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:7
+msgid "窗口属性必须在 ``mainloop()`` 之前或事件回调中设置。 如果在主循环运行期间从非 UI 线程修改属性，可能导致未定义行为。"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:11
+msgid "窗口标题"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:20
+msgid "窗口大小"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:28
+msgid ""
+"修改 ``size`` 属性会触发后端的 ``set_size()`` 方法，同时重新初始化 Cairo 画布 （调用 "
+"``cairo_reinit_surface()``）。因此窗口上已有的绘制内容会被清空。"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:32
+msgid "窗口位置"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:40
+msgid ""
+"窗口位置由后端 SDL2 管理，``pos`` setter 会调用 ``SDL_SetWindowPosition``。 Genesis "
+"后端会在窗口初始化时自动同步 SDL2 的窗口位置到 Charmy。"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:44
+msgid "窗口背景"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:46
+msgid "背景使用 (R, G, B) 或 (R, G, B, A) 元组表示，值范围为 0-255："
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:54
+msgid "背景色修改会触发窗口重绘。如果设置为透明背景（A=0）， 后端仍会绘制一个透明层，但不会遮挡后面的内容。"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:58
+msgid "窗口图标"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:60
+msgid "图标支持多种格式："
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:77
+msgid ""
+"Genesis 后端通过 SDL2 的 ``SDL_SetWindowIcon`` 设置图标， 内部将图标数据写入临时文件再加载。图标格式需要 "
+"SDL2 支持的类型（通常是 PNG 或 BMP）。"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:81
+msgid "其他窗口属性"
+msgstr ""
+
+#: ../../source/getstarted/window_config.rst:92
+msgid "更多窗口相关的 API 请参考 :doc:`WindowEntity </api/widgets/window>` 的自动生成文档。"
+msgstr ""
+
