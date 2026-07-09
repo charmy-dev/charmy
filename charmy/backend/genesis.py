@@ -31,7 +31,7 @@ __all__ = ["Backend", "DEBUG_FLAGS"]
 
 
 class DEBUG_FLAGS:
-    DRAW_CAIRO_STOCK_TEXT_BOUND : bool = True
+    DRAW_CAIRO_STOCK_TEXT_BOUND : bool = False
     FORCE_CLOSE_SHAPE           : bool = False
     OBSERVE_SHAPE_DRAWING       : bool = False
     WARN_UNCLOSED_SHAPES        : bool = False
