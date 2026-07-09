@@ -340,16 +340,6 @@
 </section>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.event.EventHandling.latest_event">
-<span class="sig-name descname"><span class="pre">latest_event</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="utils/event_types.html#charmy.utils.event_types.Event" title="charmy.utils.event_types.Event"><span class="pre">Event</span></a></span><a class="headerlink" href="#charmy.event.EventHandling.latest_event" title="链接到此定义。">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="charmy.event.EventHandling.tasks">
-<span class="sig-name descname"><span class="pre">tasks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="styles/shape.html#charmy.styles.shape.LinePath.type" title="charmy.styles.shape.LinePath.type"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="utils/event_types.html#charmy.utils.event_types.Event" title="charmy.utils.event_types.Event"><span class="pre">Event</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#charmy.event.EventTask" title="charmy.event.EventTask"><span class="pre">EventTask</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#charmy.event.EventHandling.tasks" title="链接到此定义。">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="charmy.event.EventHandling.parse_event_type_str">
 <span class="sig-name descname"><span class="pre">parse_event_type_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_type_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#charmy.event.EventHandling.parse_event_type_str" title="链接到此定义。">¶</a></dt>
@@ -426,8 +416,11 @@ this function might be removed in the future.</p>
 <dt class="field-odd">param _is_internal<span class="colon">:</span></dt>
 <dd class="field-odd"><p>If the task is added by Charmy and should be kept when clear bind</p>
 </dd>
-<dt class="field-even">return<span class="colon">:</span></dt>
-<dd class="field-even"><p>EventTask if <cite>return_task</cite> is True, otherwise the EventHandling itself.</p>
+<dt class="field-even">param task_obj_receiver<span class="colon">:</span></dt>
+<dd class="field-even"><p>Give task object to Var object, if not None, the task object will be assigned to it</p>
+</dd>
+<dt class="field-odd">return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>EventTask if <cite>return_task</cite> is True, otherwise the EventHandling itself.</p>
 </dd>
 </dl>
 </section>
@@ -625,8 +618,6 @@ this function might be removed in the future.</p>
 <li><a class="reference internal" href="#charmy.event.EventHandling.multithread_tasks"><code class="docutils literal notranslate"><span class="pre">EventHandling.multithread_tasks</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.EventHandling.WORKING_THREAD"><code class="docutils literal notranslate"><span class="pre">EventHandling.WORKING_THREAD</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.EventHandling.__init__"><code class="docutils literal notranslate"><span class="pre">EventHandling.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#charmy.event.EventHandling.latest_event"><code class="docutils literal notranslate"><span class="pre">EventHandling.latest_event</span></code></a></li>
-<li><a class="reference internal" href="#charmy.event.EventHandling.tasks"><code class="docutils literal notranslate"><span class="pre">EventHandling.tasks</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.EventHandling.parse_event_type_str"><code class="docutils literal notranslate"><span class="pre">EventHandling.parse_event_type_str()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.EventHandling.trigger"><code class="docutils literal notranslate"><span class="pre">EventHandling.trigger()</span></code></a></li>
 <li><a class="reference internal" href="#charmy.event.EventHandling.bind"><code class="docutils literal notranslate"><span class="pre">EventHandling.bind()</span></code></a></li>

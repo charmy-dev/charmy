@@ -17,11 +17,7 @@
 
 .. code-block:: python
 
-   # 方式一：直接创建 Window（推荐）
-   window = cm.Window(size=(400, 300), title="我的窗口")
-
-   # 方式二：先创建 WindowEntity 再转为 Window（内部使用）
-   # window = cm.window.Window(size=(400, 300))
+   window = cm.Window(size=(400, 300), title="Window Title")
 
 ``Window`` 继承自 ``WindowEntity`` （后端窗口实体）+ ``Container`` （容器能力）。
 大部分时候你只需要用 ``cm.Window()`` 。
@@ -30,7 +26,7 @@
 
 .. code-block:: python
 
-   window.background = (230, 230, 230)  # (R, G, B) 或 (R, G, B, A)
+   window.background = (230, 230, 230)  # (R, G, B) or (R, G, B, A)
 
 3. 添加按钮
 ------------------------------
@@ -38,9 +34,9 @@
 .. code-block:: python
 
    def on_click():
-       print("按钮被点击了！")
+       print("Button clicked!")
 
-   button = cm.Button(window, text="点我", on_click=on_click)
+   button = cm.Button(window, text="Click me!", on_click=on_click)
    button.place((50, 50), (120, 40))  # place(pos, size)
 
 ``place()`` 方法的参数：
@@ -54,7 +50,7 @@
    .. code-block:: python
 
       with window:
-          button = cm.Button(text="点我")
+          button = cm.Button(text="Click me!")
           button.place((10, 10), (100, 30))
 
    在 ``with window:`` 块内创建的控件会自动以 ``window`` 为父容器。
@@ -79,10 +75,10 @@
    def on_click():
        print("Hello from Charmy!")
 
-   window = cm.Window(size=(400, 300), title="我的第一个 Charmy 应用")
+   window = cm.Window(size=(400, 300), title="My First Charmy Application")
    window.background = (230, 230, 230)
 
-   button = cm.Button(window, text="点我", on_click=on_click)
+   button = cm.Button(window, text="Click me!", on_click=on_click)
    button.place((50, 50), (120, 40))
 
    cm.mainloop()
@@ -105,13 +101,13 @@ Button 的 ``on_click`` 参数是最简单的用法。你也可以直接使用 `
    import charmy as cm
 
    def on_enter(event):
-       print("鼠标进入按钮区域")
+       print("Mouse entered button area")
 
    def on_leave(event):
-       print("鼠标离开按钮区域")
+       print("Mouse left button area")
 
    window = cm.Window(size=(300, 200))
-   btn = cm.Button(window, text="跟踪鼠标")
+   btn = cm.Button(window, text="Track mouse")
 
    btn.bind(cm.event_types.MouseEnter, on_enter)
    btn.bind(cm.event_types.MouseLeave, on_leave)

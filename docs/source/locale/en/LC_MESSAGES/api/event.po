@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Charmy GUI \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"POT-Creation-Date: 2026-07-09 15:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -152,12 +152,22 @@ msgstr ""
 msgid "If the task is added by Charmy and should be kept when clear bind"
 msgstr ""
 
+#: charmy.event.EventHandling.bind of
+msgid "param task_obj_receiver"
+msgstr ""
+
+#: charmy.event.EventHandling.bind:17 of
+msgid ""
+"Give task object to Var object, if not None, the task object will be "
+"assigned to it"
+msgstr ""
+
 #: charmy.event.EventHandling.bind charmy.event.EventHandling.clear_bind
 #: charmy.event.EventHandling.unbind of
 msgid "return"
 msgstr ""
 
-#: charmy.event.EventHandling.bind:17 of
+#: charmy.event.EventHandling.bind:18 of
 msgid "EventTask if `return_task` is True, otherwise the EventHandling itself."
 msgstr ""
 

@@ -314,9 +314,9 @@
 <span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;按钮被点击了！&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Clicked&quot;</span><span class="p">)</span>
 
-<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;点我&quot;</span><span class="p">)</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Click me!&quot;</span><span class="p">)</span>
 <span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">on_click</span><span class="p">)</span>
 <span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
 
@@ -329,6 +329,8 @@
 <li><p><strong>target</strong>: 回调函数，接收一个事件对象作为参数</p></li>
 <li><p><strong>conditions</strong> （可选）: 过滤条件字典</p></li>
 <li><p><strong>multithread</strong> （可选）: 是否在独立线程中执行</p></li>
+<li><p><strong>task_obj_receiver</strong> （可选）：
+如果提供一个 <code class="docutils literal notranslate"><span class="pre">Var</span></code> 对象，将设定该对象值为该事件的 <code class="docutils literal notranslate"><span class="pre">EventTask</span></code> ，用于解绑。</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -342,12 +344,12 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
 
 <span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
-<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;装饰器&quot;</span><span class="p">)</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;decorator&quot;</span><span class="p">)</span>
 <span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
 
 <span class="nd">@button</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">handle_click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;按钮在 </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">mouse_pos</span><span class="si">}</span><span class="s2"> 被点击了！&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Button is clicked : </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">mouse_pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
@@ -356,12 +358,12 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 只响应鼠标左键</span>
 <span class="nd">@button</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;button&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">left_click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;左键点击&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Left click&quot;</span><span class="p">)</span>
 
 <span class="c1"># 响应右键（button=2），且启用多线程</span>
 <span class="nd">@button</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;button&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="n">multithread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">right_click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;右键点击（后台线程）&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Right click (multithreaded)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -386,8 +388,8 @@
 <h2>事件对象<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>回调函数接收到的事件对象包含事件的详细信息：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_mouse_move</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;鼠标位置: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">mouse_pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;事件来源窗口: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">subject</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mouse Pos: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">mouse_pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Source: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">subject</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseMove</span><span class="p">,</span> <span class="n">on_mouse_move</span><span class="p">)</span>
 </pre></div>
@@ -474,8 +476,8 @@
 </pre></div>
 </div>
 <p>这意味着你不需要手动计算鼠标是否在控件范围内，Charmy 会自动处理：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseEnter</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;鼠标来了！&quot;</span><span class="p">))</span>
-<span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseLeave</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;鼠标走了！&quot;</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseEnter</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entered&quot;</span><span class="p">))</span>
+<span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseLeave</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Left&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </section>
@@ -491,6 +493,17 @@
 <span class="n">button</span><span class="o">.</span><span class="n">clear_bind</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>如果是直接使用&#64;button.on()装饰器绑定的事件，也可以通过 <code class="docutils literal notranslate"><span class="pre">task_obj_receiver</span></code> 参数获取 <code class="docutils literal notranslate"><span class="pre">EventTask</span></code> 对象：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">task_var</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Var</span><span class="p">()</span>
+
+<span class="nd">@button</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">task_obj_receiver</span><span class="o">=</span><span class="n">task_var</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Clicked&quot;</span><span class="p">)</span>
+
+<span class="c1"># 后续解绑</span>
+<span class="n">button</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">task_var</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="id7">
 <h2>多线程事件<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
@@ -502,7 +515,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">heavy_work</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>           <span class="c1"># 模拟耗时操作</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;耗时任务完成&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
 
 <span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">heavy_work</span><span class="p">,</span>
             <span class="n">multithread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -517,10 +530,10 @@
 <section id="id8">
 <h2>窗口事件<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
 <p>窗口本身也是事件源：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">WidgetResize</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;窗口大小变为 </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">new_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
-<span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">WidgetMove</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;窗口移到 </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">new_pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
-<span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">FocusGain</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;窗口获得焦点&quot;</span><span class="p">))</span>
-<span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">FocusLoss</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;窗口失去焦点&quot;</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">WidgetResize</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;resize </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">new_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+<span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">WidgetMove</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;moved </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">new_pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+<span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">FocusGain</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;focus gained&quot;</span><span class="p">))</span>
+<span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">FocusLoss</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;focus lost&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </section>

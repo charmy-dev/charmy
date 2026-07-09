@@ -330,7 +330,7 @@
 <span class="c1">#   pos  ─ (x, y) 相对于父容器的偏移</span>
 <span class="c1">#   size ─ (width, height) 可选，控件的尺寸</span>
 
-<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;按钮&quot;</span><span class="p">)</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Button&quot;</span><span class="p">)</span>
 <span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>              <span class="c1"># 只指定位置</span>
 <span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>   <span class="c1"># 同时指定位置和大小</span>
 </pre></div>
@@ -363,7 +363,7 @@
     <span class="n">container</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
 
     <span class="k">with</span> <span class="n">container</span><span class="p">:</span>
-        <span class="n">btn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;嵌套按钮&quot;</span><span class="p">)</span>
+        <span class="n">btn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Button in the Container&quot;</span><span class="p">)</span>
         <span class="n">btn</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>     <span class="c1"># pos=(10,10), abs_pos=(40,40)</span>
 </pre></div>
 </div>
@@ -415,17 +415,17 @@
 <p>使用 <code class="docutils literal notranslate"><span class="pre">with</span></code> 语句可以自动设置父容器：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">window</span><span class="p">:</span>
     <span class="c1"># 在此创建的控件自动以 window 为父容器</span>
-    <span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;自动父容器&quot;</span><span class="p">)</span>
+    <span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Auto parent&quot;</span><span class="p">)</span>
     <span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 
     <span class="k">with</span> <span class="n">frame</span><span class="p">:</span>
         <span class="c1"># 嵌套容器</span>
-        <span class="n">inner_btn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;嵌套&quot;</span><span class="p">)</span>
+        <span class="n">inner_btn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Inner Button&quot;</span><span class="p">)</span>
         <span class="n">inner_btn</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>这等价于显式指定 parent：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;显式父容器&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Parent&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -439,7 +439,7 @@
 会逐级回退到 <code class="docutils literal notranslate"><span class="pre">default</span></code> 状态的 profile</p></li>
 <li><p><strong>默认值</strong>：如果都未指定，返回 <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">0)</span></code></p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;大小测试&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
 <span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>           <span class="c1"># 使用 profile 默认大小 (72, 28)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">button</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>               <span class="c1"># → (72, 28)</span>
 
@@ -459,7 +459,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 手动实现垂直排列</span>
 <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-    <span class="n">btn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;按钮</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">btn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Button</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">btn</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
     <span class="n">y</span> <span class="o">+=</span> <span class="mi">40</span>
 </pre></div>

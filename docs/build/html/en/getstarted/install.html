@@ -409,7 +409,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <p><strong>Q: 窗口显示但不响应鼠标</strong></p>
 <p>A: 确认 SDL2 事件循环在工作。在 <code class="docutils literal notranslate"><span class="pre">mainloop()</span></code> 之前添加以下代码测试：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;鼠标点击: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">mouse_pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Clicked: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">mouse_pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">on_click</span><span class="p">)</span>
 </pre></div>
