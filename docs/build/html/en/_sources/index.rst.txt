@@ -1,7 +1,7 @@
 Charmy GUI 文档
 ==============================
 
-.. sidebar:: 作者 / 项沁曦 (Xiang Qinxi)
+.. sidebar:: 作者 / XiangQinxi
 
    来自 ``中国`` 的一名高中生。
 

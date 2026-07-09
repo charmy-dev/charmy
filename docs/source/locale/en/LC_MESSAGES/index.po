@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Charmy GUI \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"POT-Creation-Date: 2026-07-09 14:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -32,7 +32,7 @@ msgid "Charmy GUI 文档"
 msgstr ""
 
 #: ../../source/index.rst:-1
-msgid "作者 / 项沁曦 (Xiang Qinxi)"
+msgid "作者 / XiangQinxi"
 msgstr ""
 
 #: ../../source/index.rst:6
@@ -132,4 +132,7 @@ msgid ""
 "项目原名为 **Suzaku**，因底层架构缺陷导致性能问题，重构为现在的 Charmy。 部分设计理念继承自 "
 "Suzaku，代码中保留了一些\"彩蛋\"作为纪念（如 ``skhynix.py``）。"
 msgstr ""
+
+#~ msgid "作者 / 项沁曦 (Xiang Qinxi)"
+#~ msgstr ""
 
