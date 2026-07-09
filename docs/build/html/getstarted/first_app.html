@@ -21,27 +21,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -213,6 +204,10 @@
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">第一个应用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="window_config.html">窗口配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -327,8 +322,8 @@
 <span class="c1"># window = cm.window.Window(size=(400, 300))</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">Window</span></code> 继承自 <code class="docutils literal notranslate"><span class="pre">WindowEntity``（后端窗口实体）+</span> <span class="pre">``Container``（容器能力）。</span>
-<span class="pre">大部分时候你只需要用</span> <span class="pre">``cm.Window()</span></code>。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Window</span></code> 继承自 <code class="docutils literal notranslate"><span class="pre">WindowEntity</span></code> （后端窗口实体）+ <code class="docutils literal notranslate"><span class="pre">Container</span></code> （容器能力）。
+大部分时候你只需要用 <code class="docutils literal notranslate"><span class="pre">cm.Window()</span></code> 。</p>
 <p>设置窗口背景色：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">)</span>  <span class="c1"># (R, G, B) 或 (R, G, B, A)</span>
 </pre></div>
@@ -345,8 +340,8 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">place()</span></code> 方法的参数：</p>
 <ul class="simple">
-<li><p>第一个参数 <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>：控件在父容器中的位置（相对于父容器的偏移）</p></li>
-<li><p>第二个参数 <a href="#id4"><span class="problematic" id="id5">``</span></a>(width, height)``（可选）：控件的尺寸</p></li>
+<li><p>第一个参数 <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code> ：控件在父容器中的位置（相对于父容器的偏移）</p></li>
+<li><p>第二个参数 <code class="docutils literal notranslate"><span class="pre">(width,</span> <span class="pre">height)</span></code> （可选）：控件的尺寸</p></li>
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">小技巧</p>
@@ -359,16 +354,16 @@
 <p>在 <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">window:</span></code> 块内创建的控件会自动以 <code class="docutils literal notranslate"><span class="pre">window</span></code> 为父容器。</p>
 </div>
 </section>
-<section id="id6">
-<h2>4. 运行应用<a class="headerlink" href="#id6" title="链接到此标题。">¶</a></h2>
+<section id="id4">
+<h2>4. 运行应用<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">mainloop()</span></code> 会进入主事件循环，不断处理窗口事件和更新界面。
 程序会一直运行直到所有窗口被关闭。</p>
 </section>
-<section id="id7">
-<h2>完整的代码<a class="headerlink" href="#id7" title="链接到此标题。">¶</a></h2>
+<section id="id5">
+<h2>完整的代码<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">():</span>
@@ -394,8 +389,8 @@
 </ul>
 </div>
 </section>
-<section id="id8">
-<h2>更复杂的例子：绑定事件<a class="headerlink" href="#id8" title="链接到此标题。">¶</a></h2>
+<section id="id6">
+<h2>更复杂的例子：绑定事件<a class="headerlink" href="#id6" title="链接到此标题。">¶</a></h2>
 <p>Button 的 <code class="docutils literal notranslate"><span class="pre">on_click</span></code> 参数是最简单的用法。你也可以直接使用 <code class="docutils literal notranslate"><span class="pre">bind()</span></code> 方法：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
 
@@ -477,9 +472,9 @@
 <li><a class="reference internal" href="#charmy">1. 导入 Charmy</a></li>
 <li><a class="reference internal" href="#id2">2. 创建窗口</a></li>
 <li><a class="reference internal" href="#id3">3. 添加按钮</a></li>
-<li><a class="reference internal" href="#id6">4. 运行应用</a></li>
-<li><a class="reference internal" href="#id7">完整的代码</a></li>
-<li><a class="reference internal" href="#id8">更复杂的例子：绑定事件</a></li>
+<li><a class="reference internal" href="#id4">4. 运行应用</a></li>
+<li><a class="reference internal" href="#id5">完整的代码</a></li>
+<li><a class="reference internal" href="#id6">更复杂的例子：绑定事件</a></li>
 </ul>
 </li>
 </ul>

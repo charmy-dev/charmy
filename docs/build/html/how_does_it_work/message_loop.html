@@ -21,27 +21,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -213,6 +204,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../getstarted/first_app.html">第一个应用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../getstarted/window_config.html">窗口配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../getstarted/custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -310,7 +305,7 @@
         <article role="main" id="furo-main-content">
           <section id="id1">
 <h1>消息循环（事件循环）<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
-<p>Charmy 使用**事件驱动**模型：程序启动后进入一个死循环，不断处理窗口事件和更新界面。</p>
+<p>Charmy 使用 <strong>事件驱动</strong> 模型：程序启动后进入一个死循环，不断处理窗口事件和更新界面。</p>
 <section id="id2">
 <h2>主循环结构<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cm.mainloop(interval=0.01)
@@ -398,7 +393,7 @@
 </section>
 <section id="id4">
 <h2>事件系统详解<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
-<p>Charmy 的事件系统采用**发布-订阅模式**，核心组件：</p>
+<p>Charmy 的事件系统采用 <strong>发布-订阅模式</strong> ，核心组件：</p>
 <ul class="simple">
 <li><p><strong>事件类型</strong>：用 <code class="docutils literal notranslate"><span class="pre">dataclass</span></code> 类表示，具有类型安全的事件匹配</p></li>
 <li><p><strong>EventHandling 混入类</strong>：提供 <code class="docutils literal notranslate"><span class="pre">bind()</span></code> / <code class="docutils literal notranslate"><span class="pre">trigger()</span></code> / <code class="docutils literal notranslate"><span class="pre">on()</span></code> 方法</p></li>
@@ -472,7 +467,7 @@
 <h2>多线程<a class="headerlink" href="#id8" title="链接到此标题。">¶</a></h2>
 <div class="admonition caution">
 <p class="admonition-title">小心</p>
-<p>多线程支持目前处于**实验阶段**，建议在主线程中完成所有 UI 操作。</p>
+<p>多线程支持目前处于 <strong>实验阶段</strong> ，建议在主线程中完成所有 UI 操作。</p>
 </div>
 <p>Charmy 支持将事件处理任务分发到工作线程，避免耗时操作阻塞 UI 刷新：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">heavy_task</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
@@ -486,7 +481,7 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
-<p>启用多线程时，回调函数在**独立线程**中运行，不能直接操作 Charmy 的 UI 对象。
+<p>启用多线程时，回调函数在 <strong>独立线程</strong> 中运行，不能直接操作 Charmy 的 UI 对象。
 如果需要更新 UI，请使用 <code class="docutils literal notranslate"><span class="pre">EventTask</span></code> 的消息传递机制（待实现）。</p>
 </div>
 </section>

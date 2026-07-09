@@ -17,7 +17,7 @@
 
    来自 ``中国`` 的一名高中生。
 
-   翻译了 ``charmy.this`` 的英文版本。
+   翻译了 ``charmy.this`` 的英文版本。进行了绝大部分`Charmy`的重构，并负责`SDL3+Cairo`后端的开发。
 
    .. image:: rgzz666_logo.png
        :alt: rgzz666_logo
@@ -77,7 +77,7 @@
    .\make html          # Windows
    # make html          # Linux / macOS
 
-文档支持 **reStructuredText**（``.rst``）和 **Markdown**（``.md``）两种格式。
+文档支持 **reStructuredText** （ ``.rst`` ）和 **Markdown** （ ``.md`` ）两种格式。
 
 API 文档自动生成
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -96,7 +96,7 @@ API 文档自动生成
 
 - 扫描 ``charmy/`` 包下所有 ``.py`` 文件（排除彩蛋和空壳文件）
 - 为每个模块生成 ``.rst`` 文件（包含 ``autoclasstree`` + ``automodule``）
-- 为每个子包生成 ``index.rst``（包含 toctree，链接到所有子模块）
+- 为每个子包生成 ``index.rst`` （包含 toctree，链接到所有子模块）
 - 自动识别 ``__init__.py`` 作为包索引
 
 .. warning::

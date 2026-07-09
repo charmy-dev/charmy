@@ -21,27 +21,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -213,6 +204,10 @@
 <li class="toctree-l2"><a class="reference internal" href="getstarted/first_app.html">第一个应用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getstarted/window_config.html">窗口配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getstarted/custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted/debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -320,7 +315,7 @@
 <aside class="sidebar">
 <p class="sidebar-title">贡献者 / rgzz666</p>
 <p>来自 <code class="docutils literal notranslate"><span class="pre">中国</span></code> 的一名高中生。</p>
-<p>翻译了 <code class="docutils literal notranslate"><span class="pre">charmy.this</span></code> 的英文版本。</p>
+<p>翻译了 <code class="docutils literal notranslate"><span class="pre">charmy.this</span></code> 的英文版本。进行了绝大部分`Charmy`的重构，并负责`SDL3+Cairo`后端的开发。</p>
 <img alt="rgzz666_logo" src="_images/rgzz666_logo.png" />
 </aside>
 <div class="admonition note">
@@ -376,7 +371,7 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <span class="c1"># make html          # Linux / macOS</span>
 </pre></div>
 </div>
-<p>文档支持 <a href="#id4"><span class="problematic" id="id5">**</span></a>reStructuredText**（<code class="docutils literal notranslate"><span class="pre">.rst</span></code>）和 <a href="#id6"><span class="problematic" id="id7">**</span></a>Markdown**（<code class="docutils literal notranslate"><span class="pre">.md</span></code>）两种格式。</p>
+<p>文档支持 <strong>reStructuredText</strong> （ <code class="docutils literal notranslate"><span class="pre">.rst</span></code> ）和 <strong>Markdown</strong> （ <code class="docutils literal notranslate"><span class="pre">.md</span></code> ）两种格式。</p>
 <section id="api">
 <h3>API 文档自动生成<a class="headerlink" href="#api" title="链接到此标题。">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">docs/source/api/</span></code> 下的 API 文档由 <code class="docutils literal notranslate"><span class="pre">autoapi.py</span></code> <strong>自动生成</strong>，请勿手动编辑：</p>
@@ -391,7 +386,7 @@ python<span class="w"> </span>docs/source/api/autoapi.py
 <ul class="simple">
 <li><p>扫描 <code class="docutils literal notranslate"><span class="pre">charmy/</span></code> 包下所有 <code class="docutils literal notranslate"><span class="pre">.py</span></code> 文件（排除彩蛋和空壳文件）</p></li>
 <li><p>为每个模块生成 <code class="docutils literal notranslate"><span class="pre">.rst</span></code> 文件（包含 <code class="docutils literal notranslate"><span class="pre">autoclasstree</span></code> + <code class="docutils literal notranslate"><span class="pre">automodule</span></code>）</p></li>
-<li><p>为每个子包生成 <a href="#id8"><span class="problematic" id="id9">``</span></a>index.rst``（包含 toctree，链接到所有子模块）</p></li>
+<li><p>为每个子包生成 <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> （包含 toctree，链接到所有子模块）</p></li>
 <li><p>自动识别 <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> 作为包索引</p></li>
 </ul>
 <div class="admonition warning">
@@ -401,8 +396,8 @@ python<span class="w"> </span>docs/source/api/autoapi.py
 </div>
 </section>
 </section>
-<section id="id10">
-<h2>测试指南<a class="headerlink" href="#id10" title="链接到此标题。">¶</a></h2>
+<section id="id4">
+<h2>测试指南<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
 <p>目前测试用例位于 <code class="docutils literal notranslate"><span class="pre">tests/</span></code> 目录下，主要是手动运行的可执行脚本：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 图形绘制测试</span>
 python<span class="w"> </span>tests/graphics.py
@@ -421,8 +416,8 @@ python<span class="w"> </span>tests/event.py
 <li><p>后续计划引入 <code class="docutils literal notranslate"><span class="pre">pytest</span></code> 自动化测试框架</p></li>
 </ul>
 </section>
-<section id="id11">
-<h2>代码规范<a class="headerlink" href="#id11" title="链接到此标题。">¶</a></h2>
+<section id="id5">
+<h2>代码规范<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
 <ul class="simple">
 <li><p>遵循 <strong>PEP 8</strong> 编码规范（<a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">https://www.python.org/dev/peps/pep-0008/</a>）</p></li>
 <li><p>行长度限制：<strong>100 字符</strong></p></li>
@@ -524,8 +519,8 @@ python<span class="w"> </span>tests/event.py
 <li><a class="reference internal" href="#api">API 文档自动生成</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id10">测试指南</a></li>
-<li><a class="reference internal" href="#id11">代码规范</a></li>
+<li><a class="reference internal" href="#id4">测试指南</a></li>
+<li><a class="reference internal" href="#id5">代码规范</a></li>
 </ul>
 </li>
 </ul>

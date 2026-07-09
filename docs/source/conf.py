@@ -103,14 +103,14 @@ html_theme_options = {
     "source_branch": "master",
     "source_directory": "docs/source",
     "announcement": "It's <em>Developing</em> !",
-    "light_css_variables": {
-        "color-brand-primary": "red",
-        "color-brand-content": "#CC3333",
-        "color-brand-visited": "#CC8033",
-    },
-    "dark_css_variables": {
-        "color-brand-primary": "#CC8033",
-        "color-brand-content": "#CC8033",
-        "color-brand-visited": "#CC3333",
-    },
+    #"light_css_variables": {
+    #    "color-brand-primary": "red",
+    #    "color-brand-content": "#CC3333",
+    #    "color-brand-visited": "#CC8033",
+    #},
+    #"dark_css_variables": {
+    #    "color-brand-primary": "#CC8033",
+    #    "color-brand-content": "#CC8033",
+    #    "color-brand-visited": "#CC3333",
+    #},
 }

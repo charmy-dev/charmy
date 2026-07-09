@@ -1,7 +1,7 @@
 抽象层
 ==============================
 
-Charmy 采用**三层架构**，从下到上依次为：
+Charmy 采用 **三层架构** ，从下到上依次为：
 
 - **后端层 (Backend Layer)** — SDL2 + Cairo (Genesis)
 - **图形层 (Graphics Layer)** — DrawnShape, DrawnLine, DrawnText…
@@ -10,7 +10,7 @@ Charmy 采用**三层架构**，从下到上依次为：
 为什么需要抽象层
 ------------------------------
 
-不同的操作系统和图形库有不同的 API。为了让 Charmy 能**跨平台**运行，
+不同的操作系统和图形库有不同的 API。为了让 Charmy 能 **跨平台** 运行，
 并且能够在不同后端之间切换，我们需要将后端的具体实现抽象出来。
 
 后端模块的划分
@@ -151,11 +151,11 @@ Genesis 后端通过 ``sdl2_handle_event()`` 方法将 SDL2 的事件转换为 C
 Fallback 机制
 ------------------------------
 
-Charmy 的线条和形状系统支持 **fallback**——如果后端不支持某种图形类型，
+Charmy 的线条和形状系统支持 **fallback** ——如果后端不支持某种图形类型，
 会自动降级为其他类型绘制。
 
-例如，Genesis 后端支持 ``CircleArc``（圆弧）的直接绘制，
-但如果某个假想的后端只支持 ``CubicBezier``（三次贝塞尔曲线），
+例如，Genesis 后端支持 ``CircleArc`` （圆弧）的直接绘制，
+但如果某个假想的后端只支持 ``CubicBezier`` （三次贝塞尔曲线），
 Charmy 会自动将圆弧分解为多条贝塞尔曲线：
 
 .. code-block:: python

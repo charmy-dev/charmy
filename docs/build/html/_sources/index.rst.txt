@@ -12,7 +12,7 @@ Charmy GUI 文档
 
 欢迎来到 **Charmy GUI** 的文档！
 
-Charmy 是一个跨平台的 Python GUI 库，采用**三层架构**设计，后端可切换，
+Charmy 是一个跨平台的 Python GUI 库，采用 **三层架构** 设计，后端可切换，
 在保持轻量的同时实现跨平台桌面应用开发。
 
 项目特点

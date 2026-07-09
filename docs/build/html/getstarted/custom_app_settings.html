@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="工作原理" href="../how_does_it_work/index.html"><link rel="prev" title="窗口配置" href="window_config.html">
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="事件处理" href="event_handling.html"><link rel="prev" title="窗口配置" href="window_config.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>自定义应用设置 - Charmy GUI 0.1.0 文档</title>
@@ -21,27 +21,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -213,6 +204,10 @@
 <li class="toctree-l2"><a class="reference internal" href="first_app.html">第一个应用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="window_config.html">窗口配置</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -379,12 +374,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../how_does_it_work/index.html">
+          <a class="next-page" href="event_handling.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">工作原理</div>
+                <div class="title">事件处理</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

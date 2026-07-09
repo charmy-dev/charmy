@@ -21,27 +21,18 @@
   body {
     --color-code-background: #f2f2f2;
   --color-code-foreground: #1e1e1e;
-  --color-brand-primary: red;
-  --color-brand-content: #CC3333;
-  --color-brand-visited: #CC8033;
   
   }
   @media not print {
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
-  --color-brand-primary: #CC8033;
-  --color-brand-content: #CC8033;
-  --color-brand-visited: #CC3333;
   
       }
     }
@@ -213,6 +204,10 @@
 <li class="toctree-l2"><a class="reference internal" href="first_app.html">第一个应用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="window_config.html">窗口配置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html">自定义应用设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_handling.html">事件处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html">布局与定位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drawing.html">自定义绘图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">调试与故障排查</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -340,7 +335,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </section>
 <section id="id2">
 <h2>后端依赖<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
-<p>Charmy 将底层图形框架抽象为**后端**。目前唯一可用的后端是 <strong>Genesis</strong>，
+<p>Charmy 将底层图形框架抽象为 <strong>后端</strong> 。目前唯一可用的后端是 <strong>Genesis</strong> ，
 它使用 SDL2 创建窗口、Cairo 进行 2D 渲染。</p>
 <p>安装 Genesis 后端所需的依赖：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pysdl2<span class="w"> </span>pysdl2-dll<span class="w"> </span>pycairo
