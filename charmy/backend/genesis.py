@@ -727,6 +727,7 @@ class TextBase(template.TextBase):
             del ctx
         return drawn_text.offset, text_size
 
+
 # region: Alias WhateverBase classes
 
 Backend.WindowBase = WindowBase
@@ -734,5 +735,10 @@ Backend.LineBase = LineBase
 Backend.ShapeBase = ShapeBase
 Backend.TextureBase = TextureBase
 Backend.TextBase = TextBase
+
+
+# region: Welcome message (to tell that Genesis backend is loaded)
+
+print("Hello from backend Genesis!")
 
 # endregion
