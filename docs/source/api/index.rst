@@ -1,53 +1,23 @@
-API Reference
-=============
-
-Welcome to the Charmy GUI API reference.
-
-Core Modules
-------------
+charmy
+======
 
 .. autoclasstree:: charmy
    :full:
    :strict:
 
+.. automodule:: charmy
+   :members:
+
 .. toctree::
    :maxdepth: 2
-   :caption: Core API:
 
+   backend/index
    cmm
    const
    event
+   graphics
    object
-   pos
-   rect
-   size
-   this
-   var
-
-Widgets
--------
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Widgets:
-
-   widgets/index
-
-Styles
-------
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Styles:
-
    styles/index
-
-
-Frameworks
-------
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Frameworks:
-
-   frameworks/index
+   this
+   utils/index
+   widgets/index

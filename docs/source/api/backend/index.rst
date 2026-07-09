@@ -6,12 +6,12 @@ charmy.backend
    :strict:
 
 .. automodule:: charmy.backend
-    :members:
+   :members:
 
 .. toctree::
    :maxdepth: 2
 
+   genesis
    loader
    template
-   genesis
    utils

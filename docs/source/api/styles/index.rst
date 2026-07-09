@@ -1,15 +1,18 @@
 charmy.styles
-==============
+=============
 
 .. autoclasstree:: charmy.styles
    :full:
    :strict:
 
 .. automodule:: charmy.styles
-    :members:
+   :members:
 
 .. toctree::
    :maxdepth: 2
 
-   color
+   shape
+   style
+   text_style
+   texture
    theme
