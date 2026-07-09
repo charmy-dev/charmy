@@ -23,8 +23,8 @@
    # 方式二：先创建 WindowEntity 再转为 Window（内部使用）
    # window = cm.window.Window(size=(400, 300))
 
-``Window`` 继承自 ``WindowEntity``（后端窗口实体）+ ``Container``（容器能力）。
-大部分时候你只需要用 ``cm.Window()``。
+``Window`` 继承自 ``WindowEntity`` （后端窗口实体）+ ``Container`` （容器能力）。
+大部分时候你只需要用 ``cm.Window()`` 。
 
 设置窗口背景色：
 
@@ -45,8 +45,8 @@
 
 ``place()`` 方法的参数：
 
-- 第一个参数 ``(x, y)``：控件在父容器中的位置（相对于父容器的偏移）
-- 第二个参数 ``(width, height)``（可选）：控件的尺寸
+- 第一个参数 ``(x, y)`` ：控件在父容器中的位置（相对于父容器的偏移）
+- 第二个参数 ``(width, height)`` （可选）：控件的尺寸
 
 .. tip::
    也可以使用 ``with`` 语句上下文自动设置父容器：
