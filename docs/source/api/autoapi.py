@@ -151,14 +151,28 @@ def _module_rst(dotted: str, short: str) -> str:
     """RST for a single module."""
     title = short
     sep = "=" * len(title)
+
+    # Skip autoclasstree for backend modules — the mermaid autoclassdiag
+    # crashes on genesis's circular class refs (Backend ↔ *Base ↔ Backend)
+    # even with the conf.py skip hook, because it imports and traverses
+    # full class hierarchies.
+    if ".backend." in dotted or dotted.endswith(".backend"):
+        tree_block = (
+            f".. autoclasstree:: {dotted}\n"
+            f"\n"
+        )
+    else:
+        tree_block = (
+            f".. autoclasstree:: {dotted}\n"
+            f"   :full:\n"
+            f"   :strict:\n"
+            f"\n"
+        )
     return (
         f"{title}\n"
         f"{sep}\n"
         f"\n"
-        f".. autoclasstree:: {dotted}\n"
-        f"   :full:\n"
-        f"   :strict:\n"
-        f"\n"
+        f"{tree_block}"
         f".. automodule:: {dotted}\n"
         f"   :members:\n"
     )
@@ -176,15 +190,17 @@ def _package_index_rst(
     """
     title = pkg_dotted
     sep = "=" * len(title)
-    lines = [
-        title,
-        sep,
-        "",
-        f".. autoclasstree:: {pkg_dotted}",
-        "   :full:",
-        "   :strict:",
-        "",
-    ]
+    lines = [title, sep, ""]
+
+    # autoclasstree — skip :full:/:strict: for backend to avoid mermaid
+    # autoclassdiag crash on circular class refs.
+    is_backend = ".backend" in pkg_dotted or pkg_dotted.endswith(".backend")
+    lines.append(f".. autoclasstree:: {pkg_dotted}")
+    if not is_backend:
+        lines.append("   :full:")
+    lines.append("   :strict:")
+    lines.append("")
+
     if include_automodule:
         lines += [
             f".. automodule:: {pkg_dotted}",
