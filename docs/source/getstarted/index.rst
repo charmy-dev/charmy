@@ -1,11 +1,11 @@
-Get Started
-===========
+快速开始
+========
 
-Let`s get started with charmy.
+带你快速上手 Charmy！
 
 .. toctree::
    :maxdepth: 2
-   :caption: Get Started:
+   :caption: 快速开始：
 
    install
    first_app

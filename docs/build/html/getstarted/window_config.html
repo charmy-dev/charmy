@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="Custom main manager settings" href="custom_app_settings.html"><link rel="prev" title="First application" href="first_app.html">
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="自定义应用设置" href="custom_app_settings.html"><link rel="prev" title="第一个应用" href="first_app.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Window`s config - Charmy GUI 0.1.0 文档</title>
+        <title>窗口配置 - Charmy GUI 0.1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -206,18 +206,18 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Main Content:</span></p>
+  <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="install.html">Install Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="first_app.html">First application</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Window`s config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html">Custom main manager settings</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="install.html">安装 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_app.html">第一个应用</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html">自定义应用设置</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">How does it work</a><input aria-label="Toggle navigation of How does it work" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -263,9 +263,9 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Other:</span></p>
+<p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../contribution.html">Contribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -308,16 +308,45 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="window-s-config">
-<h1>Window`s config<a class="headerlink" href="#window-s-config" title="链接到此标题。">¶</a></h1>
-<p>You can through <code class="docutils literal notranslate"><span class="pre">configure</span></code> function to set window`s config, through <code class="docutils literal notranslate"><span class="pre">cget</span></code> function to get window`s config.</p>
-<section id="rename-window-s-title">
-<h2>Rename window`s title<a class="headerlink" href="#rename-window-s-title" title="链接到此标题。">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;My Window&quot;</span>
+          <section id="id1">
+<h1>窗口配置<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
+<p>你可以通过属性来读取和修改窗口的各项配置。</p>
+<section id="id2">
+<h2>窗口标题<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">()</span>
+<span class="n">window</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;我的窗口&quot;</span>          <span class="c1"># 设置标题</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>               <span class="c1"># 读取标题</span>
 </pre></div>
 </div>
-<p>Or</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;My Window&quot;</span><span class="p">)</span>
+</section>
+<section id="id3">
+<h2>窗口大小<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>          <span class="c1"># 设置大小 (width, height)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>                <span class="c1"># 读取大小</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>窗口位置<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>           <span class="c1"># 设置位置 (x, y)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>                 <span class="c1"># 读取位置</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>窗口背景<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
+<p>背景色使用 (R, G, B) 或 (R, G, B, A) 元组表示：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>   <span class="c1"># 白色背景</span>
+<span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>    <span class="c1"># 半透明黑色背景</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>窗口图标<a class="headerlink" href="#id6" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="s2">&quot;path/to/icon.png&quot;</span>   <span class="c1"># 从文件设置</span>
+<span class="c1"># 或使用 bytes 数据</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;icon.png&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -333,7 +362,7 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Custom main manager settings</div>
+                <div class="title">自定义应用设置</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -344,7 +373,7 @@
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">First application</div>
+                <div class="title">第一个应用</div>
                 
               </div>
             </a>
@@ -378,8 +407,12 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Window`s config</a><ul>
-<li><a class="reference internal" href="#rename-window-s-title">Rename window`s title</a></li>
+<li><a class="reference internal" href="#">窗口配置</a><ul>
+<li><a class="reference internal" href="#id2">窗口标题</a></li>
+<li><a class="reference internal" href="#id3">窗口大小</a></li>
+<li><a class="reference internal" href="#id4">窗口位置</a></li>
+<li><a class="reference internal" href="#id5">窗口背景</a></li>
+<li><a class="reference internal" href="#id6">窗口图标</a></li>
 </ul>
 </li>
 </ul>

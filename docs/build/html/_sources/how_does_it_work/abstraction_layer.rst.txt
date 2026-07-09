@@ -1,44 +1,69 @@
-Abstraction layer
-=================
-Because ``Charmy GUI`` supports `multiple backend and frontend libraries`,
-we need to ``abstract`` their methods so they can switch between them at any time.
+抽象层
+======
 
-So we can use the map method to map the methods of the backend library to the methods of the frontend library.
+Charmy 采用**三层架构**，从下到上依次为：
 
-.. code-block:: python
+- **后端层 (Backend Layer)** — SDL2 + Cairo (Genesis)
+- **图形层 (Graphics Layer)** — DrawnShape, DrawnLine, DrawnText…
+- **控件层 (Widget Layer)** — Button, Window, Frame…
 
-   method_map: dict[Backend, typing.Callable] = {}
+为什么需要抽象层
+--------------
 
-Then, by checking whether a certain library is installed, add the mapping method. Let's use create() as an example.
+不同的操作系统和图形库有不同的 API。为了让 Charmy 能**跨平台**运行，
+并且能够在不同后端之间切换，我们需要将后端的具体实现抽象出来。
 
-.. code-block:: python
+后端模板
+--------
 
-   class GLFWBackend:
-       def create(self):
-           pass
-
-   import importlib.util
-   if importlib.util.find_spec("glfw"):
-       method_map[Backend.GLFW] = GLFWBackend
-
-It's the same for other libraries as well.
+在 ``charmy/backend/template.py`` 中定义了所有后端的接口模板：
 
 .. code-block:: python
 
-   class SDL3Backend:
-       def create(self):
-           pass
+   class Backend:
+       WindowBase: type[WindowBase]   # 窗口操作
+       LineBase: type[LineBase]       # 线条绘制
+       ShapeBase: type[ShapeBase]     # 形状绘制
+       TextureBase: type[TextureBase] # 纹理处理
+       TextBase: type[TextBase]       # 文字绘制
 
-   import importlib.util
-   if importlib.util.find_spec("sdl3"):
-       method_map[Backend.SDL3] = SDL3Backend
+每个具体的后端（如 Genesis）必须实现这些接口。
 
-Then, we can execute the corresponding framework's methods through the mapping table and the selected framework name.
+Genesis 后端
+-----------
+
+目前唯一的后端实现，使用 **SDL2** 创建和管理窗口，使用 **Cairo** 进行 2D 渲染。
+
+- **SDL2** 负责：窗口创建、事件循环、像素缓冲区管理
+- **Cairo** 负责：矢量图形渲染、文字渲染、图像合成
+
+渲染流程
+--------
+
+::
+
+   控件 → 图形对象 (DrawnShape/DrawnLine/DrawnText)
+      ↓
+   后端 ShapeBase/LineBase/TextBase
+      ↓
+   Cairo 绘制到 ImageSurface
+      ↓
+   ctypes.memmove 拷贝到 SDL2 surface
+      ↓
+   SDL_UpdateWindowSurface 刷新显示
+
+Fallback 机制
+------------
+
+Charmy 的线条和形状系统支持 **fallback**——如果后端不支持某种图形类型，
+会自动降级为其他类型绘制。例如，如果后端不支持椭圆弧，它会被分解为
+多条三次贝塞尔曲线来近似绘制。
 
 .. code-block:: python
 
-   backend = Backend.GLFW  # or Backend.SDL3
-   window = method_map[backend].create()
+   # 后端不支持 CircleArc → 自动 fallback 到 CubicBezier 序列
+   arc = cm.styles.shape.CircleArc(center=(100, 100), radius=50,
+                                    start_orient=0, end_orient=270)
+   cm.graphics.DrawnLine(window, arc, (255, 0, 0)).draw()
 
-That's the principle of the abstraction layer. Next, you can delve deeper
-through the source code and test files (see ``charmy/backend/``).
+更多细节请参考 ``charmy/backend/`` 目录下的源代码和测试文件。

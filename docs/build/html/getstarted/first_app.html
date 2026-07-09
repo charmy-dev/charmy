@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="Window`s config" href="window_config.html"><link rel="prev" title="Install Charmy" href="install.html">
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="窗口配置" href="window_config.html"><link rel="prev" title="安装 Charmy" href="install.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>First application - Charmy GUI 0.1.0 文档</title>
+        <title>第一个应用 - Charmy GUI 0.1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -188,7 +188,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -206,18 +206,18 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Main Content:</span></p>
+  <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="install.html">Install Charmy</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">First application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="window_config.html">Window`s config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html">Custom main manager settings</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="install.html">安装 Charmy</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_app_settings.html">自定义应用设置</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">How does it work</a><input aria-label="Toggle navigation of How does it work" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_does_it_work/index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_does_it_work/message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -263,9 +263,9 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Other:</span></p>
+<p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../contribution.html">Contribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -303,43 +303,61 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="first-application">
-<h1>First application<a class="headerlink" href="#first-application" title="链接到此标题。">¶</a></h1>
-<ol class="arabic simple">
-<li><p>Import <code class="docutils literal notranslate"><span class="pre">Charmy</span></code></p></li>
-</ol>
+          <section id="id1">
+<h1>第一个应用<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
+<p>下面带你一步步创建第一个 Charmy 应用。</p>
+<section id="charmy">
+<h2>1. 导入 Charmy<a class="headerlink" href="#charmy" title="链接到此标题。">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">备注</p>
-<p>Instead of developing <cite>cm</cite>, I'm playing <cite>MC</cite> here</p>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>Create a <code class="docutils literal notranslate"><span class="pre">Window</span></code></p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">()</span>
+</section>
+<section id="id2">
+<h2>2. 创建窗口<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;我的第一个 Charmy 应用&quot;</span><span class="p">)</span>
+<span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">)</span>  <span class="c1"># 浅灰色背景</span>
 </pre></div>
 </div>
-<p>3. Run the application
-There is auto created <code class="docutils literal notranslate"><span class="pre">App</span></code> object. You can run it by <code class="docutils literal notranslate"><span class="pre">cm.mainloop()</span></code>.</p>
+</section>
+<section id="id3">
+<h2>3. 添加按钮<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_button_click</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;按钮被点击了！&quot;</span><span class="p">)</span>
+
+<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;点我&quot;</span><span class="p">,</span> <span class="n">on_click</span><span class="o">=</span><span class="n">on_button_click</span><span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>4. 运行应用<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>In all, your first application should look like this:</p>
+</section>
+<section id="id5">
+<h2>完整的代码<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
 
-<span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello from Charmy!&quot;</span><span class="p">)</span>
+
+<span class="n">window</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;我的第一个 Charmy 应用&quot;</span><span class="p">)</span>
+<span class="n">window</span><span class="o">.</span><span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">)</span>
+
+<span class="n">button</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;点我&quot;</span><span class="p">,</span> <span class="n">on_click</span><span class="o">=</span><span class="n">on_click</span><span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">place</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+
 <span class="n">cm</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Then, you can get a window.</p>
-<img alt="../_images/first_app_preview.png" src="../_images/first_app_preview.png" />
+<p>运行后你会看到一个浅灰色窗口，中间有一个按钮，点击按钮会在控制台输出 <code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">from</span> <span class="pre">Charmy!</span></code>。</p>
+</section>
 </section>
 
         </article>
@@ -352,7 +370,7 @@ There is auto created <code class="docutils literal notranslate"><span class="pr
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Window`s config</div>
+                <div class="title">窗口配置</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -363,7 +381,7 @@ There is auto created <code class="docutils literal notranslate"><span class="pr
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Install Charmy</div>
+                <div class="title">安装 Charmy</div>
                 
               </div>
             </a>
@@ -385,8 +403,31 @@ There is auto created <code class="docutils literal notranslate"><span class="pr
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">第一个应用</a><ul>
+<li><a class="reference internal" href="#charmy">1. 导入 Charmy</a></li>
+<li><a class="reference internal" href="#id2">2. 创建窗口</a></li>
+<li><a class="reference internal" href="#id3">3. 添加按钮</a></li>
+<li><a class="reference internal" href="#id4">4. 运行应用</a></li>
+<li><a class="reference internal" href="#id5">完整的代码</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

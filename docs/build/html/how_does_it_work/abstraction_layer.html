@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="Message Loop (Event Loop)" href="message_loop.html"><link rel="prev" title="How does it work" href="index.html">
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="消息循环（事件循环）" href="message_loop.html"><link rel="prev" title="工作原理" href="index.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Abstraction layer - Charmy GUI 0.1.0 文档</title>
+        <title>抽象层 - Charmy GUI 0.1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -188,7 +188,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -206,18 +206,18 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Main Content:</span></p>
+  <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul class="current">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../getstarted/index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/install.html">Install Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/first_app.html">First application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/window_config.html">Window`s config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/custom_app_settings.html">Custom main manager settings</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getstarted/index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/install.html">安装 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/first_app.html">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/custom_app_settings.html">自定义应用设置</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">How does it work</a><input aria-label="Toggle navigation of How does it work" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Abstraction layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="message_loop.html">Message Loop (Event Loop)</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">抽象层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="message_loop.html">消息循环（事件循环）</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -263,9 +263,9 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Other:</span></p>
+<p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../contribution.html">Contribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -303,46 +303,72 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="abstraction-layer">
-<h1>Abstraction layer<a class="headerlink" href="#abstraction-layer" title="链接到此标题。">¶</a></h1>
-<p>Because <code class="docutils literal notranslate"><span class="pre">Charmy</span> <span class="pre">GUI</span></code> supports <cite>multiple backend and frontend libraries</cite>,
-we need to <code class="docutils literal notranslate"><span class="pre">abstract</span></code> their methods so they can switch between them at any time.</p>
-<p>So we can use the map method to map the methods of the backend library to the methods of the frontend library.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">method_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Backend</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+          <section id="id1">
+<h1>抽象层<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
+<p>Charmy 采用**三层架构**，从下到上依次为：</p>
+<ul class="simple">
+<li><p><strong>后端层 (Backend Layer)</strong> — SDL2 + Cairo (Genesis)</p></li>
+<li><p><strong>图形层 (Graphics Layer)</strong> — DrawnShape, DrawnLine, DrawnText…</p></li>
+<li><p><strong>控件层 (Widget Layer)</strong> — Button, Window, Frame…</p></li>
+</ul>
+<section id="id2">
+<h2>为什么需要抽象层<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
+<p>不同的操作系统和图形库有不同的 API。为了让 Charmy 能**跨平台**运行，
+并且能够在不同后端之间切换，我们需要将后端的具体实现抽象出来。</p>
+</section>
+<section id="id3">
+<h2>后端模板<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<p>在 <code class="docutils literal notranslate"><span class="pre">charmy/backend/template.py</span></code> 中定义了所有后端的接口模板：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Backend</span><span class="p">:</span>
+    <span class="n">WindowBase</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">WindowBase</span><span class="p">]</span>   <span class="c1"># 窗口操作</span>
+    <span class="n">LineBase</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">LineBase</span><span class="p">]</span>       <span class="c1"># 线条绘制</span>
+    <span class="n">ShapeBase</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ShapeBase</span><span class="p">]</span>     <span class="c1"># 形状绘制</span>
+    <span class="n">TextureBase</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">TextureBase</span><span class="p">]</span> <span class="c1"># 纹理处理</span>
+    <span class="n">TextBase</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">TextBase</span><span class="p">]</span>       <span class="c1"># 文字绘制</span>
 </pre></div>
 </div>
-<p>Then, by checking whether a certain library is installed, add the mapping method. Let's use create() as an example.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">GLFWBackend</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">importlib.util</span>
-<span class="k">if</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;glfw&quot;</span><span class="p">):</span>
-    <span class="n">method_map</span><span class="p">[</span><span class="n">Backend</span><span class="o">.</span><span class="n">GLFW</span><span class="p">]</span> <span class="o">=</span> <span class="n">GLFWBackend</span>
+<p>每个具体的后端（如 Genesis）必须实现这些接口。</p>
+</section>
+<section id="genesis">
+<h2>Genesis 后端<a class="headerlink" href="#genesis" title="链接到此标题。">¶</a></h2>
+<p>目前唯一的后端实现，使用 <strong>SDL2</strong> 创建和管理窗口，使用 <strong>Cairo</strong> 进行 2D 渲染。</p>
+<ul class="simple">
+<li><p><strong>SDL2</strong> 负责：窗口创建、事件循环、像素缓冲区管理</p></li>
+<li><p><strong>Cairo</strong> 负责：矢量图形渲染、文字渲染、图像合成</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>渲染流程<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>控件 → 图形对象 (DrawnShape/DrawnLine/DrawnText)
+   ↓
+后端 ShapeBase/LineBase/TextBase
+   ↓
+Cairo 绘制到 ImageSurface
+   ↓
+ctypes.memmove 拷贝到 SDL2 surface
+   ↓
+SDL_UpdateWindowSurface 刷新显示
 </pre></div>
 </div>
-<p>It's the same for other libraries as well.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SDL3Backend</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">importlib.util</span>
-<span class="k">if</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;sdl3&quot;</span><span class="p">):</span>
-    <span class="n">method_map</span><span class="p">[</span><span class="n">Backend</span><span class="o">.</span><span class="n">SDL3</span><span class="p">]</span> <span class="o">=</span> <span class="n">SDL3Backend</span>
+</section>
+<section id="fallback">
+<h2>Fallback 机制<a class="headerlink" href="#fallback" title="链接到此标题。">¶</a></h2>
+<p>Charmy 的线条和形状系统支持 <strong>fallback</strong>——如果后端不支持某种图形类型，
+会自动降级为其他类型绘制。例如，如果后端不支持椭圆弧，它会被分解为
+多条三次贝塞尔曲线来近似绘制。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 后端不支持 CircleArc → 自动 fallback 到 CubicBezier 序列</span>
+<span class="n">arc</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">styles</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">CircleArc</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                                 <span class="n">start_orient</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_orient</span><span class="o">=</span><span class="mi">270</span><span class="p">)</span>
+<span class="n">cm</span><span class="o">.</span><span class="n">graphics</span><span class="o">.</span><span class="n">DrawnLine</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">arc</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Then, we can execute the corresponding framework's methods through the mapping table and the selected framework name.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">Backend</span><span class="o">.</span><span class="n">GLFW</span>  <span class="c1"># or Backend.SDL3</span>
-<span class="n">window</span> <span class="o">=</span> <span class="n">method_map</span><span class="p">[</span><span class="n">backend</span><span class="p">]</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>That's the principle of the abstraction layer. Next, you can delve deeper
-through the source code and test files (see <code class="docutils literal notranslate"><span class="pre">charmy/backend/</span></code>).</p>
+<p>更多细节请参考 <code class="docutils literal notranslate"><span class="pre">charmy/backend/</span></code> 目录下的源代码和测试文件。</p>
+</section>
 </section>
 
         </article>
@@ -355,7 +381,7 @@ through the source code and test files (see <code class="docutils literal notran
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Message Loop (Event Loop)</div>
+                <div class="title">消息循环（事件循环）</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -366,7 +392,7 @@ through the source code and test files (see <code class="docutils literal notran
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">How does it work</div>
+                <div class="title">工作原理</div>
                 
               </div>
             </a>
@@ -388,8 +414,31 @@ through the source code and test files (see <code class="docutils literal notran
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">抽象层</a><ul>
+<li><a class="reference internal" href="#id2">为什么需要抽象层</a></li>
+<li><a class="reference internal" href="#id3">后端模板</a></li>
+<li><a class="reference internal" href="#genesis">Genesis 后端</a></li>
+<li><a class="reference internal" href="#id4">渲染流程</a></li>
+<li><a class="reference internal" href="#fallback">Fallback 机制</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

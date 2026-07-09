@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="API" href="../api/index.html"><link rel="prev" title="Abstraction layer" href="abstraction_layer.html">
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="API" href="../api/index.html"><link rel="prev" title="抽象层" href="abstraction_layer.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Message Loop (Event Loop) - Charmy GUI 0.1.0 文档</title>
+        <title>消息循环（事件循环） - Charmy GUI 0.1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -206,18 +206,18 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Main Content:</span></p>
+  <p class="caption" role="heading"><span class="caption-text">主要内容：</span></p>
 <ul class="current">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../getstarted/index.html">Get Started</a><input aria-label="Toggle navigation of Get Started" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/install.html">Install Charmy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/first_app.html">First application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/window_config.html">Window`s config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../getstarted/custom_app_settings.html">Custom main manager settings</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getstarted/index.html">快速开始</a><input aria-label="Toggle navigation of 快速开始" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/install.html">安装 Charmy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/first_app.html">第一个应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/window_config.html">窗口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/custom_app_settings.html">自定义应用设置</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">How does it work</a><input aria-label="Toggle navigation of How does it work" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="abstraction_layer.html">Abstraction layer</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Message Loop (Event Loop)</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">工作原理</a><input aria-label="Toggle navigation of 工作原理" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="abstraction_layer.html">抽象层</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">消息循环（事件循环）</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -263,9 +263,9 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Other:</span></p>
+<p class="caption" role="heading"><span class="caption-text">其他：</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../contribution.html">Contribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution.html">贡献指南</a></li>
 </ul>
 
 </div>
@@ -308,72 +308,84 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="message-loop-event-loop">
-<h1>Message Loop (Event Loop)<a class="headerlink" href="#message-loop-event-loop" title="链接到此标题。">¶</a></h1>
-<p>If you only use single-threaded synchronous task execution,
-it will cause the interface to lag.
-To avoid this problem, we need to use <code class="docutils literal notranslate"><span class="pre">asynchronous</span></code> or <code class="docutils literal notranslate"><span class="pre">multithreading</span></code> methods.</p>
-<p>Currently, events are mainly handled using <strong>synchronous single-threading</strong> (with optional multithreading).</p>
-<pre  class="mermaid">
-        graph TD
-A[Single-Threaded Event Loop] --&gt; B{Is there any task??}
-B -- Yes --&gt; C[Waiting for excuting these tasks]
-B -- No --&gt; D[Wait for 2ms]
-D --&gt; B
-    </pre><hr class="docutils" />
-<p>See <a class="reference internal" href="../api/event.html"><span class="doc">charmy.event</span></a> for the event handling API details.</p>
-<section id="multithreading">
-<h2>Multithreading<a class="headerlink" href="#multithreading" title="链接到此标题。">¶</a></h2>
-<p>Here it is divided into the working thread and the UI thread.
-The UI thread is the main thread.
-When using the <code class="docutils literal notranslate"><span class="pre">cm.mainloop</span></code> method, the main thread will continuously refresh and render the UI.
-If we handle multiple events that need refreshing (similar to the problematic <code class="docutils literal notranslate"><span class="pre">glfw_set_char_callback</span></code> method,
-where text input processing triggers repeatedly, giving one character at a time),
-it can cause noticeable lag because each handling will refresh and redraw the window.
-Therefore, methods that occupy the main thread like this should be handed over to the working thread to process.
-The working thread handles each event in turn,
-preventing multiple redundant refresh tasks from being processed at once.</p>
-<p>First, rewrite <code class="docutils literal notranslate"><span class="pre">threading.Thread</span></code> as an working thread.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">charmy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">EventThread</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
-    <span class="n">tasks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Event tasks</span>
-    <span class="n">is_alive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">cm</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">event</span><span class="p">,</span> <span class="n">target</span><span class="p">))</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">execute_tasks</span><span class="p">()</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="c1"># If idle, then rest for 0.02s to save CPU time</span>
-                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.02</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">execute_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>  <span class="c1"># Lock the task list to prevent multiple threads from accessing it at the same time</span>
-        <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">target</span><span class="p">):</span>
-                <span class="n">task</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">target</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">):</span>
-                <span class="c1"># Function list</span>
-                <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">task</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-                    <span class="n">func</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># warnings.warn(&quot;&quot;)</span>
-            <span class="k">pass</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+          <section id="id1">
+<h1>消息循环（事件循环）<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
+<p>Charmy 使用**事件驱动**模型：程序启动后进入一个死循环，不断处理窗口事件和更新界面。</p>
+<p>主循环结构
+----------:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cm.mainloop()
+  └─ 遍历所有 CharmyManager
+       └─ 遍历所有 Window
+            ├─ 处理 SDL2 事件（鼠标、键盘、窗口变化）
+            ├─ 绘制所有需要重绘的控件
+            └─ 触发 WidgetUpdate 事件
+  └─ time.sleep(interval)  ← 控制帧率
 </pre></div>
 </div>
-<p>Then, create and run the thread through <code class="docutils literal notranslate"><span class="pre">CmManager</span></code> until the main thread finishes.</p>
+<p>当前，事件主要使用**同步单线程**方式处理（可选择启用多线程）。</p>
+<pre  class="mermaid">
+        graph TD
+A[主循环开始] --&gt; B{有事件或需要重绘？}
+B -- 是 --&gt; C[处理事件并绘制]
+B -- 否 --&gt; D[等待 interval 秒]
+D --&gt; B
+C --&gt; B
+    </pre><section id="id2">
+<h2>事件系统<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
+<p>Charmy 的事件系统采用**发布-订阅模式**：</p>
+<ul class="simple">
+<li><p><strong>事件类型</strong>：用 dataclass 类表示（如 <code class="docutils literal notranslate"><span class="pre">MouseClick</span></code>、<code class="docutils literal notranslate"><span class="pre">WidgetResize</span></code>）</p></li>
+<li><p><strong>事件绑定</strong>：通过 <code class="docutils literal notranslate"><span class="pre">widget.bind(event_type,</span> <span class="pre">callback)</span></code> 注册</p></li>
+<li><p><strong>事件触发</strong>：通过 <code class="docutils literal notranslate"><span class="pre">widget.trigger(event_obj)</span></code> 触发</p></li>
+<li><p><strong>条件过滤</strong>：支持按条件绑定，如只响应鼠标左键点击</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;鼠标在 </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">mouse_pos</span><span class="si">}</span><span class="s2"> 位置点击了按钮&quot;</span><span class="p">)</span>
+
+<span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">on_click</span><span class="p">,</span>
+            <span class="n">conditions</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;button&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>  <span class="c1"># 只响应左键</span>
+</pre></div>
+</div>
 </section>
-<section id="async">
-<h2>Async<a class="headerlink" href="#async" title="链接到此标题。">¶</a></h2>
+<section id="id3">
+<h2>事件链<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<p>某些事件会自动级联触发其他事件：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MousePress + MouseRelease
+    ↓
+  MouseClick
+    ↓
+  on_click() 回调
+</pre></div>
+</div>
+<p>控件的鼠标悬停跟踪也是通过事件链实现的：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MouseMove
+  ├─ 计算鼠标下有哪些控件
+  ├─ 对每个控件触发 MouseMove
+  └─ 检测进入/离开 → 触发 MouseEnter / MouseLeave
+</pre></div>
+</div>
+<p>更多细节请参考 <a class="reference internal" href="../api/event.html"><span class="doc">事件API</span></a>。</p>
+</section>
+<section id="id4">
+<h2>多线程<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
+<div class="admonition caution">
+<p class="admonition-title">小心</p>
+<p>多线程支持目前处于**实验阶段**，建议在主线程中完成所有 UI 操作。</p>
+</div>
+<p>Charmy 支持将事件处理任务分发到工作线程，避免耗时操作阻塞 UI 刷新：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">heavy_task</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="c1"># 耗时操作，不会阻塞 UI</span>
+    <span class="o">...</span>
+
+<span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">event_types</span><span class="o">.</span><span class="n">MouseClick</span><span class="p">,</span> <span class="n">heavy_task</span><span class="p">,</span> <span class="n">multithread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>异步<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
 <div class="caution admonition">
-<p class="admonition-title">Waiting for further development</p>
-<p>...</p>
+<p class="admonition-title">等待后续开发</p>
+<p>异步支持目前尚未实现，计划在后续版本中加入。</p>
 </div>
 </section>
 </section>
@@ -399,7 +411,7 @@ preventing multiple redundant refresh tasks from being processed at once.</p>
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Abstraction layer</div>
+                <div class="title">抽象层</div>
                 
               </div>
             </a>
@@ -433,9 +445,11 @@ preventing multiple redundant refresh tasks from being processed at once.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Message Loop (Event Loop)</a><ul>
-<li><a class="reference internal" href="#multithreading">Multithreading</a></li>
-<li><a class="reference internal" href="#async">Async</a></li>
+<li><a class="reference internal" href="#">消息循环（事件循环）</a><ul>
+<li><a class="reference internal" href="#id2">事件系统</a></li>
+<li><a class="reference internal" href="#id3">事件链</a></li>
+<li><a class="reference internal" href="#id4">多线程</a></li>
+<li><a class="reference internal" href="#id5">异步</a></li>
 </ul>
 </li>
 </ul>
