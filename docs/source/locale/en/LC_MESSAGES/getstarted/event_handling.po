@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Charmy GUI \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-09 14:09+0800\n"
+"POT-Creation-Date: 2026-07-09 15:23+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -55,212 +55,244 @@ msgstr ""
 msgid "**multithread** （可选）: 是否在独立线程中执行"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:34
+#: ../../source/getstarted/event_handling.rst:32
+msgid ""
+"**task_obj_receiver** （可选）： 如果提供一个 ``Var`` 对象，将设定该对象值为该事件的 ``EventTask`` "
+"，用于解绑。"
+msgstr ""
+
+#: ../../source/getstarted/event_handling.rst:36
 msgid "``Button`` 的 ``on_click`` 参数只是 ``bind()`` 的语法糖， 内部已经绑定了 ``MouseClick`` 事件。"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:38
+#: ../../source/getstarted/event_handling.rst:40
 msgid "装饰器写法 ``@widget.on()``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:40
+#: ../../source/getstarted/event_handling.rst:42
 msgid "除了 ``bind()`` 方法，还可以用 ``@widget.on()`` **装饰器** 来注册事件："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:56
+#: ../../source/getstarted/event_handling.rst:58
 msgid "``on()`` 也支持条件过滤和多线程参数："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:71
+#: ../../source/getstarted/event_handling.rst:73
 msgid "装饰器方式适合让代码更紧凑。内部实现其实就是调用 ``bind()``："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:88
+#: ../../source/getstarted/event_handling.rst:90
 msgid "事件对象"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:90
+#: ../../source/getstarted/event_handling.rst:92
 msgid "回调函数接收到的事件对象包含事件的详细信息："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:100
+#: ../../source/getstarted/event_handling.rst:102
 msgid "常用事件属性："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:105
+#: ../../source/getstarted/event_handling.rst:107
 msgid "事件类型"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:106
+#: ../../source/getstarted/event_handling.rst:108
 msgid "属性"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:107
+#: ../../source/getstarted/event_handling.rst:109
 msgid "说明"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:108
+#: ../../source/getstarted/event_handling.rst:110
 msgid "``MouseMove``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:109
+#: ../../source/getstarted/event_handling.rst:111
 msgid "``mouse_pos``, ``subject``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:110
+#: ../../source/getstarted/event_handling.rst:112
 msgid "鼠标位置、所属窗口"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:111
+#: ../../source/getstarted/event_handling.rst:113
 msgid "``MousePress``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:112
-#: ../../source/getstarted/event_handling.rst:115
-#: ../../source/getstarted/event_handling.rst:118
+#: ../../source/getstarted/event_handling.rst:114
+#: ../../source/getstarted/event_handling.rst:117
+#: ../../source/getstarted/event_handling.rst:120
 msgid "``mouse_pos``, ``button``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:113
+#: ../../source/getstarted/event_handling.rst:115
 msgid "位置、按下的按键 (0=左, 1=中, 2=右)"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:114
+#: ../../source/getstarted/event_handling.rst:116
 msgid "``MouseRelease``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:116
+#: ../../source/getstarted/event_handling.rst:118
 msgid "位置、释放的按键"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:117
+#: ../../source/getstarted/event_handling.rst:119
 msgid "``MouseClick``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:119
+#: ../../source/getstarted/event_handling.rst:121
 msgid "位置、点击的按键"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:120
+#: ../../source/getstarted/event_handling.rst:122
 msgid "``MouseEnter``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:121
-#: ../../source/getstarted/event_handling.rst:124
+#: ../../source/getstarted/event_handling.rst:123
+#: ../../source/getstarted/event_handling.rst:126
 msgid "``subject``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:122
+#: ../../source/getstarted/event_handling.rst:124
 msgid "鼠标进入控件"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:123
+#: ../../source/getstarted/event_handling.rst:125
 msgid "``MouseLeave``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:125
+#: ../../source/getstarted/event_handling.rst:127
 msgid "鼠标离开控件"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:126
+#: ../../source/getstarted/event_handling.rst:128
 msgid "``WidgetResize``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:127
+#: ../../source/getstarted/event_handling.rst:129
 msgid "``new_size``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:128
+#: ../../source/getstarted/event_handling.rst:130
 msgid "新大小 ``(width, height)``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:129
+#: ../../source/getstarted/event_handling.rst:131
 msgid "``WidgetMove``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:130
+#: ../../source/getstarted/event_handling.rst:132
 msgid "``new_pos``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:131
+#: ../../source/getstarted/event_handling.rst:133
 msgid "新位置 ``(x, y)``"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:134
+#: ../../source/getstarted/event_handling.rst:136
 msgid "条件过滤"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:136
+#: ../../source/getstarted/event_handling.rst:138
 msgid "只当满足某些条件时才执行回调："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:153
+#: ../../source/getstarted/event_handling.rst:155
 msgid "事件链"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:155
+#: ../../source/getstarted/event_handling.rst:157
 msgid "某些事件会自动级联触发其他事件："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:166
+#: ../../source/getstarted/event_handling.rst:168
 msgid "鼠标悬停跟踪："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:175
+#: ../../source/getstarted/event_handling.rst:177
 msgid "这意味着你不需要手动计算鼠标是否在控件范围内，Charmy 会自动处理："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:183
+#: ../../source/getstarted/event_handling.rst:185
 msgid "解绑事件"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:185
+#: ../../source/getstarted/event_handling.rst:187
 msgid "``bind()`` 会返回一个 ``EventTask`` 对象，可以用它来解绑："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:198
+#: ../../source/getstarted/event_handling.rst:199
+msgid ""
+"如果是直接使用@button.on()装饰器绑定的事件，也可以通过 ``task_obj_receiver`` 参数获取 "
+"``EventTask`` 对象："
+msgstr ""
+
+#: ../../source/getstarted/event_handling.rst:213
 msgid "多线程事件"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:201
+#: ../../source/getstarted/event_handling.rst:216
 msgid "多线程支持处于 **实验阶段** 。"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:203
+#: ../../source/getstarted/event_handling.rst:218
 msgid "对于耗时操作，可以启用多线程避免阻塞 UI："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:216
+#: ../../source/getstarted/event_handling.rst:231
 msgid "多线程回调中 **不要直接操作 UI 对象** （如修改控件属性、创建窗口等）。 如果需要更新 UI，请通过事件机制传递消息（暂未实现，敬请期待）。"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:220
+#: ../../source/getstarted/event_handling.rst:235
 msgid "窗口事件"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:222
+#: ../../source/getstarted/event_handling.rst:237
 msgid "窗口本身也是事件源："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:232
+#: ../../source/getstarted/event_handling.rst:247
 msgid "内部事件与用户事件"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:234
+#: ../../source/getstarted/event_handling.rst:249
 msgid "Charmy 的控件内部也会使用 ``bind()`` 来实现自身行为。 例如，Button 内部绑定了以下事件："
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:247
+#: ../../source/getstarted/event_handling.rst:262
 msgid ""
 "这些内部绑定使用 ``_is_internal=True`` 标记。当调用 ``clear_bind()`` 时， "
 "内部绑定会被保留，只有用户绑定被清除。"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:251
+#: ../../source/getstarted/event_handling.rst:266
 msgid "可用的事件类型一览"
 msgstr ""
 
-#: ../../source/getstarted/event_handling.rst:280
+#: ../../source/getstarted/event_handling.rst:295
 msgid "更详细的事件类型定义请参考 :doc:`event_types API 文档 </api/utils/event_types>`。"
 msgstr ""
+
+#~ msgid ""
+#~ "如果是直接使用@button.on()装饰器绑定的事件，也可以通过 ``task_obj_receiver`` "
+#~ "参数获取 ``EventTask`` 对象： .. code-block::"
+#~ " python"
+#~ msgstr ""
+
+#~ msgid "task_var = cm.Var()"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "@button.on(cm.event_types.MouseClick, "
+#~ "task_obj_receiver=task_var) def on_click(event):"
+#~ msgstr ""
+
+#~ msgid "print(\"Clicked\")"
+#~ msgstr ""
+
+#~ msgid "# 后续解绑 button.unbind(task_var.value)"
+#~ msgstr ""
 

@@ -13,7 +13,7 @@
 .. code-block:: python
 
    window = cm.Window()
-   window.title = "我的窗口"          # 设置标题，立即更新窗口标题栏
+   window.title = "MyWindow"          # 设置标题，立即更新窗口标题栏
    print(window.title)               # 读取当前标题
 
 窗口大小

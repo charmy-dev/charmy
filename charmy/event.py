@@ -185,6 +185,7 @@ class EventHandling:
         :param condition: Conditions required for the task to run when event is triggered
         :param multithread: If this task should be executed in another thread (False by default)
         :param _is_internal: If the task is added by Charmy and should be kept when clear bind
+        :param task_obj_receiver: Give task object to Var object, if not None, the task object will be assigned to it
         :return: EventTask if `return_task` is True, otherwise the EventHandling itself.
         """
         if conditions is None:

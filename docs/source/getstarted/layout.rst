@@ -32,7 +32,7 @@ Charmy 使用和大多数 GUI 框架相同的坐标系：
    #   pos  ─ (x, y) 相对于父容器的偏移
    #   size ─ (width, height) 可选，控件的尺寸
 
-   button = cm.Button(window, text="按钮")
+   button = cm.Button(window, text="Button")
    button.place((50, 100))              # 只指定位置
    button.place((50, 100), (200, 40))   # 同时指定位置和大小
 
@@ -68,7 +68,7 @@ Charmy 使用和大多数 GUI 框架相同的坐标系：
        container.place((30, 30))
 
        with container:
-           btn = cm.Button(text="嵌套按钮")
+           btn = cm.Button(text="Button in the Container")
            btn.place((10, 10))     # pos=(10,10), abs_pos=(40,40)
 
 .. caution::
@@ -116,19 +116,19 @@ Charmy 使用和大多数 GUI 框架相同的坐标系：
 
    with window:
        # 在此创建的控件自动以 window 为父容器
-       button = cm.Button(text="自动父容器")
+       button = cm.Button(text="Auto parent")
        button.place((10, 10))
 
        with frame:
            # 嵌套容器
-           inner_btn = cm.Button(text="嵌套")
+           inner_btn = cm.Button(text="Inner Button")
            inner_btn.place((5, 5))
 
 这等价于显式指定 parent：
 
 .. code-block:: python
 
-   button = cm.Button(parent=window, text="显式父容器")
+   button = cm.Button(parent=window, text="Parent")
 
 控件大小
 ----------------------------------------
@@ -143,7 +143,7 @@ Charmy 使用和大多数 GUI 框架相同的坐标系：
 
 .. code-block:: python
 
-   button = cm.Button(window, text="大小测试")
+   button = cm.Button(window, text="Test")
    button.place((10, 10))           # 使用 profile 默认大小 (72, 28)
    print(button.size)               # → (72, 28)
 
@@ -165,7 +165,7 @@ Charmy 使用和大多数 GUI 框架相同的坐标系：
       # 手动实现垂直排列
       y = 10
       for i in range(5):
-          btn = cm.Button(window, text=f"按钮{i}")
+          btn = cm.Button(window, text=f"Button{i}")
           btn.place((10, y), (100, 30))
           y += 40
 

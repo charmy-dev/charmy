@@ -145,11 +145,11 @@ A: 在事件回调中添加打印语句来跟踪：
 
 .. code-block:: python
 
-   button.bind(cm.event_types.MousePress, lambda e: print(f"按下: {e.button}"))
-   button.bind(cm.event_types.MouseRelease, lambda e: print(f"释放: {e.button}"))
-   button.bind(cm.event_types.MouseClick, lambda e: print(f"点击: {e.button}"))
-   button.bind(cm.event_types.MouseEnter, lambda e: print("进入"))
-   button.bind(cm.event_types.MouseLeave, lambda e: print("离开"))
+   button.bind(cm.event_types.MousePress, lambda e: print(f"Pressed: {e.button}"))
+   button.bind(cm.event_types.MouseRelease, lambda e: print(f"Released: {e.button}"))
+   button.bind(cm.event_types.MouseClick, lambda e: print(f"Clicked: {e.button}"))
+   button.bind(cm.event_types.MouseEnter, lambda e: print("Entered"))
+   button.bind(cm.event_types.MouseLeave, lambda e: print("Left"))
 
 结合 ``mainloop(0.5)`` 降低帧率，可以清晰地观察事件触发顺序。
 
