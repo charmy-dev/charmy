@@ -260,7 +260,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self._alive = False
         if isinstance(self, Container):
             # Also destroy children if self is container
-            self._clear_chidren()
+            self._clear_children()
 
     def __contains__(self, pos: styles.shape.Point) -> bool:
         point = (pos[0] - self.x, pos[1] - self.y)
