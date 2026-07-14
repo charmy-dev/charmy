@@ -3,10 +3,9 @@
 from __future__ import annotations as _
 
 import typing as _typing
+import dataclasses as _dataclasses
 
-import reactive_caching
-
-from .widget import Widget as _Widget
+from .widget import Widget as _Widget, WidgetProfile as _WidgetProfile
 from .. import styles as _styles
 from .. import event_types as _event_types
 from .. import graphics as _graphics
@@ -56,6 +55,16 @@ button_default_style: dict[str, _typing.Any] = {
     }
 
 
+@_dataclasses.dataclass
+class ButtonProfle(_WidgetProfile):
+    """Button profile."""
+    text: _typing.Optional[str] = None
+    shape: _typing.Optional[dict | _styles.shape.ShapeType] = _styles.shape.Rect((0, 0), (0, 0))
+    background: _typing.Optional[dict | _styles.texture.TextureType] = None
+    border_width: _typing.Optional[int] = None
+    border_texture: _typing.Optional[dict | _styles.texture.TextureLike] = None
+
+
 class Button(_Widget):
     """Text buttons in Charmy."""
 
@@ -82,6 +91,9 @@ class Button(_Widget):
         self.style: dict[str, _typing.Any] = style.copy()
         self.theme: _typing.Optional[_styles.theme.Theme] = None
         self.state: str = "normal"
+
+        # Override profiles type
+        self.profiles: _typing.Dict[str, ButtonProfile]
 
         # Drawn objects, used by internal drawing functions
         self._components: tuple[_graphics.DrawnShape, _graphics.DrawnText] = (
@@ -111,18 +123,13 @@ class Button(_Widget):
             lambda _: self.config(state="normal"), _is_internal=True
             )
 
-    @reactive_caching.cached_property("-exposed-")
-    # BUG of reactive_caching: cannot listen change in properties
-    def components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
+    def _update_components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
         """Components (drawn objects) that make up the button."""
-        state=self.state
-        self.state="default"
-        curr_style = self.curr_state_styles.copy()
-        self.state=state
-        curr_style.update(self.curr_state_styles)
         # Make background shape
         self._components[0].shape = \
-            _styles.shape.AnyShape.from_json(curr_style["shape"])
+            _styles.shape.AnyShape.from_json(
+                self.profiles[self._negotiate_profile_state(self.state, "shape")].shape
+                )
         self._components[0].texture = \
             _styles.texture.Texture.from_json(curr_style["background"])
         self._components[0].border_width = \

@@ -11,11 +11,16 @@ from ..event import EventHandling, event_types
 from .container import Container, layout_profiles
 from .. import graphics
 from .. import styles
+from ..utils import marks, type_checking
+
+if typing.TYPE_CHECKING:
+    from ..event import EventTask
 
 __all__ = ["Widget", "WidgetProfile"]
 
+
 @dataclasses.dataclass
-class WidgetProfile:
+class WidgetProfile(EventHandling):
     """Class to store configs of a specific widget under a specific state.
 
     Each `WidgetProfile` represents a profile for `Widget`. Further, `ButtonProfile` for 
@@ -24,8 +29,11 @@ class WidgetProfile:
     themes.
     """
     # TODO: Support themes in WidgetProfiles
-    size: typing.Optional[styles.shape.Size] = None
+
+    ProfileProp: typing.TypeAlias = type_checking.ProfileProp
+
     fallback_state: str = "default"
+    size: ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
     # _fallback_target: typing.Self | None | typing.Literal["widget_specify"] = "widget_specify"
 
     def __post_init__(self):
@@ -43,7 +51,7 @@ class WidgetProfile:
         """To see whether an specific item is contained and specified in this profile."""
         if not hasattr(self, item):
             return False
-        return getattr(self, item) is not None
+        return getattr(self, item) is not marks.profile_value_fallback_mark
 
     @staticmethod
     def on_value_change(item_name: str):
@@ -58,7 +66,8 @@ class WidgetProfile:
     def __setattr__(self, name: str, value: typing.Any) -> None:
         """To set attribute and run bound routine."""
         super().__setattr__(name, value)
-        self.on_value_change(name)
+        if not name.startswith("_"):
+            self.trigger(event_types.ProfileChanged(self, name))
 
 
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
@@ -97,16 +106,20 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             else:
                 parent = Container._with_stack[-1]
 
+        # Parent init
         super().__init__()
-        EventHandling.__init__(self)
-        reactive_caching.CachedClass.__init__(self)
+        # EventHandling.__init__(self)
+        # reactive_caching.CachedClass.__init__(self)
 
+        # Parent
         self.parent: Container = parent
         self.parent.add_child(self)
 
-        self._profiles: dict[str, WidgetProfile] = {"default": WidgetProfile().default()}
+        # Profiles and theme
+        self.profiles: dict[str, WidgetProfile] = {"default": WidgetProfile().default()}
         if profiles is not None:
             self.profiles.update(profiles)
+        self._registered_profiles: typing.Dict[WidgetProfile, EventTask] = {}
         self.theme: typing.Optional[styles.theme.Theme] = None # TODO: Support theme
 
         self.is_visible: bool = False
@@ -116,13 +129,18 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
         self._alive: bool = True
 
-    @property
-    def profiles(self) -> dict[str, WidgetProfile]:
-        """Profiles config of current widget"""
-        # TODO: Support type hint for other profile classes
-        return self._profiles
+        # Event binds
+        self.bind(
+            event_types.WidgetUpdate, 
+            lambda _: self._update_registered_profiles, 
+            _is_internal = True
+            )
 
-    def _negotiate_profile_state(self, target_state: str, target_item: str):
+    def _negotiate_profile_state(self, 
+            target_state: str, 
+            target_item: str, 
+            _fallback_path: list[str] = [], 
+            ):
         """Negotiate and deduce a valid profile state when getting a value from a profile.
 
         In other words, this is the fallback routine when getting a value from a profile.
@@ -131,12 +149,37 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             return "default" # Fallback to default state derectly if state not exists
         if target_item not in target_state:
             # If target item remains not specified (with value None) in target state's profile
+            if target_state in _fallback_path: # Inter-fallback
+                return "default" # Return default if inter-fallback.
+            new_fallback_path = _fallback_path.copy()
+            new_fallback_path.append(target_state)
             return self._negotiate_profile_state(
-                self.profiles[target_state].fallback_state, target_item
+                self.profiles[target_state].fallback_state, target_item, 
+                new_fallback_path
                 ) # Return negotiated fallback state
-            # BUG: Cannot correctly handle inter-fallback profiles. Current code is expected to 
-            #      give a max recursion error in such case, but it should give default state.
         return target_state
+
+    def _update_registered_profiles(self):
+        """Update registered profile.
+        
+        Register profiles that are not registered yet, and remove those which are no longer 
+        relating to this widget.
+        """
+        curr_profiles = list(self.profiles.values())
+        for profile in curr_profiles:
+            if profile not in self._registered_profiles:
+                # Profile not registered, then register it
+                task_obj = profile.bind(
+                    event_types.ProfileChanged, 
+                    self._refresh_components, 
+                    _is_internal = True, 
+                    )
+                self._registered_profiles[profile] = task_obj
+        for profile in self._registered_profiles.keys():
+            if profile not in curr_profiles:
+                # Profile is no longer relating to this widget, unregister it
+                profile.unbind(self._registered_profiles[profile])
+                del self._registered_profiles[profile]
 
     @property
     def pos(self) -> styles.shape.Point:

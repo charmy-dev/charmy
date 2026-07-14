@@ -244,6 +244,16 @@ class MouseClick(MouseInteractEvent):
     type: _typing.ClassVar[str] = "mouse_interact.click"
     button: int
 
+
+# region Profile events
+
+@_dataclass
+class ProfileChanged(Event):
+    type: _typing.ClassVar[str]  = "profile.changed"
+
+    subject: _widget.WidgetProfile
+    item_changed: str
+
 # region Delay events
 
 @_dataclass
