@@ -9,6 +9,7 @@ from .widget import Widget as _Widget, WidgetProfile as _WidgetProfile
 from .. import styles as _styles
 from .. import event_types as _event_types
 from .. import graphics as _graphics
+from ..utils import type_checking as _type_checking, marks as _marks
 
 if _typing.TYPE_CHECKING:
     from .. import container as _container
@@ -58,11 +59,26 @@ button_default_style: dict[str, _typing.Any] = {
 @_dataclasses.dataclass
 class ButtonProfle(_WidgetProfile):
     """Button profile."""
-    text: _typing.Optional[str] = None
-    shape: _typing.Optional[dict | _styles.shape.ShapeType] = _styles.shape.Rect((0, 0), (0, 0))
-    background: _typing.Optional[dict | _styles.texture.TextureType] = None
-    border_width: _typing.Optional[int] = None
-    border_texture: _typing.Optional[dict | _styles.texture.TextureLike] = None
+    shape: _type_checking.ProfileProp[dict | _styles.shape.ShapeType] = \
+        _marks.profile_value_fallback_mark
+    background: _type_checking.ProfileProp[dict | _styles.texture.TextureType] = \
+        _marks.profile_value_fallback_mark
+    border_width: _type_checking.ProfileProp[int] = _marks.profile_value_fallback_mark
+    border_texture: _type_checking.ProfileProp[dict | _styles.texture.TextureLike] = \
+        _marks.profile_value_fallback_mark
+    text: _type_checking.ProfileProp[str] = _marks.profile_value_fallback_mark
+    text_style: _type_checking.ProfileProp[dict | _styles.text_style.TextStyle] = \
+        _marks.profile_value_fallback_mark
+    text_texture: _type_checking.ProfileProp[dict | _styles.texture.TextureType] = \
+        _marks.profile_value_fallback_mark
+
+    @classmethod
+    def default(cls) -> _typing.Self:
+        instance = cls(
+            size=(72, 28), 
+            shape=_styles.shape.Rect((0, 0))
+            )
+        return instance
 
 
 class Button(_Widget):

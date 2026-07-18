@@ -30,10 +30,8 @@ class WidgetProfile(EventHandling):
     """
     # TODO: Support themes in WidgetProfiles
 
-    ProfileProp: typing.TypeAlias = type_checking.ProfileProp
-
     fallback_state: str = "default"
-    size: ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
+    size: type_checking.ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
     # _fallback_target: typing.Self | None | typing.Literal["widget_specify"] = "widget_specify"
 
     def __post_init__(self):
@@ -43,7 +41,7 @@ class WidgetProfile(EventHandling):
     def default(cls) -> typing.Self:
         """To generate a profile with full default values for this widget."""
         instance = cls(
-            size=(0, 0)
+            size=(0, 0), 
             )
         return instance
 
