@@ -3,13 +3,13 @@
 from __future__ import annotations as _
 
 import typing as _typing
+import dataclasses as _dataclasses
 
-import reactive_caching
-
-from .widget import Widget as _Widget
+from .widget import Widget as _Widget, WidgetProfile as _WidgetProfile
 from .. import styles as _styles
 from .. import event_types as _event_types
 from .. import graphics as _graphics
+from ..utils import type_checking as _type_checking, marks as _marks
 
 if _typing.TYPE_CHECKING:
     from .. import container as _container
@@ -56,6 +56,31 @@ button_default_style: dict[str, _typing.Any] = {
     }
 
 
+@_dataclasses.dataclass
+class ButtonProfle(_WidgetProfile):
+    """Button profile."""
+    shape: _type_checking.ProfileProp[dict | _styles.shape.ShapeType] = \
+        _marks.profile_value_fallback_mark
+    background: _type_checking.ProfileProp[dict | _styles.texture.TextureType] = \
+        _marks.profile_value_fallback_mark
+    border_width: _type_checking.ProfileProp[int] = _marks.profile_value_fallback_mark
+    border_texture: _type_checking.ProfileProp[dict | _styles.texture.TextureLike] = \
+        _marks.profile_value_fallback_mark
+    text: _type_checking.ProfileProp[str] = _marks.profile_value_fallback_mark
+    text_style: _type_checking.ProfileProp[dict | _styles.text_style.TextStyle] = \
+        _marks.profile_value_fallback_mark
+    text_texture: _type_checking.ProfileProp[dict | _styles.texture.TextureType] = \
+        _marks.profile_value_fallback_mark
+
+    @classmethod
+    def default(cls) -> _typing.Self:
+        instance = cls(
+            size=(72, 28), 
+            shape=_styles.shape.Rect((0, 0))
+            )
+        return instance
+
+
 class Button(_Widget):
     """Text buttons in Charmy."""
 
@@ -82,6 +107,9 @@ class Button(_Widget):
         self.style: dict[str, _typing.Any] = style.copy()
         self.theme: _typing.Optional[_styles.theme.Theme] = None
         self.state: str = "normal"
+
+        # Override profiles type
+        self.profiles: _typing.Dict[str, ButtonProfile]
 
         # Drawn objects, used by internal drawing functions
         self._components: tuple[_graphics.DrawnShape, _graphics.DrawnText] = (
@@ -111,18 +139,13 @@ class Button(_Widget):
             lambda _: self.config(state="normal"), _is_internal=True
             )
 
-    @reactive_caching.cached_property("-exposed-")
-    # BUG of reactive_caching: cannot listen change in properties
-    def components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
+    def _update_components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
         """Components (drawn objects) that make up the button."""
-        state=self.state
-        self.state="default"
-        curr_style = self.curr_state_styles.copy()
-        self.state=state
-        curr_style.update(self.curr_state_styles)
         # Make background shape
         self._components[0].shape = \
-            _styles.shape.AnyShape.from_json(curr_style["shape"])
+            _styles.shape.AnyShape.from_json(
+                self.profiles[self._negotiate_profile_state(self.state, "shape")].shape
+                )
         self._components[0].texture = \
             _styles.texture.Texture.from_json(curr_style["background"])
         self._components[0].border_width = \

@@ -11,10 +11,14 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "json5", "reactive-caching", 
-    "pysdl2", "pysdl2-dll", "pycairo", # Required by Genesis backend
 ]
 license = "AGPLv3"
-documentation = "https://charmy.netlify.app/"
+documentation = "https://charmy.bash-sudo.su/"
+
+[project.optional-dependencies]
+backend-genesis = [
+    "pysdl2", "pysdl2-dll", "pycairo", # Required by Genesis backend
+]
 
 [tool.poetry.extras]
 docs = [

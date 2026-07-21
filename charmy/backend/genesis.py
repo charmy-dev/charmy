@@ -129,7 +129,7 @@ class WindowBase(template.WindowBase):
         self.cairo_context: cairo.Context = cairo.Context(self.surface)
         self.cairo_context.set_line_join(cairo.LINE_JOIN_ROUND)
         self.cairo_context.set_line_cap(cairo.LINE_CAP_ROUND)
-        self.cairo_context.set_source_rgba(0, 0, 0, 255)  # Black back
+        self.cairo_context.set_source_rgba(0, 0, 0, 1.0)  # Black back
         self.cairo_context.paint()
 
     def show(self) -> typing.Self:
@@ -727,6 +727,7 @@ class TextBase(template.TextBase):
             del ctx
         return drawn_text.offset, text_size
 
+
 # region: Alias WhateverBase classes
 
 Backend.WindowBase = WindowBase
@@ -734,5 +735,10 @@ Backend.LineBase = LineBase
 Backend.ShapeBase = ShapeBase
 Backend.TextureBase = TextureBase
 Backend.TextBase = TextBase
+
+
+# region: Welcome message (to tell that Genesis backend is loaded)
+
+print("Hello from backend Genesis!")
 
 # endregion

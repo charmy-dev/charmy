@@ -163,8 +163,6 @@ class Transparent(Texture):
 
 TransparentLike: _typing.TypeAlias = None | tuple[int, int, int, _typing.Literal[0]]
 
-# endregion
-
 
 # region ensure_texture
 
@@ -198,5 +196,10 @@ def ensure_texture(texture_like: Texture | TextureLike) -> Texture:
                 "represent a valid texture!"
                 )
     return result
+
+
+# region: TextureType
+
+TextureType: _typing.TypeAlias = Texture | TextureLike
 
 # endregion
