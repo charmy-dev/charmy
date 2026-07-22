@@ -1,6 +1,6 @@
 # Charmy GUI
 
-Formerly `Suzaku`
+Formerly `Suzaku`.
 
 Charmy is a GUI module for Python, allowing switching between different backends, and hence providing a cross-platform while also lightweight solution of building GUI applications.
 
@@ -30,7 +30,7 @@ Please DO NOT create issues irrelevant to software bugs or suggestions etc. in t
 
 Unfortunately, currently there is no other discussion group chat available on any other platforms that you may be easier to access. We will create one when we publish our first usable version, because there is no reason to do so before that since users cannot provide any feedback without a working version.
 
-**However,** the good news is, totowang-hhh (aka. rgzz666, one of the devs) can communicate well in English (and that's why he was the one who wrote this README), so feel free to reach him via any possible method. For instance, simply [email me](mailto:tt1224@hotmail.com) for further discussion.
+**However,** the good news is, totowang-hhh (aka. rgzz666, one of the devs) can communicate well in English (and that's why he was the one who wrote this README), so feel free to reach him via any possible method. For instance, you may [email him](mailto:tt1224@hotmail.com) for further discussion.
 
 ~~thx, now I'm getting annoyed with 26-key touchscreen keyboards 😅~~
 
@@ -44,4 +44,4 @@ The Genesis backend uses Cairo and SDL2 for rendering and window operations resp
 
 This is an open-source project licensed under `AGPLv3`, for full license text, please refer to `LICENSE.txt`.
 
-We also plan to provide paid license in the future, anyone who buys paid license will be able to freely (to some extents, terms and conditions apply) use Charmy without the limitations of `AGPL`. Please no that this paragraph is a brief description of one of our future plans, and does not describe, explain, or completes the licensing policies (currently AGPL only) of this project. More information of the price and terms of paid license, please wait for further notice or contact us.
+We also plan to provide paid license in the future, anyone who buys paid license will be able to freely (to some extents, terms and conditions apply) use Charmy without the limitations of `AGPL`. Please no that this paragraph is a brief description of one of our future plans, and does not describe, explain, or complete the licensing policies (currently AGPL only) of this project. For more information of the price and terms of paid license, please wait for further notice or contact us.
