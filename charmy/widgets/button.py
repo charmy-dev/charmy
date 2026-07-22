@@ -85,11 +85,11 @@ class Button(_Widget):
     """Text buttons in Charmy."""
 
     def __init__(self, 
-                parent: _container.Container | None = None, 
-                text: str = "Button", 
-                on_click: _typing.Callable = lambda: None, 
-                style: _typing.Optional[dict[str, _typing.Any]] = None, 
-                *args, **kwargs):
+                 parent: _container.Container | None = None,
+                 text: str = "Button",
+                 on_click: _typing.Callable = lambda: None,
+                 style: _typing.Optional[dict[str, _typing.Any]] = None,
+                 *args, **kwargs):
         """Text buttons in Charmy.
 
         :param parent: Parent of the button
