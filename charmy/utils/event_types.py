@@ -5,7 +5,6 @@ import typing as _typing
 from dataclasses import dataclass as _dataclass
 import time as _time
 
-from ..event import EventHandling as _EventHandling
 from ..cm_object import CharmyObject as _CharmyObject
 from . import type_checking as _type_checking
 
@@ -14,6 +13,7 @@ if _typing.TYPE_CHECKING:
     from ..styles import shape as _shape
     from ..widgets import widget as _widget, container as _container
     from ..widgets import window as _window
+    from ..utils import var as _var
 
 
 # region Base class & generic classes
@@ -179,9 +179,8 @@ class MouseMove(MouseRawEvent):
         last_hovering = self.subject._mouse_hovering_on.copy()
         super().call_chain(subject)
         if not subject._mouse_hovering:
-            if isinstance(subject, _EventHandling):
-                subject._mouse_hovering = True
-                subject.trigger(MouseEnter(subject, self))
+            subject._mouse_hovering = True
+            subject.trigger(MouseEnter(subject, self))
         if subject is self.subject:
             for item in last_hovering:
                 if item not in self.subject._mouse_hovering_on:
@@ -245,7 +244,13 @@ class MouseClick(MouseInteractEvent):
     button: int
 
 
-# region Profile events
+# region Data containers events
+
+@_dataclass
+class VarChanged(Event):
+    type: _typing.ClassVar[str]  = "var.changed"
+
+    subject: _var.Var
 
 @_dataclass
 class ProfileChanged(Event):

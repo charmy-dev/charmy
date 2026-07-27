@@ -12,6 +12,7 @@ from .container import Container, layout_profiles
 from .. import graphics
 from .. import styles
 from ..utils import marks, type_checking
+from ..utils import var
 
 if typing.TYPE_CHECKING:
     from ..event import EventTask
@@ -20,7 +21,7 @@ __all__ = ["Widget", "WidgetProfile"]
 
 
 @dataclasses.dataclass
-class WidgetProfile(EventHandling):
+class WidgetProfile(CharmyObject, EventHandling):
     """Class to store configs of a specific widget under a specific state.
 
     Each `WidgetProfile` represents a profile for `Widget`. Further, `ButtonProfile` for 
@@ -32,10 +33,15 @@ class WidgetProfile(EventHandling):
 
     fallback_state: str = "default"
     size: type_checking.ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
-    # _fallback_target: typing.Self | None | typing.Literal["widget_specify"] = "widget_specify"
+
+    _referencing_vars: typing.ClassVar[dict[str, var.Var]] = {}
 
     def __post_init__(self):
+        super().__init__()
+        EventHandling.__init__(self)
         self._initialized: bool = True
+        type(self)._referencing_vars = {}
+        # 👆 Clear referencing vars cache to prepare for next initialization
 
     @classmethod
     def default(cls) -> typing.Self:
@@ -51,22 +57,39 @@ class WidgetProfile(EventHandling):
             return False
         return getattr(self, item) is not marks.profile_value_fallback_mark
 
-    @staticmethod
-    def on_value_change(item_name: str):
-        """Routine to run when value of profile changed.
-
-        This is a placeholder function that does nothing, override it from outside!
-
-        :param item_name: Name of the item that has been changed.
-        """
-        return None
-
     def __setattr__(self, name: str, value: typing.Any) -> None:
         """To set attribute and run bound routine."""
         super().__setattr__(name, value)
+        if not hasattr(self, "_alive"):
+            return
         if not name.startswith("_"):
             self.trigger(event_types.ProfileChanged(self, name))
 
+    @classmethod
+    def references(cls, target: str) -> var.Var:
+        """To represent a profile var."""
+        if not hasattr(cls, target):
+            raise NameError(
+                f"Referencing attribute {target} that does not exist for {cls.__name__}."
+                )
+        if target not in cls._referencing_vars:
+            the_var = var.Var()
+            cls._referencing_vars[target] = the_var
+        else:
+            the_var = cls._referencing_vars[target]
+        return the_var
+
+    def __eq__(self, other: object) -> bool:
+        if type(other) != type(self):
+            return False # We are not even the same type of objects
+        for attr, value in self.__dict__.items():
+            if not hasattr(other, attr):
+                return False
+            if getattr(other, attr) != value:
+                return False
+        else:
+            # If all attributes have same value, we consider the two profiles are same
+            return True
 
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     """Widget base class."""
@@ -106,8 +129,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         # Parent init
         super().__init__()
-        # EventHandling.__init__(self)
-        # reactive_caching.CachedClass.__init__(self)
+        EventHandling.__init__(self)
+        reactive_caching.CachedClass.__init__(self)
 
         # Parent
         self.parent: Container = parent
@@ -126,13 +149,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.state: str = "normal"
         self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
         self._alive: bool = True
-
-        # Event binds
-        self.bind(
-            event_types.WidgetUpdate, 
-            lambda _: self._update_registered_profiles, 
-            _is_internal = True
-            )
 
     def _negotiate_profile_state(self, 
             target_state: str, 
@@ -273,6 +289,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         """Draw the widget, does nothing on base class."""
         if not self._alive:
             return self
+
+        self._update_registered_profiles()
 
         for component in self._components:
             component = typing.cast(graphics.DrawnObject, component)

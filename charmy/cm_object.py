@@ -166,6 +166,16 @@ class CharmyObject:
         """Happens when someone boring puts a Charmy stuff into str() or print()."""
         return str(f"CharmyObject[{self.id}]")
 
+    # region: hashable
+
+    def __hash__(self) -> int:
+        return int(self.id[len(self.class_name):])
+
+    def __eq__(self, other: object) -> bool:
+        if type(other) != type(self):
+            return False # Not in same type, impossible to be equal
+        return self.id == other.id
+
     # endregion
 
 

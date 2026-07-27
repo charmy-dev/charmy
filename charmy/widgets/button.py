@@ -23,7 +23,7 @@ button_default_style: dict[str, _typing.Any] = {
         "shape": {
             "type": "rect", 
             "pos": (0, 0), 
-            "size": "$[widget.size]", 
+            "size": "$[widget.size]", # TODO: Implement profiles vars
             }, 
         "background": {
             "type": "color", 
@@ -59,12 +59,12 @@ button_default_style: dict[str, _typing.Any] = {
 @_dataclasses.dataclass
 class ButtonProfle(_WidgetProfile):
     """Button profile."""
-    shape: _type_checking.ProfileProp[dict | _styles.shape.ShapeType] = \
+    shape: _type_checking.ProfileProp[_styles.shape.ShapeJSON | _styles.shape.ShapeType] = \
         _marks.profile_value_fallback_mark
-    background: _type_checking.ProfileProp[dict | _styles.texture.TextureType] = \
+    background: _type_checking.ProfileProp[_styles.texture.TextureJSON | _styles.texture.TextureType] = \
         _marks.profile_value_fallback_mark
     border_width: _type_checking.ProfileProp[int] = _marks.profile_value_fallback_mark
-    border_texture: _type_checking.ProfileProp[dict | _styles.texture.TextureLike] = \
+    border_texture: _type_checking.ProfileProp[dict | _styles.texture.TextureType] = \
         _marks.profile_value_fallback_mark
     text: _type_checking.ProfileProp[str] = _marks.profile_value_fallback_mark
     text_style: _type_checking.ProfileProp[dict | _styles.text_style.TextStyle] = \
@@ -76,7 +76,13 @@ class ButtonProfle(_WidgetProfile):
     def default(cls) -> _typing.Self:
         instance = cls(
             size=(72, 28), 
-            shape=_styles.shape.Rect((0, 0))
+            shape=_styles.shape.Rect((0, 0), _WidgetProfile.references("size")), 
+            background = _styles.texture.Color((200, 200, 200)), 
+            border_width = 2, 
+            border_texture = _styles.texture.Color((20, 20, 20)), 
+            text = "Button", 
+            text_style = _styles.text_style.TextStyle.sys_default, 
+            text_texture = _styles.texture.Color((0, 0, 0)), 
             )
         return instance
 
@@ -109,7 +115,7 @@ class Button(_Widget):
         self.state: str = "normal"
 
         # Override profiles type
-        self.profiles: _typing.Dict[str, ButtonProfile]
+        self.profiles: _typing.Dict[str, ButtonProfle]
 
         # Drawn objects, used by internal drawing functions
         self._components: tuple[_graphics.DrawnShape, _graphics.DrawnText] = (
@@ -143,7 +149,7 @@ class Button(_Widget):
         """Components (drawn objects) that make up the button."""
         # Make background shape
         self._components[0].shape = \
-            _styles.shape.AnyShape.from_json(
+            _styles.shape.AnyShape.from_profile_value(
                 self.profiles[self._negotiate_profile_state(self.state, "shape")].shape
                 )
         self._components[0].texture = \

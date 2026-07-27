@@ -9,8 +9,9 @@ import typing as _typing
 
 
 if _typing.TYPE_CHECKING:
-    from .. import graphics as cm_draw
-    from ..backend import template as cm_backend
+    from .. import graphics as _draw
+    from ..backend import template as _backend
+    from . import shape as _shape
 
 
 class WEIGHT:
@@ -61,8 +62,8 @@ class TextStyle():
                 size: _typing.Optional[int] | float = None, 
                 weight: int = WEIGHT.REGULAR, 
                 italic: bool = False, 
-                underlined: bool | cm_draw.DrawnLine = False, 
-                strikethrough: bool | cm_draw.DrawnLine = False, 
+                underlined: bool | _draw.DrawnLine = False, 
+                strikethrough: bool | _draw.DrawnLine = False, 
                 ):
         """To express a font style in Charmy.
 
@@ -94,23 +95,21 @@ eights?view=netframework-4.8#remarks) to learn more about the values. Presets ar
         self.size: int | float = size if size is not None else self.sys_default.size
         self.weight: int = weight
         self.italic: bool = italic
-        self.underlined: bool | cm_draw.DrawnLine = underlined
-        self.strikethrough: bool | cm_draw.DrawnLine = strikethrough
+        self.underlined: bool | _draw.DrawnLine = underlined
+        self.strikethrough: bool | _draw.DrawnLine = strikethrough
 
     @staticmethod
     def from_json(json_content):
         return TextStyle(**json_content)
 
-    def get_text_boundary(self, text: str, backend: _typing.Optional[cm_backend.Backend]):
-        """Get boundary of a specific text in this style."""
-        if backend is not None:
-            # If backend specified, then get size from backend
-            from .. import graphics
-            return backend.TextBase.get_text_bound(graphics.DrawnText(
-                text, self, (0, 0, 0)
-                ))
-        else:
-            pass
+    def get_text_boundary(self, 
+            text: str, 
+            backend: _typing.Optional[_backend.Backend]
+            ) -> _shape.ShapeRange:
+        """Get boundary of a specific text in this style. (NOT IMPLEMENTED)"""
+        return (0, 0), (0, 0)
 
 
 TextStyle.sys_default = TextStyle("Arial", 14)
+
+TextStyleJSON: _typing.TypeAlias = dict[str, _typing.Any]

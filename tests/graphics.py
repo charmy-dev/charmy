@@ -21,7 +21,7 @@ test_arc_2 = cm.graphics.DrawnLine(window,
     cm.styles.shape.CircleArc((200, 100), 50, 320, 50), (100, 100, 255)) .draw()
 test_quadratic_bezier = cm.graphics.DrawnLine(window, cm.styles.shape.QuadraticBezier([
     (100, 150), (250, 250), (-40, 350)
-    ]), (100, 255, 100, 100), width=8) .draw()
+    ]), (100, 255, 100, 0.4), width=8) .draw()
 
 
 # region Shapes
@@ -36,7 +36,7 @@ test_rounded_rect = cm.graphics.DrawnShape(window, cm.styles.shape.RoundRect(
     (0, 0), (150, 100), 25), (150, 150, 255), offset=(300, 100)) .draw()
 
 test_rounded_rect_2 = cm.graphics.DrawnShape(window, cm.styles.shape.RoundRect(
-    (350, 150), (150, 100), 25), (255, 255, 0, 50)) .draw()
+    (350, 150), (150, 100), 25), (255, 255, 0, 0.2)) .draw()
 
 # region Texts
 test_text = cm.graphics.DrawnText(

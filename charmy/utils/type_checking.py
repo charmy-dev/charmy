@@ -3,6 +3,7 @@ from __future__ import annotations as _
 import typing as _typing
 
 from . import marks as _marks
+from . import var as _var
 
 if _typing.TYPE_CHECKING:
     from .. import styles as _styles
@@ -31,4 +32,4 @@ class WindowLike(_typing.Protocol):
 
 _PropType = _typing.TypeVar("_PropType")
 
-type ProfileProp[_PropType] = _PropType | _marks.Mark
+ProfileProp: _typing.TypeAlias = _PropType | _var.Var[_PropType] | _marks.Mark

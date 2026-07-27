@@ -597,7 +597,9 @@ class TextureBase(template.TextureBase):
             context.set_source_rgba(0, 0, 0, 0)
             return noskip
         if isinstance(texture, cmtx.Color):
-            context.set_source_rgba(*[v / 255 for v in texture])
+            r, g, b, a = texture.r / 255, texture.g / 255, texture.b / 255, texture.a
+            context.set_source_rgba(r, g, b, a)
+            # Alpha value of texture should be float between 0 and 1
         else:
             template.not_implemented_func(
                 Backend.friendly_name, f"Drawing texture type {texture.__class__.__name__}"

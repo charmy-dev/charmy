@@ -67,7 +67,7 @@ class Texture:
 
             {
             "type": "color", 
-            "color": (255, 0, 0, 100),
+            "color": (255, 0, 0, 0.5),
             }
         """
         # Convert raw content to JSON
@@ -90,7 +90,7 @@ class Texture:
 
 # Color types
 RGB: _typing.TypeAlias = tuple[int, int, int]
-RGBA: _typing.TypeAlias = tuple[int, int, int, int]
+RGBA: _typing.TypeAlias = tuple[int, int, int, float]
 HEX: _typing.TypeAlias = str
 
 ColorLike: _typing.TypeAlias = RGB | RGBA | HEX
@@ -114,19 +114,31 @@ class Color(Texture):
         :param color: The RGB(A) tuple or the HEX string that represents the color
         """
 
-        self.color: RGBA = (0, 255, 0, 255)
+        self.color: RGBA = (0, 255, 0, 1)
 
         if isinstance(color, tuple): # Expressed by int tuple
             if len(color) == 4: # RGBA
                 self.color = color
             elif len(color) == 3: # RGB
-                self.color = (*color, 255)
+                self.color = (*color, 1)
         elif isinstance(color, str):
             if color[0] == "#": # Remove leading hash if exists
                 color = color[1:]
             if len(color) == 6:
                 raise NotImplementedError("HEX colors conversion not implemented")
                 # TODO: Implement HEX colors
+
+        # Value check
+        if False in [
+                0 <= self.r <= 255, 
+                0 <= self.g <= 255, 
+                0 <= self.b <= 255, 
+                0 <= self.a <= 1
+                ]:
+            raise ValueError(
+                "Color should be in form of (R 0~255, G 0~255, B 0~255, A 0.0~1.0). "
+                f"Received wrong value {self.color}"
+                )
 
     def __iter__(self):
         return iter(self.color)
@@ -141,7 +153,7 @@ class Color(Texture):
     def b(self) -> int:
         return self.color[2]
     @property
-    def a(self) -> int:
+    def a(self) -> float:
         return self.color[3]
 
 
@@ -201,5 +213,6 @@ def ensure_texture(texture_like: Texture | TextureLike) -> Texture:
 # region: TextureType
 
 TextureType: _typing.TypeAlias = Texture | TextureLike
+TextureJSON: _typing.TypeAlias = dict[str, _typing.Any]
 
 # endregion
