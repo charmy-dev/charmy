@@ -132,6 +132,8 @@ class EventHandling:
             for task in self.tasks[type(event_obj)]:
                 if event_obj.meets(task.conditions):
                     task.execute(event_obj)
+                    if task.one_time:
+                        self.unbind(task)
         event_obj.call_chain(self)
         return self
 
@@ -142,6 +144,7 @@ class EventHandling:
         target: typing.Callable | typing.Iterable, 
         conditions: dict = {}, 
         multithread: bool = False, 
+        one_time: bool = False, 
         _is_internal: bool = False, 
         task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
         return_task: typing.Literal[True] = True
@@ -154,6 +157,7 @@ class EventHandling:
         target: typing.Callable | typing.Iterable, 
         conditions: dict = {}, 
         multithread: bool = False, 
+        one_time: bool = False, 
         _is_internal: bool = False, 
         task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
         return_task: typing.Literal[False] = False
@@ -165,6 +169,7 @@ class EventHandling:
         target: typing.Callable | typing.Iterable[typing.Callable], 
         conditions: typing.Optional[dict] = None, 
         multithread: bool = False, 
+        one_time: bool = False, 
         _is_internal: bool = False, 
         task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
         return_task: bool = True
@@ -184,13 +189,16 @@ class EventHandling:
         :param target: A (list of) callable thing, what to do when this task is executed
         :param condition: Conditions required for the task to run when event is triggered
         :param multithread: If this task should be executed in another thread (False by default)
+        :param one_time: 
+            If set to True, then destroy the task immediately after trigger (False by default)
         :param _is_internal: If the task is added by Charmy and should be kept when clear bind
-        :param task_obj_receiver: Give task object to Var object, if not None, the task object will be assigned to it
+        :param task_obj_receiver: 
+            Give task object to Var object, if not None, the task object will be assigned to it
         :return: EventTask if `return_task` is True, otherwise the EventHandling itself.
         """
         if conditions is None:
             conditions = {}
-        task = EventTask(target, conditions, multithread, _is_internal)
+        task = EventTask(target, conditions, multithread, one_time, _is_internal)
         if not event_type in self.tasks:
             self.tasks[event_type] = []
         self.tasks[event_type].append(task)
@@ -206,6 +214,7 @@ class EventHandling:
             event_type: type[event_types.Event], 
             conditions: typing.Optional[dict[str, typing.Any]] = None, 
             multithread: bool = False, 
+            one_time: bool = False, 
             _is_internal: bool = False, 
             task_obj_receiver: typing.Optional[var.Var[EventTask]] = None, 
             ) -> typing.Callable[[typing.Callable], typing.Callable]:
@@ -217,7 +226,15 @@ class EventHandling:
             conditions = {}
         def decorator(func: typing.Callable) -> typing.Callable:
             """Binds the function to be decorated to the event."""
-            self.bind(event_type, func, conditions, multithread, _is_internal, task_obj_receiver)
+            self.bind(
+                event_type, 
+                func, 
+                conditions, 
+                multithread, 
+                one_time, 
+                _is_internal, 
+                task_obj_receiver
+                )
             return func
         return decorator
 
@@ -295,6 +312,8 @@ class EventTask(CharmyObject):
     target: typing.Callable | typing.Iterable[typing.Callable]
     conditions: dict[str, typing.Any]
     multithread: bool = False
+    one_time: bool = False
+    # 👆 Note that the functionality of one_time attr was maintained by EventHandling.trigger
     _internal_task: bool = False
 
     task_threads: typing.ClassVar[list[threading.Thread]] = []

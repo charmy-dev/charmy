@@ -15,49 +15,8 @@ if _typing.TYPE_CHECKING:
     from .. import container as _container
 
 
-button_default_style: dict[str, _typing.Any] = {
-    # Default button style (bootstrap)
-    # These styles JSON might be moved to somewhere else in the future...
-    ":default": { # Default state
-        "size": (72, 28), 
-        "shape": {
-            "type": "rect", 
-            "pos": (0, 0), 
-            "size": "$[widget.size]", # TODO: Implement profiles vars
-            }, 
-        "background": {
-            "type": "color", 
-            "color": (200, 200, 200), 
-            }, 
-        "border_width": 2, 
-        "border_texture": {
-            "type": "color", 
-            "color": (20, 20, 20), 
-            }, 
-        "text_style": {
-            "font": None, 
-            "size": None, 
-            }, 
-        "text_texture": {
-            "type": "color", 
-            "color": (0, 0, 0), 
-            }, 
-        }, 
-    ":hover": { # Hovering
-        "background": {
-            "type": "color", 
-            "color": (0, 0, 0)
-            }, 
-        "text_texture": {
-            "type": "color", 
-            "color": (255, 255, 255), 
-            }, 
-        }, 
-    }
-
-
 @_dataclasses.dataclass
-class ButtonProfle(_WidgetProfile):
+class ButtonProfile(_WidgetProfile):
     """Button profile."""
     shape: _type_checking.ProfileProp[_styles.shape.ShapeJSON | _styles.shape.ShapeType] = \
         _marks.profile_value_fallback_mark
@@ -90,6 +49,9 @@ class ButtonProfle(_WidgetProfile):
 class Button(_Widget):
     """Text buttons in Charmy."""
 
+    ProfileClass = ButtonProfile
+    ProfileType = ButtonProfile
+
     def __init__(self, 
             parent: _container.Container | None = None,
             text: str = "Button",
@@ -105,17 +67,14 @@ class Button(_Widget):
         :param *args: → See `Widget.__init__(...)`
         :param **kwargs: → See `Widget.__init__(...)`
         """
-        if style is None:
-            style = button_default_style
         super().__init__(parent, style)
         self.text: str = text
         self.on_click: _typing.Callable = on_click
-        self.style: dict[str, _typing.Any] = style.copy()
         self.theme: _typing.Optional[_styles.theme.Theme] = None
         self.state: str = "normal"
 
         # Override profiles type
-        self.profiles: _typing.Dict[str, ButtonProfle]
+        self.profiles: _typing.Dict[str, ButtonProfile]
 
         # Drawn objects, used by internal drawing functions
         self._components: tuple[_graphics.DrawnShape, _graphics.DrawnText] = (

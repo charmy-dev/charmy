@@ -36,12 +36,17 @@ class WidgetProfile(CharmyObject, EventHandling):
 
     _referencing_vars: typing.ClassVar[dict[str, var.Var]] = {}
 
+    def __init_subclass__(cls) -> None:
+        cls.__hash__ = WidgetProfile.__hash__
+
     def __post_init__(self):
         super().__init__()
         EventHandling.__init__(self)
         self._initialized: bool = True
         type(self)._referencing_vars = {}
         # 👆 Clear referencing vars cache to prepare for next initialization
+        # After all initialization completes, trigger a profile changed event
+        self.trigger(event_types.ProfileChanged(self, "-initialized-"))
 
     @classmethod
     def default(cls) -> typing.Self:
@@ -79,21 +84,13 @@ class WidgetProfile(CharmyObject, EventHandling):
             the_var = cls._referencing_vars[target]
         return the_var
 
-    def __eq__(self, other: object) -> bool:
-        if type(other) != type(self):
-            return False # We are not even the same type of objects
-        for attr, value in self.__dict__.items():
-            if not hasattr(other, attr):
-                return False
-            if getattr(other, attr) != value:
-                return False
-        else:
-            # If all attributes have same value, we consider the two profiles are same
-            return True
+    def __hash__(self) -> int:
+        return super().__hash__()
 
 class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     """Widget base class."""
 
+    ProfileClass: type[WidgetProfile] = WidgetProfile
     ProfileType: typing.TypeAlias = WidgetProfile
 
     def __init__(self, 
@@ -137,7 +134,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.parent.add_child(self)
 
         # Profiles and theme
-        self.profiles: dict[str, WidgetProfile] = {"default": WidgetProfile().default()}
+        self.profiles: dict[str, WidgetProfile] = {"default": type(self).ProfileClass.default()}
         if profiles is not None:
             self.profiles.update(profiles)
         self._registered_profiles: typing.Dict[WidgetProfile, EventTask] = {}
@@ -163,7 +160,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             return "default" # Fallback to default state derectly if state not exists
         if target_item not in target_state:
             # If target item remains not specified (with value None) in target state's profile
-            if target_state in _fallback_path: # Inter-fallback
+            if target_state in _fallback_path: # Inter-fallback workaround
                 return "default" # Return default if inter-fallback.
             new_fallback_path = _fallback_path.copy()
             new_fallback_path.append(target_state)
@@ -185,7 +182,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # Profile not registered, then register it
                 task_obj = profile.bind(
                     event_types.ProfileChanged, 
-                    self._refresh_components, 
+                    self._update_components, 
                     _is_internal = True, 
                     )
                 self._registered_profiles[profile] = task_obj
@@ -194,6 +191,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # Profile is no longer relating to this widget, unregister it
                 profile.unbind(self._registered_profiles[profile])
                 del self._registered_profiles[profile]
+        self._update_components() # After changing the profile list, components needs rebuild
 
     @property
     def pos(self) -> styles.shape.Point:
@@ -278,7 +276,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # … then the widget is not inside in a root container
                 raise RuntimeError(f"Nowhere to put {self.id} as it is not in a valid window!")
 
-    def _refresh_components(self) -> typing.Tuple[graphics.DrawnObject, ...]:
+    def _update_components(self) -> typing.Tuple[graphics.DrawnObject, ...]:
         """Refresh configs of components (drawn objects) that make up the widget.
 
         For widget base class, it does not have any component.
@@ -298,6 +296,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         if isinstance(self, Container):
             Container.draw_children(self)
+
+        self.trigger(event_types.WidgetUpdate(self))
 
         return self
 

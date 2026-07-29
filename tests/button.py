@@ -22,7 +22,7 @@ button.place((10, 10))
 
 if MEM_STATS:
     @button.on(cm.event_types.MouseClick)
-    def print_mem(event: cm.event_types.MouseClick):
+    def print_mem(_: cm.event_types.MouseClick):
         snapshot = tracemalloc.take_snapshot()
 
         for stat in snapshot.statistics("lineno")[:20]:
@@ -32,10 +32,14 @@ if MEM_STATS:
 
 if TEST_WIDGET_MOVE:
     @button.on(cm.event_types.MouseClick)
-    def move_button(event: cm.event_types.MouseClick):
+    def move_button(_: cm.event_types.MouseClick):
         old = button.layout_profile.pos
         button.layout_profile.pos = old[0] + 10, old[1] + 10
-        cm.graphics.DrawnShape(window, cm.styles.shape.Rect(*button._components[1].boundary), (255, 0, 0, 30)).draw()
+        cm.graphics.DrawnShape(
+            window, 
+            cm.styles.shape.Rect(*button._components[1].boundary), 
+            (255, 0, 0, 30)
+            ).draw()
 
 
 if PERFORMANCE_STATS:

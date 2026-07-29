@@ -167,8 +167,9 @@ class MouseRawEvent(Event):
             self.subject._mouse_hovering_on = hovering.copy()
             hovering.pop(0) # Ignore subject
             for item in hovering:
-                if isinstance(item, _EventHandling):
-                    item.trigger(self)
+                if _typing.TYPE_CHECKING:
+                    item = _typing.cast(_EventHandling, item)
+                item.trigger(self)
 
 @_dataclass
 class MouseMove(MouseRawEvent):

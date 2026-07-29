@@ -116,9 +116,9 @@ class CharmyObject:
 
         self.id: typing.Final[str] = id_  # Do not change after initialization
 
-    def __init_subclass__(cls):
-        """To initialize a CharmyObject subclass."""
-        super().__init_subclass__()
+    # def __init_subclass__(cls):
+    #     """To initialize a CharmyObject subclass."""
+    #     super().__init_subclass__()
 
     # region: Properties
 
