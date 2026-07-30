@@ -30,6 +30,18 @@ class WindowLike(_typing.Protocol):
     _hovering_on: _typing.List[_container.Container | _widget.Widget]
 
 
+def isinstance_of_any(obj: object, classes: list[type | None]) -> bool:
+    for clazz in classes:
+        if clazz is None: # Regard None as NoneType
+            if obj is None: # Therefore check if obj is also None
+                return True
+        else:
+            if isinstance(obj, clazz):
+                return True
+    else:
+        return False
+
+
 _PropType = _typing.TypeVar("_PropType")
 
 ProfileProp: _typing.TypeAlias = _PropType | _var.Var[_PropType] | _marks.Mark

@@ -9,7 +9,7 @@ from .widget import Widget as _Widget, WidgetProfile as _WidgetProfile
 from .. import styles as _styles
 from .. import event_types as _event_types
 from .. import graphics as _graphics
-from ..utils import type_checking as _type_checking, marks as _marks
+from ..utils import type_checking as _type_checking, marks as _marks, var as _var
 
 if _typing.TYPE_CHECKING:
     from .. import container as _container
@@ -113,10 +113,19 @@ class Button(_Widget):
             _styles.shape.SingleShape.from_profile_value(curr_profile.shape)
         self._components[0].texture = \
             _styles.texture.Texture.from_profile_value(curr_profile.background)
-        self._components[0].border_width = \
-            curr_profile.border_width
+        if curr_profile.border_width is int:
+            border_width = curr_profile.border_width
+        elif isinstance(curr_profile.border_width, _var.Var):
+            border_width = curr_profile.border_width.value
+            if type(border_width) is not int:
+                raise TypeError("border_width for widget was given in a Var with wrong type.")
+        elif curr_profile.border_width == _marks.profile_value_fallback_mark:
+            raise TypeError("border_width used to construct widget must be actual value.")
+        else:
+            raise TypeError("border_width used to construct widget is in wrong type.")
+        self._components[0].border_width = border_width
         self._components[0].border_texture = \
-            _styles.texture.Texture.from_json(curr_style["border_texture"])
+            _styles.texture.Texture.from_profile_value(curr_profile.border_texture)
         self._components[0].offset = \
             self.abs_pos
         # Drawn text

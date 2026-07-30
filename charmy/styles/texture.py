@@ -28,12 +28,41 @@ import typing as _typing
 
 import json as _json
 
+from ..utils import marks as _marks
+from ..utils import type_checking as _type_checking
+
 
 # region Texture base class
 
 class Texture:
     """Texture base class in Charmy."""
     type: _typing.ClassVar[str] = "texture"
+
+    @staticmethod
+    def is_texture_like(value: object) -> bool:
+        # return _type_checking.isinstance_of_any(value, [tuple, None])
+        match value:
+            case tuple(): # Suspect RGB / RGBA
+                if not len(value) not in [3, 4]:
+                    return False
+                if False in [type(v) is int for v in value]:
+                    return False
+                return True
+            case str(): # Suspect HEX
+                if value.startswith("#"):
+                    starts_with_hashtag = 1 # 1 for yes
+                else:
+                    starts_with_hashtag = 0 # 0 for no
+                if len(value) not in [6 + starts_with_hashtag, 8 + starts_with_hashtag]:
+                    return False
+                ALLOWED_CHARS = "0123456789ABCDEF"
+                if False in [char in ALLOWED_CHARS for char in value[starts_with_hashtag:]]:
+                    return False
+                return True
+            case None: # Suspect TransparentLike (actually confirmed)
+                return True
+            case _: # Not even suspected to be anything
+                return False
 
     @staticmethod
     def find_class_by_type(type_name: str) -> type[Texture] | None:
@@ -48,7 +77,7 @@ class Texture:
             return None
 
     @staticmethod
-    def from_json(json_content: dict[str, _typing.Any] | str) -> Texture:
+    def from_json(json_content: dict[str, _typing.Any] | str | TextureLike) -> Texture:
         """Create a texture object from json content.
 
         This function is a static method of Texture and its subclasses. It creates and returns a 
@@ -70,6 +99,11 @@ class Texture:
             "color": (255, 0, 0, 0.5),
             }
         """
+        # If texture-like stuff, then 'ensure' it and return directly
+        if Texture.is_texture_like(json_content):
+            json_content = _typing.cast(TextureLike, json_content)
+            return ensure_texture(json_content)
+        json_content = _typing.cast(dict[str, _typing.Any] | str, json_content)
         # Convert raw content to JSON
         if isinstance(json_content, str):
             json_content = _json.loads(json_content)
@@ -84,6 +118,27 @@ class Texture:
         params = json_content.copy()
         params.pop("type")
         return cls(**params)
+
+    @staticmethod
+    def from_profile_value(
+            profile_value: _type_checking.ProfileProp[TextureJSON | TextureType]
+            ) -> Texture:
+        """Load shape from profile value.
+
+        If is JSON, load from JSON, otherwise return as-is.
+        """
+        if profile_value == _marks.profile_value_fallback_mark:
+            raise TypeError("Profile value used to build shape must be actual value.")
+        elif isinstance(profile_value, dict):
+            return Texture.from_json(profile_value)
+        elif isinstance(profile_value, Texture) or Texture.is_texture_like(profile_value):
+            profile_value = _typing.cast(TextureType, profile_value)
+            return ensure_texture(profile_value)
+        else:
+            raise TypeError(
+                f"Profile value given to build shape is in wrong type {type(profile_value)}, "
+                "while expected ProfileProp[ShapeJSON | SingleShape]."
+                )
 
 
 # region Color
