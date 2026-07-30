@@ -170,9 +170,21 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 ) # Return negotiated fallback state
         return target_state
 
+    def migrate_full_curr_profile(self) -> ProfileType:
+        """Select and migrate profiles, return full profile of current state."""
+        result = type(self).ProfileClass()
+        for name, value in self.profiles[self.state].__dict__.items():
+            if value == marks.profile_value_fallback_mark:
+                setattr(
+                    result, 
+                    name, 
+                    getattr(self.profiles[self._negotiate_profile_state(self.state, name)], name)
+                    )
+        return result
+
     def _update_registered_profiles(self):
         """Update registered profile.
-        
+
         Register profiles that are not registered yet, and remove those which are no longer 
         relating to this widget.
         """

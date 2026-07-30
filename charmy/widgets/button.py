@@ -106,15 +106,15 @@ class Button(_Widget):
 
     def _update_components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
         """Components (drawn objects) that make up the button."""
+        # Generate a full profile for current state
+        curr_profile = _typing.cast(ButtonProfile, self.migrate_full_curr_profile())
         # Make background shape
         self._components[0].shape = \
-            _styles.shape.AnyShape.from_profile_value(
-                self.profiles[self._negotiate_profile_state(self.state, "shape")].shape
-                )
+            _styles.shape.SingleShape.from_profile_value(curr_profile.shape)
         self._components[0].texture = \
-            _styles.texture.Texture.from_json(curr_style["background"])
+            _styles.texture.Texture.from_profile_value(curr_profile.background)
         self._components[0].border_width = \
-            curr_style["border_width"]
+            curr_profile.border_width
         self._components[0].border_texture = \
             _styles.texture.Texture.from_json(curr_style["border_texture"])
         self._components[0].offset = \

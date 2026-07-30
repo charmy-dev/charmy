@@ -36,7 +36,11 @@ from abc import abstractmethod as _abstractmethod
 import json as _json
 import reactive_caching as _reactive_caching
 
-from ..utils import geo_math as _geo_math, var as _var
+from ..utils import \
+    geo_math as _geo_math, \
+    var as _var, \
+    type_checking as _type_checking, \
+    marks as _marks
 
 
 # region Lines
@@ -582,6 +586,77 @@ class ShapeType(_reactive_caching.CachedClass):
     @_abstractmethod
     def __contains__(self, point: Point) -> bool: ...
 
+    @staticmethod
+    def find_class_by_type(type_name: str) -> type[ShapeType] | None:
+        """Find a shape class by shape type, return `None` if not found.
+
+        :param type_name: Shape type in string
+        """
+        for cls in SingleShape.__subclasses__():
+            if cls.type == type_name:
+                return cls
+        else:
+            return None
+
+    @staticmethod
+    def from_json(json_content: ShapeJSON | str) -> ShapeType:
+        """Create a shape object from json content.
+
+        This function is a static method of AnyShape and its subclasses. It creates and returns a 
+        shape object base on the JSON content given. This will be useful when loading shape config 
+        from styles.
+
+        :param json_content: The JSON content, either Python dict or raw string data
+
+        JSON Format
+        -----------
+        Shapes can be represented in JSON in a structured way. Each JSON data must has a `type` key 
+        that defines the type of the shape, and also other keys and values that specify the params 
+        for that shape. The following is an example for rectangles.
+
+        .. code-block:: python
+
+            {
+            "type": "rect", 
+            "pos": (50, 50), 
+            "size": (100, 100), 
+            }
+        """
+        # Convert raw content to JSON
+        if isinstance(json_content, str):
+            json_content = _json.loads(json_content)
+            assert type(json_content) is dict
+            # 👆 Must assert the type here, because the fucking json module did not specify the 
+            # type of the return value of loads()
+        if not isinstance(json_content["type"], str):
+            raise TypeError("Invalid shape JSON.")
+        cls = ShapeType.find_class_by_type(json_content["type"])
+        if cls is None:
+            raise CharmyShapeError(f"Invalid shape type {json_content["type"]}.")
+        params = json_content.copy()
+        params.pop("type")
+        return cls(**params)
+
+    @staticmethod
+    def from_profile_value(
+            profile_value: _type_checking.ProfileProp[ShapeJSON | ShapeType]
+            ) -> ShapeType:
+        """Load shape from profile value.
+
+        If is JSON, load from JSON, otherwise return as-is.
+        """
+        if profile_value == _marks.profile_value_fallback_mark:
+            raise TypeError("Profile value used to build shape must be actual value.")
+        elif isinstance(profile_value, dict):
+            return ShapeType.from_json(profile_value)
+        elif isinstance(profile_value, SingleShape):
+            return profile_value
+        else:
+            raise TypeError(
+                f"Profile value given to build shape is in wrong type {type(profile_value)}, "
+                "while expected ProfileProp[ShapeJSON | SingleShape]."
+                )
+
 class SingleShape(ShapeType):
     """Base class of all single shapes."""
     type: _typing.ClassVar[str] = "single_shape"
@@ -623,68 +698,6 @@ class SingleShape(ShapeType):
             last_line_end = line.end_point
             # 👆 Set last_line_end to end point of current line, lines must be connected.
         return True
-
-    @staticmethod
-    def find_class_by_type(type_name: str) -> type[SingleShape] | None:
-        """Find a shape class by shape type, return `None` if not found.
-
-        :param type_name: Shape type in string
-        """
-        for cls in SingleShape.__subclasses__():
-            if cls.type == type_name:
-                return cls
-        else:
-            return None
-
-    @staticmethod
-    def from_json(json_content: ShapeJSON | str) -> SingleShape:
-        """Create a shape object from json content.
-
-        This function is a static method of AnyShape and its subclasses. It creates and returns a 
-        shape object base on the JSON content given. This will be useful when loading shape config 
-        from styles.
-
-        :param json_content: The JSON content, either Python dict or raw string data
-
-        JSON Format
-        -----------
-        Shapes can be represented in JSON in a structured way. Each JSON data must has a `type` key 
-        that defines the type of the shape, and also other keys and values that specify the params 
-        for that shape. The following is an example for rectangles.
-
-        .. code-block:: python
-
-            {
-            "type": "rect", 
-            "pos": (50, 50), 
-            "size": (100, 100), 
-            }
-        """
-        # Convert raw content to JSON
-        if isinstance(json_content, str):
-            json_content = _json.loads(json_content)
-            assert type(json_content) is dict
-            # 👆 Must assert the type here, because the fucking json module did not specify the 
-            # type of the return value of loads()
-        if not isinstance(json_content["type"], str):
-            raise TypeError("Invalid shape JSON.")
-        cls = SingleShape.find_class_by_type(json_content["type"])
-        if cls is None:
-            raise CharmyShapeError(f"Invalid shape type {json_content["type"]}.")
-        params = json_content.copy()
-        params.pop("type")
-        return cls(**params)
-
-    @staticmethod
-    def from_profile_value(profile_value: ShapeJSON | SingleShape) -> SingleShape:
-        """Load shape from profile value.
-
-        If is JSON, load from JSON, otherwise return as-is.
-        """
-        if isinstance(profile_value, dict):
-            return SingleShape.from_json(profile_value)
-        else:
-            return profile_value
 
     def flatten(self, tolerance: int = 15) -> PolyLine:
         """Convert all curve edges to polyline and merge the shape into a single polyline."""
