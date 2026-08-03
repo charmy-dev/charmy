@@ -7,11 +7,14 @@ from __future__ import annotations as _
 
 import typing as _typing
 
+from ..utils import marks as _marks
+
 
 if _typing.TYPE_CHECKING:
     from .. import graphics as _draw
     from ..backend import template as _backend
     from . import shape as _shape
+    from ..utils import type_checking as _type_checking
 
 
 class WEIGHT:
@@ -39,6 +42,8 @@ work-4.8#remarks).
     Extra Bold / Ultra Bold     `EXTRABOLD`    800    
     Black / Heavy               `BLACK`        900    
     Extra Black / Ultra Black   `EXTRABLACK`   950    
+
+    **Note:** Some fontweights might not be supported by all backends!
     """
     THIN        : int = 100
     EXTRALIGHT  : int = 200
@@ -51,7 +56,7 @@ work-4.8#remarks).
     BLACK       : int = 900
     EXTRABLACK  : int = 950
 
-class TextStyle():
+class TextStyle:
     """Represents text styles in Charmy."""
 
     sys_fonts: _typing.ClassVar[list[str]] = ["Arial"]
@@ -101,6 +106,26 @@ eights?view=netframework-4.8#remarks) to learn more about the values. Presets ar
     @staticmethod
     def from_json(json_content):
         return TextStyle(**json_content)
+
+    @staticmethod
+    def from_profile_value(
+            profile_value: _type_checking.ProfileProp[TextStyle | TextStyleJSON]
+            ) -> TextStyle:
+        """Load shape from profile value.
+
+        If is JSON, load from JSON, otherwise return as-is.
+        """
+        if profile_value == _marks.profile_value_fallback_mark:
+            raise TypeError("Profile value used to build shape must be actual value.")
+        elif isinstance(profile_value, TextStyle):
+            return profile_value
+        elif isinstance(profile_value, dict):
+            return TextStyle.from_json(profile_value)
+        else:
+            raise TypeError(
+                f"Profile value given to build text style is in wrong type {type(profile_value)}, "
+                "while expected ProfileProp[TextStyle | TextStyleJSON]."
+                )
 
     def get_text_boundary(self, 
             text: str, 

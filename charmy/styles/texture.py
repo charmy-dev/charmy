@@ -136,8 +136,8 @@ class Texture:
             return ensure_texture(profile_value)
         else:
             raise TypeError(
-                f"Profile value given to build shape is in wrong type {type(profile_value)}, "
-                "while expected ProfileProp[ShapeJSON | SingleShape]."
+                f"Profile value given to build texture is in wrong type {type(profile_value)}, "
+                "while expected ProfileProp[TextureJSON | TextureType]."
                 )
 
 

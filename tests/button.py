@@ -38,7 +38,7 @@ if TEST_WIDGET_MOVE:
         cm.graphics.DrawnShape(
             window, 
             cm.styles.shape.Rect(*button._components[1].boundary), 
-            (255, 0, 0, 30)
+            (255, 0, 0, 0.3)
             ).draw()
 
 

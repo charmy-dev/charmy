@@ -4,6 +4,7 @@ import typing
 
 import dataclasses
 import reactive_caching
+import copy
 
 from . import window
 from ..cm_object import CharmyObject
@@ -43,6 +44,14 @@ class WidgetProfile(CharmyObject, EventHandling):
         super().__init__()
         EventHandling.__init__(self)
         self._initialized: bool = True
+        for ref, var in self._referencing_vars.items():
+            # walk through each referencing var, replace their ref with var, and replace the value 
+            # of var to original value of ref
+            if ref not in dir(self):
+                raise NameError(f"Referencing inexisting property {ref} in profile {self.id}")
+            original_val = getattr(self, ref)
+            var.value = original_val
+            setattr(self, ref, var)
         type(self)._referencing_vars = {}
         # 👆 Clear referencing vars cache to prepare for next initialization
         # After all initialization completes, trigger a profile changed event
@@ -172,15 +181,21 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     def migrate_full_curr_profile(self) -> ProfileType:
         """Select and migrate profiles, return full profile of current state."""
-        result = type(self).ProfileClass()
-        for name, value in self.profiles[self.state].__dict__.items():
+        # result = type(self).ProfileClass().default()
+        if self.state in self.profiles:
+            base_theme = copy.copy(self.profiles[self.state])
+        else:
+            base_theme = type(self).ProfileClass().default()
+        for name, value in base_theme.__dict__.items():
             if value == marks.profile_value_fallback_mark:
+                fallback_state = self._negotiate_profile_state(self.state, name)
                 setattr(
-                    result, 
+                    base_theme, 
                     name, 
-                    getattr(self.profiles[self._negotiate_profile_state(self.state, name)], name)
+                    getattr(self.profiles[fallback_state], name)
                     )
-        return result
+        # print(base_theme.__dict__)
+        return base_theme
 
     def _update_registered_profiles(self):
         """Update registered profile.
@@ -252,7 +267,10 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             target_profile_state = self._negotiate_profile_state(self.state, "size")
             profile_specified = self.profiles[target_profile_state].size
             if type(profile_specified) is not tuple:
-                return (0, 0)
+                if isinstance(profile_specified, var.Var):
+                    profile_specified = profile_specified.value
+                else:
+                    return (0, 0)
             if len(profile_specified) != 2:
                 return (0, 0)
             if type(profile_specified[0]) is not int or type(profile_specified[1]) is not int:

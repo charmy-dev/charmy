@@ -107,13 +107,14 @@ class Button(_Widget):
     def _update_components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
         """Components (drawn objects) that make up the button."""
         # Generate a full profile for current state
-        curr_profile = _typing.cast(ButtonProfile, self.migrate_full_curr_profile())
+        curr_profile = self.migrate_full_curr_profile()
+        curr_profile = _typing.cast(ButtonProfile, curr_profile)
         # Make background shape
         self._components[0].shape = \
             _styles.shape.SingleShape.from_profile_value(curr_profile.shape)
         self._components[0].texture = \
             _styles.texture.Texture.from_profile_value(curr_profile.background)
-        if curr_profile.border_width is int:
+        if type(curr_profile.border_width) is int:
             border_width = curr_profile.border_width
         elif isinstance(curr_profile.border_width, _var.Var):
             border_width = curr_profile.border_width.value
@@ -132,9 +133,9 @@ class Button(_Widget):
         self._components[1].text = \
             self.text
         self._components[1].style = \
-            _styles.text_style.TextStyle.from_json(curr_style["text_style"])
+            _styles.text_style.TextStyle.from_profile_value(curr_profile.text_style)
         self._components[1].texture = \
-            _styles.texture.Texture.from_json(curr_style["text_texture"])
+            _styles.texture.Texture.from_profile_value(curr_profile.text_texture)
         self._components[1].offset = \
             (self.abs_pos[0] + ((self.width - self._components[1].boundary[1][0]) // 2), 
              self.abs_pos[1] + ((self.height - self._components[1].boundary[1][1]) // 2))

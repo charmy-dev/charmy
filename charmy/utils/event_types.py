@@ -185,9 +185,11 @@ class MouseMove(MouseRawEvent):
         if subject is self.subject:
             for item in last_hovering:
                 if item not in self.subject._mouse_hovering_on:
-                    if isinstance(item, _EventHandling):
-                        item._mouse_hovering = False
-                        item.trigger(MouseLeave(subject, self))
+                    # if isinstance(item, _EventHandling):
+                    if _typing.TYPE_CHECKING:
+                        item = _typing.cast(_EventHandling, item)
+                    item._mouse_hovering = False
+                    item.trigger(MouseLeave(subject, self))
 
 @_dataclass
 class MousePress(MouseRawEvent):
