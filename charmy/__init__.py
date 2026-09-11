@@ -27,3 +27,8 @@ from .cm_object import CharmyObject
 from . import styles
 from .utils.var import Var
 from .widgets import *
+
+
+def cnm():
+    """Do not call this."""
+    raise RuntimeError("CNM谁让你调用这碧了？")

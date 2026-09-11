@@ -100,7 +100,7 @@ class WidgetConfigure(WidgetEvent):
         if self.item_changed == "pos":
             subject.trigger(WidgetMove(subject, subject.pos, self.old_value)) # type: ignore
         if self.item_changed == "size":
-            subject.trigger(WidgetResize(subject, self.size, self.old_value)) # type: ignore
+            subject.trigger(WidgetResize(subject, subject.size, self.old_value)) # type: ignore
 
 @_dataclass
 class WidgetResize(WidgetEvent):

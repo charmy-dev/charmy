@@ -1,7 +1,8 @@
-"""Geometry and math helpers extracted from `charmy.styles.shape`.
+"""Geometry and math helpers extracted from `charmy.styles.shape`, and more.
 
-This module centralizes math utilities used for shapes: angle conversions,
-circle-point computations, arc-to-bezier conversion, and angle coverage tests.
+This module centralizes math utilities used for shapes and some other modules:
+angle conversions, circle-point computations, arc-to-bezier conversion, and
+angle coverage tests.
 
 !! THIS IS A VIBED MODULE !!
 ----------------------------
@@ -26,7 +27,7 @@ _DirectionChar: typing.TypeAlias = typing.Literal["n", "e", "s", "w", "N", "E", 
 def expand_rectrange(
         rectrange: shape.RectRange, 
         width: int, 
-        direction: tuple[_DirectionChar, ...] | _DirectionChar | str
+        direction: tuple[_DirectionChar, ...] | _DirectionChar | str = "nesw"
         ) -> shape.RectRange:
     """Expand a RectRange to specific directions for specific pixels.
 
@@ -37,14 +38,14 @@ def expand_rectrange(
     :param direction: In which direction(s)
     """
     direction_lowered = [d.lower() for d in direction] if type(direction) is tuple else \
-        [direction.lower()] # type: ignore # because this place direction must be str
+        direction.lower() # type: ignore # because this place direction must be str
     n_expansion = width if "n" in direction_lowered else 0
     e_expansion = width if "e" in direction_lowered else 0
     s_expansion = width if "s" in direction_lowered else 0
     w_expansion = width if "w" in direction_lowered else 0
     result = (
         (rectrange[0][0] - e_expansion, rectrange[0][1] - n_expansion), 
-        (rectrange[1][0] + w_expansion, rectrange[1][1] + s_expansion)
+        (rectrange[1][0] + e_expansion + w_expansion, rectrange[1][1] + n_expansion + s_expansion)
         )
     return result
 

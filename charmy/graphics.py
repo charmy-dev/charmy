@@ -6,10 +6,12 @@ import typing as _typing
 
 from abc import abstractmethod as _abstractmethod
 import copy as _copy
+import math
 
 from . import styles as _styles
 from . import cm_object as _cm_object
 from .const import DEBUG_FLAGS as _DEBUG_FLAGS
+from .utils import geo_math
 
 
 if _typing.TYPE_CHECKING:
@@ -58,23 +60,6 @@ class DrawnObject(_cm_object.CharmyObject):
     @_abstractmethod
     def __contains__(self, point: _styles.shape.Point) -> bool: ...
 
-    # def __setattr__(self, name: str, value: _typing.Any) -> None:
-    #     """Set attr and mark self need redraw."""
-    #     # Pass internal, and pass when object initializing
-    #     if name.startswith("_"):
-    #         return super().__setattr__(name, value)
-    #     if self._booting:
-    #         return super().__setattr__(name, value)
-    #     # If is a watched attr of self, add self bbox to redraw list
-    #     # If position changed, add both old and new bbox
-    #     if self._drawn:
-    #         old_boundary = self.boundary
-    #     super().__setattr__(name, value)
-    #     if name in self._attrs and self._drawn:
-    #         self.window._redraw_regions.append(self.boundary)
-    #         print(f"{self.id} redrawn on {name} change")
-    #         if self.boundary != old_boundary:
-    #             self.window._redraw_regions.append(old_boundary)
 
 # region Line
 
@@ -166,6 +151,8 @@ class DrawnLine(DrawnObject):
                     drawn_host.draw(_fallback_from)
             if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 _draw_bbox(self)
+        self.window._redraw_regions.append(geo_math.expand_rectrange(
+            self.boundary, abs(self.width)))
         self._drawn = True
         return self
 
@@ -275,7 +262,8 @@ class DrawnShape(DrawnObject):
             self.window.backend_base.charmy_window._drawing_list.append(self)
         if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
             _draw_bbox(self)
-        self.window._redraw_regions.append(self.boundary)
+        self.window._redraw_regions.append(
+            geo_math.expand_rectrange(self.boundary, abs(self.border_width)))
         self._drawn = True
         return self
 

@@ -1,5 +1,5 @@
 """Set of modules that describes styles in Charmy."""
 
-from . import style, shape, texture, text_style, theme
+from . import shape, texture, text_style, theme
 
-__all__ = ["style", "shape", "texture", "text_style", "theme"]
+__all__ = ["shape", "texture", "text_style", "theme"]

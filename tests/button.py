@@ -16,7 +16,7 @@ if MEM_STATS:
 window = cm.Window(size=(300, 160))
 window.title = "Button test"
 
-button = cm.Button(window, text="Hit me", on_click=lambda: print("Button clicked!"))
+button = cm.Button(window, text="Hit me!", on_click=lambda: print("Button clicked!"))
 button.place((10, 10))
 
 

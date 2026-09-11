@@ -12,7 +12,7 @@ from ..event import EventHandling, event_types
 from .container import Container, layout_profiles
 from .. import graphics
 from .. import styles
-from ..utils import marks, type_checking, var, on_setattr
+from ..utils import marks, type_checking, var, on_setattr, geo_math
 
 if typing.TYPE_CHECKING:
     from ..event import EventTask
@@ -152,27 +152,75 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self._registered_profiles: typing.Dict[WidgetProfile, EventTask] = {}
         self.theme: typing.Optional[styles.theme.Theme] = None # TODO: Support theme
 
+        # State
         self.is_visible: bool = False
+        self.state: str = "normal"
+
+        # Layout profiles
         self._layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
         self._on_layout_change_task: typing.Optional[EventTask] = None
 
-        self.state: str = "normal"
+        # Intrnal misc
+        self._max_possible_surrounding_drawn_width: int = 0
+
+        # Components list
         self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
+
+        # Alive flag, update components
         self._alive: bool = True
 
+        # Event bindings
         self.bind(
             event_types.WidgetMove, 
-            lambda e: self.root_container._requested_redraw_regions.append((e.old_pos, self.size))
+            lambda e: self.root_container._requested_redraw_regions.append(
+                geo_math.expand_rectrange(
+                    (e.old_pos, self.size), 
+                    self._max_possible_surrounding_drawn_width)
+                ), 
+            _is_internal=True, 
             )
         self.bind(
             event_types.WidgetResize, 
-            lambda e: self.root_container._requested_redraw_regions.append((self.pos, e.old_size))
+            [
+                lambda e: self.root_container._requested_redraw_regions.append(
+                    geo_math.expand_rectrange(
+                        (self.pos, e.old_size), 
+                        self._max_possible_surrounding_drawn_width
+                        )
+                    ), 
+                lambda _: self._calc_max_possible_surrounding_drawn_width(), 
+            ], 
+            _is_internal=True, 
+            )
+        self.bind(
+            event_types.WidgetUpdate, 
+            lambda _: self._calc_max_possible_surrounding_drawn_width(), 
+            _is_internal=True, 
+            one_time=True, 
             )
         # self.bind(
         #     event_types.WidgetMove, 
         #     lambda e: print("Hey I'm moving bro! I say I'm moving!")
         #     # This is a test, or an ester egg if u prefer that way
         #     )
+
+    def _calc_max_possible_surrounding_drawn_width(self) -> int:
+        """Calculate maximum possible value of the width of surrounding drawn area."""
+        line_widths = [0]
+        for drawn_obj in self._components:
+            match drawn_obj:
+                case graphics.DrawnLine():
+                    line_widths.append(drawn_obj.width)
+                case graphics.DrawnShape():
+                    line_widths.append(drawn_obj.border_width)
+                case graphics.DrawnText():
+                    text_size = drawn_obj.boundary[1]
+                    line_widths.append(max(
+                        (text_size[0] - self.width) // 2 + 1, 
+                        (text_size[1] - self.height) // 2 + 1, 
+                        ))
+        self._max_possible_surrounding_drawn_width = max(0, max(line_widths))
+        return self._max_possible_surrounding_drawn_width
 
     def _negotiate_profile_state(self, 
             target_state: str, 
@@ -334,6 +382,25 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         return self.size[1]
 
     @property
+    def boundary(self) -> styles.shape.RectRange:
+        """Rect range of a widget."""
+        return self.pos, self.size
+        # if len(self._components) == 0:
+        #     return (0, 0), (0, 0)
+        # drawn_obj_boundaries = [drawn_obj.boundary for drawn_obj in self._components]
+        # xs = [
+        #     *[pos[0] for pos, _ in drawn_obj_boundaries], 
+        #     *[pos[0] + size[0] for pos, size in drawn_obj_boundaries], 
+        #     ]
+        # ys = [
+        #     *[pos[1] for pos, _ in drawn_obj_boundaries], 
+        #     *[pos[1] + size[1] for pos, size in drawn_obj_boundaries], 
+        #     ]
+        # min_x, max_x = min(xs), max(xs)
+        # min_y, max_y = min(ys), max(ys)
+        # return (min_x, min_y), (max_x - min_x, max_y - min_y)
+
+    @property
     def root_container(self) -> window.Window:
         """Get the root container that contains the widget.
 
@@ -409,9 +476,3 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             if not self._alive:
                 return
             self.trigger(event_types.WidgetConfigure(self, name, old))
-
-    # def _on_cache_dirty(self, prop_name: str) -> None:
-    #     if prop_name == "components":
-    #         for component in self.components:
-    #             component = typing.cast(graphics.DrawnObject, component)
-    #             component._need_redraw = True
