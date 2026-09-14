@@ -24,3 +24,8 @@ created with the explicit permission from the original author.
 These image files are NOT licensed under AGPL (which the whole project was
 licensed under), are provided as-is and are redistributable, but shall not be
 modified.
+
+This notice applies to the images in this directory, including versions of these
+images that were present in previous commits of this repository. The absence of
+this notice from earlier commits does not imply that those versions were
+licensed differently.
