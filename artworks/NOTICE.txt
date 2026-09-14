@@ -1,0 +1,26 @@
+This is a temporary notice on the use of the images under this directory, and
+shall remain effective until this file is removed.
+
+The images in this directory were created by 稲凪 咲 (https://inagi-saki.work),
+referred to as Inagi in this notice for readability, and remains the copyright
+holder.
+
+We (the Charmy development team) have been granted the permission to use the
+images for the production, maintenance, promotion and any possible future use
+in Charmy project, even if the project is renamed, has its open source license 
+changed (as long as it is open-source) or transferred in the future. We have
+also been granted the permission for commercial use of the images. The mentioned
+facts in this paragraph can be verified through the relevant emails and their
+replies.
+
+We currently do not permit, and are not able to allow any third parties other
+than the original author and us, to use the artworks for secondary creation or
+modification. We intend to remove this restriction once we:
+1. gain required sublicensing permission from the original author
+2. complete formal policies and/or terms of use of these images
+Therefore, any modification or derivative works of these images may only be
+created with the explicit permission from the original author.
+
+These image files are NOT licensed under AGPL (which the whole project was
+licensed under), are provided as-is and are redistributable, but shall not be
+modified.

@@ -1,6 +1,6 @@
 PERFORMANCE_STATS: bool = False
 MEM_STATS: bool = False
-TEST_WIDGET_MOVE: bool = True
+TEST_WIDGET_MOVE: bool = False
 
 
 import charmy as cm
