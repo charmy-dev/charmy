@@ -34,6 +34,12 @@ line-length = 100
 # A programmer who writes codes already formatted never needs a formatting tool
 # (, but someone isn't).
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+# 👆 Only collect `test_*.py`. The rest of `tests/` holds manual demo scripts (`graphics.py`, 
+# `event.py`, ...) which open real windows and must not run as part of the suite.
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
