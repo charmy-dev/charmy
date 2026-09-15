@@ -455,12 +455,19 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         return self
 
     def destroy(self) -> None:
-        """Destroy a widget when no longer needed."""
+        """Destroy a widget when no longer needed.
+
+        The widget is also detached from its parent, so that a destroyed widget stops being drawn 
+        and hit-tested instead of lingering in the parent's child list.
+        """
         self.trigger(event_types.WidgetDestroy(self))
         self._alive = False
         if isinstance(self, Container):
             # Also destroy children if self is container
             self._clear_children()
+        parent = getattr(self, "parent", None)
+        if parent is not None:
+            parent.remove_child(self)
 
     def __contains__(self, pos: styles.shape.Point) -> bool:
         point = (pos[0] - self.x, pos[1] - self.y)
