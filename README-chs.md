@@ -2,33 +2,33 @@
   <img src="./artworks/icon.png" alt="Project main icon" style="width: 8rem; height: 8rem;">
   <div>
     <h1>Charmy GUI</h1>
-    <p>A lightweight but powerful GUI module for Python.</p>
+    <p>适用于Python的，轻量但全能的GUI库</p>
   </div>
 </div>
 
-Formerly `Suzaku`.
+曾用名`Suzaku`。
 
-Charmy is a GUI module for Python, allowing switching between different backends, and hence providing a cross-platform while also lightweight solution of building GUI applications.
+Charmy是一个针对Python程序的GUI库，允许再多个后端之间切换，并因此提供一个在跨平台的同时保持轻量的GUI方案。
 
-Charmy is still under development, you may motivate us and boost this process by giving us a star.
+Charmy仍然在开发中，您可以透过点亮一个star来激励我们并加速开发进程。
 
-Many thanks to [稲凪 咲](https://inagi-saki.work) (Inagi) for the icon and mascot design.
+十分感谢[稲凪 咲](https://inagi-saki.work)提供的图标和吉祥物设计。
 
-This README is a temporary version during early dev stages, and will be changed in future.
+本README是一个早期开发阶段的临时版本，未来可能会有较大修改
 
-## More Information
+## 更多资讯
 
-Charmy is still under development, and many of its details are not yet designed or may change in the future.
+Charmy仍在开发中，它的许多细节可能还没设计好，或者可能会在将来面临大改。
 
-If you are interested in this project, you may join our discussion to see our latest progress. See [To Follow Up](#to-follow-up) section for more.
+如果您对此项目感兴趣，则可以加入我们的讨论并查看最新进度。参阅[最新动态](#最新动态)章节。
 
-## Latest Progress
+## 目前成果
 
-Firstly, the basic structural design must be introduced here. Charmy is designed to be devided into three layer, which are backend layer, graphics layer, widget layer, from bottom to top.
+首先，简要介绍Charmy的基本架构设计。Charmy被设计为三层：后端层、绘图层、控件层，由底到顶。
 
 Currently, we almost completed the basic functions of backend and graphics layer, and the effect can be seen by running `/tests/graphics.py`.
 
-## To Follow Up
+## 最新动态
 
 We (The development team members) discuss our latest progress and the next steps in a QQ group chat, which many other Chinese developers also do. Anyone who is interested in (or even better, willing to contribute to) this project will be welcomed to join. The group chat number is: `887102507` .
 
