@@ -121,9 +121,10 @@ class LinePath(_reactive_caching.CachedClass):
             # type of the return value of loads()
         if not isinstance(json_content["type"], str):
             raise TypeError("Invalid line JSON.")
-        cls = LinePath.find_class_by_type(json_content["type"])
+        line_type = json_content["type"]
+        cls = LinePath.find_class_by_type(line_type)
         if cls is None:
-            raise CharmyShapeError(f"Invalid line type {json_content["type"]}.")
+            raise CharmyShapeError(f"Invalid line type {line_type}.")
         params = json_content.copy()
         params.pop("type")
         return cls(**params)
@@ -630,9 +631,10 @@ class ShapeType(_reactive_caching.CachedClass):
             # type of the return value of loads()
         if not isinstance(json_content["type"], str):
             raise TypeError("Invalid shape JSON.")
-        cls = ShapeType.find_class_by_type(json_content["type"])
+        shape_type = json_content["type"]
+        cls = ShapeType.find_class_by_type(shape_type)
         if cls is None:
-            raise CharmyShapeError(f"Invalid shape type {json_content["type"]}.")
+            raise CharmyShapeError(f"Invalid shape type {shape_type}.")
         params = json_content.copy()
         params.pop("type")
         return cls(**params)
