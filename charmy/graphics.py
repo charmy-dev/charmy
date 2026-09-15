@@ -22,7 +22,7 @@ def _draw_bbox(obj: DrawnObject):
     range_rect = DrawnShape(
         obj.window, 
         _styles.shape.Rect(*obj.boundary), 
-        (0, 0, 255, 20), 
+        (0, 0, 255, 0.2), 
         1, (0, 0, 255), 
         (0, 0), (0, 0)
         # obj.offset, 
