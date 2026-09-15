@@ -26,30 +26,32 @@ Charmy仍在开发中，它的许多细节可能还没设计好，或者可能�
 
 首先，简要介绍Charmy的基本架构设计。Charmy被设计为三层：后端层、绘图层、控件层，由底到顶。
 
-Currently, we almost completed the basic functions of backend and graphics layer, and the effect can be seen by running `/tests/graphics.py`.
+截至目前，我们已经完成了后端层和绘图层的基本功能，其效果可透过运行`/tests/graphics.py`来查看。
 
 ## 最新动态
 
-We (The development team members) discuss our latest progress and the next steps in a QQ group chat, which many other Chinese developers also do. Anyone who is interested in (or even better, willing to contribute to) this project will be welcomed to join. The group chat number is: `887102507` .
+我们（Charmy开发组）像大部分中国开发团队一样，在QQ群内沟通开发进度。我们欢迎任何感兴趣或希望贡献的人加入我们的群组。群号为：`887102507`。
+
+请不要在Issues中发布除反馈或建议以外的其他内容。对于这些离题内容，发在Discussions（如果可用）中，或直接联系我们
 
 Please DO NOT create issues irrelevant to software bugs or suggestions etc. in this repository, use GitHub Discussions (if available) or contact us directly in that case.
 
-### For anyone outside China
+### 对于海外用户或不希望使用QQ的用户
 
-Unfortunately, currently there is no other discussion group chat available on any other platforms that you may be easier to access. We will create one when we publish our first usable version, because there is no reason to do so before that since users cannot provide any feedback without a working version.
+~~讲真，老哥，你为什么会在阅读中文README？~~
 
-**However,** the good news is, totowang-hhh (aka. rgzz666, one of the devs) can communicate well in English (and that's why he was the one who wrote this README), so feel free to reach him via any possible method. For instance, you may [email him](mailto:tt1224@hotmail.com) for further discussion.
+很遗憾，我们尚未在任何海外平台上提供交流群，因为在第一个可用版本出现之前，收集反馈似乎意义不大。您可以[联系rgzz666](mailto:tt1224@hotmail.com)，用中文或英文沟通。
 
-~~thx, now I'm getting annoyed with 26-key touchscreen keyboards 😅~~
+## Genesis后端
 
-## The Genesis Backend
+Genesis后端时目前使用的唯一后端，它会在早期开发阶段临时使用。Genesis后端主要用于可行性验证，同时方便我们调试更上层的机制是否可用。
 
-The Genesis backend is current used backend. It will be temporarily used during the development of the higher level GUI APIs exposed to users.
+Genesis后端分别使用SDL2和Cairo进行窗口操作和绘制。
 
-The Genesis backend uses Cairo and SDL2 for rendering and window operations respectively.
+## 授权
 
-## License
+注：此部分以英文原文为准，中文翻译仅供参考
 
-This is an open-source project licensed under `AGPLv3`, for full license text, please refer to `LICENSE.txt`.
+Charmy是一个遵循`AGPLv3`开源协议的项目，对于完整的开源协议文本，参阅`LICENSE.txt`。
 
-We also plan to provide paid license in the future, anyone who buys paid license will be able to freely (to some extents, terms and conditions apply) use Charmy without the limitations of `AGPL`. Please note that this paragraph is a brief description of one of our future plans, and does not describe, explain, or complete the licensing policies (currently AGPL only) of this project. For more information of the price and terms of paid license, please wait for further notice or contact us.
+我们也计划在未来提供付费授权。购买付费授权的实体将可以不受`AGPL`的约束而使用或修改本项目（但仍需遵循一定的规定和条款）。请注意：这些描述只是对我们未来规划的简要介绍，而不对当前的开源条款构成任何补全、覆盖、解释或描述作用。有关更多相关规划，请关注后续通知，或带价咨询。
