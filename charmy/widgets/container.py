@@ -78,9 +78,23 @@ class Container(reactive_caching.CachedClass):
     # endregion
 
     def add_child(self, child: widget.Widget) -> typing.Self:
-        """Add a child object."""
+        """Add a child object.
+
+        Note
+        ----
+        The child list is **rebound** rather than mutated in place on purpose. The `layers` 
+        cached property is only invalidated through `__setattr__`, so an in-place `append()` would 
+        leave the cache stale and the newly added child would never be drawn.
+        """
         if child not in self.children:
-            self.children.append(child)
+            self.children = [*self.children, child]
+        return self
+
+    def remove_child(self, child: widget.Widget) -> typing.Self:
+        """Remove a child object, so that it is no longer drawn or hit-tested."""
+        if child in self.children:
+            # Identity comparison: never drop a merely "equal" sibling object
+            self.children = [sibling for sibling in self.children if sibling is not child]
         return self
 
     def draw_children(self) -> typing.Self:
@@ -95,8 +109,11 @@ class Container(reactive_caching.CachedClass):
         return self
 
     def _clear_children(self):
-        for child in self.children:
+        """Destroy every child, then drop them from the child list."""
+        # 👇 Iterate a copy: `destroy()` removes each child from `self.children` as it goes
+        for child in list(self.children):
             child.destroy()
+        self.children = []
 
     def __contains__(self, target: widget.Widget) -> bool:
         return target in self.children
