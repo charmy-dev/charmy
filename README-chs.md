@@ -1,10 +1,4 @@
-<div style="display: flex; justify-items: center;">
-  <img src="./artworks/icon.png" alt="Project main icon" style="width: 8rem; height: 8rem;">
-  <div>
-    <h1>Charmy GUI</h1>
-    <p>适用于Python的，轻量但全能的GUI库</p>
-  </div>
-</div>
+# Charmy GUI
 
 曾用名`Suzaku`。
 
@@ -20,7 +14,7 @@ Charmy仍然在开发中，您可以透过点亮一个star来激励我们并加�
 
 Charmy仍在开发中，它的许多细节可能还没设计好，或者可能会在将来面临大改。
 
-如果您对此项目感兴趣，则可以加入我们的讨论并查看最新进度。参阅[最新动态](#最新动态)章节。
+如果您对此项目感兴趣，则可以加入我们的讨论并查看最新进度。参阅[最新动态](#%E6%9C%80%E6%96%B0%E5%8A%A8%E6%80%81)章节。
 
 ## 目前成果
 

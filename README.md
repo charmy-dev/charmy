@@ -1,10 +1,6 @@
-<div style="display: flex; justify-items: center;">
-  <img src="./artworks/icon.png" alt="Project main icon" style="width: 8rem; height: 8rem;">
-  <div>
-    <h1>Charmy GUI</h1>
-    <p>A lightweight but powerful GUI module for Python.</p>
-  </div>
-</div>
+<img src="./artworks/icon.png" alt="Project main icon" style="width: 8rem; height: 8rem;">
+
+# Charmy GUI
 
 Formerly `Suzaku`.
 

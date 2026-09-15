@@ -1,10 +1,6 @@
-<div style="display: flex; justify-items: center;">
-  <img src="./artworks/icon.png" alt="Project main icon" style="width: 8rem; height: 8rem;">
-  <div>
-    <h1>Charmy GUI</h1>
-    <p>Python用の、軽量でありながら高性能なGUIモジュールです</p>
-  </div>
-</div>
+<img src="./artworks/icon.png" alt="Project main icon" style="width: 8rem; height: 8rem;">
+
+# Charmy GUI
 
 以前は `Suzaku` と呼ばれていました。
 
