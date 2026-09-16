@@ -26,10 +26,14 @@ from __future__ import annotations as _
 
 import typing as _typing
 
+from abc import abstractmethod as _abstractmethod
 import json as _json
 
 from ..utils import marks as _marks
 from ..utils import type_checking as _type_checking
+
+if _typing.TYPE_CHECKING:
+    from . import shape as _shape
 
 
 # region Texture base class
@@ -40,13 +44,17 @@ class Texture:
 
     @staticmethod
     def is_texture_like(value: object) -> bool:
+        """Runtime check of TextureLike objects."""
         # return _type_checking.isinstance_of_any(value, [tuple, None])
         match value:
             case tuple(): # Suspect RGB / RGBA
-                if not len(value) not in [3, 4]:
+                if len(value) not in [3, 4]:
                     return False
-                if False in [type(v) is int for v in value]:
+                if False in [type(v) is int for v in value[:3]]:
                     return False
+                if len(value) == 4:
+                    if type(value[3]) is not float and type(value[3]) is not int:
+                        return False
                 return True
             case str(): # Suspect HEX
                 if value.startswith("#"):
@@ -155,14 +163,6 @@ class Color(Texture):
     """Represents pure colors."""
     type: _typing.ClassVar[str] = "color"
 
-    # @typing.overload
-    # def __init__(self, r: int, g: int, b: int, a: int = 255): ... # RGB(A)
-    # @typing.overload
-    # def __init__(self, color: tuple[int, int, int, int] | \
-    #              tuple[int, int, int]): ... # Single RGB(A) tuple
-    # @typing.overload
-    # def __init__(self, color: str): ... # Single HEX string (RRGGBB / RRGGBBAA)
-
     def __init__(self, color: RGB | RGBA | HEX):
         """Initialize a color object.
         
@@ -231,6 +231,28 @@ class Transparent(Texture):
 TransparentLike: _typing.TypeAlias = None | tuple[int, int, int, _typing.Literal[0]]
 
 
+# region Gradient
+
+class Gradient(Texture):
+    """Gradient base class."""
+    @_abstractmethod
+    def get_color_at(self, point: _shape.Point) -> Color: ...
+
+
+class LinearGradient(Gradient):
+    """Linear gradient."""
+    type: _typing.ClassVar[str] = "linear_gradient"
+
+    def __init__(self, 
+            start_point: _shape.Point, 
+            end_point: _shape.Point, 
+            colors: dict[float, Color | ColorLike]
+            ):
+        self.start_point: _shape.Point = start_point
+        self.end_point: _shape.Point = end_point
+        self.colors: dict[float, Color | ColorLike] = colors
+
+
 # region ensure_texture
 
 TextureLike: _typing.TypeAlias = ColorLike | TransparentLike
@@ -244,6 +266,11 @@ def ensure_texture(texture_like: Texture | TextureLike) -> Texture:
     if isinstance(texture_like, Texture):
         result = texture_like
     else:
+        if not Texture.is_texture_like(texture_like):
+            # Not TextureLike
+            raise TypeError(
+                f"Expected a TextureLike type to convert to Texture, but got {texture_like}"
+                )
         # Convert into texture
         if isinstance(texture_like, tuple): # RGB(A)
             if len(texture_like) == 4: # RGBA
