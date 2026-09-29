@@ -27,6 +27,7 @@ from __future__ import annotations as _
 import typing as _typing
 
 from abc import abstractmethod as _abstractmethod
+import bisect
 import json as _json
 
 from ..utils import marks as _marks
@@ -235,8 +236,12 @@ TransparentLike: _typing.TypeAlias = None | tuple[int, int, int, _typing.Literal
 
 class Gradient(Texture):
     """Gradient base class."""
+
+    @_abstractmethod 
+    def get_color_at_ratio(self, ratio: float) -> Color: ...
+
     @_abstractmethod
-    def get_color_at(self, point: _shape.Point) -> Color: ...
+    def get_color_at_point(self, point: _shape.Point) -> Color: ...
 
 
 class LinearGradient(Gradient):
@@ -246,11 +251,79 @@ class LinearGradient(Gradient):
     def __init__(self, 
             start_point: _shape.Point, 
             end_point: _shape.Point, 
-            colors: dict[float, Color | ColorLike]
+            colors: dict[float, Color | ColorLike | Transparent | TransparentLike]
             ):
+        """Initialize a linear gradient texture.
+
+        :param start_point: Start point of gradient line
+        :param end_point: End point of gradient line
+        :param colors: Colors in the gradient, in form of {ratio: color, ...}
+        """
         self.start_point: _shape.Point = start_point
         self.end_point: _shape.Point = end_point
-        self.colors: dict[float, Color | ColorLike] = colors
+        self.colors: dict[float, Color | ColorLike | Transparent | TransparentLike] = colors
+
+    def get_color_at_ratio(self, ratio: float) -> RGBA:
+        """To get the color at a specific ratio in linear gradient.
+
+        This is a vibed module.
+
+        :param ratio: The ratio to get color at
+        """
+        if not self.colors:
+            raise ValueError("Linear gradient requires at least one color stop.")
+
+        ratio_list = sorted(self.colors.keys())
+        if ratio <= ratio_list[0]:
+            return _typing.cast(RGBA, 
+                                ensure_texture(self.colors[ratio_list[0]]).color) # type: ignore
+        if ratio >= ratio_list[-1]:
+            return _typing.cast(RGBA, 
+                                ensure_texture(self.colors[ratio_list[-1]]).color) # type: ignore
+
+        insert_pos = bisect.bisect_left(ratio_list, ratio)
+        if insert_pos == len(ratio_list):
+            insert_pos = len(ratio_list) - 1
+        if ratio == ratio_list[insert_pos]:
+            return _typing.cast(RGBA, 
+                        ensure_texture(self.colors[ratio_list[insert_pos]]).color) # type: ignore
+
+        lower_ratio = ratio_list[insert_pos - 1]
+        higher_ratio = ratio_list[insert_pos]
+        lower_color = _typing.cast(Color, ensure_texture(self.colors[lower_ratio]))
+        higher_color = _typing.cast(Color, ensure_texture(self.colors[higher_ratio]))
+
+        span = higher_ratio - lower_ratio
+        if span == 0:
+            return _typing.cast(RGBA, lower_color.color)
+
+        weight = (ratio - lower_ratio) / span
+        result = [
+            int(lower_v + (higher_v - lower_v) * weight)
+            for lower_v, higher_v in zip(lower_color.color[:3], higher_color.color[:3])
+        ]
+        result.append(lower_color.color[3] + (higher_color.color[3] - lower_color.color[3]) \
+                      * weight) # type: ignore
+        return _typing.cast(RGBA, tuple(result))
+
+    def get_color_at_point(self, point: _shape.Point) -> Color:
+        """To get the color at a specific pixel.
+
+        This is a vibed module.
+
+        :param point: The point to get color at
+        """
+        x0, y0 = self.start_point
+        x1, y1 = self.end_point
+        dx, dy = x1 - x0, y1 - y0
+        if dx == 0 and dy == 0:
+            ratio = 0.0
+        else:
+            numerator = (point[0] - x0) * dx + (point[1] - y0) * dy
+            denominator = dx * dx + dy * dy
+            ratio = numerator / denominator
+            ratio = max(0.0, min(1.0, ratio))
+        return Color(self.get_color_at_ratio(ratio))
 
 
 # region ensure_texture

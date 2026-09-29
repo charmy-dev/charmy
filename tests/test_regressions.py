@@ -2,6 +2,8 @@
 
 Each test class names the review item it guards, so a failure points straight back at the report. 
 Everything here runs headless — see `tests/conftest.py`.
+
+This is a vibed module.
 """
 
 import pytest
