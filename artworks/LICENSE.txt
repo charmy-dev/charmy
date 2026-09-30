@@ -1,8 +1,17 @@
-THIS LICENSE IS NOT YET VALID UNTIL THIS NOTICE AND THAT WRITTEN IN NOTICE.TXT ARE BOTH REMOVED.
+THIS LICENSE IS NOT YET VALID UNTIL THIS NOTICE AND THAT WRITTEN IN NOTICE.TXT
+ARE BOTH REMOVED.
 
-=== ARTWORKS USAGE LICENSE
+===== ARTWORKS USAGE LICENSE =====
 
-Original Author: 稲凪 咲 (Inagi)
-Copyright: © 2026 稲凪 咲 (Inagi)
-Original Licensor: 稲凪 咲 (Inagi)
-Original Licensee: Charmy development team
+Original Author and Copyright Holder:
+© 2026 稲凪 咲 (Inagi)
+
+Licensor: Charmy development team
+Licensee: Any recipient of the Artwork under this license
+
+=== 1. The Original License
+
+The Artwork covered by this License was created by Inagi and is used by the
+Project under authorization from the original copyright holder.
+
+The original author grants Charmy development team a ...
