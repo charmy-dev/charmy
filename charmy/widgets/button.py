@@ -67,7 +67,7 @@ class Button(_Widget):
         :param *args: → See `Widget.__init__(...)`
         :param **kwargs: → See `Widget.__init__(...)`
         """
-        super().__init__(parent, style)
+        super().__init__(parent, *args, style, **kwargs)
         self.text: str = text
         self.on_click: _typing.Callable = on_click
         self.theme: _typing.Optional[_styles.theme.Theme] = None
