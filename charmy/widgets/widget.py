@@ -1,5 +1,7 @@
 """Charmy widgets base class"""
 
+from __future__ import annotations
+
 import typing
 
 import dataclasses
@@ -35,6 +37,7 @@ class WidgetProfile(CharmyObject, EventHandling):
     size: type_checking.ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
 
     _referencing_vars: typing.ClassVar[dict[str, var.Var]] = {}
+    _query_widget: typing.Optional[Widget] = None
 
     def __init_subclass__(cls) -> None:
         cls.__hash__ = WidgetProfile.__hash__
@@ -81,18 +84,22 @@ class WidgetProfile(CharmyObject, EventHandling):
             self.trigger(event_types.ProfileChanged(self, name))
 
     @classmethod
-    def references(cls, target: str) -> var.Var:
+    def references(cls, target: str) -> var.Var | var.Query:
         """To represent a profile var."""
-        if not hasattr(cls, target):
-            raise NameError(
-                f"Referencing attribute {target} that does not exist for {cls.__name__}."
-                )
-        if target not in cls._referencing_vars:
-            the_var = var.Var()
-            cls._referencing_vars[target] = the_var
+        if target.startswith("widget."): # Refs widget prop
+            prop_name = target.split(".")[-1]
+            return var.Query(lambda widget=WidgetProfile._query_widget, attr=prop_name: getattr(widget, attr))
         else:
-            the_var = cls._referencing_vars[target]
-        return the_var
+            if not hasattr(cls, target):
+                raise NameError(
+                    f"Referencing attribute {target} that does not exist for {cls.__name__}."
+                    )
+            if target not in cls._referencing_vars:
+                the_var = var.Var()
+                cls._referencing_vars[target] = the_var
+            else:
+                the_var = cls._referencing_vars[target]
+            return the_var
 
     def __hash__(self) -> int:
         return super().__hash__()
@@ -160,7 +167,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self._layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
         self._on_layout_change_task: typing.Optional[EventTask] = None
 
-        # Intrnal misc
+        # Internal misc
         self._max_possible_surrounding_drawn_width: int = 0
 
         # Components list
@@ -385,20 +392,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     def boundary(self) -> styles.shape.RectRange:
         """Rect range of a widget."""
         return self.pos, self.size
-        # if len(self._components) == 0:
-        #     return (0, 0), (0, 0)
-        # drawn_obj_boundaries = [drawn_obj.boundary for drawn_obj in self._components]
-        # xs = [
-        #     *[pos[0] for pos, _ in drawn_obj_boundaries], 
-        #     *[pos[0] + size[0] for pos, size in drawn_obj_boundaries], 
-        #     ]
-        # ys = [
-        #     *[pos[1] for pos, _ in drawn_obj_boundaries], 
-        #     *[pos[1] + size[1] for pos, size in drawn_obj_boundaries], 
-        #     ]
-        # min_x, max_x = min(xs), max(xs)
-        # min_y, max_y = min(ys), max(ys)
-        # return (min_x, min_y), (max_x - min_x, max_y - min_y)
 
     @property
     def root_container(self) -> window.Window:
@@ -428,6 +421,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         """Draw the widget, does nothing on base class."""
         if not self._alive:
             return self
+
+        WidgetProfile._query_widget = self
 
         self._update_registered_profiles()
 

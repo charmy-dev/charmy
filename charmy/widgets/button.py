@@ -35,7 +35,7 @@ class ButtonProfile(_WidgetProfile):
     def default(cls) -> _typing.Self:
         instance = cls(
             size=(72, 28), 
-            shape=_styles.shape.Rect((0, 0), _WidgetProfile.references("size")), 
+            shape=_styles.shape.Rect((0, 0), _WidgetProfile.references("widget.size")), 
             background = _styles.texture.Color((200, 200, 200)), 
             border_width = 2, 
             border_texture = _styles.texture.Color((20, 20, 20)), 
@@ -109,6 +109,7 @@ class Button(_Widget):
         # Generate a full profile for current state
         curr_profile = self.migrate_full_curr_profile()
         curr_profile = _typing.cast(ButtonProfile, curr_profile)
+        curr_profile._query_widget = self
         # Make background shape
         self._components[0].shape = \
             _styles.shape.SingleShape.from_profile_value(curr_profile.shape)
