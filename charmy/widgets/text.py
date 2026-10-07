@@ -1,4 +1,4 @@
-"""Charmy button."""
+"""Charmy text."""
 
 from __future__ import annotations as _
 

@@ -5,9 +5,9 @@ This module contains Var and Query, which are used for referencing in Python.
 Vars are used to implement thing like C(++) pointers. A var will be able to be referenced or
 modified from somewhere else, providing experience like C(++) pointers.
 
-Starting from [Commit hash here later], this module also provides a Query class for realtime
-referencing the return value of a specific callable (like class properties, but may be used outside
-classes), with an interface that is similar to Vars.
+Starting from commit 2708f2f, this module also provides a Query class for realtime referencing the
+return value of a specific callable (like class properties, but may be used outside classes), with
+an interface that is similar to Vars.
 """
 
 import typing as _typing
