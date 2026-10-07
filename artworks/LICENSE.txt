@@ -6,12 +6,33 @@ ARE BOTH REMOVED.
 Original Author and Copyright Holder:
 © 2026 稲凪 咲 (Inagi)
 
-Licensor: Charmy development team
-Licensee: Any recipient of the Artwork under this license
-
 === 1. The Original License
+
+Licensor: 稲凪 咲 (Inagi)
+Licensee: Charmy Development Team
 
 The Artwork covered by this License was created by Inagi and is used by the
 Project under authorization from the original copyright holder.
 
-The original author grants Charmy development team a ...
+The original author grants Charmy Development Team a loose, non-exclusive, 
+worldwide, royalty-free license to use, reproduce, distribute, display, and 
+otherwise incorporate the Artwork into Charmy (the Project), this original
+license will remain valid if the Project is renamed, has its license on its
+source code changed, or be transferred.
+
+Charmy Development Team is free to use these Artworks for any usage, as long as
+it is within common sense, and not for political purposes.
+
+=== 2. Downstream License
+
+Licensor: Charmy Development Team
+Licensee: Any recipient of the Artwork under this license
+
+Charmy Development Team grants any users or forks of this project a
+non-exclusive, worldwide, royalty-free license to use these artworks, with
+additional terms applied. No ownership of the Artwork is transferred by this
+license. This downstream license does not grant any rights exceeding those held
+by the Project.
+
+For end users of applications that use Charmy to implement their graphical user
+interface
