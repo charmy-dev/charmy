@@ -14,7 +14,7 @@ if MEM_STATS:
 
 
 window = cm.Window(size=(300, 160))
-window.title = "Button test"
+window.title = "Text test"
 
 text = cm.Text(window, text="Hi, I`m just a text label!")
 text.place((10, 10))

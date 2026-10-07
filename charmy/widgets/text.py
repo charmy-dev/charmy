@@ -18,7 +18,6 @@ if _typing.TYPE_CHECKING:
 @_dataclasses.dataclass
 class TextProfile(_WidgetProfile):
     """Text profile."""
-    text: _type_checking.ProfileProp[str] = _marks.profile_value_fallback_mark
     text_style: _type_checking.ProfileProp[dict | _styles.text_style.TextStyle] = \
         _marks.profile_value_fallback_mark
     text_texture: _type_checking.ProfileProp[dict | _styles.texture.TextureType] = \
@@ -28,7 +27,6 @@ class TextProfile(_WidgetProfile):
     def default(cls) -> _typing.Self:
         instance = cls(
             size=(72, 28),
-            text = "Text",
             text_style = _styles.text_style.TextStyle.sys_default,
             text_texture = _styles.texture.Color((0, 0, 0)),
             )
@@ -44,7 +42,6 @@ class Text(_Widget):
     def __init__(self,
             parent: _container.Container | None = None,
             text: str = "Text",
-            style: _typing.Optional[dict[str, _typing.Any]] = None,
             *args, **kwargs):
         """Text labels in Charmy.
 
@@ -55,7 +52,7 @@ class Text(_Widget):
         :param *args: → See `Widget.__init__(...)`
         :param **kwargs: → See `Widget.__init__(...)`
         """
-        super().__init__(parent, *args, style, **kwargs)
+        super().__init__(parent, *args, **kwargs)
         self.text: str = text
         self.theme: _typing.Optional[_styles.theme.Theme] = None
         self.state: str = "normal"
@@ -73,10 +70,11 @@ class Text(_Widget):
             )
 
     def _update_components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
-        """Components (drawn objects) that make up the button."""
+        """Components (drawn objects) that make up the text."""
         # Generate a full profile for current state
         curr_profile = self.migrate_full_curr_profile()
         curr_profile = _typing.cast(TextProfile, curr_profile)
+        curr_profile._query_widget = self
         # Drawn text
         self._components[0].text = \
             self.text
