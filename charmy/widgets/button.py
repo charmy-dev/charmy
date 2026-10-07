@@ -56,7 +56,6 @@ class Button(_Widget):
             parent: _container.Container | None = None,
             text: str = "Button",
             on_click: _typing.Callable = lambda: None,
-            style: _typing.Optional[dict[str, _typing.Any]] = None,
             *args, **kwargs):
         """Text buttons in Charmy.
 
@@ -67,7 +66,7 @@ class Button(_Widget):
         :param *args: → See `Widget.__init__(...)`
         :param **kwargs: → See `Widget.__init__(...)`
         """
-        super().__init__(parent, *args, style, **kwargs)
+        super().__init__(parent, *args, **kwargs)
         self.text: str = text
         self.on_click: _typing.Callable = on_click
         self.theme: _typing.Optional[_styles.theme.Theme] = None
