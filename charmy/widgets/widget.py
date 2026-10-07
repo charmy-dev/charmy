@@ -37,7 +37,8 @@ class WidgetProfile(CharmyObject, EventHandling):
     size: type_checking.ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
 
     _referencing_vars: typing.ClassVar[dict[str, var.Var]] = {}
-    _query_widget: typing.Optional[Widget] = None
+    _query_widget: typing.ClassVar[typing.Optional[Widget]] = None
+    _pause_profile_change_event_trigger: bool = False
 
     def __init_subclass__(cls) -> None:
         cls.__hash__ = WidgetProfile.__hash__
@@ -80,6 +81,8 @@ class WidgetProfile(CharmyObject, EventHandling):
             return
         if not self._alive:
             return
+        if self._pause_profile_change_event_trigger:
+            return
         if not name.startswith("_"):
             self.trigger(event_types.ProfileChanged(self, name))
 
@@ -88,7 +91,10 @@ class WidgetProfile(CharmyObject, EventHandling):
         """To represent a profile var."""
         if target.startswith("widget."): # Refs widget prop
             prop_name = target.split(".")[-1]
-            return var.Query(lambda widget=WidgetProfile._query_widget, attr=prop_name: getattr(widget, attr))
+            return var.Query(
+                lambda attr=prop_name: \
+                getattr(WidgetProfile._query_widget, attr)
+                )
         else:
             if not hasattr(cls, target):
                 raise NameError(
@@ -259,6 +265,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             base_theme = copy.copy(self.profiles[self.state])
         else:
             base_theme = type(self).ProfileClass().default()
+        base_theme._pause_profile_change_event_trigger = True
         for name, value in base_theme.__dict__.items():
             if value == marks.profile_value_fallback_mark:
                 fallback_state = self._negotiate_profile_state(self.state, name)
@@ -268,6 +275,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                     getattr(self.profiles[fallback_state], name)
                     )
         # print(base_theme.__dict__)
+        base_theme._pause_profile_change_event_trigger = False
         return base_theme
 
     def _update_registered_profiles(self):
@@ -281,7 +289,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # Profile not registered, then register it
                 task_obj = profile.bind(
                     event_types.ProfileChanged, 
-                    self._update_components, 
+                    lambda _: self._update_components(), 
                     _is_internal = True, 
                     )
                 self._registered_profiles[profile] = task_obj

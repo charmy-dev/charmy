@@ -74,7 +74,7 @@ class Text(_Widget):
         # Generate a full profile for current state
         curr_profile = self.migrate_full_curr_profile()
         curr_profile = _typing.cast(TextProfile, curr_profile)
-        curr_profile._query_widget = self
+        _WidgetProfile._query_widget = self
         # Drawn text
         self._components[0].text = \
             self.text

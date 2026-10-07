@@ -89,6 +89,12 @@ class Button(_Widget):
                 ), 
             )
 
+        # Internal state profiles
+        self.profiles["hover"] = ButtonProfile("default", 
+            background=(0, 0, 0), 
+            text_texture=(255, 255, 255)
+            )
+
         # Internal event binds
         self.bind(
             _event_types.MouseClick, 
@@ -108,7 +114,7 @@ class Button(_Widget):
         # Generate a full profile for current state
         curr_profile = self.migrate_full_curr_profile()
         curr_profile = _typing.cast(ButtonProfile, curr_profile)
-        curr_profile._query_widget = self
+        _WidgetProfile._query_widget = self
         # Make background shape
         self._components[0].shape = \
             _styles.shape.SingleShape.from_profile_value(curr_profile.shape)
