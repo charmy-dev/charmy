@@ -27,8 +27,9 @@ the Artworks or Artwork Elements, including the Modified Works.
 “Application Based on the Project” means an application whose graphical user
 interface is implemented, in whole or in part, using the Project.
 
-“Fork of the Project” means a software project derived from and includes the
-Project's source code, whether or not it retains the name of the Project.
+“Fork of the Project” means a software project derived from the Project and that
+includes the Project's source code, whether or not it retains the name of the
+Project.
 
 === 1. The Original License
 
@@ -45,7 +46,7 @@ The Licensee is free to use the Artworks for any purpose, as long as it is
 within common sense, and not for political purposes.
 
 The Licensee agrees to keep the Project open-source and avoid any improper use
-of the artworks prohibited or otherwise restricted by the Original Author.
+of the Artworks prohibited or otherwise restricted by the Original Author.
 
 === 2. Downstream License
 
@@ -53,9 +54,9 @@ Licensor: Project Developer
 Licensee: Any recipient of the Artworks under this license
 
 Project Developer grants the Licensee a non-exclusive, worldwide, royalty-free
-license to use these artworks, with additional terms applied. No ownership of
-the Artworks is transferred by this license. This downstream license does not
-grant any rights exceeding those held by the Project.
+license to use the Artworks, with additional terms applied. No ownership of the
+Artworks is transferred by this license. This downstream license does not grant
+any rights exceeding those held by the Project Developer.
 
 Any individual or organization is allowed to modify, create derivative works of,
 reproduce, distribute or display the Artworks, but must not use the Artworks,
@@ -65,7 +66,7 @@ software, product, service, organization, or other entity that is not affiliated
 with or derived from the Project, unless explicitly authorized by the Project
 Developer, regardless of whether such use is commercial or non-commercial.
 
-Any Derivative Works of the artworks, or any other artworks that include the
+Any Derivative Works of the Artworks, or any other artworks that include the
 Artwork Elements, must follow the following terms:
  - Such works must not be created, used, or distributed for pornographic
    purposes, and must not include any sexually explicit content.
