@@ -1,38 +1,81 @@
-THIS LICENSE IS NOT YET VALID UNTIL THIS NOTICE AND THAT WRITTEN IN NOTICE.TXT
-ARE BOTH REMOVED.
+THIS LICENSE SHALL NOT TAKE EFFECT UNTIL THIS NOTICE AND THE CORRESPONDING
+NOTICE IN NOTICE.txt HAVE BOTH BEEN REMOVED.
 
 ===== ARTWORKS USAGE LICENSE =====
 
 Original Author and Copyright Holder:
 © 2026 稲凪 咲 (Inagi)
 
+the Project: Charmy
+Project Developer: Charmy Development Team
+
+=== 0. Definitions
+
+"The Artworks" means any artworks covered by this License, which were created by
+the Original Author and are used by the Project under authorization from the
+Original Copyright Holder.
+
+“Artwork Elements” means the character and other distinctive visual elements
+depicted in the Artworks.
+
+"Modified Work" means any work derived from the Artworks by modifying their
+image content.
+
+“Derivative Work” means any work derived from, modified from, or incorporating
+the Artworks or Artwork Elements, including the Modified Works.
+
+“Application Based on the Project” means an application whose graphical user
+interface is implemented, in whole or in part, using the Project.
+
+“Fork of the Project” means a software project derived from and includes the
+Project's source code, whether or not it retains the name of the Project.
+
 === 1. The Original License
 
-Licensor: 稲凪 咲 (Inagi)
-Licensee: Charmy Development Team
+Licensor: Original Author
+Licensee: Project Developer
 
-The Artwork covered by this License was created by Inagi and is used by the
-Project under authorization from the original copyright holder.
+The Licensor grants the Licensee a non-exclusive, worldwide, royalty-free
+license to use, reproduce, distribute, display, and otherwise incorporate the
+Artworks into the Project. This original license shall remain valid even if the
+Project is renamed, its source code is released under a different license, or
+the Project is transferred to another party.
 
-The original author grants Charmy Development Team a loose, non-exclusive, 
-worldwide, royalty-free license to use, reproduce, distribute, display, and 
-otherwise incorporate the Artwork into Charmy (the Project), this original
-license will remain valid if the Project is renamed, has its license on its
-source code changed, or be transferred.
+The Licensee is free to use the Artworks for any purpose, as long as it is
+within common sense, and not for political purposes.
 
-Charmy Development Team is free to use these Artworks for any usage, as long as
-it is within common sense, and not for political purposes.
+The Licensee agrees to keep the Project open-source and avoid any improper use
+of the artworks prohibited or otherwise restricted by the Original Author.
 
 === 2. Downstream License
 
-Licensor: Charmy Development Team
-Licensee: Any recipient of the Artwork under this license
+Licensor: Project Developer
+Licensee: Any recipient of the Artworks under this license
 
-Charmy Development Team grants any users or forks of this project a
-non-exclusive, worldwide, royalty-free license to use these artworks, with
-additional terms applied. No ownership of the Artwork is transferred by this
-license. This downstream license does not grant any rights exceeding those held
-by the Project.
+Project Developer grants the Licensee a non-exclusive, worldwide, royalty-free
+license to use these artworks, with additional terms applied. No ownership of
+the Artworks is transferred by this license. This downstream license does not
+grant any rights exceeding those held by the Project.
 
-For end users of applications that use Charmy to implement their graphical user
-interface
+Any individual or organization is allowed to modify, create derivative works of,
+reproduce, distribute or display the Artworks, but must not use the Artworks,
+Artwork Elements, or any derivative work thereof, to represent, identify,
+endorse, promote, or otherwise serve as a visual identifier for any project,
+software, product, service, organization, or other entity that is not affiliated
+with or derived from the Project, unless explicitly authorized by the Project
+Developer, regardless of whether such use is commercial or non-commercial.
+
+Any Derivative Works of the artworks, or any other artworks that include the
+Artwork Elements, must follow the following terms:
+ - Such works must not be created, used, or distributed for pornographic
+   purposes, and must not include any sexually explicit content.
+ - Such works must not be created, used, or distributed for political purposes,
+   including to promote, oppose, endorse, or campaign for any political party,
+   candidate, organization, movement, campaign, or political cause.
+ - Such works and their use must not constitute an unreasonable, abusive, or
+   otherwise improper use of the Artworks, as determined by the Original Author.
+The Project Developer and the Original Author reserve the right to determine, at
+their discretion, whether a particular use or content violates the content-
+related restrictions set forth in this License.
+
+For Applications Based on the Project,... (TO BE WRITTEN)
