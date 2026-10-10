@@ -29,7 +29,7 @@ the Project constitutes a Substantive Modification.
 
 "Modified Work" means any work derived from the Artworks by modifying their
 image content. Each Modified Work must contain one or more Substantive
-Modifications, otherwise it it shall be considered use of the Artworks as-is.
+Modifications, otherwise it shall be treated as of the Artworks as-is.
 
 "Derivative Work" means any work derived from, modified from, or incorporating
 the Artworks or Artwork Elements, including the Modified Works.
@@ -83,7 +83,7 @@ service, organization, or other entity that is not affiliated with or derived
 from the Project, unless explicitly authorized by the Project Developer,
 regardless of whether such use is commercial or non-commercial.
 
-Any Derivative Works of the Artworks, or any other artworks that include the
+Any Derivative Works of the Artworks, or any other works incorporating the
 Artwork Elements, must follow the following terms:
  - Such works must not be created, used, or distributed for pornographic
    purposes, and must not include any sexually explicit content.
@@ -95,6 +95,10 @@ Artwork Elements, must follow the following terms:
 The Project Developer and the Original Author each reserve the right to
 determine, at their discretion, whether a particular use or content violates the
 content-related restrictions set forth in this License.
+
+Any Derivative Work incorporating the Artworks or Artwork Elements shall, with
+respect to the Artworks and Artwork Elements contained therein, be distributed
+under this License.
 
 Applications Based on the Project are allowed to include the Artworks or Artwork
 Elements, or any of the Derivative Works (only when allowed by the relevant
@@ -108,10 +112,25 @@ Based on the Project.
 
 Forks of the Project are allowed to use or include any of the Derivative Works
 as their visual identifier, only when also allowed by the relevant author or
-copyright holder of the Derivative Works used. Using the Artworks as-is as a
-visual identifier is not allowed. (TO BE CHECKED)
+copyright holder of the Derivative Works used. Using the Artworks as-is, or any
+work treated as use of the Artworks as-is under this License, as a visual
+identifier is not allowed. (TO BE CHECKED)
 
-Authorized usages of the Artworks, the Artwork Elements or Derivative Works that
-are in purpose to produce, represent, promote, distribute, or otherwise used by
-the Applications Based on the Project, and Forks of the Project, are allowed for
-commercial use. (TO BE CHECKED)
+Authorized uses of the Artworks, Artwork Elements, or Derivative Works for the
+purpose of producing, representing, promoting, distributing, or otherwise
+supporting an Application Based on the Project or a Fork of the Project are
+permitted for commercial use.
+
+=== 3. Applicable License Version
+
+For each release or distribution of the Project, the version of this License
+officially designated by the Project Developer and in effect at the time of such
+release or distribution shall govern the use of the Artworks in that release or
+distribution.
+
+The applicable License version shall not be determined by the version of this
+License included in any copy, fork, or other distribution of the Project.
+
+Subsequent versions of this License shall not retroactively modify the terms
+applicable to a release or distribution made before such subsequent version took
+effect.
