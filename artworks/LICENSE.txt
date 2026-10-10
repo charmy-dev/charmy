@@ -15,21 +15,32 @@ Project Developer: Charmy Development Team
 the Original Author and are used by the Project under authorization from the
 Original Copyright Holder.
 
-“Artwork Elements” means the character and other distinctive visual elements
+"Artwork Elements" means the character and other distinctive visual elements
 depicted in the Artworks.
 
-"Modified Work" means any work derived from the Artworks by modifying their
-image content.
+"Substantive Modification" means a modification to the Artworks, Artwork
+Elements, the Project or any of the Forks of the Project, that is meaningful and
+can distinguish the modified version from the original version. The Project
+Developer and the Original Author each reserve the right to determine, at their
+own discretion, whether a modification to the Artworks or Artwork Elements
+constitutes a Substantive Modification. The Project Developer also reserves the
+right to determine whether a modification to the Project or any of the Forks of
+the Project constitutes a Substantive Modification.
 
-“Derivative Work” means any work derived from, modified from, or incorporating
+"Modified Work" means any work derived from the Artworks by modifying their
+image content. Each Modified Work must contain one or more Substantive
+Modifications, otherwise it it shall be considered use of the Artworks as-is.
+
+"Derivative Work" means any work derived from, modified from, or incorporating
 the Artworks or Artwork Elements, including the Modified Works.
 
-“Application Based on the Project” means an application whose graphical user
+"Application Based on the Project" means an application whose graphical user
 interface is implemented, in whole or in part, using the Project.
 
-“Fork of the Project” means a software project derived from the Project and that
-includes the Project's source code, whether or not it retains the name of the
-Project.
+“Fork of the Project” means a software project, or a part of a software project,
+that is derived from the Project and includes the Project's source code, and has
+made one or more Substantive Modifications to or added new content to its code,
+whether or not it retains the name of the Project.
 
 === 1. The Original License
 
@@ -58,13 +69,19 @@ license to use the Artworks, with additional terms applied. No ownership of the
 Artworks is transferred by this license. This downstream license does not grant
 any rights exceeding those held by the Project Developer.
 
-Any individual or organization is allowed to modify, create derivative works of,
-reproduce, distribute or display the Artworks, but must not use the Artworks,
-Artwork Elements, or any derivative work thereof, to represent, identify,
-endorse, promote, or otherwise serve as a visual identifier for any project,
-software, product, service, organization, or other entity that is not affiliated
-with or derived from the Project, unless explicitly authorized by the Project
-Developer, regardless of whether such use is commercial or non-commercial.
+For the purposes of this License, any work that reproduces or recreates the
+Artworks, in whole or in part, without incorporating at least one Substantive
+Modification shall be treated as use of the Artworks as-is, regardless of the
+method used to produce that work.
+
+Any individual or organization may modify, create derivative works of,
+reproduce, distribute or display the Artworks subject to the terms and
+restrictions of this License, but must not use the Artworks, Artwork Elements,
+or any derivative work thereof, to represent, identify, endorse, promote, or
+otherwise serve as a visual identifier for any project, software, product,
+service, organization, or other entity that is not affiliated with or derived
+from the Project, unless explicitly authorized by the Project Developer,
+regardless of whether such use is commercial or non-commercial.
 
 Any Derivative Works of the Artworks, or any other artworks that include the
 Artwork Elements, must follow the following terms:
@@ -75,8 +92,26 @@ Artwork Elements, must follow the following terms:
    candidate, organization, movement, campaign, or political cause.
  - Such works and their use must not constitute an unreasonable, abusive, or
    otherwise improper use of the Artworks, as determined by the Original Author.
-The Project Developer and the Original Author reserve the right to determine, at
-their discretion, whether a particular use or content violates the content-
-related restrictions set forth in this License.
+The Project Developer and the Original Author each reserve the right to
+determine, at their discretion, whether a particular use or content violates the
+content-related restrictions set forth in this License.
 
-For Applications Based on the Project,... (TO BE WRITTEN)
+Applications Based on the Project are allowed to include the Artworks or Artwork
+Elements, or any of the Derivative Works (only when allowed by the relevant
+author or copyright holder) in their visual identifiers, but only when such
+elements are combined with other symbols, for the purpose of indicating that the
+application uses the Project or the Forks of the Project, in whole or in part,
+to implement its graphical user interface. The Project Developer and the
+Original Author each reserve the right to determine, at their discretion,
+whether a particular Derivative Work satisfies the requirements for Applications
+Based on the Project.
+
+Forks of the Project are allowed to use or include any of the Derivative Works
+as their visual identifier, only when also allowed by the relevant author or
+copyright holder of the Derivative Works used. Using the Artworks as-is as a
+visual identifier is not allowed. (TO BE CHECKED)
+
+Authorized usages of the Artworks, the Artwork Elements or Derivative Works that
+are in purpose to produce, represent, promote, distribute, or otherwise used by
+the Applications Based on the Project, and Forks of the Project, are allowed for
+commercial use. (TO BE CHECKED)
