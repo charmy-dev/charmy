@@ -52,8 +52,10 @@ class Backend(template.Backend):
     ShapeBase: type[ShapeBase]
     TextureBase: type[TextureBase]
 
+    _backend_curr_drawing_obj_stack: typing.ClassVar[list[charmy_stuff.graphics.DrawnObject]] = []
+
     def __init__(self):
-        """APIs are aliased here."""
+        """The main entrance of the backend."""
         super().__init__()
     
     def backend_init(self, **kwargs) -> None:
@@ -385,6 +387,8 @@ class LineBase(template.LineBase):
                 "Wrong backend for draw_line()! Asked to draw on a window held by "
                 f"{window.Backend.friendly_name} but I serve backend {Backend.friendly_name}!"
                 )
+        # Set current drawing object
+        Backend._backend_curr_drawing_obj_stack.append(drawn_line)
         # Set texture & line width
         if not TextureBase.cairo_set_context_texture(window.cairo_context, texture, noskip):
             return
@@ -450,6 +454,8 @@ class LineBase(template.LineBase):
             template.not_implemented_func(Backend.friendly_name, f"Drawing line type {line.type}")
         if stroke:
             window.cairo_context.stroke()
+        # Set current drawing object back to None
+        Backend._backend_curr_drawing_obj_stack.pop()
 
 
 # region Shapes
@@ -569,7 +575,11 @@ class ShapeBase(template.ShapeBase):
         if not isinstance(window, WindowBase):
             warnings.warn(f"Wrong backend for shape {drawn_shape.id}.")
             return
+        # Set current drawing object
+        Backend._backend_curr_drawing_obj_stack.append(drawn_shape)
+        # Fill rule
         window.cairo_context.set_fill_rule(cairo.FILL_RULE_WINDING)
+        # Select draw routine depending on type
         if isinstance(drawn_shape.shape, charmy_stuff.styles.shape.SingleShape):
             ShapeBase.draw_any_shape(drawn_shape, stroke, noskip, *args, **kwargs)
         elif isinstance(drawn_shape.shape, charmy_stuff.styles.shape.ShapeGroup):
@@ -577,6 +587,8 @@ class ShapeBase(template.ShapeBase):
         else:
             template.not_implemented_func(Backend.friendly_name, 
                     f"Drawing a shape that is neither a subclass of SingleShape nor ShapeGroup")
+        # Set current drawing object back to None
+        Backend._backend_curr_drawing_obj_stack.pop()
 
 
 # region Textures
@@ -613,6 +625,26 @@ class TextureBase(template.TextureBase):
             r, g, b, a = texture.r / 255, texture.g / 255, texture.b / 255, texture.a
             context.set_source_rgba(r, g, b, a)
             # Alpha value of texture should be float between 0 and 1
+        elif isinstance(texture, cmtx.LinearGradient):
+            if Backend._backend_curr_drawing_obj_stack[-1] is None:
+                return False
+            start_point_abs = (
+                Backend._backend_curr_drawing_obj_stack[-1].offset[0] + texture.start_point[0],
+                Backend._backend_curr_drawing_obj_stack[-1].offset[1] + texture.start_point[1]
+                )
+            end_point_abs = (
+                Backend._backend_curr_drawing_obj_stack[-1].offset[0] + texture.end_point[0],
+                Backend._backend_curr_drawing_obj_stack[-1].offset[1] + texture.end_point[1]
+                )
+            gradient = cairo.LinearGradient(*start_point_abs, *end_point_abs)
+            for ratio, color, in texture.colors.items():
+                normalized_color = cmtx.ensure_texture(color)
+                normalized_color = typing.cast(charmy_stuff.styles.texture.Color, normalized_color)
+                gradient.add_color_stop_rgba(
+                    ratio, 
+                    normalized_color.r, normalized_color.g, normalized_color.b, normalized_color.a
+                    )
+            context.set_source(gradient)
         else:
             template.not_implemented_func(
                 Backend.friendly_name, f"Drawing texture type {texture.__class__.__name__}"
