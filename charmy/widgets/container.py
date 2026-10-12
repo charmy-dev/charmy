@@ -104,7 +104,7 @@ class Container(reactive_caching.CachedClass):
             managed_layer = typing.cast(list[widget.Widget], managed_layer)
             place_layer = typing.cast(list[widget.Widget], place_layer)
         for layer in place_layer, managed_layer:
-            for child in reversed(layer):
+            for child in layer:
                 child.draw()
         return self
 

@@ -67,7 +67,7 @@ class CharmyManager(_CharmyRegisteredObject, _EventHandling):
         return
 
 
-def mainloop(interval: float = .01) -> None:
+def mainloop(interval: float = .00) -> None:
     """Start main loop.
 
     :param interval: Time to wait between each loop, in integer seconds

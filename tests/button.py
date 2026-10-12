@@ -1,6 +1,7 @@
 PERFORMANCE_STATS: bool = False
 MEM_STATS: bool = False
 TEST_WIDGET_MOVE: bool = False
+CREATE_BTN_ON_CLICK: bool = False
 
 
 import charmy as cm
@@ -40,6 +41,17 @@ if TEST_WIDGET_MOVE:
         #     cm.styles.shape.Rect(*button._components[1].boundary), 
         #     (255, 0, 0, 0.3)
         #     ).draw()
+
+if CREATE_BTN_ON_CLICK:
+    dummy_button_count = 0
+    @button.on(cm.event_types.MouseClick)
+    def create_button(_: cm.event_types.MouseClick):
+        global window, dummy_button_count
+        cm.Button(window, "Dumb button").place((
+            dummy_button_count // 5 * 10 + dummy_button_count % 5 * 10 + 30, 
+            dummy_button_count % 5 * 10 + 50
+            ))
+        dummy_button_count += 1
 
 
 if PERFORMANCE_STATS:

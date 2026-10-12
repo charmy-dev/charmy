@@ -1,6 +1,4 @@
 PERFORMANCE_STATS: bool = False
-MEM_STATS: bool = False
-TEST_WIDGET_MOVE: bool = True
 
 
 import charmy as cm
@@ -8,9 +6,6 @@ import charmy as cm
 
 if PERFORMANCE_STATS:
     import cProfile
-if MEM_STATS:
-    import tracemalloc
-    tracemalloc.start()
 
 
 window = cm.Window(size=(300, 160))
