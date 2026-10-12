@@ -638,7 +638,7 @@ class TextureBase(template.TextureBase):
                 )
             gradient = cairo.LinearGradient(*start_point_abs, *end_point_abs)
             for ratio, color, in texture.colors.items():
-                normalized_color = cmtx.ensure_texture(color)
+                normalized_color = cmtx.ensure_texture(color, prefer_color_on_zero_alpha=True)
                 normalized_color = typing.cast(charmy_stuff.styles.texture.Color, normalized_color)
                 gradient.add_color_stop_rgba(
                     ratio, 

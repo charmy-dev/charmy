@@ -330,10 +330,13 @@ class LinearGradient(Gradient):
 
 TextureLike: _typing.TypeAlias = ColorLike | TransparentLike
 
-def ensure_texture(texture_like: Texture | TextureLike) -> Texture:
+def ensure_texture(texture_like: Texture | TextureLike, 
+        prefer_color_on_zero_alpha: bool = False
+        ) -> Texture:
     """Convert TextureLike types into Texture objects.
 
     :param texture_like: The TextureLike value
+    :param prefer_color_on_zero_alpha: Returns color instead of transparent when set to True
     :return texture: The converted Texture object.
     """
     if isinstance(texture_like, Texture):
@@ -347,7 +350,7 @@ def ensure_texture(texture_like: Texture | TextureLike) -> Texture:
         # Convert into texture
         if isinstance(texture_like, tuple): # RGB(A)
             if len(texture_like) == 4: # RGBA
-                if texture_like[-1] == 0: # Transparent
+                if texture_like[-1] == 0 and not prefer_color_on_zero_alpha: # Transparent
                     result = Transparent()
                 else: # RGBA, not transparent
                     result = Color(texture_like)
@@ -356,7 +359,7 @@ def ensure_texture(texture_like: Texture | TextureLike) -> Texture:
         elif isinstance(texture_like, str): # HEX
             result = Color(texture_like)
         elif texture_like is None: # Transparent
-            result = Transparent()
+            result = Transparent() if not prefer_color_on_zero_alpha else Color((0, 0, 0))
         else:
             raise ValueError(
                 f"Value {texture_like} in type {type(texture_like)} does not "
