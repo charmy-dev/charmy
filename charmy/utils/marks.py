@@ -15,10 +15,11 @@ class Mark:
         self.payload: list[_typing.Any] = payload
 
 profile_value_fallback_mark = Mark("profile_value_fallback")
-profile_value_ref_widget_prop_mark = lambda attr_name: Mark("profile_value_ref_widget_prop", [attr_name])
+profile_fallback_unspecified_mark = Mark("profile_fallback_unspecified")
+profile_fallback_root_mark = Mark("profile_fallback_root")
 
-def profile_var(item: str):
-    """"""
-    mark = Mark("profile_var")
-    mark.payload.append(item)
+def profile_fallback_widget_state_mark(state: str):
+    """Profile refs var."""
+    mark = Mark("profile_fallback_widget_state")
+    mark.payload.append(state)
     return mark

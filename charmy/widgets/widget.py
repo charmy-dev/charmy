@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import typing
 
+import copy
 import dataclasses
 import reactive_caching
-import copy
 
 from . import window
 from ..cm_object import CharmyObject
@@ -30,10 +30,15 @@ class WidgetProfile(CharmyObject, EventHandling):
     `Button`, `TextProfile` for `Text`, and so on. An instance of `WidgetProfile` or its subclasses 
     comes with default values for such type of widget. These default values will be affected by 
     themes.
+
+    Each `WidgetProfile` may have a `base_profile`, which explicitly specifies which profile should 
+    the one being created base on and fallback to, and overrides the internal fallback routine. If 
+    `base_profile` is set to `profile_fallback_widget_state(state: str)` mark, Charmy will use the 
+    specified state profile of the current widget as base profile.
     """
     # TODO: Support themes in WidgetProfiles
 
-    fallback_state: str = "default"
+    base_profile: typing.Optional[WidgetProfile | marks.Mark] = None
     size: type_checking.ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
 
     _referencing_vars: typing.ClassVar[dict[str, var.Var]] = {}
@@ -235,48 +240,63 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self._max_possible_surrounding_drawn_width = max(0, max(line_widths))
         return self._max_possible_surrounding_drawn_width
 
-    def _negotiate_profile_state(self, 
-            target_state: str, 
-            target_item: str, 
-            _fallback_path: list[str] = [], 
-            ):
-        """Negotiate and deduce a valid profile state when getting a value from a profile.
+    def make_profiles_fallback_list(self, 
+            _fallback_path: typing.Optional[list[WidgetProfile]] = None
+            ) -> list[ProfileType]:
+        """Make a profile fallback path.
 
-        In other words, this is the fallback routine when getting a value from a profile.
+        This is where Charmy decides the profile value fallback path.
         """
-        if target_state not in self.profiles:
-            return "default" # Fallback to default state derectly if state not exists
-        if target_item not in target_state:
-            # If target item remains not specified (with value None) in target state's profile
-            if target_state in _fallback_path: # Inter-fallback workaround
-                return "default" # Return default if inter-fallback.
-            new_fallback_path = _fallback_path.copy()
-            new_fallback_path.append(target_state)
-            return self._negotiate_profile_state(
-                self.profiles[target_state].fallback_state, target_item, 
-                new_fallback_path
-                ) # Return negotiated fallback state
-        return target_state
+        target_state = self.state if self.state in self.profiles.keys() else "default"
+        fallback_path = _fallback_path if _fallback_path is not None \
+            else [self.profiles[target_state]]
+        target_profile = fallback_path[-1]
+        if target_profile.base_profile is not None:
+            # Base profile specified
+            if isinstance(target_profile.base_profile, WidgetProfile):
+                # Explicitly specified
+                fallback_path.append(target_profile.base_profile)
+            elif isinstance(target_profile.base_profile, marks.Mark):
+                # Specified to widget state
+                if target_profile.base_profile.meaning != "profile_fallback_widget_state":
+                    raise TypeError(
+                        "Wrong mark type for base_profile! Must be 'profile_fallback_widget_state',"
+                        f" but got '{target_profile.base_profile.meaning}'."
+                        )
+                if target_profile.base_profile.payload[0] not in self.profiles.keys():
+                    raise ValueError(
+                        "Referencing inexisting state profile "
+                        f"'{target_profile.base_profile.payload[0]}' for widget {self.id}"
+                        )
+                fallback_path.append(self.profiles[target_profile.base_profile.payload[0]])
+            else:
+                raise TypeError(
+                    "Wrong type for base profile! Must be WidgetProfile or Mark, "
+                    f"but got {type(target_profile.base_profile)}"
+                    )
+            self.make_profiles_fallback_list(fallback_path)
+        else:
+            fallback_path.append(self.profiles["default"])
+            fallback_path.append(self.ProfileClass.default())
+        return fallback_path
 
     def migrate_full_curr_profile(self) -> ProfileType:
-        """Select and migrate profiles, return full profile of current state."""
-        # result = type(self).ProfileClass().default()
-        if self.state in self.profiles:
-            base_theme = copy.copy(self.profiles[self.state])
-        else:
-            base_theme = type(self).ProfileClass().default()
-        base_theme._pause_profile_change_event_trigger = True
-        for name, value in base_theme.__dict__.items():
-            if value == marks.profile_value_fallback_mark:
-                fallback_state = self._negotiate_profile_state(self.state, name)
-                setattr(
-                    base_theme, 
-                    name, 
-                    getattr(self.profiles[fallback_state], name)
-                    )
-        # print(base_theme.__dict__)
-        base_theme._pause_profile_change_event_trigger = False
-        return base_theme
+        """Select and migrate profiles, return full profile of current state.
+
+        This is where the profile value fallback happens.
+        """
+        fallback_list = self.make_profiles_fallback_list()
+        if self.state == "hover":
+            breakpoint()
+        full_profile = copy.copy(fallback_list[0])
+        for field in dataclasses.fields(full_profile):
+            if getattr(full_profile, field.name) == marks.profile_value_fallback_mark:
+                for fallback_profile in fallback_list[1:]:
+                    fallback_val = getattr(fallback_profile, field.name)
+                    if fallback_val != marks.profile_value_fallback_mark:
+                        setattr(full_profile, field.name, fallback_val)
+                        break
+        return full_profile
 
     def _update_registered_profiles(self):
         """Update registered profile.
@@ -368,20 +388,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             layout_specified = self.layout_profile.size
         if layout_specified is None:
             # If size not given, get from style
-            # curr_style = self.curr_state_styles
-            target_profile_state = self._negotiate_profile_state(self.state, "size")
-            profile_specified = self.profiles[target_profile_state].size
-            if type(profile_specified) is not tuple:
-                if isinstance(profile_specified, var.Var):
-                    profile_specified = profile_specified.value
-                    if profile_specified is None:
-                        return (0, 0)
-                else:
-                    return (0, 0)
-            if len(profile_specified) != 2:
-                return (0, 0)
-            if type(profile_specified[0]) is not int or type(profile_specified[1]) is not int:
-                return (0, 0)
+            profile_specified = self.migrate_full_curr_profile().size
+            profile_specified = typing.cast(styles.shape.Size, profile_specified)
             return profile_specified
         else:
             return layout_specified

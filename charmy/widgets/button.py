@@ -52,6 +52,15 @@ class Button(_Widget):
     ProfileClass = ButtonProfile
     ProfileType = ButtonProfile
 
+    DEFAULT_PROFILES: dict[str, ButtonProfile] = {
+        "default": ButtonProfile.default(), 
+        "hover": ButtonProfile(
+            _marks.profile_fallback_widget_state_mark("default"), 
+            background=(0, 0, 0), 
+            text_texture=(255, 255, 255)
+            )
+        }
+
     def __init__(self, 
             parent: _container.Container | None = None,
             text: str = "Button",
@@ -87,12 +96,6 @@ class Button(_Widget):
                 self.text, _styles.text_style.TextStyle.sys_default, 
                 None
                 ), 
-            )
-
-        # Internal state profiles
-        self.profiles["hover"] = ButtonProfile("default", 
-            background=(0, 0, 0), 
-            text_texture=(255, 255, 255)
             )
 
         # Internal event binds
