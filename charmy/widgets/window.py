@@ -3,6 +3,7 @@
 import typing as _typing
 
 import pathlib as _pathlib
+import sys
 import io as _io
 
 from ..event import EventHandling as _EventHandling, event_types as _event_types
@@ -67,7 +68,8 @@ class WindowEntity(_CharmyObject, _EventHandling):
         # Set props
         self.size = size
         self.title = title
-        self.icon = _pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / "window_icon.png"
+        self.icon = _pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / \
+            "icon.png" if sys.platform == "darwin" else "window_icon.png"
         self.background = background
         # Other internal attrs
         self._mouse_hovering_on: list[_Container | _Widget] = []
