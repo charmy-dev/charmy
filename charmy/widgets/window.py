@@ -69,7 +69,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
         self.size = size
         self.title = title
         self.icon = _pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / \
-            "icon.png" if sys.platform == "darwin" else "window_icon.png"
+            ("icon.png" if sys.platform == "darwin" else "window_icon.png")
         self.background = background
         # Other internal attrs
         self._mouse_hovering_on: list[_Container | _Widget] = []
