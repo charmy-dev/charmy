@@ -5,6 +5,7 @@ import typing as _typing
 
 class Mark:
     """A class use to represent a mark.
+
     A mark is used to represent some meaning with a specific Mark data type, so it will not be 
     mistaken with other meanings.
     """
@@ -13,6 +14,9 @@ class Mark:
         if payload is None:
             payload = []
         self.payload: list[_typing.Any] = payload
+
+    def __str__(self):
+        return f"CM_Mark:{self.meaning}{tuple(self.payload)}"
 
 profile_value_fallback_mark = Mark("profile_value_fallback")
 profile_fallback_unspecified_mark = Mark("profile_fallback_unspecified")

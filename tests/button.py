@@ -20,6 +20,21 @@ window.title = "Button test"
 button = cm.Button(window, text="Hit me!", on_click=lambda: print("Button clicked!"))
 button.place((10, 10))
 
+styled_button = cm.Button(
+    window, 
+    text="Fancy dumb", 
+    profiles={"default": cm.button.ButtonProfile(
+        size=(100, 30), 
+        background=cm.styles.texture.LinearGradient(
+            (0, 50), (0, 0), {
+                0: (235, 235, 235), 
+                1: (200, 200, 200), 
+                }
+            )
+        )}
+    )
+styled_button.place((150, 10))
+
 
 if MEM_STATS:
     @button.on(cm.event_types.MouseClick)

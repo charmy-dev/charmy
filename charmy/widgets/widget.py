@@ -122,6 +122,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     ProfileClass: type[WidgetProfile] = WidgetProfile
     ProfileType: typing.TypeAlias = WidgetProfile
+    DEFAULT_PROFILES = {"default": ProfileClass.default()}
 
     def __init__(self, 
         parent: Container | None = None, 
@@ -164,9 +165,11 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.parent.add_child(self)
 
         # Profiles and theme
-        self.profiles: dict[str, WidgetProfile] = {"default": type(self).ProfileClass.default()}
+        self.profiles: dict[str, WidgetProfile] = copy.deepcopy(type(self).DEFAULT_PROFILES)
         if profiles is not None:
-            self.profiles.update(profiles)
+            for state, profile in profiles.items():
+                profile.base_profile = self.profiles[state]
+                self.profiles[state] = profile
         self._registered_profiles: typing.Dict[WidgetProfile, EventTask] = {}
         self.theme: typing.Optional[styles.theme.Theme] = None # TODO: Support theme
 
@@ -286,9 +289,11 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         This is where the profile value fallback happens.
         """
         fallback_list = self.make_profiles_fallback_list()
-        if self.state == "hover":
-            breakpoint()
+        if hasattr(fallback_list[-1], "shape"):
+            if not isinstance(fallback_list[-1].shape, styles.shape.SingleShape):
+                breakpoint()
         full_profile = copy.copy(fallback_list[0])
+        full_profile._pause_profile_change_event_trigger = True
         for field in dataclasses.fields(full_profile):
             if getattr(full_profile, field.name) == marks.profile_value_fallback_mark:
                 for fallback_profile in fallback_list[1:]:
@@ -388,6 +393,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             layout_specified = self.layout_profile.size
         if layout_specified is None:
             # If size not given, get from style
+            WidgetProfile._query_widget = self
             profile_specified = self.migrate_full_curr_profile().size
             profile_specified = typing.cast(styles.shape.Size, profile_specified)
             return profile_specified

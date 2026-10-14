@@ -55,7 +55,7 @@ class Button(_Widget):
     DEFAULT_PROFILES: dict[str, ButtonProfile] = {
         "default": ButtonProfile.default(), 
         "hover": ButtonProfile(
-            _marks.profile_fallback_widget_state_mark("default"), 
+            base_profile=_marks.profile_fallback_widget_state_mark("default"), 
             background=(0, 0, 0), 
             text_texture=(255, 255, 255)
             )
@@ -115,9 +115,9 @@ class Button(_Widget):
     def _update_components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
         """Components (drawn objects) that make up the button."""
         # Generate a full profile for current state
+        _WidgetProfile._query_widget = self
         curr_profile = self.migrate_full_curr_profile()
         curr_profile = _typing.cast(ButtonProfile, curr_profile)
-        _WidgetProfile._query_widget = self
         # Make background shape
         self._components[0].shape = \
             _styles.shape.SingleShape.from_profile_value(curr_profile.shape)
