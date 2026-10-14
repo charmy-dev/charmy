@@ -126,7 +126,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     def __init__(self, 
         parent: Container | None = None, 
-        profiles: typing.Optional[dict[str, WidgetProfile]] = None
+        profiles: typing.Optional[dict[str, WidgetProfile]] = None, 
+        *args, **kwargs, 
         ) -> None:
         """To initialize a widget.
 
@@ -156,7 +157,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 parent = Container._with_stack[-1]
 
         # Parent init
-        super().__init__()
+        super().__init__(*args, **kwargs)
         EventHandling.__init__(self)
         reactive_caching.CachedClass.__init__(self)
 
@@ -168,7 +169,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.profiles: dict[str, WidgetProfile] = copy.deepcopy(type(self).DEFAULT_PROFILES)
         if profiles is not None:
             for state, profile in profiles.items():
-                profile.base_profile = self.profiles[state]
+                if profile.base_profile is None:
+                    profile.base_profile = self.profiles[state]
                 self.profiles[state] = profile
         self._registered_profiles: typing.Dict[WidgetProfile, EventTask] = {}
         self.theme: typing.Optional[styles.theme.Theme] = None # TODO: Support theme
@@ -289,18 +291,19 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         This is where the profile value fallback happens.
         """
         fallback_list = self.make_profiles_fallback_list()
-        if hasattr(fallback_list[-1], "shape"):
-            if not isinstance(fallback_list[-1].shape, styles.shape.SingleShape):
-                breakpoint()
         full_profile = copy.copy(fallback_list[0])
         full_profile._pause_profile_change_event_trigger = True
+        looped_shape = False
         for field in dataclasses.fields(full_profile):
-            if getattr(full_profile, field.name) == marks.profile_value_fallback_mark:
-                for fallback_profile in fallback_list[1:]:
-                    fallback_val = getattr(fallback_profile, field.name)
-                    if fallback_val != marks.profile_value_fallback_mark:
-                        setattr(full_profile, field.name, fallback_val)
-                        break
+            # if getattr(full_profile, field.name) == marks.profile_value_fallback_mark:
+            profile_val = getattr(full_profile, field.name)
+            if isinstance(profile_val, marks.Mark):
+                if profile_val.meaning == marks.profile_value_fallback_mark.meaning:
+                    for fallback_profile in fallback_list[1:]:
+                        fallback_val = getattr(fallback_profile, field.name)
+                        if fallback_val != marks.profile_value_fallback_mark:
+                            setattr(full_profile, field.name, fallback_val)
+                            break
         return full_profile
 
     def _update_registered_profiles(self):
@@ -396,8 +399,12 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             WidgetProfile._query_widget = self
             profile_specified = self.migrate_full_curr_profile().size
             profile_specified = typing.cast(styles.shape.Size, profile_specified)
+            if self.id == "Im_Different":
+                breakpoint()
             return profile_specified
         else:
+            if self.id == "Im_Different":
+                breakpoint()
             return layout_specified
 
     @property

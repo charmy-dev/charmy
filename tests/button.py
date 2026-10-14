@@ -17,21 +17,21 @@ if MEM_STATS:
 window = cm.Window(size=(300, 160))
 window.title = "Button test"
 
-button = cm.Button(window, text="Hit me!", on_click=lambda: print("Button clicked!"))
+button = cm.Button(window, text="Hit me!", on_click=lambda: print("Button clicked!"), id_ = "Im_Different")
 button.place((10, 10))
 
 styled_button = cm.Button(
     window, 
     text="Fancy dumb", 
-    profiles={"default": cm.button.ButtonProfile(
+    profiles={"hover": cm.button.ButtonProfile(
         size=(100, 30), 
         background=cm.styles.texture.LinearGradient(
-            (0, 50), (0, 0), {
-                0: (235, 235, 235), 
-                1: (200, 200, 200), 
+            (0, 30), (0, 0), {
+                0: (255, 0, 0), 
+                1: (0, 0, 255), 
                 }
             )
-        )}
+        )}, 
     )
 styled_button.place((150, 10))
 
