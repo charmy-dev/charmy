@@ -44,4 +44,8 @@ def isinstance_of_any(obj: object, classes: list[type | None]) -> bool:
 
 _PropType = _typing.TypeVar("_PropType")
 
-ProfileProp: _typing.TypeAlias = _PropType | _var.Var[_PropType] | _marks.Mark
+ProfileProp: _typing.TypeAlias = \
+    _PropType | \
+    _var.Var[_PropType] | \
+    _var.Query[_PropType] | \
+    _marks.Mark

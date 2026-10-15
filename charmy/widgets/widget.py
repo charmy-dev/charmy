@@ -293,7 +293,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         fallback_list = self.make_profiles_fallback_list()
         full_profile = copy.copy(fallback_list[0])
         full_profile._pause_profile_change_event_trigger = True
-        looped_shape = False
         for field in dataclasses.fields(full_profile):
             # if getattr(full_profile, field.name) == marks.profile_value_fallback_mark:
             profile_val = getattr(full_profile, field.name)
@@ -301,7 +300,11 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 if profile_val.meaning == marks.profile_value_fallback_mark.meaning:
                     for fallback_profile in fallback_list[1:]:
                         fallback_val = getattr(fallback_profile, field.name)
-                        if fallback_val != marks.profile_value_fallback_mark:
+                        val_is_fallback = False
+                        if isinstance(fallback_val, marks.Mark):
+                            if fallback_val.meaning == marks.profile_value_fallback_mark.meaning:
+                                val_is_fallback = True
+                        if not val_is_fallback:
                             setattr(full_profile, field.name, fallback_val)
                             break
         return full_profile
@@ -403,8 +406,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 breakpoint()
             return profile_specified
         else:
-            if self.id == "Im_Different":
-                breakpoint()
             return layout_specified
 
     @property

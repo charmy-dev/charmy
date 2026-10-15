@@ -26,6 +26,7 @@ from .cm_object import CharmyObject
 # from .backend import Frameworks
 from . import styles
 from .utils.var import Var
+from .utils import *
 from .widgets import *
 
 
