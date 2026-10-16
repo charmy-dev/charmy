@@ -257,7 +257,11 @@ class WindowBase(template.WindowBase):
             # Get SDL2 window surface
             self._window_surface = sdl2.SDL_GetWindowSurface(self.window)
             # Lock the surface
-            sdl2.SDL_LockSurface(self._window_surface)
+            try:
+                sdl2.SDL_LockSurface(self._window_surface)
+            except OSError:
+                if not self.charmy_window._alive:
+                    print("[!] Given up SDL_LockSurface on an inactive window.")
 
             # Get pixels pointer
             pixels_ptr = self._window_surface.contents.pixels

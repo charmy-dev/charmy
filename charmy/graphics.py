@@ -6,7 +6,6 @@ import typing as _typing
 
 from abc import abstractmethod as _abstractmethod
 import copy as _copy
-import math
 
 from . import styles as _styles
 from . import cm_object as _cm_object

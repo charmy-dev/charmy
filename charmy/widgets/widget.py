@@ -8,7 +8,6 @@ import copy
 import dataclasses
 import reactive_caching
 
-from . import window
 from ..cm_object import CharmyObject
 from ..event import EventHandling, event_types
 from .container import Container, layout_profiles
@@ -18,6 +17,7 @@ from ..utils import marks, type_checking, var, on_setattr, geo_math
 
 if typing.TYPE_CHECKING:
     from ..event import EventTask
+    from . import window
 
 __all__ = ["Widget", "WidgetProfile"]
 
@@ -221,11 +221,22 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             _is_internal=True, 
             one_time=True, 
             )
+        self.bind(
+            event_types.WidgetUpdate, 
+            lambda _: self._declare_components_belong_self(), 
+            _is_internal=True, 
+            one_time=True, 
+            )
         # self.bind(
         #     event_types.WidgetMove, 
         #     lambda e: print("Hey I'm moving bro! I say I'm moving!")
         #     # This is a test, or an ester egg if u prefer that way
         #     )
+
+    def _declare_components_belong_self(self):
+        for component in self._components:
+            # Declare each component belongs to self
+            self.root_container._components_belongs_to[component] = self
 
     def _calc_max_possible_surrounding_drawn_width(self) -> int:
         """Calculate maximum possible value of the width of surrounding drawn area."""
@@ -378,7 +389,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     @property
     def abs_pos(self) -> styles.shape.Point:
         """Absolute position of the widget in its root container."""
-        if not isinstance(self.parent, window.WindowEntity):
+        if not self.parent.IS_ROOT_CONTAINER:
             parent_pos = self.parent.abs_pos
             self_pos = self.pos
             return (parent_pos[0] + self_pos[0], parent_pos[1] + self_pos[1])
@@ -402,8 +413,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             WidgetProfile._query_widget = self
             profile_specified = self.migrate_full_curr_profile().size
             profile_specified = typing.cast(styles.shape.Size, profile_specified)
-            if self.id == "Im_Different":
-                breakpoint()
             return profile_specified
         else:
             return layout_specified
@@ -424,13 +433,17 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         return self.pos, self.size
 
     @property
-    def root_container(self) -> window.Window:
+    def root_container(self) -> window.WindowEntity:
         """Get the root container that contains the widget.
 
         :return window: Either the window, or None meaning that not contained in a root container
         """
-        if isinstance(self.parent, window.Window):
-            return self.parent
+        if self.parent.IS_ROOT_CONTAINER:
+            if typing.TYPE_CHECKING:
+                parent = typing.cast(window.WindowEntity, self.parent)
+            else:
+                parent = self.parent
+            return parent
         else:
             if isinstance(self.parent, Widget):
                 # If parent is widget, then get widget's root_container to trace root

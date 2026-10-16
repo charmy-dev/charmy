@@ -15,6 +15,7 @@ from .. import styles as _styles
 from ..utils import type_checking as _type_checking
 from .. import graphics as _graphics
 from ..const import DEBUG_FLAGS as _DEBUG_FLAGS
+from .widget import WidgetProfile as _WidgetProfile
 
 if _typing.TYPE_CHECKING:
     from ..backend.template import WindowBase as _WindowBase
@@ -26,6 +27,8 @@ __all__ = ["WindowEntity", "Window"]
 
 class WindowEntity(_CharmyObject, _EventHandling):
     """Contains abilities of window entities."""
+
+    IS_ROOT_CONTAINER: bool = True
 
     def __init__(self, 
                 parent: _CharmyManager | None = None, 
@@ -74,6 +77,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
         # Other internal attrs
         self._mouse_hovering_on: list[_Container | _Widget] = []
         self._drawing_list: _typing.List[_graphics.DrawnObject] = []
+        self._components_belongs_to: dict[_graphics.DrawnObject, _Widget] = {}
         self._redraw_regions: list[_styles.shape.RectRange] = [((0, 0), self.size)]
         self._requested_redraw_regions: list[_styles.shape.RectRange] = []
         # Bind on window events
@@ -180,6 +184,10 @@ class WindowEntity(_CharmyObject, _EventHandling):
         backend = self.parent.backend # Alias to avoid the path to backend getting too long
         self.backend_base.draw_background()
         for drawn_obj in drawing_list:
+            if drawn_obj in self._components_belongs_to:
+                # If the drawn object is a component of a widget, 
+                # then set WidgetProfile._query_widget to the widget that this component belongs to
+                _WidgetProfile._query_widget = self._components_belongs_to[drawn_obj]
             if isinstance(drawn_obj, _graphics.DrawnLine):
                 backend.LineBase.draw_line(drawn_obj)
             elif isinstance(drawn_obj, _graphics.DrawnShape):
