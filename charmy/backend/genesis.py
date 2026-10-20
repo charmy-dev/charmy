@@ -633,16 +633,27 @@ class TextureBase(template.TextureBase):
             if Backend._backend_curr_drawing_obj_stack[-1] is None:
                 return False
             start_point_abs = (
-                Backend._backend_curr_drawing_obj_stack[-1].offset[0] + texture.start_point[0],
-                Backend._backend_curr_drawing_obj_stack[-1].offset[1] + texture.start_point[1]
+                Backend._backend_curr_drawing_obj_stack[-1].offset[0] + \
+                    charmy_stuff.var.unpack_var(
+                        charmy_stuff.var.unpack_var(texture.start_point, (0, 0))[0], 0),
+                Backend._backend_curr_drawing_obj_stack[-1].offset[1] + \
+                    charmy_stuff.var.unpack_var(
+                        charmy_stuff.var.unpack_var(texture.start_point, (0, 0))[1], 0)
                 )
             end_point_abs = (
-                Backend._backend_curr_drawing_obj_stack[-1].offset[0] + texture.end_point[0],
-                Backend._backend_curr_drawing_obj_stack[-1].offset[1] + texture.end_point[1]
+                Backend._backend_curr_drawing_obj_stack[-1].offset[0] + \
+                    charmy_stuff.var.unpack_var(
+                        charmy_stuff.var.unpack_var(texture.end_point, (0, 0))[0], 0),
+                Backend._backend_curr_drawing_obj_stack[-1].offset[1] + \
+                    charmy_stuff.var.unpack_var(
+                        charmy_stuff.var.unpack_var(texture.end_point, (0, 0))[1], 0)
                 )
             gradient = cairo.LinearGradient(*start_point_abs, *end_point_abs)
-            for ratio, color, in texture.colors.items():
-                normalized_color = cmtx.ensure_texture(color, prefer_color_on_zero_alpha=True)
+            for ratio, color, in charmy_stuff.var.unpack_var(texture.colors, {}).items():
+                normalized_color = cmtx.ensure_texture(
+                    charmy_stuff.var.unpack_var(color, cmtx.Color((0, 0, 0, 0))), 
+                    prefer_color_on_zero_alpha=True
+                    )
                 normalized_color = typing.cast(charmy_stuff.styles.texture.Color, normalized_color)
                 r, g, b, a = \
                     normalized_color.r / 255, \

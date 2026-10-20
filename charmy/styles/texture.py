@@ -343,8 +343,8 @@ class LinearGradient(Gradient):
     type: _typing.ClassVar[str] = "linear_gradient"
 
     def __init__(self, 
-            start_point: _var.VarOrVal[_shape.Point], 
-            end_point: _var.VarOrVal[_shape.Point], 
+            start_point: tuple[_var.VarOrVal[int], _var.VarOrVal[int]], 
+            end_point: tuple[_var.VarOrVal[int], _var.VarOrVal[int]], 
             colors: _var.VarOrVal[dict[float, \
                     _var.VarOrVal[Color | ColorLike | Transparent | TransparentLike]]]
             ):
@@ -354,8 +354,8 @@ class LinearGradient(Gradient):
         :param end_point: End point of gradient line
         :param colors: Colors in the gradient, in form of {ratio: color, ...}
         """
-        self.start_point: _var.VarOrVal[_shape.Point] = start_point
-        self.end_point: _var.VarOrVal[_shape.Point] = end_point
+        self.start_point: tuple[_var.VarOrVal[int], _var.VarOrVal[int]] = start_point
+        self.end_point: tuple[_var.VarOrVal[int], _var.VarOrVal[int]] = end_point
         self.colors: _var.VarOrVal[dict[float, \
                     _var.VarOrVal[Color | ColorLike | Transparent | TransparentLike]]] = colors
 
@@ -412,6 +412,8 @@ class LinearGradient(Gradient):
         """
         x0, y0 = _var.unpack_var(self.start_point, (0, 0))
         x1, y1 = _var.unpack_var(self.end_point, (0, 0))
+        x0 = _var.unpack_var(x0, 0); y0 = _var.unpack_var(y0, 0)
+        x1 = _var.unpack_var(x1, 0); y1 = _var.unpack_var(y1, 0)
         dx, dy = x1 - x0, y1 - y0
         if dx == 0 and dy == 0:
             ratio = 0.0
