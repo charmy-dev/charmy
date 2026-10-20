@@ -29,9 +29,13 @@ import typing as _typing
 from abc import abstractmethod as _abstractmethod
 import bisect
 import json as _json
+import warnings as _warnings
 
-from ..utils import marks as _marks
-from ..utils import type_checking as _type_checking
+from ..utils import \
+    marks as _marks, \
+    type_checking as _type_checking, \
+    var as _var, \
+    clamp_val as _clamp_val
 
 if _typing.TYPE_CHECKING:
     from . import shape as _shape
@@ -153,8 +157,19 @@ class Texture:
 # region Color
 
 # Color types
-RGB: _typing.TypeAlias = tuple[int, int, int]
-RGBA: _typing.TypeAlias = tuple[int, int, int, float]
+RGB: _typing.TypeAlias = tuple[
+    _var.VarOrVal[int], 
+    _var.VarOrVal[int], 
+    _var.VarOrVal[int]
+    ]
+ExactRGB: _typing.TypeAlias = tuple[int, int, int]
+RGBA: _typing.TypeAlias = tuple[
+    _var.VarOrVal[int], 
+    _var.VarOrVal[int], 
+    _var.VarOrVal[int], 
+    _var.VarOrVal[float]
+    ]
+ExactRGBA: _typing.TypeAlias = tuple[int, int, int, float]
 HEX: _typing.TypeAlias = str
 
 ColorLike: _typing.TypeAlias = RGB | RGBA | HEX
@@ -164,40 +179,63 @@ class Color(Texture):
     """Represents pure colors."""
     type: _typing.ClassVar[str] = "color"
 
-    def __init__(self, color: RGB | RGBA | HEX):
+    def __init__(self, color: _var.VarOrVal[RGB | RGBA | HEX]):
         """Initialize a color object.
         
         :param color: The RGB(A) tuple or the HEX string that represents the color
         """
 
-        self.color: RGBA = (0, 255, 0, 1)
-
-        if isinstance(color, tuple): # Expressed by int tuple
-            if len(color) == 4: # RGBA
-                self.color = color
-            elif len(color) == 3: # RGB
-                self.color = (*color, 1)
-        elif isinstance(color, str):
-            if color[0] == "#": # Remove leading hash if exists
-                color = color[1:]
-            if len(color) == 6:
-                raise NotImplementedError("HEX colors conversion not implemented")
-                # TODO: Implement HEX colors
-
-        # Value check
-        if False in [
-                0 <= self.r <= 255, 
-                0 <= self.g <= 255, 
-                0 <= self.b <= 255, 
-                0 <= self.a <= 1
-                ]:
-            raise ValueError(
-                "Color should be in form of (R 0~255, G 0~255, B 0~255, A 0.0~1.0). "
-                f"Received wrong value {self.color}"
-                )
+        self._color: _var.VarOrVal[RGB | RGBA | HEX] = (0, 0, 0, 0)
+        self.color = color
 
     def __iter__(self):
         return iter(self.color)
+
+    @staticmethod
+    def to_rgba(color: RGB | RGBA | HEX) -> ExactRGBA:
+        if isinstance(color, tuple): # Expressed by int tuple
+            if len(color) == 4: # RGBA
+                r, g, b, a = color
+            elif len(color) == 3: # RGB
+                r, g, b = color
+                a = 1
+        elif isinstance(color, str):
+            if color[0] == "#": # Remove leading hash if exists
+                color = color[1:]
+            if len(color) != 6:
+                raise ValueError(f"Incorrect HEX color format: incorrect length of {len(color)}.")
+                # TODO: Color presets?
+            raise NotImplementedError("HEX colors conversion not implemented")
+            # TODO: Implement HEX colors
+        r = _var.unpack_var(r, 0)
+        g = _var.unpack_var(g, 0)
+        b = _var.unpack_var(b, 0)
+        a = _var.unpack_var(a, 0)
+        return r, g, b, a
+
+    @property
+    def color(self) -> ExactRGBA:
+        color = self.to_rgba(_var.unpack_var(self._color, (0, 0, 0, 0)))
+        r = _var.unpack_var(color[0], 0)
+        g = _var.unpack_var(color[1], 0)
+        b = _var.unpack_var(color[2], 0)
+        a = _var.unpack_var(color[3], 0.0)
+        # Value check
+        if False in [
+                0 <= r <= 255, 
+                0 <= g <= 255, 
+                0 <= b <= 255, 
+                0 <= a <= 1
+                ]:
+            _warnings.warn(
+                "Color should be in form of (R 0~255, G 0~255, B 0~255, A 0.0~1.0). "
+                f"Received wrong value {self.color} and will be clamped."
+                )
+            r = _clamp_val(r, 0, 255)
+            g = _clamp_val(g, 0, 255)
+            b = _clamp_val(b, 0, 255)
+            a = _clamp_val(a, 0.0, 1.0)
+        return r, g, b, a
 
     @property
     def r(self) -> int:
@@ -211,6 +249,62 @@ class Color(Texture):
     @property
     def a(self) -> float:
         return self.color[3]
+
+    def _manipulate_value(self, index: int, new: int | float) -> bool:
+        if isinstance(self._color, _var.Query):
+            _warnings.warn("Cannot set color value for colors expressed by Query.")
+            return False
+        if isinstance(self._color, _var.Var):
+            color = self._color.value
+        else:
+            color = self._color
+        if type(color) is str:
+            color_vals = list(self.to_rgba(color))
+        color_vals[index] = new
+        assert len(color_vals) == 3 or len(color_vals) == 4
+        if isinstance(self._color, _var.Var):
+            self._color.value = tuple(color_vals) # type: ignore
+        else:
+            self._color = tuple(color_vals) # type: ignore
+        return True
+
+    @r.setter
+    def r(self, new: int):
+        if not 0 < new < 255:
+            _warnings.warn(
+                f"Invalid value {new} for Color.r, must be between 0~255. Will be clamped."
+                )
+            new = _clamp_val(new, 0, 255)
+        self._manipulate_value(0, new)
+    @g.setter
+    def g(self, new: int):
+        if not 0 < new < 255:
+            _warnings.warn(
+                f"Invalid value {new} for Color.g, must be between 0~255. Will be clamped."
+                )
+            new = _clamp_val(new, 0, 255)
+        self._manipulate_value(1, new)
+    @b.setter
+    def b(self, new: int):
+        if not 0 < new < 255:
+            _warnings.warn(
+                f"Invalid value {new} for Color.b, must be between 0~255. Will be clamped."
+                )
+            new = _clamp_val(new, 0, 255)
+        self._manipulate_value(2, new)
+    @a.setter
+    def a(self, new: float):
+        if not 0 < new < 1:
+            _warnings.warn(
+                f"Invalid value {new} for Color.a, must be between 0~1. Will be clamped."
+                )
+            new = _clamp_val(new, 0.0, 1.0)
+        self._manipulate_value(3, new)
+
+    @color.setter
+    def color(self, new: _var.VarOrVal[RGB | RGBA | HEX]):
+        self._color = _var.unpack_var(new, (0, 0, 0, 0))
+        
 
 
 # region Transparent
@@ -249,9 +343,10 @@ class LinearGradient(Gradient):
     type: _typing.ClassVar[str] = "linear_gradient"
 
     def __init__(self, 
-            start_point: _shape.Point, 
-            end_point: _shape.Point, 
-            colors: dict[float, Color | ColorLike | Transparent | TransparentLike]
+            start_point: _var.VarOrVal[_shape.Point], 
+            end_point: _var.VarOrVal[_shape.Point], 
+            colors: _var.VarOrVal[dict[float, \
+                    _var.VarOrVal[Color | ColorLike | Transparent | TransparentLike]]]
             ):
         """Initialize a linear gradient texture.
 
@@ -259,9 +354,10 @@ class LinearGradient(Gradient):
         :param end_point: End point of gradient line
         :param colors: Colors in the gradient, in form of {ratio: color, ...}
         """
-        self.start_point: _shape.Point = start_point
-        self.end_point: _shape.Point = end_point
-        self.colors: dict[float, Color | ColorLike | Transparent | TransparentLike] = colors
+        self.start_point: _var.VarOrVal[_shape.Point] = start_point
+        self.end_point: _var.VarOrVal[_shape.Point] = end_point
+        self.colors: _var.VarOrVal[dict[float, \
+                    _var.VarOrVal[Color | ColorLike | Transparent | TransparentLike]]] = colors
 
     def get_color_at_ratio(self, ratio: float) -> RGBA:
         """To get the color at a specific ratio in linear gradient.
@@ -270,16 +366,17 @@ class LinearGradient(Gradient):
 
         :param ratio: The ratio to get color at
         """
-        if not self.colors:
+        colors = _var.unpack_var(self.colors, {})
+        if not colors:
             raise ValueError("Linear gradient requires at least one color stop.")
 
-        ratio_list = sorted(self.colors.keys())
+        ratio_list = sorted(colors.keys())
         if ratio <= ratio_list[0]:
             return _typing.cast(RGBA, 
-                                ensure_texture(self.colors[ratio_list[0]]).color) # type: ignore
+                                ensure_texture(colors[ratio_list[0]]).color) # type: ignore
         if ratio >= ratio_list[-1]:
             return _typing.cast(RGBA, 
-                                ensure_texture(self.colors[ratio_list[-1]]).color) # type: ignore
+                                ensure_texture(colors[ratio_list[-1]]).color) # type: ignore
 
         insert_pos = bisect.bisect_left(ratio_list, ratio)
         if insert_pos == len(ratio_list):
@@ -290,8 +387,8 @@ class LinearGradient(Gradient):
 
         lower_ratio = ratio_list[insert_pos - 1]
         higher_ratio = ratio_list[insert_pos]
-        lower_color = _typing.cast(Color, ensure_texture(self.colors[lower_ratio]))
-        higher_color = _typing.cast(Color, ensure_texture(self.colors[higher_ratio]))
+        lower_color = _typing.cast(Color, ensure_texture(_var.unpack_var(colors[lower_ratio])))
+        higher_color = _typing.cast(Color, ensure_texture(_var.unpack_var(colors[higher_ratio])))
 
         span = higher_ratio - lower_ratio
         if span == 0:
@@ -313,8 +410,8 @@ class LinearGradient(Gradient):
 
         :param point: The point to get color at
         """
-        x0, y0 = self.start_point
-        x1, y1 = self.end_point
+        x0, y0 = _var.unpack_var(self.start_point, (0, 0))
+        x1, y1 = _var.unpack_var(self.end_point, (0, 0))
         dx, dy = x1 - x0, y1 - y0
         if dx == 0 and dy == 0:
             ratio = 0.0

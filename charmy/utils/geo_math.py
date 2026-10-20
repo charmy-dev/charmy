@@ -4,8 +4,8 @@ This module centralizes math utilities used for shapes and some other modules:
 angle conversions, circle-point computations, arc-to-bezier conversion, and
 angle coverage tests.
 
-!! THIS IS A VIBED MODULE !!
-----------------------------
+!! THIS IS A (MOSTLY) VIBED MODULE !!
+-------------------------------------
 This module was mostly vibed by GitHub Copilot, ChatGPT, and Google Gemini. 
 It includes geometric knowledge that the core devs (in 2026) have not learned 
 yet.
