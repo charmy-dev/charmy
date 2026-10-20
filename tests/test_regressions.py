@@ -279,7 +279,7 @@ class TestIntegration:
     def test_button_components_build_with_the_repaired_texture_layer(self, headless_window):
         button = Button(headless_window)
         button.place((0, 0), (100, 100))
-        shape, text = button._update_components()
+        shape, text = button._update_components_wrapper()
         assert isinstance(shape.texture, tx.Color)
         assert isinstance(shape.border_texture, tx.Color)
         assert isinstance(text.texture, tx.Color)

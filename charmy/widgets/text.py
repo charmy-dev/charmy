@@ -69,12 +69,10 @@ class Text(_Widget):
                 ),
             )
 
-    def _update_components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
+    def _update_components(self, 
+            curr_profile: TextProfile, 
+            ) -> _typing.Tuple[_graphics.DrawnObject, ...]:
         """Components (drawn objects) that make up the text."""
-        # Generate a full profile for current state
-        curr_profile = self.migrate_full_curr_profile()
-        curr_profile = _typing.cast(TextProfile, curr_profile)
-        _WidgetProfile._query_widget = self
         # Drawn text
         self._components[0].text = \
             self.text

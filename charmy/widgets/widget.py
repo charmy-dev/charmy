@@ -13,7 +13,7 @@ from ..event import EventHandling, event_types
 from .container import Container, layout_profiles
 from .. import graphics
 from .. import styles
-from ..utils import marks, type_checking, var, on_setattr, geo_math
+from ..utils import marks, on_setattr, geo_math, var, type_checking, event_types, misc_globals
 
 if typing.TYPE_CHECKING:
     from ..event import EventTask
@@ -42,7 +42,7 @@ class WidgetProfile(CharmyObject, EventHandling):
     size: type_checking.ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
 
     _referencing_vars: typing.ClassVar[dict[str, var.Var]] = {}
-    _query_widget: typing.ClassVar[typing.Optional[Widget]] = None
+    # _query_widget: typing.ClassVar[typing.Optional[Widget]] = None
     _pause_profile_change_event_trigger: bool = False
 
     def __init_subclass__(cls) -> None:
@@ -98,7 +98,7 @@ class WidgetProfile(CharmyObject, EventHandling):
             prop_name = target.split(".")[-1]
             return var.Query(
                 lambda attr=prop_name: \
-                getattr(WidgetProfile._query_widget, attr)
+                getattr(misc_globals.profile_query_widget, attr)
                 )
         else:
             if not hasattr(cls, target):
@@ -221,12 +221,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             _is_internal=True, 
             one_time=True, 
             )
-        self.bind(
-            event_types.WidgetUpdate, 
-            lambda _: self._declare_components_belong_self(), 
-            _is_internal=True, 
-            one_time=True, 
-            )
         # self.bind(
         #     event_types.WidgetMove, 
         #     lambda e: print("Hey I'm moving bro! I say I'm moving!")
@@ -236,7 +230,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     def _declare_components_belong_self(self):
         for component in self._components:
             # Declare each component belongs to self
-            self.root_container._components_belongs_to[component] = self
+            if component not in self.root_container._components_belong_to:
+                self.root_container._components_belong_to[component] = self
 
     def _calc_max_possible_surrounding_drawn_width(self) -> int:
         """Calculate maximum possible value of the width of surrounding drawn area."""
@@ -331,7 +326,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # Profile not registered, then register it
                 task_obj = profile.bind(
                     event_types.ProfileChanged, 
-                    lambda _: self._update_components(), 
+                    lambda _: self._update_components_wrapper(), 
                     _is_internal = True, 
                     )
                 self._registered_profiles[profile] = task_obj
@@ -340,7 +335,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # Profile is no longer relating to this widget, unregister it
                 profile.unbind(self._registered_profiles[profile])
                 del self._registered_profiles[profile]
-        self._update_components() # After changing the profile list, components needs rebuild
+        self._update_components_wrapper() # After changing the profile list, components needs rebuild
 
     @property
     def layout_profile(self) -> layout_profiles.LayoutProfile:
@@ -389,7 +384,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     @property
     def abs_pos(self) -> styles.shape.Point:
         """Absolute position of the widget in its root container."""
-        if not self.parent.IS_ROOT_CONTAINER:
+        if not hasattr(self.parent, "backend_base"):
             parent_pos = self.parent.abs_pos
             self_pos = self.pos
             return (parent_pos[0] + self_pos[0], parent_pos[1] + self_pos[1])
@@ -410,7 +405,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             layout_specified = self.layout_profile.size
         if layout_specified is None:
             # If size not given, get from style
-            WidgetProfile._query_widget = self
+            misc_globals.profile_query_widget = self
             profile_specified = self.migrate_full_curr_profile().size
             profile_specified = typing.cast(styles.shape.Size, profile_specified)
             return profile_specified
@@ -438,7 +433,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         :return window: Either the window, or None meaning that not contained in a root container
         """
-        if self.parent.IS_ROOT_CONTAINER:
+        if hasattr(self.parent, "backend_base"):
             if typing.TYPE_CHECKING:
                 parent = typing.cast(window.WindowEntity, self.parent)
             else:
@@ -453,7 +448,16 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # … then the widget is not inside in a root container
                 raise RuntimeError(f"Nowhere to put {self.id} as it is not in a valid window!")
 
-    def _update_components(self) -> typing.Tuple[graphics.DrawnObject, ...]:
+    def _update_components_wrapper(self) -> typing.Tuple[graphics.DrawnObject, ...]:
+        """Update components, but with actions that need to be done before or after it."""
+        self._declare_components_belong_self()
+        misc_globals.profile_query_widget = self
+        new_components = self._update_components(curr_profile=self.migrate_full_curr_profile())
+        return new_components
+
+    def _update_components(self, 
+            curr_profile: WidgetProfile, 
+            ) -> typing.Tuple[graphics.DrawnObject, ...]:
         """Refresh configs of components (drawn objects) that make up the widget.
 
         For widget base class, it does not have any component.
@@ -465,7 +469,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         if not self._alive:
             return self
 
-        WidgetProfile._query_widget = self
+        misc_globals.profile_query_widget = self
 
         self._update_registered_profiles()
 
@@ -509,6 +513,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
     def __contains__(self, pos: styles.shape.Point) -> bool:
         point = (pos[0] - self.x, pos[1] - self.y)
+        misc_globals.profile_query_widget = self
         for component in self._components:
             if point in component:
                 # print(f"Point {point} in {self.id}-{component.id}")

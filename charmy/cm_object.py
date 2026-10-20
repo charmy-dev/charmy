@@ -87,7 +87,6 @@ class _InstancesList(typing.Generic[_InstanceType]):
         """Get the length of this list."""
         return len(self.instances)
 
-# endregion
 
 # region CharmyObject
 
@@ -114,7 +113,7 @@ class CharmyObject:
             id_ = id_prefix + str(self.__class__._next_id)
             self.__class__._next_id += 1
 
-        self.id: typing.Final[str] = id_  # Do not change after initialization
+        self.id: str = id_  # Do not change after initialization
 
     # def __init_subclass__(cls):
     #     """To initialize a CharmyObject subclass."""
@@ -169,14 +168,12 @@ class CharmyObject:
     # region: hashable
 
     def __hash__(self) -> int:
-        return int(self.id[len(self.class_name):])
+        return super().__hash__()
 
     def __eq__(self, other: object) -> bool:
         if type(other) != type(self):
             return False # Not in same type, impossible to be equal
         return self.id == other.id
-
-    # endregion
 
 
 # region Registed Objects

@@ -644,10 +644,12 @@ class TextureBase(template.TextureBase):
             for ratio, color, in texture.colors.items():
                 normalized_color = cmtx.ensure_texture(color, prefer_color_on_zero_alpha=True)
                 normalized_color = typing.cast(charmy_stuff.styles.texture.Color, normalized_color)
-                gradient.add_color_stop_rgba(
-                    ratio, 
-                    normalized_color.r, normalized_color.g, normalized_color.b, normalized_color.a
-                    )
+                r, g, b, a = \
+                    normalized_color.r / 255, \
+                    normalized_color.g / 255, \
+                    normalized_color.b / 255, \
+                    normalized_color.a
+                gradient.add_color_stop_rgba(ratio, r, g, b, a)
             context.set_source(gradient)
         else:
             template.not_implemented_func(

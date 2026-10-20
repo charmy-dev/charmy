@@ -25,8 +25,6 @@ class Container(reactive_caching.CachedClass):
     instantiated directly.
     """
 
-    IS_ROOT_CONTAINER: bool = False
-
     _with_stack: typing.ClassVar[list[Container]] = [] # Used to store embedding stack in with as
 
     def __init__(self, *args, **kwargs):

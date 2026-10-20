@@ -19,12 +19,21 @@ window.title = "Button test"
 
 button = cm.Button(window, text="Hit me!", on_click=lambda: print("Button clicked!"), id_ = "Im_Different", )
 button.place((10, 10))
+button._components[0].id = "Im_Also_Different"
 
 styled_button = cm.Button(
     window, 
     text="Fancy dumb", 
     profiles={
-        "default": cm.button.ButtonProfile(size=(100, 30)), 
+        "default": cm.button.ButtonProfile(
+            size=(100, 30), 
+            background=cm.styles.texture.LinearGradient(
+                (0, 0), (0, 30), {
+                    0: (255, 150, 150), 
+                    1: (150, 150, 255), 
+                    }
+                )
+            ), 
         "hover": cm.button.ButtonProfile(
             background=cm.styles.texture.LinearGradient(
                 (0, 30), (0, 0), {

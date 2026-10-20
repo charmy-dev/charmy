@@ -6,7 +6,7 @@ from dataclasses import dataclass as _dataclass
 import time as _time
 
 from ..cm_object import CharmyObject as _CharmyObject
-from . import type_checking as _type_checking
+from . import type_checking as _type_checking, misc_globals as _misc_globals
 
 if _typing.TYPE_CHECKING:
     from ..event import EventHandling as _EventHandling

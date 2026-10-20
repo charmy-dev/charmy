@@ -12,10 +12,9 @@ from .container import Container as _Container
 from .. import const as _const
 from ..cmm import CharmyManager as _CharmyManager
 from .. import styles as _styles
-from ..utils import type_checking as _type_checking
+from ..utils import type_checking as _type_checking, misc_globals as _misc_globals
 from .. import graphics as _graphics
 from ..const import DEBUG_FLAGS as _DEBUG_FLAGS
-from .widget import WidgetProfile as _WidgetProfile
 
 if _typing.TYPE_CHECKING:
     from ..backend.template import WindowBase as _WindowBase
@@ -27,8 +26,6 @@ __all__ = ["WindowEntity", "Window"]
 
 class WindowEntity(_CharmyObject, _EventHandling):
     """Contains abilities of window entities."""
-
-    IS_ROOT_CONTAINER: bool = True
 
     def __init__(self, 
                 parent: _CharmyManager | None = None, 
@@ -77,7 +74,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
         # Other internal attrs
         self._mouse_hovering_on: list[_Container | _Widget] = []
         self._drawing_list: _typing.List[_graphics.DrawnObject] = []
-        self._components_belongs_to: dict[_graphics.DrawnObject, _Widget] = {}
+        self._components_belong_to: dict[_graphics.DrawnObject, _Widget] = {}
         self._redraw_regions: list[_styles.shape.RectRange] = [((0, 0), self.size)]
         self._requested_redraw_regions: list[_styles.shape.RectRange] = []
         # Bind on window events
@@ -184,10 +181,10 @@ class WindowEntity(_CharmyObject, _EventHandling):
         backend = self.parent.backend # Alias to avoid the path to backend getting too long
         self.backend_base.draw_background()
         for drawn_obj in drawing_list:
-            if drawn_obj in self._components_belongs_to:
+            if drawn_obj in self._components_belong_to:
                 # If the drawn object is a component of a widget, 
                 # then set WidgetProfile._query_widget to the widget that this component belongs to
-                _WidgetProfile._query_widget = self._components_belongs_to[drawn_obj]
+                _misc_globals.profile_query_widget = self._components_belong_to[drawn_obj]
             if isinstance(drawn_obj, _graphics.DrawnLine):
                 backend.LineBase.draw_line(drawn_obj)
             elif isinstance(drawn_obj, _graphics.DrawnShape):
@@ -202,13 +199,6 @@ class WindowEntity(_CharmyObject, _EventHandling):
 
     def _find_need_redraw(self) -> _typing.List[_graphics.DrawnObject]:
         """Find all components that need to be redrawn in current frame."""
-        # for drawn_obj in self._drawing_list:
-        #     if drawn_obj._need_redraw:
-        #         region = drawn_obj.boundary
-        #         if not region in self._redraw_regions:
-        #             # Repeat check
-        #             self._redraw_regions.append(region)
-        #             drawn_obj._need_redraw = False
         result: _typing.List[_graphics.DrawnObject] = []
         for drawn_obj in self._drawing_list:
             boundary = drawn_obj.boundary
@@ -235,6 +225,8 @@ class WindowEntity(_CharmyObject, _EventHandling):
             return # Skip if window inactive
         if ((0, 0), self.size) in self._redraw_regions:
             force_redraw = True # When whole window needs redraw, it is force redraw then
+        if _const.DEBUG_FLAGS.FORCE_REDRAW_WHOLE_WIN:
+            force_redraw = True # When FORCE_REDRAW_WHOLE_WIN debug flag is true, then force redraw
         # Trigger event
         self.trigger(_event_types.WidgetUpdate(self))
         if force_redraw:

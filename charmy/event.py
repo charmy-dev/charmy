@@ -4,7 +4,6 @@ import collections.abc
 import re
 import threading
 import typing
-import warnings
 from dataclasses import dataclass
 
 from .cm_object import CharmyObject

@@ -9,7 +9,8 @@ from .widget import Widget as _Widget, WidgetProfile as _WidgetProfile
 from .. import styles as _styles
 from .. import event_types as _event_types
 from .. import graphics as _graphics
-from ..utils import type_checking as _type_checking, marks as _marks, var as _var
+from ..utils import type_checking as _type_checking, marks as _marks, var as _var, \
+    misc_globals as _misc_globals
 
 if _typing.TYPE_CHECKING:
     from .. import container as _container
@@ -112,12 +113,10 @@ class Button(_Widget):
             lambda _: self.config(state="normal"), _is_internal=True
             )
 
-    def _update_components(self) -> _typing.Tuple[_graphics.DrawnObject, ...]:
+    def _update_components(self, 
+            curr_profile: ButtonProfile, 
+            ) -> _typing.Tuple[_graphics.DrawnObject, ...]:
         """Components (drawn objects) that make up the button."""
-        # Generate a full profile for current state
-        _WidgetProfile._query_widget = self
-        curr_profile = self.migrate_full_curr_profile()
-        curr_profile = _typing.cast(ButtonProfile, curr_profile)
         # Make background shape
         self._components[0].shape = \
             _styles.shape.SingleShape.from_profile_value(curr_profile.shape)

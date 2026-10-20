@@ -626,8 +626,8 @@ class ShapeType(_reactive_caching.CachedClass):
         # Convert raw content to JSON
         if isinstance(json_content, str):
             json_content = _json.loads(json_content)
-            assert type(json_content) is dict
-            # 👆 Must assert the type here, because the fucking json module did not specify the 
+            json_content = _typing.cast(dict, json_content)
+            # 👆 Must cast the type here, because the fucking json module did not specify the 
             # type of the return value of loads()
         if not isinstance(json_content["type"], str):
             raise TypeError("Invalid shape JSON.")
