@@ -39,6 +39,8 @@ class Text(_Widget):
     ProfileClass = TextProfile
     ProfileType = TextProfile
 
+    DEFAULT_PROFILES = {"default": TextProfile.default()}
+
     def __init__(self,
             parent: _container.Container | None = None,
             text: str = "Text",
