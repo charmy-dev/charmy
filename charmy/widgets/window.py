@@ -179,7 +179,8 @@ class WindowEntity(_CharmyObject, _EventHandling):
         :param drawing_list: The list of the objects to draw
         """
         backend = self.parent.backend # Alias to avoid the path to backend getting too long
-        self.backend_base.draw_background()
+        if len(drawing_list) > 0:
+            self.backend_base.draw_background()
         for drawn_obj in drawing_list:
             if drawn_obj in self._components_belong_to:
                 # If the drawn object is a component of a widget, 
