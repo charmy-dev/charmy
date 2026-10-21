@@ -61,11 +61,6 @@ if TEST_WIDGET_MOVE:
     def move_button(_: cm.event_types.MouseClick):
         old = button.layout_profile.pos
         button.layout_profile.pos = old[0] + 10, old[1] + 10
-        # cm.graphics.DrawnShape(
-        #     window, 
-        #     cm.styles.shape.Rect(*button._components[1].boundary), 
-        #     (255, 0, 0, 0.3)
-        #     ).draw()
 
 if CREATE_BTN_ON_CLICK:
     dummy_button_count = 0

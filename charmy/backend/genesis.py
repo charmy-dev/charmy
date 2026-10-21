@@ -31,7 +31,6 @@ __all__ = ["Backend", "DEBUG_FLAGS"]
 
 
 class DEBUG_FLAGS:
-    DRAW_CAIRO_STOCK_TEXT_BOUND : bool = False
     FORCE_CLOSE_SHAPE           : bool = False
     OBSERVE_SHAPE_DRAWING       : bool = False
     WARN_UNCLOSED_SHAPES        : bool = False
@@ -697,18 +696,7 @@ class TextBase(template.TextBase):
         ## Set Cairo font
         TextBase.cairo_set_font(drawn_text, window)
         # Text size
-        text_size = TextBase.get_text_bound(drawn_text, window.cairo_context) [1]
-        drawn_text._backend_reported_size = text_size
-        if DEBUG_FLAGS.DRAW_CAIRO_STOCK_TEXT_BOUND:
-            text_bound = charmy_stuff.graphics.DrawnShape(
-                drawn_text.window, 
-                charmy_stuff.styles.shape.Rect(drawn_text.offset, text_size), 
-                (255, 0, 0, 50), 
-                2, (255, 0, 0)
-                ) .draw()
-            # window.charmy_window._drawing_list.insert(
-            #     window.charmy_window._drawing_list.index(drawn_text) + 1, text_bound
-            #     )
+        text_size = TextBase.get_text_size(drawn_text)
         ## Draw text itself
         window.cairo_context.move_to(drawn_text.offset[0], drawn_text.offset[1] + text_size[1])
         # 👆 Cairo use bottom-left as anchor, while Charmy uses top-left, so needs conversion on y
@@ -751,10 +739,6 @@ class TextBase(template.TextBase):
                 strikethrough = drawn_text.style.strikethrough
             # Insert the underline right after the text
             strikethrough.draw()
-            # LineBase.draw_line(strikethrough)
-            # window.charmy_window._drawing_list.insert(
-            #     window.charmy_window._drawing_list.index(drawn_text) + 1, strikethrough
-            #     )
 
     @staticmethod
     def cairo_set_font(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase):
@@ -772,24 +756,17 @@ class TextBase(template.TextBase):
         window.cairo_context.set_font_size(drawn_text.style.size)
 
     @staticmethod
-    def get_text_bound(drawn_text: charmy_stuff.graphics.DrawnText, 
-                      ctx: typing.Optional[cairo.Context] = None):
-        ## Calc text size
-        if ctx is None:
-            # If not given a context, then make one
-            surface: cairo.ImageSurface = cairo.ImageSurface(
-            cairo.FORMAT_ARGB32, 10, 10)
-            ctx = cairo.Context(surface)
-            make_ctx = True
-        else:
-            make_ctx = False
-        extents = ctx.text_extents(drawn_text.text)
+    def get_text_size(
+            drawn_text: charmy_stuff.graphics.DrawnText, 
+            ) -> charmy_stuff.styles.shape.Size:
+        backend_win = drawn_text.window.backend_base
+        if not isinstance(backend_win, WindowBase):
+            raise ValueError(
+                "Trying to get size of a text that is not drawn by backend Genesis using Genesis."
+                )
+        extents = backend_win.cairo_context.text_extents(drawn_text.text)
         text_size = (int(round(extents.width, 0)), int(round(extents.height, 0)))
-        if make_ctx:
-            # If made context before, destroy it immediately
-            del surface
-            del ctx
-        return drawn_text.offset, text_size
+        return text_size
 
 
 # region: Alias WhateverBase classes

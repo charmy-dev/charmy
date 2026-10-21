@@ -336,9 +336,12 @@ class TextBase():
         not_implemented_func(operation_desc="Drawing text")
 
     @staticmethod
-    def get_text_bound(drawn_text: charmy_stuff.graphics.DrawnText, *args, **kwargs):
+    def get_text_size(
+            drawn_text: charmy_stuff.graphics.DrawnText
+            , *args, **kwargs) -> charmy_stuff.styles.shape.Size:
         """To get the text's boundary when it is rendered by a specific backend."""
         not_implemented_func(operation_desc="Getting text boundary.")
+        return (0, 0)
 
 
 # region: Alias WhateverBase classes

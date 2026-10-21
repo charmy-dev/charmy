@@ -329,7 +329,7 @@ class DrawnText(DrawnObject):
         """Rect boundary of the drawn text."""
         # TODO: Implement getting text boundary via text-shape conversion
         pos = self.offset[0] - self.anchor[0], self.offset[1] - self.anchor[1]
-        size = self._backend_reported_size
+        size = self.window.backend_base.Backend.TextBase.get_text_size(self)
         return pos, size
 
     def draw(self) -> _typing.Self:

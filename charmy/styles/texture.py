@@ -229,7 +229,7 @@ class Color(Texture):
                 ]:
             _warnings.warn(
                 "Color should be in form of (R 0~255, G 0~255, B 0~255, A 0.0~1.0). "
-                f"Received wrong value {self.color} and will be clamped."
+                f"Received wrong value {(r, g, b, a)} and will be clamped."
                 )
             r = _clamp_val(r, 0, 255)
             g = _clamp_val(g, 0, 255)
