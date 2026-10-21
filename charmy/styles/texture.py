@@ -27,8 +27,9 @@ from __future__ import annotations as _
 import typing as _typing
 
 from abc import abstractmethod as _abstractmethod
-import bisect
+import bisect as _bisect
 import json as _json
+import reactive_caching as _reactive_caching
 import warnings as _warnings
 
 from ..utils import \
@@ -175,7 +176,7 @@ HEX: _typing.TypeAlias = str
 ColorLike: _typing.TypeAlias = RGB | RGBA | HEX
 
 # Color class
-class Color(Texture):
+class Color(Texture, _reactive_caching.CachedClass):
     """Represents pure colors."""
     type: _typing.ClassVar[str] = "color"
 
@@ -184,6 +185,8 @@ class Color(Texture):
         
         :param color: The RGB(A) tuple or the HEX string that represents the color
         """
+
+        _reactive_caching.CachedClass.__init__(self)
 
         self._color: _var.VarOrVal[RGB | RGBA | HEX] = (0, 0, 0, 0)
         self.color = color
@@ -213,7 +216,7 @@ class Color(Texture):
         a = _var.unpack_var(a, 0)
         return r, g, b, a
 
-    @property
+    @_reactive_caching.cached_property(["_color"])
     def color(self) -> ExactRGBA:
         color = self.to_rgba(_var.unpack_var(self._color, (0, 0, 0, 0)))
         r = _var.unpack_var(color[0], 0)
@@ -378,7 +381,7 @@ class LinearGradient(Gradient):
             return _typing.cast(RGBA, 
                                 ensure_texture(colors[ratio_list[-1]]).color) # type: ignore
 
-        insert_pos = bisect.bisect_left(ratio_list, ratio)
+        insert_pos = _bisect.bisect_left(ratio_list, ratio)
         if insert_pos == len(ratio_list):
             insert_pos = len(ratio_list) - 1
         if ratio == ratio_list[insert_pos]:
