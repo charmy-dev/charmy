@@ -14,7 +14,7 @@ This module is impossible to be completed by three secondary school students
 without the help from third-party, and here, in this era, we chose AI. We 
 provide no guarantee for codes this file.
 """
-from __future__ import annotations
+from __future__ import annotations as _
 
 import math
 import typing

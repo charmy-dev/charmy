@@ -1,6 +1,6 @@
 """Charmy widgets base class"""
 
-from __future__ import annotations
+from __future__ import annotations as _
 
 import typing
 

@@ -1,3 +1,5 @@
+from __future__ import annotations as _
+
 import typing as _typing
 
 if _typing.TYPE_CHECKING:
