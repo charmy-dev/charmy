@@ -181,6 +181,8 @@ class WindowEntity(_CharmyObject, _EventHandling):
         backend = self.parent.backend # Alias to avoid the path to backend getting too long
         if len(drawing_list) > 0:
             self.backend_base.draw_background()
+            if _const.DEBUG_FLAGS.PRINT_REDRAWN_OBJ_IDS:
+                print(f"To be redrawn this frame: {[obj.id for obj in drawing_list]}")
         for drawn_obj in drawing_list:
             if drawn_obj in self._components_belong_to:
                 # If the drawn object is a component of a widget, 
