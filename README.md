@@ -24,6 +24,10 @@ Firstly, the basic structural design must be introduced here. Charmy is designed
 
 Currently, we almost completed the basic functions of backend and graphics layer, and the effect can be seen by running `/tests/graphics.py`.
 
+We also completed the basic functions of button widget, which will be the base of many other widgets. You may try `/tests/button.py` to see the effect. screenshot below:
+
+![Screenshot of button test]("./README_RES/button_screenshot.png")
+
 ## To Follow Up
 
 We (The development team members) discuss our latest progress and the next steps in a QQ group chat, which many other Chinese developers also do. Anyone who is interested in (or even better, willing to contribute to) this project will be welcomed to join. The group chat number is: `887102507` .

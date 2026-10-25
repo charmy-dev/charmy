@@ -9,6 +9,9 @@ Original Author and Copyright Holder:
 the Project: Charmy
 Project Developer: Charmy Development Team
 
+Version: 0.1.0
+Version release date: [TO BE FILLED]
+
 === 0. Definitions
 
 "The Artworks" means any artworks covered by this License, which were created by
@@ -39,8 +42,8 @@ interface is implemented, in whole or in part, using the Project.
 
 “Fork of the Project” means a software project, or a part of a software project,
 that is derived from the Project and includes the Project's source code, and has
-made one or more Substantive Modifications to or added new content to its code,
-whether or not it retains the name of the Project.
+made one or more Substantive Modifications to its code, whether or not it
+retains the name of the Project.
 
 === 1. The Original License
 
@@ -83,8 +86,8 @@ service, organization, or other entity that is not affiliated with or derived
 from the Project, unless explicitly authorized by the Project Developer,
 regardless of whether such use is commercial or non-commercial.
 
-Any Derivative Works of the Artworks, or any other works incorporating the
-Artwork Elements, must follow the following terms:
+The Artworks, any Derivative Works of the Artworks, or any other works
+incorporating the Artwork Elements, must follow the following terms:
  - Such works must not be created, used, or distributed for pornographic
    purposes, and must not include any sexually explicit content.
  - Such works must not be created, used, or distributed for political purposes,
@@ -95,10 +98,6 @@ Artwork Elements, must follow the following terms:
 The Project Developer and the Original Author each reserve the right to
 determine, at their discretion, whether a particular use or content violates the
 content-related restrictions set forth in this License.
-
-Any Derivative Work incorporating the Artworks or Artwork Elements shall, with
-respect to the Artworks and Artwork Elements contained therein, be distributed
-under this License.
 
 Applications Based on the Project are allowed to include the Artworks or Artwork
 Elements, or any of the Derivative Works (only when allowed by the relevant
@@ -120,6 +119,10 @@ Authorized uses of the Artworks, Artwork Elements, or Derivative Works for the
 purpose of producing, representing, promoting, distributing, or otherwise
 supporting an Application Based on the Project or a Fork of the Project are
 permitted for commercial use.
+
+The Licensor reserves the right to interpret this License and to determine, in
+its discretion, how its provisions apply to particular uses of the Artworks,
+subject to applicable law.
 
 === 3. Applicable License Version
 
