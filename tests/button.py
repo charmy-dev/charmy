@@ -35,7 +35,7 @@ styled_button = cm.Button(
                     .05: (230, 230, 230), 
                     .3: (240, 240, 240), 
                     .5: (230, 230, 230), 
-                    1: (140, 140, 140), 
+                    1: (180, 180, 180), 
                     }
                 ), 
             border_width = 1, 
@@ -44,11 +44,11 @@ styled_button = cm.Button(
         "hover": cm.button.ButtonProfile(
             background=cm.styles.texture.LinearGradient(
                 (0, cm.profile_ref("widget.height")), (0, 0), {
-                    0: (80, 80, 80), 
+                    0: (40, 40, 40), 
                     .05: (130, 130, 130), 
                     .3: (140, 140, 140), 
                     .5: (130, 130, 130), 
-                    1: (80, 80, 80), 
+                    1: (60, 60, 60), 
                     }
                 )
             ), 
