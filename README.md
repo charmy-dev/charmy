@@ -26,7 +26,7 @@ Currently, we almost completed the basic functions of backend and graphics layer
 
 We also completed the basic functions of button widget, which will be the base of many other widgets. You may try `/tests/button.py` to see the effect. screenshot below:
 
-![Screenshot of button test]("./README_RES/button_screenshot.png")
+![Screenshot of button test](./README_RES/button_screenshot.png)
 
 ## To Follow Up
 

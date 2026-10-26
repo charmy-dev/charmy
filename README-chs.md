@@ -1,3 +1,5 @@
+<img src="./artworks/icon.png" alt="项目图标" style="width: 8rem; height: 8rem;">
+
 # Charmy GUI
 
 曾用名`Suzaku`。
@@ -24,7 +26,7 @@ Charmy仍在开发中，它的许多细节可能还没设计好，或者可能�
 
 同时，我们也完成了按钮空间的基本功能，这将会是大部分空间的基础。您可以尝试`/tests/button.py`来预览效果。截图见下：
 
-![按钮测试的截图]("./README_RES/button_screenshot.png")
+![按钮测试的截图](./README_RES/button_screenshot.png)
 
 ## 最新动态
 
