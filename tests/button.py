@@ -26,18 +26,29 @@ styled_button = cm.Button(
     profiles={
         "default": cm.button.ButtonProfile(
             size=(100, 30), 
+            shape=cm.styles.shape.RoundRect(
+                (0, 0), cm.profile_ref("widget.size"), 5
+                ), 
             background=cm.styles.texture.LinearGradient(
-                (0, 0), (0, cm.widget.WidgetProfile.references("widget.height")), {
-                    0: (255, 150, 150), 
-                    1: (150, 150, 255), 
+                (0, 0), (0, cm.profile_ref("widget.height")), {
+                    0: (180, 180, 180), 
+                    .05: (230, 230, 230), 
+                    .3: (240, 240, 240), 
+                    .5: (230, 230, 230), 
+                    1: (140, 140, 140), 
                     }
-                )
+                ), 
+            border_width = 1, 
+            border_texture = (200, 200, 200), 
             ), 
         "hover": cm.button.ButtonProfile(
             background=cm.styles.texture.LinearGradient(
-                (0, cm.widget.WidgetProfile.references("widget.height")), (0, 0), {
-                    0: (255, 0, 0), 
-                    1: (0, 0, 255), 
+                (0, cm.profile_ref("widget.height")), (0, 0), {
+                    0: (80, 80, 80), 
+                    .05: (130, 130, 130), 
+                    .3: (140, 140, 140), 
+                    .5: (130, 130, 130), 
+                    1: (80, 80, 80), 
                     }
                 )
             ), 

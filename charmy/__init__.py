@@ -23,13 +23,15 @@ from . import backend
 from . import graphics
 from .event import event_types, EventHandling, EventTask
 from .cm_object import CharmyObject
-# from .backend import Frameworks
 from . import styles
 from .utils.var import Var
 from .utils import *
 from .widgets import *
 
+# Aliases
+profile_ref = widget.WidgetProfile.references
 
+# Easter egg from idk when
 def cnm():
     """Do not call this."""
     raise RuntimeError("CNM谁让你调用这碧了？")
