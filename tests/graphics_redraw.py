@@ -17,7 +17,7 @@ test_rounded_rect_2 = cm.graphics.DrawnShape(window, cm.styles.shape.RoundRect(
 # region Texts
 test_text = cm.graphics.DrawnText(
     window, 
-    "In this test, prop of round rect 2 keeps changing", 
+    "In this test, prop of round rect 1 keeps changing", 
     cm.styles.text_style.TextStyle(
         font="Consolas", 
         size=18, 
