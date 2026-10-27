@@ -14,7 +14,7 @@ class DEBUG_FLAGS:
     WAIT_AFTER_EACH_FRAME: bool | float = False
     MARK_REDRAWS: bool = False # BUG: redraw markings will be kept until next redraw
     FORCE_REDRAW_WHOLE_WIN: bool = False
-    PRINT_REDRAWN_OBJ_IDS = False
+    PRINT_REDRAWN_OBJ_IDS: bool = False
 
 
 @dataclasses.dataclass

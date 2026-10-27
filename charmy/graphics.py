@@ -39,12 +39,7 @@ class DrawnObject(_cm_object.CharmyObject):
 
     def __init__(self, window: _window.WindowEntity):
         """To represent a drawn object, inherit this class."""
-        self._booting: bool = True
         super().__init__()
-        self._attrs: list[str] = []
-        self._need_redraw: bool = True
-        self._drawn: bool = False
-        self._booting = False
         self.window: _window.WindowEntity = window
         self.offset: _styles.shape.Point
         self.anchor: _styles.shape.Point
@@ -82,7 +77,6 @@ class DrawnLine(DrawnObject):
         :param anchor: Point of anchor on the original line
         """
         super().__init__(window)
-        self._attrs = ["line", "texture", "width", "offset", "anchor"]
 
         self.line: _styles.shape.LinePath = line
         self._texture: _styles.texture.Texture = _styles.texture.ensure_texture(texture)
@@ -152,7 +146,6 @@ class DrawnLine(DrawnObject):
                 _draw_bbox(self)
         self.window._redraw_regions.append(geo_math.expand_rectrange(
             self.boundary, abs(self.width)))
-        self._drawn = True
         return self
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
@@ -183,7 +176,6 @@ class DrawnShape(DrawnObject):
         :param anchor: Point of anchor on the original shape
         """
         super().__init__(window)
-        self._attrs = ["shape", "texture", "border_width", "border_texture", "offset", "anchor"]
 
         self.shape: _styles.shape.ShapeType = shape
         self._texture: _styles.texture.Texture = _styles.texture.ensure_texture(texture)
@@ -263,7 +255,6 @@ class DrawnShape(DrawnObject):
             _draw_bbox(self)
         self.window._redraw_regions.append(
             geo_math.expand_rectrange(self.boundary, abs(self.border_width)))
-        self._drawn = True
         return self
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
@@ -297,7 +288,6 @@ class DrawnText(DrawnObject):
         :param anchor: Point of anchor on the text
         """
         super().__init__(window)
-        self._attrs = ["text", "style", "texture", "offset", "anchor"]
 
         self.text: str = text
         self.style: _styles.text_style.TextStyle = style
@@ -377,7 +367,6 @@ class DrawnText(DrawnObject):
             #### Render as shape
             # TODO: Implement text → shape fallback
             raise NotImplementedError("Currently cannot render text as shape!")
-        self._drawn = True
         return self
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
