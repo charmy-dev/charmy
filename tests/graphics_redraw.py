@@ -44,3 +44,5 @@ while window._alive:
         print("Texture of round rect 1 updated.")
         test_rounded_rect.texture = colors[color_pointer % 3]
         color_pointer += 1
+        test_rounded_rect.draw() # This was designed like this!!!
+        # How I forgot this??
