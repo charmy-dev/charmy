@@ -82,9 +82,9 @@ class WidgetProfile(CharmyObject, EventHandling):
     def __setattr__(self, name: str, value: typing.Any) -> None:
         """To set attribute and run bound routine."""
         super().__setattr__(name, value)
-        if not hasattr(self, "_alive"):
+        if not hasattr(self, "_initialized"):
             return
-        if not self._alive:
+        if not self._initialized:
             return
         if self._pause_profile_change_event_trigger:
             return
@@ -327,7 +327,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # Profile not registered, then register it
                 task_obj = profile.bind(
                     event_types.ProfileChanged, 
-                    lambda _: self.draw(), 
+                    [lambda _: self.draw(), lambda e: print(e.item_changed)], 
                     _is_internal = True, 
                     )
                 self._registered_profiles[profile] = task_obj
