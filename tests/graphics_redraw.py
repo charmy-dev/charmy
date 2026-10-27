@@ -21,7 +21,6 @@ test_text = cm.graphics.DrawnText(
     cm.styles.text_style.TextStyle(
         font="Consolas", 
         size=18, 
-        weight=cm.styles.text_style.WEIGHT.EXTRALIGHT, 
         underlined=True, 
         # strikethrough=True, 
         ), 
