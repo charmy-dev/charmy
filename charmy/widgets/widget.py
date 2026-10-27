@@ -321,21 +321,25 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         Register profiles that are not registered yet, and remove those which are no longer 
         relating to this widget.
         """
+        has_change: bool = False
         for _, profile in self.profiles.items():
             if profile not in self._registered_profiles:
                 # Profile not registered, then register it
                 task_obj = profile.bind(
                     event_types.ProfileChanged, 
-                    lambda _: self._update_components_wrapper(), 
+                    lambda _: self.draw(), 
                     _is_internal = True, 
                     )
                 self._registered_profiles[profile] = task_obj
+                has_change = True
         for profile in self._registered_profiles.keys():
             if profile not in self.profiles.values():
                 # Profile is no longer relating to this widget, unregister it
                 profile.unbind(self._registered_profiles[profile])
                 del self._registered_profiles[profile]
-        self._update_components_wrapper() # After changing the profile list, components needs rebuild
+                has_change = True
+        if has_change:
+            self.draw() # After changing the profile list and confirmed has change, components needs rebuild
 
     @property
     def layout_profile(self) -> layout_profiles.LayoutProfile:
@@ -471,7 +475,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         misc_globals.profile_query_widget = self
 
-        self._update_registered_profiles()
+        self._update_components(self.migrate_full_curr_profile())
 
         for component in self._components:
             component = typing.cast(graphics.DrawnObject, component)

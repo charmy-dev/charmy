@@ -105,7 +105,7 @@ class Container(reactive_caching.CachedClass):
             place_layer = typing.cast(list[widget.Widget], place_layer)
         for layer in place_layer, managed_layer:
             for child in layer:
-                child.draw()
+                child._update_registered_profiles()
         return self
 
     def _clear_children(self):

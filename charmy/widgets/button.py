@@ -9,8 +9,7 @@ from .widget import Widget as _Widget, WidgetProfile as _WidgetProfile
 from .. import styles as _styles
 from .. import event_types as _event_types
 from .. import graphics as _graphics
-from ..utils import type_checking as _type_checking, marks as _marks, var as _var, \
-    misc_globals as _misc_globals
+from ..utils import type_checking as _type_checking, marks as _marks, var as _var
 
 if _typing.TYPE_CHECKING:
     from .. import container as _container
