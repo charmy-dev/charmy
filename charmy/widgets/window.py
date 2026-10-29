@@ -70,6 +70,8 @@ class WindowEntity(_CharmyObject, _EventHandling):
         self.title = title
         self.icon = _pathlib.Path(__file__).parent / ".." / "resources" / "imgs" / \
             ("icon.png" if sys.platform == "darwin" else "window_icon.png")
+            # Here, macOS provides larger place to show window icon, so use full icon instead of the
+            # window icon optimized for minimal size
         self.background = background
         # Other internal attrs
         self._mouse_hovering_on: list[_Container | _Widget] = []
@@ -206,7 +208,7 @@ class WindowEntity(_CharmyObject, _EventHandling):
         for drawn_obj in self._drawing_list:
             boundary = drawn_obj.boundary
             for region in self._redraw_regions:
-                 # Check overlap on both axes (x AND y) to determine intersection
+                # Check overlap on both axes (x AND y) to determine intersection
                 x1, y1 = boundary[0]
                 w1, h1 = boundary[1]
                 x2, y2 = region[0]

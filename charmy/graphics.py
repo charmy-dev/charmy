@@ -7,6 +7,8 @@ import typing as _typing
 from abc import abstractmethod as _abstractmethod
 import copy as _copy
 
+from charmy.styles.shape import RectRange
+
 from . import styles as _styles
 from . import cm_object as _cm_object
 from .const import DEBUG_FLAGS as _DEBUG_FLAGS
@@ -44,15 +46,38 @@ class DrawnObject(_cm_object.CharmyObject):
         self.offset: _styles.shape.Point
         self.anchor: _styles.shape.Point
 
-    @_abstractmethod
-    def draw(self, *args, **kwargs) -> _typing.Self: ...
+    def draw(self, 
+            _fallback_from: list[type[_styles.shape.LinePath]] = [], 
+            ) -> _typing.Self:
+        """Draw the shape using backend.
+
+        :param window: The window to draw shape to
+        :param _fallback_from: Internal use only, the fallback path
+        """
+        # Remove self from render list if already rendered
+        if self in self.window._drawing_list:
+            self.window._drawing_list.remove(self)
+        # Rendering process
+        if self.check_backend_supports():
+            self.window.backend_base.charmy_window._drawing_list.append(self)
+        if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
+            _draw_bbox(self)
+        self.window._redraw_regions.append(self.max_drawn_boundary)
+        return self
 
     @property
     @_abstractmethod
     def boundary(self) -> _styles.shape.RectRange: ...
 
+    @property
+    @_abstractmethod
+    def max_drawn_boundary(self) -> _styles.shape.RectRange: ...
+
     @_abstractmethod
     def __contains__(self, point: _styles.shape.Point) -> bool: ...
+
+    @_abstractmethod
+    def check_backend_supports(self) -> bool: ...
 
 
 # region Line
@@ -223,6 +248,10 @@ class DrawnShape(DrawnObject):
             self.offset[1] + self.shape.boundary[0][1] - self.anchor[1]
             ), self.shape.boundary[1]
 
+    @property
+    def max_drawn_boundary(self) -> _styles.shape.RectRange:
+        return geo_math.expand_rectrange(self.boundary, abs(self.border_width)))
+
     def copy(self) -> DrawnShape:
         return DrawnShape(
             self.window, 
@@ -234,28 +263,11 @@ class DrawnShape(DrawnObject):
             self.anchor
             )
 
-    def draw(self, 
-            _fallback_from: list[type[_styles.shape.LinePath]] = [], 
-            ) -> _typing.Self:
-        """Draw the shape using backend.
-
-        :param window: The window to draw shape to
-        :param _fallback_from: Internal use only, the fallback path
-        """
+    def check_backend_supports(self) -> bool:
+        """Check if backend supports self."""
         backend = self.window.parent.backend
-        # Remove self from render list if already rendered
-        if self in self.window._drawing_list:
-            self.window._drawing_list.remove(self)
-        # Rendering process
-        backend = self.window.parent.backend
-        if self.shape.type in backend.ShapeBase.supports or \
-            "any_shape" in backend.ShapeBase.supports:
-            self.window.backend_base.charmy_window._drawing_list.append(self)
-        if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
-            _draw_bbox(self)
-        self.window._redraw_regions.append(
-            geo_math.expand_rectrange(self.boundary, abs(self.border_width)))
-        return self
+        return self.shape.type in backend.ShapeBase.supports or \
+            "any_shape" in backend.ShapeBase.supports
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
         return point in self.shape
