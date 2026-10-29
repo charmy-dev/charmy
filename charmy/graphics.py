@@ -7,8 +7,6 @@ import typing as _typing
 from abc import abstractmethod as _abstractmethod
 import copy as _copy
 
-from charmy.styles.shape import RectRange
-
 from . import styles as _styles
 from . import cm_object as _cm_object
 from .const import DEBUG_FLAGS as _DEBUG_FLAGS
@@ -46,7 +44,15 @@ class DrawnObject(_cm_object.CharmyObject):
         self.offset: _styles.shape.Point
         self.anchor: _styles.shape.Point
 
+    def fallback(self):
+        backend = self.window.parent.backend
+        raise RuntimeError(
+            f"Backend {backend.friendly_name} does not support rendering {type(self).__name__}, "
+            "and no fallback provided for this type of DrawnObject."
+            )
+
     def draw(self, 
+            redraw: bool = True, 
             _fallback_from: list[type[_styles.shape.LinePath]] = [], 
             ) -> _typing.Self:
         """Draw the shape using backend.
@@ -54,12 +60,14 @@ class DrawnObject(_cm_object.CharmyObject):
         :param window: The window to draw shape to
         :param _fallback_from: Internal use only, the fallback path
         """
-        # Remove self from render list if already rendered
-        if self in self.window._drawing_list:
+        # Remove self from render list if user asked redraw and is already rendered before
+        if redraw and self in self.window._drawing_list:
             self.window._drawing_list.remove(self)
         # Rendering process
         if self.check_backend_supports():
             self.window.backend_base.charmy_window._drawing_list.append(self)
+        else:
+            self.fallback()
         if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
             _draw_bbox(self)
         self.window._redraw_regions.append(self.max_drawn_boundary)
@@ -250,7 +258,7 @@ class DrawnShape(DrawnObject):
 
     @property
     def max_drawn_boundary(self) -> _styles.shape.RectRange:
-        return geo_math.expand_rectrange(self.boundary, abs(self.border_width)))
+        return geo_math.expand_rectrange(self.boundary, abs(self.border_width))
 
     def copy(self) -> DrawnShape:
         return DrawnShape(
