@@ -511,7 +511,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         for component in self._components:
             component = typing.cast(graphics.DrawnObject, component)
-            component.draw()
+            component.draw(redraw = False)
 
         if isinstance(self, Container):
             Container.draw_children(self)

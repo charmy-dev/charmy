@@ -1,7 +1,7 @@
 PERFORMANCE_STATS: bool = False
 MEM_STATS: bool = False
 TEST_WIDGET_MOVE: bool = False
-CREATE_BTN_ON_CLICK: bool = True
+CREATE_BTN_ON_CLICK: bool = False
 
 
 import charmy as cm

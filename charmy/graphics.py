@@ -44,7 +44,7 @@ class DrawnObject(_cm_object.CharmyObject):
         self.offset: _styles.shape.Point
         self.anchor: _styles.shape.Point
 
-    def fallback(self):
+    def fallback(self, redraw: bool, _fallback_from: _typing.Optional[list[DrawnObject]] = None):
         backend = self.window.parent.backend
         raise RuntimeError(
             f"Backend {backend.friendly_name} does not support rendering {type(self).__name__}, "
@@ -67,7 +67,7 @@ class DrawnObject(_cm_object.CharmyObject):
         if self.check_backend_supports():
             self.window.backend_base.charmy_window._drawing_list.append(self)
         else:
-            self.fallback()
+            self.fallback(redraw, _fallback_from) # type: ignore
         if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
             _draw_bbox(self)
         self.window._redraw_regions.append(self.max_drawn_boundary)
@@ -84,8 +84,8 @@ class DrawnObject(_cm_object.CharmyObject):
     @_abstractmethod
     def __contains__(self, point: _styles.shape.Point) -> bool: ...
 
-    @_abstractmethod
-    def check_backend_supports(self) -> bool: ...
+    def check_backend_supports(self) -> bool:
+        return False
 
 
 # region Line
@@ -142,44 +142,21 @@ class DrawnLine(DrawnObject):
             self.offset[1] + self.line.boundary[0][1] - self.anchor[1]
             ), self.line.boundary[1]
 
-    def draw(self, 
-            _fallback_from: _typing.Optional[list[type[_styles.shape.LinePath]]] = None
-            ) -> _typing.Self:
-        """Draw the line.
+    def check_backend_supports(self) -> bool:
+        backend = self.window.backend_base.Backend
+        return self.line.type in backend.LineBase.supports
 
-        :param window: The window to draw line to
-        :param _fallback_from: Internal use only, the fallback path
-        """
-
-        window = self.window
-
-        if not _fallback_from:
+    def fallback(self, 
+                redraw: bool = True, 
+                _fallback_from: _typing.Optional[list[type[_styles.shape.LinePath]]] = None
+                ):
+        if _fallback_from is None:
             _fallback_from = []
-
-        backend = window.parent.backend
-        # 👆 Alias to avoid path to backend properties getting too long. 😅
-        # Remove self from render list if already rendered
-        if self in self.window._drawing_list:
-            self.window._drawing_list.remove(self)
-        # Rendering process
-        if self.line.type == "line_path_class":
-            raise TypeError("styles.shape.LinePath class is a template, cannot be drawn.")
-        else:
-            if self.line.type in backend.LineBase.supports:
-                # If supported by the windows' backend.
-                window.backend_base.charmy_window._drawing_list.append(self)
-            else:
-                # If not supported, enters the fallback process
-                _fallback_from.append(self.line.__class__)
-                for fallback_line in self.line.fallback(_from = _fallback_from):
-                    drawn_host = _copy.copy(self)
-                    drawn_host.line = fallback_line
-                    drawn_host.draw(_fallback_from)
-            if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
-                _draw_bbox(self)
-        self.window._redraw_regions.append(geo_math.expand_rectrange(
-            self.boundary, abs(self.width)))
-        return self
+        _fallback_from.append(self.line.__class__)
+        for fallback_line in self.line.fallback(_from = _fallback_from):
+            drawn_host = _copy.copy(self)
+            drawn_host.line = fallback_line
+            drawn_host.draw(redraw, _fallback_from)
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
         return False
@@ -191,14 +168,14 @@ class DrawnShape(DrawnObject):
     """A Class used to represent shapes drawn to GUI or canvas."""
 
     def __init__(self, 
-                window: _window.WindowEntity, 
-                shape: _styles.shape.ShapeType, 
-                texture: _styles.texture.Texture | _styles.texture.TextureLike, 
-                border_width: int = 0, 
-                border_texture: _styles.texture.Texture | _styles.texture.TextureLike = None, 
-                offset: _styles.shape.Point | _typing.Literal["auto"] = "auto", 
-                anchor: _styles.shape.Point | _typing.Literal["auto"] = "auto", 
-                ):
+            window: _window.WindowEntity, 
+            shape: _styles.shape.ShapeType, 
+            texture: _styles.texture.Texture | _styles.texture.TextureLike, 
+            border_width: int = 0, 
+            border_texture: _styles.texture.Texture | _styles.texture.TextureLike = None, 
+            offset: _styles.shape.Point | _typing.Literal["auto"] = "auto", 
+            anchor: _styles.shape.Point | _typing.Literal["auto"] = "auto", 
+            ):
         """Used to express shapes drawn on GUI or canvas.
 
         :param shape: The shape (to be drawn)
@@ -342,14 +319,14 @@ class DrawnText(DrawnObject):
         size = self.window.backend_base.Backend.TextBase.get_text_size(self)
         return pos, size
 
-    def draw(self) -> _typing.Self:
+    def draw(self, redraw: bool = True, _ = None) -> _typing.Self:
         """Draw the text.
 
         :param window: The window to draw text to
         """
         backend = self.window.parent.backend
         # Remove self from render list if already rendered
-        if self in self.window._drawing_list:
+        if self in self.window._drawing_list and redraw:
             self.window._drawing_list.remove(self)
         # Rendering process
         if backend.TextBase.supports.direct_render:
@@ -380,7 +357,8 @@ class DrawnText(DrawnObject):
                 rendered_text.style = rendered_style
             else:
                 rendered_text = self
-            self.window.backend_base.charmy_window._drawing_list.append(rendered_text)
+            if self not in self.window._drawing_list:
+                self.window._drawing_list.append(rendered_text)
             if _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY:
                 _draw_bbox(self)
         else:
