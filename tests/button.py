@@ -6,7 +6,7 @@ CREATE_BTN_ON_CLICK: bool = False
 
 import charmy as cm
 
-cm.DEBUG_FLAGS.PRINT_REDRAWN_OBJ_IDS = True
+cm.DEBUG_FLAGS.PRINT_REDRAWN_OBJ_IDS = False
 
 
 if PERFORMANCE_STATS:

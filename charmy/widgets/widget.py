@@ -91,6 +91,19 @@ class WidgetProfile(CharmyObject, EventHandling):
         if not name.startswith("_"):
             self.trigger(event_types.ProfileChanged(self, name))
 
+    def __eq__(self, other: typing.Any) -> bool:
+        if not isinstance(other, type(self)):
+            return False
+        else:
+            for field in dataclasses.fields(self):
+                if field.name.startswith("_"):
+                    continue
+                if getattr(self, field.name) != getattr(other, field.name):
+                    print(f"{field.name} had change on profile {self.id}")
+                    return False
+            else:
+                return True
+
     @classmethod
     def references(cls, target: str) -> var.Var | var.Query:
         """To represent a profile var."""
@@ -185,6 +198,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         # Internal misc
         self._max_possible_surrounding_drawn_width: int = 0
+        self._last_full_profile: typing.Optional[Widget.ProfileType] = None
 
         # Components list
         self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
@@ -296,6 +310,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         This is where the profile value fallback happens.
         """
+        misc_globals.profile_query_widget = self
         fallback_list = self.make_profiles_fallback_list()
         full_profile = copy.copy(fallback_list[0])
         full_profile._pause_profile_change_event_trigger = True
@@ -409,7 +424,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             layout_specified = self.layout_profile.size
         if layout_specified is None:
             # If size not given, get from style
-            misc_globals.profile_query_widget = self
             profile_specified = self.migrate_full_curr_profile().size
             profile_specified = typing.cast(styles.shape.Size, profile_specified)
             return profile_specified
@@ -452,12 +466,28 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                 # … then the widget is not inside in a root container
                 raise RuntimeError(f"Nowhere to put {self.id} as it is not in a valid window!")
 
-    def _update_components_wrapper(self) -> typing.Tuple[graphics.DrawnObject, ...]:
+    def _update_components_wrapper(self, 
+            curr_profile: typing.Optional[ProfileType] = None
+            ) -> typing.Tuple[graphics.DrawnObject, ...]:
         """Update components, but with actions that need to be done before or after it."""
         self._declare_components_belong_self()
-        misc_globals.profile_query_widget = self
-        new_components = self._update_components(curr_profile=self.migrate_full_curr_profile())
+        if curr_profile is None:
+            curr_profile = self.migrate_full_curr_profile()
+        new_components = self._update_components(curr_profile=curr_profile)
         return new_components
+
+    def _check_change(self):
+        """Check for profile changes, and if exists, redraw widget."""
+        curr_profile = self.migrate_full_curr_profile()
+        if self._last_full_profile == None:
+            has_change = True
+        elif curr_profile != self._last_full_profile:
+            has_change = True
+        else:
+            has_change = False
+        if has_change:
+            self.draw(curr_profile)
+            self._last_full_profile = curr_profile
 
     def _update_components(self, 
             curr_profile: WidgetProfile, 
@@ -468,14 +498,16 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         """
         return ()
 
-    def draw(self, *args, **kwargs) -> typing.Self:
+    def draw(self, 
+            curr_profile: typing.Optional[ProfileType] = None, 
+            *args, **kwargs) -> typing.Self:
         """Draw the widget, does nothing on base class."""
         if not self._alive:
             return self
 
         misc_globals.profile_query_widget = self
 
-        self._update_components(self.migrate_full_curr_profile())
+        self._update_components_wrapper(curr_profile)
 
         for component in self._components:
             component = typing.cast(graphics.DrawnObject, component)
