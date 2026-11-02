@@ -9,10 +9,10 @@ window.background = (200, 200, 200)
 # region Shapes
 
 test_rounded_rect = cm.graphics.DrawnShape(window, cm.styles.shape.RoundRect(
-    (0, 0), (150, 100), 25), (150, 150, 255), offset=(150, 100)) .draw()
+    (0, 0), (150, 100), 25), (150, 150, 255), offset=(150, 100)) .stamp()
 
 test_rounded_rect_2 = cm.graphics.DrawnShape(window, cm.styles.shape.RoundRect(
-    (230, 150), (150, 100), 25), (255, 255, 0, 0.2)) .draw()
+    (230, 150), (150, 100), 25), (255, 255, 0, 0.2)) .stamp()
 
 # region Texts
 test_text = cm.graphics.DrawnText(
@@ -26,7 +26,7 @@ test_text = cm.graphics.DrawnText(
         ), 
     (0, 0, 0), 
     (30, 350), 
-    ) .draw()
+    ) .stamp()
 
 # endregion
 
@@ -44,5 +44,5 @@ while window._alive:
         print("Texture of round rect 1 updated.")
         test_rounded_rect.texture = colors[color_pointer % 3]
         color_pointer += 1
-        test_rounded_rect.draw() # This was designed like this!!!
+        test_rounded_rect.stamp() # This was designed like this!!!
         # How I forgot this??

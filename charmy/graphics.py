@@ -29,7 +29,7 @@ def _draw_bbox(obj: DrawnObject):
         )
     # obj.window.parent.backend.ShapeBase.draw_shape(range_rect)
     _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY = False # Temporarily disable to avoid infinite loop
-    range_rect.draw()
+    range_rect.stamp()
     _DEBUG_FLAGS.DRAW_OBJECTS_BOUNDARY = True
 
 
@@ -51,7 +51,7 @@ class DrawnObject(_cm_object.CharmyObject):
             "and no fallback provided for this type of DrawnObject."
             )
 
-    def draw(self, 
+    def stamp(self, 
             redraw: bool = True, 
             _fallback_from: list[type[_styles.shape.LinePath]] = [], 
             ) -> _typing.Self:
@@ -156,7 +156,7 @@ class DrawnLine(DrawnObject):
         for fallback_line in self.line.fallback(_from = _fallback_from):
             drawn_host = _copy.copy(self)
             drawn_host.line = fallback_line
-            drawn_host.draw(redraw, _fallback_from)
+            drawn_host.stamp(redraw, _fallback_from)
 
     def __contains__(self, point: _styles.shape.Point) -> bool:
         return False
@@ -319,7 +319,7 @@ class DrawnText(DrawnObject):
         size = self.window.backend_base.Backend.TextBase.get_text_size(self)
         return pos, size
 
-    def draw(self, redraw: bool = True, _ = None) -> _typing.Self:
+    def stamp(self, redraw: bool = True, _ = None) -> _typing.Self:
         """Draw the text.
 
         :param window: The window to draw text to

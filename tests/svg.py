@@ -19,7 +19,7 @@ apple_logo = cm.graphics.DrawnShape(
     window, 
     apple_shape, 
     (0, 0, 0)
-    ) .draw()
+    ) .stamp()
 
 
 AT_SVG = \
@@ -51,7 +51,7 @@ at_logo = cm.graphics.DrawnShape(
     at_shape, 
     (0, 0, 0), 
     offset=(250, 20)
-    ) .draw()
+    ) .stamp()
 
 # Disclaimer
 cm.graphics.DrawnText(
@@ -65,7 +65,7 @@ cm.graphics.DrawnText(
         ), 
     (0, 0, 0), 
     (50, 250), 
-    ) .draw()
+    ) .stamp()
 cm.graphics.DrawnText(
     window, 
     "The Apple logo is is an Apple Inc. property.", 
@@ -75,6 +75,6 @@ cm.graphics.DrawnText(
         ), 
     (0, 0, 0), 
     (50, 280), 
-    ) .draw()
+    ) .stamp()
 
 cm.mainloop(interval=0.011111)

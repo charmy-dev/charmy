@@ -15,7 +15,7 @@ test_shape = cm.graphics.DrawnShape(
             (200, 80), (150, 150), (120, 150), (50, 50), 
             ])
     ]), 
-    None, 5, (255, 0, 0)) .draw()
+    None, 5, (255, 0, 0)) .stamp()
 
 shape_boundary = test_shape.boundary
 
@@ -25,7 +25,7 @@ def draw_within():
             if (x, y) in test_shape.shape:
                 cm.graphics.DrawnShape(window, 
                     cm.styles.shape.Rect((0, 0), (3, 3)), (0, 0, 200), offset=(x, y)
-                    ) .draw()
+                    ) .stamp()
 
 draw_within()
 

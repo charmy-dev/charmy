@@ -719,7 +719,7 @@ class TextBase(template.TextBase):
             else:
                 underline = drawn_text.style.underlined
             # Insert the underline right after the text
-            underline.draw()
+            underline.stamp()
             # LineBase.draw_line(underline)
             # window.charmy_window._drawing_list.insert(
             #     window.charmy_window._drawing_list.index(drawn_text) + 1, underline
@@ -739,7 +739,7 @@ class TextBase(template.TextBase):
             else:
                 strikethrough = drawn_text.style.strikethrough
             # Insert the underline right after the text
-            strikethrough.draw()
+            strikethrough.stamp()
 
     @staticmethod
     def cairo_set_font(drawn_text: charmy_stuff.graphics.DrawnText, window: WindowBase):

@@ -14,29 +14,29 @@ window.background = (200, 200, 200)
 # region Lines
 test_polyline = cm.graphics.DrawnLine(window, cm.styles.shape.PolyLine([
     (500, 10), (50, 150), (200, 300), (70, 30)
-    ]), (255, 100, 100)) .draw()
+    ]), (255, 100, 100)) .stamp()
 test_arc = cm.graphics.DrawnLine(window, 
-    cm.styles.shape.CircleArc((100, 100), 50, 0, 290), (100, 100, 255)) .draw()
+    cm.styles.shape.CircleArc((100, 100), 50, 0, 290), (100, 100, 255)) .stamp()
 test_arc_2 = cm.graphics.DrawnLine(window, 
-    cm.styles.shape.CircleArc((200, 100), 50, 320, 50), (100, 100, 255)) .draw()
+    cm.styles.shape.CircleArc((200, 100), 50, 320, 50), (100, 100, 255)) .stamp()
 test_quadratic_bezier = cm.graphics.DrawnLine(window, cm.styles.shape.QuadraticBezier([
     (100, 150), (250, 250), (-40, 350)
-    ]), (100, 255, 100, 0.4), width=8) .draw()
+    ]), (100, 255, 100, 0.4), width=8) .stamp()
 
 
 # region Shapes
 test_rect = cm.graphics.DrawnShape(window, 
-    cm.styles.shape.Rect((300, 300), (100, 80)), (0, 255, 255), 3, (255, 0, 0)) .draw()
+    cm.styles.shape.Rect((300, 300), (100, 80)), (0, 255, 255), 3, (255, 0, 0)) .stamp()
 
 test_polygon = cm.graphics.DrawnShape(window, cm.styles.shape.AnyShape([cm.styles.shape.PolyLine([
     (400, 400), (450, 400), (470, 430), (420, 450), (350, 420), (400, 400)
-    ])]), (150, 150, 150), 5, (255, 0, 0)) .draw()
+    ])]), (150, 150, 150), 5, (255, 0, 0)) .stamp()
 
 test_rounded_rect = cm.graphics.DrawnShape(window, cm.styles.shape.RoundRect(
-    (0, 0), (150, 100), 25), (150, 150, 255), offset=(300, 100)) .draw()
+    (0, 0), (150, 100), 25), (150, 150, 255), offset=(300, 100)) .stamp()
 
 test_rounded_rect_2 = cm.graphics.DrawnShape(window, cm.styles.shape.RoundRect(
-    (350, 150), (150, 100), 25), (255, 255, 0, 0.2)) .draw()
+    (350, 150), (150, 100), 25), (255, 255, 0, 0.2)) .stamp()
 
 # region Texts
 test_text = cm.graphics.DrawnText(
@@ -51,7 +51,7 @@ test_text = cm.graphics.DrawnText(
         ), 
     (0, 0, 0), 
     (200, 250), 
-    ) .draw()
+    ) .stamp()
 
 # endregion
 

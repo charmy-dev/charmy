@@ -31,24 +31,24 @@ cm.graphics.DrawnShape(
     win, 
     cm.styles.shape.Rect((20, 20), (100, 100)), 
     test_gradient_1, 
-    ) .draw()
+    ) .stamp()
 
 cm.graphics.DrawnText(
     win, "TEXT BEHIND", 
     cm.styles.text_style.TextStyle(), (0, 0, 0), 
     offset=(150, 70)
-    ) .draw()
+    ) .stamp()
 
 cm.graphics.DrawnShape(
     win, 
     cm.styles.shape.Rect((140, 20), (100, 100)), 
     test_gradient_2, 
-    ) .draw()
+    ) .stamp()
 
 cm.graphics.DrawnShape(
     win, 
     cm.styles.shape.Rect((20, 140), (100, 100)), 
     test_gradient_3, 
-    ) .draw()
+    ) .stamp()
 
 cm.mainloop()
