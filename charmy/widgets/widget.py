@@ -99,7 +99,6 @@ class WidgetProfile(CharmyObject, EventHandling):
                 if field.name.startswith("_"):
                     continue
                 if getattr(self, field.name) != getattr(other, field.name):
-                    print(f"{field.name} had change on profile {self.id}")
                     return False
             else:
                 return True
@@ -199,6 +198,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         # Internal misc
         self._max_possible_surrounding_drawn_width: int = 0
         self._last_full_profile: typing.Optional[Widget.ProfileType] = None
+        self._last_rect_range: styles.shape.RectRange = (0, 0), (0, 0)
 
         # Components list
         self._components: typing.Tuple[graphics.DrawnShape, ...] = ()
@@ -328,7 +328,11 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                         if not val_is_fallback:
                             setattr(full_profile, field.name, fallback_val)
                             break
-        return full_profile
+                    else:
+                        raise RuntimeError(
+                            f"No final fallback value for {fallback_list[0]}.{profile_val}"
+                            )
+        return var.resolve_references(full_profile)
 
     def _update_registered_profiles(self):
         """Update registered profile.
@@ -483,11 +487,14 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             has_change = True
         elif curr_profile != self._last_full_profile:
             has_change = True
+        elif self.boundary != self._last_rect_range:
+            has_change = True
         else:
             has_change = False
         if has_change:
             self.draw(curr_profile)
             self._last_full_profile = curr_profile
+            self._last_rect_range = self.boundary
 
     def _update_components(self, 
             curr_profile: WidgetProfile, 
