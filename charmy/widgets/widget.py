@@ -40,6 +40,8 @@ class WidgetProfile(CharmyObject, EventHandling):
 
     base_profile: typing.Optional[WidgetProfile | marks.Mark] = None
     size: type_checking.ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
+    min_size: type_checking.ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
+    max_size: type_checking.ProfileProp[styles.shape.Size] = marks.profile_value_fallback_mark
 
     _referencing_vars: typing.ClassVar[dict[str, var.Var]] = {}
     # _query_widget: typing.ClassVar[typing.Optional[Widget]] = None
@@ -70,6 +72,8 @@ class WidgetProfile(CharmyObject, EventHandling):
         """To generate a profile with full default values for this widget."""
         instance = cls(
             size=(0, 0), 
+            min_size=(-1, -1), 
+            max_size=(-1, -1), 
             )
         return instance
 
@@ -536,7 +540,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         :param pos: The position to place the widget
         :param size: The size of this widget
         """
-        self.layout_profile = layout_profiles.PlaceProfile(pos, size)
+        self.layout_profile = layout_profiles.PlaceProfile(self, pos, size)
         return self
 
     def destroy(self) -> None:
