@@ -8,6 +8,7 @@ from __future__ import annotations as _
 import typing as _typing
 
 from ..utils import marks as _marks
+from ..const import FONTWEIGHT as WEIGHT
 
 
 if _typing.TYPE_CHECKING:
@@ -16,45 +17,6 @@ if _typing.TYPE_CHECKING:
     from . import shape as _shape
     from ..utils import type_checking as _type_checking
 
-
-class WEIGHT:
-    """Preset constant values of fontweight.
-
-    Introduction to TrueType Fontweight
-    -----------------------------------
-    TrueType fontweight determines the thickness of text. It has some common 
-    presets which are listed below. Learn more in [MSDN docs about this](https:\
-//learn.microsoft.com/en-us/dotnet/api/system.windows.fontweights?view=netframe\
-work-4.8#remarks).
-
-    List of Presets
-    ---------------
-    =========================== ============== =======
-    Font Weight                 Preset         Value  
-    =========================== ============== =======
-    Thin / Hairline             `THIN`         100    
-    Extra Light / Ultra Light   `EXTRALIGHT`   200    
-    Light                       `LIGHT`        300    
-    Regular                     `REGULAR`      400    
-    Medium                      `MEDIUM`       500    
-    Semi Bold                   `SEMIBOLD`     600    
-    Bold                        `BOLD`         700    
-    Extra Bold / Ultra Bold     `EXTRABOLD`    800    
-    Black / Heavy               `BLACK`        900    
-    Extra Black / Ultra Black   `EXTRABLACK`   950    
-
-    **Note:** Some fontweights might not be supported by all backends!
-    """
-    THIN        : int = 100
-    EXTRALIGHT  : int = 200
-    LIGHT       : int = 300
-    REGULAR     : int = 400
-    MEDIUM      : int = 500
-    SEMIBOLD    : int = 600
-    BOLD        : int = 700
-    EXTRABOLD   : int = 800
-    BLACK       : int = 900
-    EXTRABLACK  : int = 950
 
 class TextStyle:
     """Represents text styles in Charmy."""

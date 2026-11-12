@@ -21,6 +21,7 @@ class DEBUG_FLAGS:
 class Configs:
     default_backend: str         = environ.get("CHARMY_BACKEND", "auto")
 
+
 class MOUSE_KEYS:
     """Consts of mouse keys.
 
@@ -32,49 +33,58 @@ class MOUSE_KEYS:
     MIDDLE  : int = 1
     RIGHT   : int = 2
 
-class ID(Enum):
-    """ID is an enum to store object ID.
+class FLEX_DIRECTION:
+    """Consts to represent flex directions.
 
-    AUTO: Auto generate ID.
-    NONE: No ID.
+    - ROW / X / HORIZONTAL / H: 0
+    - COLUMN / Y / VERTICAL / V: 1
     """
+    ROW         : int = 0
+    COLUMN      : int = 1
+    X           : int = 0
+    Y           : int = 1
+    HORIZONTAL  : int = 0
+    VERTICAL    : int = 1
+    H           : int = 0
+    V           : int = 1
 
-    AUTO = 0
-    NONE = 1
+class FONTWEIGHT:
+    """Preset constant values of fontweight.
 
+    Introduction to TrueType Fontweight
+    -----------------------------------
+    TrueType fontweight determines the thickness of text. It has some common presets which are 
+    listed below. Learn more in [MSDN docs about this](https://learn.microsoft.com/en-us/dotnet/api\
+/system.windows.fontweights?view=netframework-4.8#remarks).
 
-# @dataclasses.dataclass
-# class Backends:
-#     OPENGL = opengl = "OPENGL"
+    List of Presets
+    ---------------
+    =========================== ============== =======
+    Font Weight                 Preset         Value  
+    =========================== ============== =======
+    Thin / Hairline             `THIN`         100    
+    Extra Light / Ultra Light   `EXTRALIGHT`   200    
+    Light                       `LIGHT`        300    
+    Regular                     `REGULAR`      400    
+    Medium                      `MEDIUM`       500    
+    Semi Bold                   `SEMIBOLD`     600    
+    Bold                        `BOLD`         700    
+    Extra Bold / Ultra Bold     `EXTRABOLD`    800    
+    Black / Heavy               `BLACK`        900    
+    Extra Black / Ultra Black   `EXTRABLACK`   950    
 
-
-# @dataclasses.dataclass
-# class UI:
-#     GLFW = glfw = "GLFW"
-#     SDL = sdl = "SDL"
-
-
-# @dataclasses.dataclass
-# class Drawing:
-#     SKIA = skia = "SKIA"
-
-
-class DrawingMode(Enum):
-    """DrawingMode is an enum to store drawing mode.
-    IMMEDIATE(immediate): IMMEDIATE is an enum to store drawing mode.
-    RETAINED(retained): RETAINED is an enum to store drawing mode.
+    **Note:** Some fontweights might not be supported by all backends!
     """
-
-    IMMEDIATE = immediate = "IMMEDIATE"
-    RETAINED = retained = "READIED"
-
-
-MANAGER_ID = "manager"
-
-
-class Orient(Enum):
-    HORIZONTAL = H = "h"
-    VERTICAL = V = "v"
+    THIN        : int = 100
+    EXTRALIGHT  : int = 200
+    LIGHT       : int = 300
+    REGULAR     : int = 400
+    MEDIUM      : int = 500
+    SEMIBOLD    : int = 600
+    BOLD        : int = 700
+    EXTRABOLD   : int = 800
+    BLACK       : int = 900
+    EXTRABLACK  : int = 950
 
 
 # if sys.platform.startswith("darwin"):
