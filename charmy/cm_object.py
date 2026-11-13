@@ -7,8 +7,6 @@ import typing
 
 import weakref
 
-from .const import ID
-
 
 # class InstanceCounterMeta(type):
 #     """

@@ -336,7 +336,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
                         raise RuntimeError(
                             f"No final fallback value for {fallback_list[0]}.{profile_val}"
                             )
-        return var.resolve_references(full_profile)
+        # return var.resolve_references(full_profile)
+        return full_profile
 
     def _update_registered_profiles(self):
         """Update registered profile.
@@ -393,7 +394,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     def pos(self) -> styles.shape.Point:
         """Position of the widget."""
         match self.layout_profile:
-            case layout_profiles.PlaceProfile():
+            case layout_profiles.PlaceLayout():
                 return self.layout_profile.pos
             case _:
                 return (0, 0)
@@ -424,7 +425,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
 
         First try to deduce from layout profile, then get from config if not specified.
         """
-        layout_specified: typing.Optional[styles.shape.Point]
+        layout_specified: typing.Optional[styles.shape.Size]
         if type(self.layout_profile) is layout_profiles.LayoutProfile:
             # If no layout profile specified
             layout_specified = None
@@ -540,7 +541,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         :param pos: The position to place the widget
         :param size: The size of this widget
         """
-        self.layout_profile = layout_profiles.PlaceProfile(self, pos, size)
+        self.layout_profile = layout_profiles.PlaceLayout(self, pos, size)
         return self
 
     def destroy(self) -> None:

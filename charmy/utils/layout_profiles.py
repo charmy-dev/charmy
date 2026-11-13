@@ -7,6 +7,7 @@ from abc import abstractmethod as _abstractmethod
 
 from .. import event as _event
 from .on_setattr import apply_on_setattr as _apply_on_setattr
+from . import var as _var
 
 if _typing.TYPE_CHECKING:
     from ..styles import shape as _shape
@@ -38,7 +39,7 @@ class LayoutProfile(_event.EventHandling):
             # print(f"Layout changed: {name}")
 
 @_dataclasses.dataclass
-class PlaceProfile(LayoutProfile):
+class PlaceLayout(LayoutProfile):
     """Place layout profile, to directly specify the position and size of the widget."""
     type: _typing.ClassVar[str] = "place"
 
@@ -50,7 +51,7 @@ class PlaceProfile(LayoutProfile):
     size: _typing.Optional[_shape.Size] = None
 
 @_dataclasses.dataclass
-class ManagedLayoutProfile(LayoutProfile):
+class ManagedLayout(LayoutProfile):
     """Base class of maneged layouts. Should never be used directly."""
     type: _typing.ClassVar[str] = "managed"
 
@@ -85,34 +86,44 @@ class ManagedLayoutProfile(LayoutProfile):
         return
 
 @_dataclasses.dataclass
-class FlexLayout(ManagedLayoutProfile):
+class FlexLayout(ManagedLayout):
     """Flex layout profile."""
     type: _typing.ClassVar[str] = "flex"
 
     expand_priority: int = -1
-
-    def __post_init__(self):
-        self._widget_boundaries: dict[_widget.Widget, _shape.RectRange] = {}
+    expansion_share_ratio: float = 0
 
     @property
     def pos(self) -> _shape.Point:
         """Calculated pos for the widget by the flex layout."""
-        return self._widget_boundaries[self.subject][0]
+        return (0, 0) # TODO: You know that, go implement it.
 
     @property
     def size(self) -> _shape.Size:
         """Calculated size for the widget by the flex layout."""
-        return self._widget_boundaries[self.subject][1]
+        flex_direction = self.subject.parent.flex_direction
+        if flex_direction not in [0, 1]:
+            raise ValueError(f"Invalid direction integer {flex_direction} for a container.")
+        subject_len = self.subject.parent._flex_dist[self.subject]
+        other_side_len = _var.unpack_var(
+            self.subject.migrate_full_curr_profile().size)[1-flex_direction] # type: ignore
+        if flex_direction == 0:
+            return (subject_len, other_side_len)
+        else:
+            return (other_side_len, subject_len)
 
     def update(self):
         """Update boundaries of all widgets in their parent container."""
-        for direction in (0, 1):
-            # For each direction (x and y, which is index 0 and 1 in every pos and size)
-            widget_suggested_sizes: dict[_widget.Widget, _shape.Size] = {}
-            widget_min_sizes: dict[_widget.Widget, _shape.Size] = {}
-            widget_max_sizes: dict[_widget.Widget, _shape.Size] = {}
-            for widget in self.subject.parent.children:
-                suggested = widget.migrate_full_curr_profile().size
-                min_ = widget.migrate_full_curr_profile().min_size
-                max_ = widget.migrate_full_curr_profile().max_size
-                # widget_suggested_sizes[widget] = widget.migrate_full_curr_profile().size
+        widget_suggested_sizes: dict[_widget.Widget, _var.VarOrVal[_shape.Size]] = {}
+        widget_min_sizes: dict[_widget.Widget, _var.VarOrVal[_shape.Size]] = {}
+        widget_max_sizes: dict[_widget.Widget, _var.VarOrVal[_shape.Size]] = {}
+        for widget in self.subject.parent.children:
+            suggested = _typing.cast(_var.VarOrVal[_shape.Size], 
+                    widget.migrate_full_curr_profile().size)
+            min_ = _typing.cast(_var.VarOrVal[_shape.Size], 
+                    widget.migrate_full_curr_profile().min_size)
+            max_ = _typing.cast(_var.VarOrVal[_shape.Size], 
+                    widget.migrate_full_curr_profile().max_size)
+            widget_suggested_sizes[widget] = suggested
+            widget_min_sizes[widget] = min_
+            widget_max_sizes[widget] = max_
