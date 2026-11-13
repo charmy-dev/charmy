@@ -68,6 +68,9 @@ class Query(_typing.Generic[VarType]):
         return self.func(*self.func_args, **self.func_kwargs)
 
 
+VarOrVal: _typing.TypeAlias = VarType | Var[VarType] | Query[VarType]
+
+
 @_typing.overload
 def unpack_var(
     var_or_val: VarOrVal[VarType],
@@ -301,4 +304,3 @@ def resolve_references(original: VarOrVal[VarType]) -> VarType:
     return _typing.cast(VarType, resolve(original))
 
 
-VarOrVal: _typing.TypeAlias = VarType | Var[VarType] | Query[VarType]
