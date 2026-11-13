@@ -38,7 +38,7 @@ class LayoutProfile(_event.EventHandling):
             # print(f"Layout changed: {name}")
 
 @_dataclasses.dataclass
-class PlaceProfile(LayoutProfile):
+class PlaceLayout(LayoutProfile):
     """Place layout profile, to directly specify the position and size of the widget."""
     type: _typing.ClassVar[str] = "place"
 
@@ -85,23 +85,24 @@ class ManagedLayoutProfile(LayoutProfile):
         return
 
 @_dataclasses.dataclass
-class FlexLayout(ManagedLayoutProfile):
-    """Flex layout profile."""
-    type: _typing.ClassVar[str] = "flex"
+class LinearLayout(ManagedLayoutProfile):
+    """Linear layout profile."""
+    type: _typing.ClassVar[str] = "linear"
 
     expand_priority: int = -1
+    stretch_share_ratio: int = 1
 
     def __post_init__(self):
         self._widget_boundaries: dict[_widget.Widget, _shape.RectRange] = {}
 
     @property
     def pos(self) -> _shape.Point:
-        """Calculated pos for the widget by the flex layout."""
+        """Calculated pos for the widget by the linear layout."""
         return self._widget_boundaries[self.subject][0]
 
     @property
     def size(self) -> _shape.Size:
-        """Calculated size for the widget by the flex layout."""
+        """Calculated size for the widget by the linear layout."""
         return self._widget_boundaries[self.subject][1]
 
     def update(self):

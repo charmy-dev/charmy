@@ -393,7 +393,7 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
     def pos(self) -> styles.shape.Point:
         """Position of the widget."""
         match self.layout_profile:
-            case layout_profiles.PlaceProfile():
+            case layout_profiles.PlaceLayout():
                 return self.layout_profile.pos
             case _:
                 return (0, 0)
@@ -540,7 +540,21 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         :param pos: The position to place the widget
         :param size: The size of this widget
         """
-        self.layout_profile = layout_profiles.PlaceProfile(self, pos, size)
+        self.layout_profile = layout_profiles.PlaceLayout(self, pos, size)
+        return self
+
+    def put(self, 
+            expand_priority: int = -1, 
+            stretch_share_ratio: int = 1,
+            ) -> typing.Self:
+        """Add the widget to parent, using linear layout.
+
+        :param expand_priority: The priority of expansion
+        :param stretch_share_ratio: 
+            Ratio of stretch shared among widgets with same parent and priority
+        """
+        self.layout_profile = layout_profiles.LinearLayout(
+            self, expand_priority, stretch_share_ratio)
         return self
 
     def destroy(self) -> None:
