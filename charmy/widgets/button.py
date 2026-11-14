@@ -35,6 +35,9 @@ class ButtonProfile(_WidgetProfile):
     def default(cls) -> _typing.Self:
         instance = cls(
             size=(72, 28), 
+            min_size=(-1, -1), max_size=(-1, -1),
+            # BUG: 👆 Dirty fix, ultimate solution is to add fallback to its parent classes' default
+            #      profiles.
             shape=_styles.shape.Rect((0, 0), _WidgetProfile.references("widget.size")), 
             background = _styles.texture.Color((200, 200, 200)), 
             border_width = 2, 

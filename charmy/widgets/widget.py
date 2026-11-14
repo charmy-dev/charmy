@@ -196,8 +196,8 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         self.state: str = "normal"
 
         # Layout profiles
-        self._layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
-        self._on_layout_change_task: typing.Optional[EventTask] = None
+        self.layout_profile: layout_profiles.LayoutProfile = layout_profiles.LayoutProfile()
+        # self._on_layout_change_task: typing.Optional[EventTask] = None
 
         # Internal misc
         self._max_possible_surrounding_drawn_width: int = 0
@@ -366,31 +366,6 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             self.draw() # After changing the profile list and confirmed has change, components needs rebuild
 
     @property
-    def layout_profile(self) -> layout_profiles.LayoutProfile:
-        return self._layout_profile
-
-    @layout_profile.setter
-    def layout_profile(self, new: layout_profiles.LayoutProfile):
-        def handle_layout_change(event: event_types.LayoutChanged):
-            match event.item_changed:
-                case "pos":
-                    self.trigger(event_types.WidgetMove(
-                        self, 
-                        self._layout_profile.pos, 
-                        event.old_value
-                        ))
-                case "size":
-                    self.trigger(event_types.WidgetResize(
-                        self, 
-                        self._layout_profile.size, 
-                        event.old_value
-                        ))
-        if self._on_layout_change_task is not None:
-            self._layout_profile.unbind(self._on_layout_change_task)
-        self._layout_profile = new
-        self._layout_profile.bind(event_types.LayoutChanged, handle_layout_change)
-
-    @property
     def pos(self) -> styles.shape.Point:
         """Position of the widget."""
         match self.layout_profile:
@@ -542,6 +517,20 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         :param size: The size of this widget
         """
         self.layout_profile = layout_profiles.PlaceLayout(self, pos, size)
+        return self
+
+    def put(self, 
+            expand_priority: int = -1, 
+            stretch_share_ratio: int = 1,
+            ) -> typing.Self:
+        """Add the widget to parent, using linear layout.
+
+        :param expand_priority: The priority of expansion
+        :param stretch_share_ratio: 
+            Ratio of stretch shared among widgets with same parent and priority
+        """
+        self.layout_profile = layout_profiles.LinearLayout(
+            self, expand_priority, stretch_share_ratio)
         return self
 
     def destroy(self) -> None:

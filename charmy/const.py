@@ -33,8 +33,10 @@ class MOUSE_KEYS:
     MIDDLE  : int = 1
     RIGHT   : int = 2
 
-class FLEX_DIRECTION:
-    """Consts to represent flex directions.
+class DIRECTIONS:
+    """Consts to represent directions.
+
+    Currently used by linear layout.
 
     - ROW / X / HORIZONTAL / H: 0
     - COLUMN / Y / VERTICAL / V: 1

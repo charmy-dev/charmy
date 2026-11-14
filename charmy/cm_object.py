@@ -59,7 +59,7 @@ class _InstancesList(typing.Generic[_InstanceType]):
     def __getitem__(self, id_: str) -> _InstanceType:
         """Get or find an object from this list.
 
-        :param item: Either the index or the ID of the target object
+        :param id_: Either the index or the ID of the target object
         """
         instance: _InstanceType | None = self.instances_by_id[id_]
         if instance is None:
@@ -174,7 +174,7 @@ class CharmyObject:
         return self.id == other.id
 
 
-# region Registed Objects
+# region Registered Objects
 
 class CharmyRegisteredObject(CharmyObject):
 

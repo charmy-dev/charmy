@@ -374,8 +374,9 @@ class LineBase(template.LineBase):
         """To draw a line on a specific window.
 
         Args:
-            line: The line to be drawn
-            window: The WindowBase to draw line
+            drawn_line: The line to be drawn
+            stroke: Whether to stroke the line after drawing
+            noskip: Whether to skip drawing the line
         """
         # Unpack the DrawnLine
         line = drawn_line.line
@@ -619,6 +620,7 @@ class TextureBase(template.TextureBase):
 
         :param context: The Cairo context to set texture
         :param texture: The texture to set
+        :param noskip: Whether to skip drawing the texture (e.g. transparent)
         :return bool: If the object needs to be drawn
         """
         cmtx = charmy_stuff.styles.texture # CMTX = abbr. CharMy TeXture

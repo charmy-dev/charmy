@@ -86,31 +86,25 @@ class ManagedLayout(LayoutProfile):
         return
 
 @_dataclasses.dataclass
-class FlexLayout(ManagedLayout):
-    """Flex layout profile."""
-    type: _typing.ClassVar[str] = "flex"
+class LinearLayout(ManagedLayout):
+    """Linear layout profile."""
+    type: _typing.ClassVar[str] = "linear"
 
     expand_priority: int = -1
-    expansion_share_ratio: float = 0
+    stretch_share_ratio: int = 1
+
+    def __post_init__(self):
+        self._widget_boundaries: dict[_widget.Widget, _shape.RectRange] = {}
 
     @property
     def pos(self) -> _shape.Point:
-        """Calculated pos for the widget by the flex layout."""
-        return (0, 0) # TODO: You know that, go implement it.
+        """Calculated pos for the widget by the linear layout."""
+        return self._widget_boundaries[self.subject][0]
 
     @property
     def size(self) -> _shape.Size:
-        """Calculated size for the widget by the flex layout."""
-        flex_direction = self.subject.parent.flex_direction
-        if flex_direction not in [0, 1]:
-            raise ValueError(f"Invalid direction integer {flex_direction} for a container.")
-        subject_len = self.subject.parent._flex_dist[self.subject]
-        other_side_len = _var.unpack_var(
-            self.subject.migrate_full_curr_profile().size)[1-flex_direction] # type: ignore
-        if flex_direction == 0:
-            return (subject_len, other_side_len)
-        else:
-            return (other_side_len, subject_len)
+        """Calculated size for the widget by the linear layout."""
+        return self._widget_boundaries[self.subject][1]
 
     def update(self):
         """Update boundaries of all widgets in their parent container."""
