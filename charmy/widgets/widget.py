@@ -307,6 +307,11 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
         else:
             fallback_path.append(self.profiles["default"])
             fallback_path.append(self.ProfileClass.default())
+        # Then add profiles of its parent classes
+        parent_classes = type(self).mro()
+        for clazz in parent_classes:
+            if issubclass(clazz, Widget):
+                fallback_path.append(clazz.ProfileClass.default())
         return fallback_path
 
     def migrate_full_curr_profile(self) -> ProfileType:
@@ -324,6 +329,9 @@ class Widget(CharmyObject, EventHandling, reactive_caching.CachedClass):
             if isinstance(profile_val, marks.Mark):
                 if profile_val.meaning == marks.profile_value_fallback_mark.meaning:
                     for fallback_profile in fallback_list[1:]:
+                        if not hasattr(fallback_profile, field.name):
+                            # For parnet class profiles: If no such field then fallback directly
+                            val_is_fallback = True
                         fallback_val = getattr(fallback_profile, field.name)
                         val_is_fallback = False
                         if isinstance(fallback_val, marks.Mark):
