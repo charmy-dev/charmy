@@ -30,7 +30,7 @@ class Container(reactive_caching.CachedClass):
 
     def __init__(self, 
             managed_layout_type: type[layout_profiles.ManagedLayout] | str = \
-                layout_profiles.FlexLayout, 
+                layout_profiles.LinearLayout, 
             flex_direction: typing.Literal[0, 1] = 1, 
             *args, **kwargs):
         """Initialize a container base class.
@@ -125,14 +125,14 @@ class Container(reactive_caching.CachedClass):
     def update_layout(self):
         """Update layout results."""
         match self.managed_layout_type:
-            case layout_profiles.FlexLayout:
+            case layout_profiles.LinearLayout:
                 # Flex layout logic
                 d = self.flex_direction # d for direction or dimension
                 total_length = self.size[d]
                 remain_length = total_length
                 max_priority = 0
                 for child in self.children:
-                    if isinstance(child.layout_profile, layout_profiles.FlexLayout):
+                    if isinstance(child.layout_profile, layout_profiles.LinearLayout):
                         remain_length -= child.size[d]
                         if child.layout_profile.expand_priority > max_priority:
                             max_priority = child.layout_profile.expand_priority
