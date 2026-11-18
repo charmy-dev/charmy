@@ -8,7 +8,7 @@ from abc import abstractmethod
 import reactive_caching
 
 from ..utils import layout_profiles # Expose them as (...).container.layout_profiles
-from ..utils import type_checking
+from ..utils import type_checking, var
 from ..styles import shape, texture
 from .. import cm_object
 
@@ -124,6 +124,21 @@ class Container(reactive_caching.CachedClass):
 
     def update_layout(self):
         """Update layout results."""
+
+        def get_widget_sizes(the_widget: widget.Widget) -> tuple[shape.Size, shape.Size, shape.Size]:
+            full_profile = the_widget.migrate_full_curr_profile()
+            wanted_size = \
+                var.unpack_var(typing.cast(var.VarOrVal[shape.Size], full_profile.size), (0, 0))
+            min_size = var.unpack_var(
+                typing.cast(var.VarOrVal[shape.Size], full_profile.min_size), wanted_size)
+            max_size = var.unpack_var(
+                typing.cast(var.VarOrVal[shape.Size], full_profile.max_size), wanted_size)
+            if min_size == (-1, -1):
+                min_size = wanted_size
+            if max_size == (-1. -1):
+                max_size = wanted_size
+            return min_size, wanted_size, max_size
+
         match self.managed_layout_type:
             case layout_profiles.LinearLayout:
                 # Flex layout logic
@@ -131,11 +146,43 @@ class Container(reactive_caching.CachedClass):
                 total_length = self.size[d]
                 remain_length = total_length
                 max_priority = 0
+                priority_levels: dict[int, list[widget.Widget]] = {}
+                # Warning: below comments all in Chinese as things are getting a bit complicated
+                #          and Chinese is a language with higher efficiency.   —— rgzz666
                 for child in self.children:
                     if isinstance(child.layout_profile, layout_profiles.LinearLayout):
+                        # 对于每一个采用线性布局的控件
+                        # 如尚未记录，则先将其记录到flex_dist列表中
+                        if child not in self._flex_dist:
+                            self._flex_dist[child] = get_widget_sizes(child)[1][d]
+                        # 初步处理，将其长度从总长减去，全部处理完后即为余长
                         remain_length -= child.size[d]
-                        if child.layout_profile.expand_priority > max_priority:
-                            max_priority = child.layout_profile.expand_priority
+                        # 如果当前child的优先级还不在优先级列表里，则初始化相应的列表项
+                        if child.layout_profile.expand_priority not in priority_levels.keys():
+                            priority_levels[child.layout_profile.expand_priority] = []
+                            # 只有新增了优先级，才判断它是不是新的最大优先级
+                            if child.layout_profile.expand_priority > max_priority:
+                                max_priority = child.layout_profile.expand_priority
+                        # 完成后，把child加入相应的优先级层级列表
+                        priority_levels[child.layout_profile.expand_priority].append(child)
+                if remain_length == 0:
+                    # 此处处理一个特殊情况：如果第一轮正好分完长度，也就是余长恰好=0，则什么也不做直接返回
+                    # 这样按照当前的结果，所有控件都会取其profile中指定的默认值
+                    return
+                first_go_remain_length = remain_length # >0为伸展控件，<0为压缩控件
+                # 生成一个列表，内容是所有存在的优先级，按照尝试顺序排序
+                # 即：如果初步的余长>0则优先级由大而小，余长<0则由小而大
+                priority_level_nums = sorted(priority_levels.keys(), reverse=remain_length > 0)
+                for priority_level_num in priority_level_nums:
+                    # 对于每一个优先级层级
+                    assumed_remain_length = remain_length # 用于存储本层级初步处理后，假设的剩余长度
+                    for the_widget in priority_levels[priority_level_num]:
+                        sizes = get_widget_sizes(the_widget)
+                        if first_go_remain_length > 0:
+                            assumed_remain_length -= sizes[2][d] - sizes[1][d]
+                    if assumed_remain_length == 0: # 对于正好没有剩余长度的情况
+                        return # 停止分配，就这样了
+                    elif assumed_remain_length > 0: # 如本轮分配后有剩余长度
             case _:
                 self_id = self.id if isinstance(self, cm_object.CharmyObject) else "without ID"
                 raise ValueError(f"Managed layout type chosen for container {self_id} is invalid.")
