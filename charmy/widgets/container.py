@@ -182,7 +182,13 @@ class Container(reactive_caching.CachedClass):
                             assumed_remain_length -= sizes[2][d] - sizes[1][d]
                     if assumed_remain_length == 0: # 对于正好没有剩余长度的情况
                         return # 停止分配，就这样了
-                    elif assumed_remain_length > 0: # 如本轮分配后有剩余长度
+                    else: # 如本轮分配后不是正好结束
+                        ratio_sum = sum([
+                            the_widget.layout_profile.stretch_share_ratio for the_widget in \
+                            priority_levels[priority_level_num]
+                            ])
+                        for the_widget in priority_levels[priority_level_num]:
+                            self._flex_dist[the_widget] = NotImplemented
             case _:
                 self_id = self.id if isinstance(self, cm_object.CharmyObject) else "without ID"
                 raise ValueError(f"Managed layout type chosen for container {self_id} is invalid.")
