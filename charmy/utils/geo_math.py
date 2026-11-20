@@ -4,8 +4,8 @@ This module centralizes math utilities used for shapes and some other modules:
 angle conversions, circle-point computations, arc-to-bezier conversion, and
 angle coverage tests.
 
-!! THIS IS A (MOSTLY) VIBED MODULE !!
--------------------------------------
+!! THIS IS A MOSTLY VIBED MODULE !!
+-----------------------------------
 This module was mostly vibed by GitHub Copilot, ChatGPT, and Google Gemini. 
 It includes geometric knowledge that the core devs (in 2026) have not learned 
 yet.
@@ -21,6 +21,15 @@ import typing
 
 if typing.TYPE_CHECKING:
     from ..styles import shape
+
+
+def dist_len(total_len: int, ratios: list[float]) -> list[int]:
+    """Distribute a given total length into ratio, and return a list of abs length.
+
+    :param total_len: Total length to distribute in integer pixels
+    :param ratios: List of ratios to distribute the length according to
+    """
+    return [round(total_len / sum(ratios) * this_ratio) for this_ratio in ratios]
 
 
 _DirectionChar: typing.TypeAlias = typing.Literal["n", "e", "s", "w", "N", "E", "S", "W"]

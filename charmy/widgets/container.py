@@ -8,7 +8,7 @@ from abc import abstractmethod
 import reactive_caching
 
 from ..utils import layout_profiles # Expose them as (...).container.layout_profiles
-from ..utils import type_checking, var
+from ..utils import type_checking, var, geo_math
 from ..styles import shape, texture
 from .. import cm_object
 
@@ -54,7 +54,7 @@ class Container(reactive_caching.CachedClass):
         managed_layout_type = typing.cast(type[layout_profiles.ManagedLayout], managed_layout_type)
 
         self.children: list[widget.Widget] = []
-        self._flex_dist: dict[widget.Widget, int] = {}
+        self._linear_layout_dist: dict[widget.Widget, int] = {}
 
         self.background: texture.Texture | texture.TextureLike
         # TODO: Change this⬆️ to let it only be specified with profiles, in specific widgets
@@ -124,7 +124,15 @@ class Container(reactive_caching.CachedClass):
 
     def update_layout(self):
         """Update layout results."""
+        match self.managed_layout_type:
+            case layout_profiles.LinearLayout:
+                self._update_linear_layout()
+            case _:
+                self_id = self.id if isinstance(self, cm_object.CharmyObject) else "without ID"
+                raise ValueError(f"Managed layout type chosen for container {self_id} is invalid.")
 
+    def _update_linear_layout(self):
+        """Update calculated results of linear layout."""
         def get_widget_sizes(the_widget: widget.Widget) -> tuple[shape.Size, shape.Size, shape.Size]:
             full_profile = the_widget.migrate_full_curr_profile()
             wanted_size = \
@@ -138,87 +146,78 @@ class Container(reactive_caching.CachedClass):
             if max_size == (-1. -1):
                 max_size = wanted_size
             return min_size, wanted_size, max_size
-
-        match self.managed_layout_type:
-            case layout_profiles.LinearLayout:
-                # Flex layout logic
-                d = self.flex_direction # d for direction or dimension
-                total_length = self.size[d]
-                remain_length = total_length
-                max_priority = 0
-                priority_levels: dict[int, list[widget.Widget]] = {}
-                # Warning: below comments all in Chinese as things are getting a bit complicated
-                #          and Chinese is a language with higher efficiency.   —— rgzz666
-                for child in self.children:
-                    if isinstance(child.layout_profile, layout_profiles.LinearLayout):
-                        # 对于每一个采用线性布局的控件
-                        # 如尚未记录，则先将其记录到flex_dist列表中
-                        if child not in self._flex_dist:
-                            self._flex_dist[child] = get_widget_sizes(child)[1][d]
-                        # 初步处理，将其长度从总长减去，全部处理完后即为余长
-                        remain_length -= child.size[d]
-                        # 如果当前child的优先级还不在优先级列表里，则初始化相应的列表项
-                        if child.layout_profile.expand_priority not in priority_levels.keys():
-                            priority_levels[child.layout_profile.expand_priority] = []
-                            # 只有新增了优先级，才判断它是不是新的最大优先级
-                            if child.layout_profile.expand_priority > max_priority:
-                                max_priority = child.layout_profile.expand_priority
-                        # 完成后，把child加入相应的优先级层级列表
-                        priority_levels[child.layout_profile.expand_priority].append(child)
-                if remain_length == 0:
-                    # 此处处理一个特殊情况：如果第一轮正好分完长度，也就是余长恰好=0，则什么也不做直接返回
-                    # 这样按照当前的结果，所有控件都会取其profile中指定的默认值
-                    return
-                first_go_remain_length = remain_length # >0为伸展控件，<0为压缩控件
-                # 生成一个列表，内容是所有存在的优先级，按照尝试顺序排序
-                # 即：如果初步的余长>0则优先级由大而小，余长<0则由小而大
-                priority_level_nums = sorted(priority_levels.keys(), reverse=remain_length > 0)
-                for priority_level_num in priority_level_nums:
-                    # 对于每一个优先级层级
-                    assumed_remain_length = remain_length # 用于存储本层级初步处理后，假设的剩余长度
-                    for the_widget in priority_levels[priority_level_num]:
-                        sizes = get_widget_sizes(the_widget)
-                        if first_go_remain_length > 0:
-                            assumed_remain_length -= sizes[2][d] - sizes[1][d]
-                    if assumed_remain_length == 0: # 对于正好没有剩余长度的情况
-                        return # 停止分配，就这样了
-                    else: # 如本轮分配后不是正好结束
-                        ratio_sum = sum([
-                            the_widget.layout_profile.stretch_share_ratio for the_widget in \
-                            priority_levels[priority_level_num] \
-                            if isinstance(the_widget.layout_profile, layout_profiles.LinearLayout)
-                            ]) # 将所有比例求和作为下一步除数
-                            #（虽然已经确定priority_levels只会有线性布局的控件，但还是保留判断来修复类型提示）
-                        for the_widget in priority_levels[priority_level_num]:
-                            if not isinstance(the_widget.layout_profile, 
-                                              layout_profiles.LinearLayout):
-                                # 此处同理，虽然已经确定priority_levels只会有线性布局的控件，但还是保留判断来
-                                # 修复类型提示
-                                continue
-                            ## 根据比例计算每个控件最终分得的长度
-                            self._flex_dist[the_widget] = round(
-                                abs(self.size[d]) / ratio_sum * \
-                                the_widget.layout_profile.stretch_share_ratio)
-                            ## 此处核验每个控件分配的长度，记录需要再分配的长度，然后调整这些超出的长度
-                            len_to_redist = 0 # 需要再分配的总长
-                            # 可以伸展或收缩的控件列表
-                            expandable: list[widget.Widget] = list(self._flex_dist.keys())
-                            compressable: list[widget.Widget] = list(self._flex_dist.keys())
-                            for the_widget, dist_len in self._flex_dist.items():
-                                widget_sizes = get_widget_sizes(the_widget)
-                                if dist_len > widget_sizes[2][d]:
-                                    # 超出最大容许长度
-                                    len_to_redist += widget_sizes[2][d] - dist_len
-                                    self._flex_dist[the_widget] = widget_sizes[2][d]
-                                    expandable.remove(the_widget)
-                                elif dist_len <  widget_sizes[0][d]:
-                                    # 不足最小容许长度
-                                    len_to_redist += dist_len - widget_sizes[0][d]
-                                    self._flex_dist[the_widget] = widget_sizes[0][d]
-                                    compressable.remove(the_widget)
-            case _:
-                self_id = self.id if isinstance(self, cm_object.CharmyObject) else "without ID"
-                raise ValueError(f"Managed layout type chosen for container {self_id} is invalid.")
+        # Linear layout logic
+        d = self.flex_direction # d for direction or dimension
+        total_length = self.size[d]
+        remain_length = total_length
+        max_priority = 0
+        priority_levels: dict[int, list[widget.Widget]] = {}
+        # Warning: below comments all in Chinese as things are getting a bit complicated
+        #          and Chinese is a language with higher efficiency.   —— rgzz666
+        for child in self.children:
+            if isinstance(child.layout_profile, layout_profiles.LinearLayout):
+                # 对于每一个采用线性布局的控件
+                # 如尚未记录，则先将其记录到flex_dist列表中
+                if child not in self._linear_layout_dist:
+                    self._linear_layout_dist[child] = get_widget_sizes(child)[1][d]
+                # 初步处理，将其长度从总长减去，全部处理完后即为余长
+                remain_length -= child.size[d]
+                # 如果当前child的优先级还不在优先级列表里，则初始化相应的列表项
+                if child.layout_profile.expand_priority not in priority_levels.keys():
+                    priority_levels[child.layout_profile.expand_priority] = []
+                    # 只有新增了优先级，才判断它是不是新的最大优先级
+                    if child.layout_profile.expand_priority > max_priority:
+                        max_priority = child.layout_profile.expand_priority
+                # 完成后，把child加入相应的优先级层级列表
+                priority_levels[child.layout_profile.expand_priority].append(child)
+        if remain_length == 0:
+            # 此处处理一个特殊情况：如果第一轮正好分完长度，也就是余长恰好=0，则什么也不做直接返回
+            # 这样按照当前的结果，所有控件都会取其profile中指定的默认值
+            return
+        first_go_remain_length = remain_length # >0为伸展控件，<0为压缩控件
+        # 生成一个列表，内容是所有存在的优先级，按照尝试顺序排序
+        # 即：如果初步的余长>0则优先级由大而小，余长<0则由小而大
+        priority_level_nums = sorted(priority_levels.keys(), reverse=remain_length > 0)
+        for priority_level_num in priority_level_nums:
+            # 对于每一个优先级层级
+            assumed_remain_length = remain_length # 用于存储本层级初步处理后，假设的剩余长度
+            for the_widget in priority_levels[priority_level_num]:
+                sizes = get_widget_sizes(the_widget)
+                if first_go_remain_length > 0:
+                    assumed_remain_length -= sizes[2][d] - sizes[1][d]
+            if assumed_remain_length == 0: # 对于正好没有剩余长度的情况
+                return # 停止分配，就这样了
+            else: # 如本轮分配后不是正好结束
+                ratios = [
+                    the_widget.layout_profile.stretch_share_ratio for the_widget in \
+                    priority_levels[priority_level_num] \
+                    if isinstance(the_widget.layout_profile, layout_profiles.LinearLayout)
+                    ] # 将所有比例存为一个列表，后续交予geo_math.dist_len来分配
+                    # （虽然已经确定priority_levels只会有线性布局的控件，但还是保留判断来修复类型提示）
+                managed_widgets = list(self._linear_layout_dist.keys())
+                for index, len in enumerate(ratios):
+                    self._linear_layout_dist[managed_widgets[index]] = len
+                # 此处核验每个控件分配的长度，记录需要再分配的长度，然后调整这些超出的长度
+                len_to_redist = 0 # 需要再分配的总长
+                # 可以伸展或收缩的控件列表
+                expandable: list[widget.Widget] = list(self._linear_layout_dist.keys())
+                compressable: list[widget.Widget] = list(self._linear_layout_dist.keys())
+                for the_widget, dist_len in self._linear_layout_dist.items():
+                    widget_sizes = get_widget_sizes(the_widget)
+                    if dist_len > widget_sizes[2][d]:
+                        # 超出最大容许长度
+                        len_to_redist += widget_sizes[2][d] - dist_len
+                        self._linear_layout_dist[the_widget] = widget_sizes[2][d]
+                        expandable.remove(the_widget)
+                    elif dist_len <  widget_sizes[0][d]:
+                        # 不足最小容许长度
+                        len_to_redist += dist_len - widget_sizes[0][d]
+                        self._linear_layout_dist[the_widget] = widget_sizes[0][d]
+                        compressable.remove(the_widget)
+                # 差异长度再分配
+                if len_to_redist == 0:
+                    # 如果无需再分配则直接跳过
+                    continue
 
     def draw_children(self) -> typing.Self:
         """Draw the container and its children."""
