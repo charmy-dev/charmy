@@ -185,10 +185,37 @@ class Container(reactive_caching.CachedClass):
                     else: # 如本轮分配后不是正好结束
                         ratio_sum = sum([
                             the_widget.layout_profile.stretch_share_ratio for the_widget in \
-                            priority_levels[priority_level_num]
-                            ])
+                            priority_levels[priority_level_num] \
+                            if isinstance(the_widget.layout_profile, layout_profiles.LinearLayout)
+                            ]) # 将所有比例求和作为下一步除数
+                            #（虽然已经确定priority_levels只会有线性布局的控件，但还是保留判断来修复类型提示）
                         for the_widget in priority_levels[priority_level_num]:
-                            self._flex_dist[the_widget] = NotImplemented
+                            if not isinstance(the_widget.layout_profile, 
+                                              layout_profiles.LinearLayout):
+                                # 此处同理，虽然已经确定priority_levels只会有线性布局的控件，但还是保留判断来
+                                # 修复类型提示
+                                continue
+                            ## 根据比例计算每个控件最终分得的长度
+                            self._flex_dist[the_widget] = round(
+                                abs(self.size[d]) / ratio_sum * \
+                                the_widget.layout_profile.stretch_share_ratio)
+                            ## 此处核验每个控件分配的长度，记录需要再分配的长度，然后调整这些超出的长度
+                            len_to_redist = 0 # 需要再分配的总长
+                            # 可以伸展或收缩的控件列表
+                            expandable: list[widget.Widget] = list(self._flex_dist.keys())
+                            compressable: list[widget.Widget] = list(self._flex_dist.keys())
+                            for the_widget, dist_len in self._flex_dist.items():
+                                widget_sizes = get_widget_sizes(the_widget)
+                                if dist_len > widget_sizes[2][d]:
+                                    # 超出最大容许长度
+                                    len_to_redist += widget_sizes[2][d] - dist_len
+                                    self._flex_dist[the_widget] = widget_sizes[2][d]
+                                    expandable.remove(the_widget)
+                                elif dist_len <  widget_sizes[0][d]:
+                                    # 不足最小容许长度
+                                    len_to_redist += dist_len - widget_sizes[0][d]
+                                    self._flex_dist[the_widget] = widget_sizes[0][d]
+                                    compressable.remove(the_widget)
             case _:
                 self_id = self.id if isinstance(self, cm_object.CharmyObject) else "without ID"
                 raise ValueError(f"Managed layout type chosen for container {self_id} is invalid.")
